@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "@theogravity/pulumi-fusionauth";
+ * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthGenericConnector("example", {
  *     authenticationUrl: "http://mygameserver.local:7001/fusionauth-connector",

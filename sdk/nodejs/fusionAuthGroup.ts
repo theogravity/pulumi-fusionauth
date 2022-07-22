@@ -17,7 +17,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "@theogravity/pulumi-fusionauth";
+ * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const myGroup = new fusionauth.FusionAuthGroup("myGroup", {
  *     tenantId: fusionauth_tenant.my_tenant.id,

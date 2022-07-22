@@ -14,7 +14,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "@theogravity/pulumi-fusionauth";
+ * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthUser("example", {
  *     userId: "4c4511df-0d0d-4029-8c2b-f6c01b9e138d",

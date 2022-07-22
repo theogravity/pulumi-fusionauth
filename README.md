@@ -13,13 +13,13 @@ This package is available for several languages/platforms:
 To use from JavaScript or TypeScript in Node.js, install using either `npm`:
 
 ```bash
-npm install @theogravity/pulumi-fusionauth
+npm install pulumi-fusionauth
 ```
 
 or `yarn`:
 
 ```bash
-yarn add @theogravity/pulumi-fusionauth
+yarn add pulumi-fusionauth
 ```
 
 ### Python

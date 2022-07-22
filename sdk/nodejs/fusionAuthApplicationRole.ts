@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "@theogravity/pulumi-fusionauth";
+ * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const myAppAdminRole = new fusionauth.FusionAuthApplicationRole("myAppAdminRole", {
  *     applicationId: fusionauth_application.my_app.id,

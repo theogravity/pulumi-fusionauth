@@ -20,7 +20,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "@theogravity/pulumi-fusionauth";
+ * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const google = new fusionauth.FusionAuthIdpGoogle("google", {
  *     applicationConfigurations: [{
