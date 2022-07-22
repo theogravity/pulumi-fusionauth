@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package xyz
+package fusionauth
 
 import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/gpsinsight/terraform-provider-fusionauth/fusionauth"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi-xyz/provider/pkg/version"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/terraform-providers/terraform-provider-xyz/xyz"
+	"github.com/theogravity/pulumi-fusionauth/provider/pkg/version"
 )
 
 // all of the token components used below.
 const (
 	// This variable controls the default name of the package in the package
 	// registries for nodejs and python:
-	mainPkg = "xyz"
+	mainPkg = "fusionauth"
 	// modules:
-	mainMod = "index" // the xyz module
+	mainMod = "index" // the fusionauth module
 )
 
 // preConfigureCallback is called before the providerConfigure function of the underlying provider.
@@ -46,72 +46,107 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(xyz.Provider())
+	p := shimv2.NewProvider(fusionauth.Provider())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:    p,
-		Name: "xyz",
+		Name: "fusionauth",
 		// DisplayName is a way to be able to change the casing of the provider
 		// name when being displayed on the Pulumi registry
-		DisplayName: "",
+		DisplayName: "FusionAuth",
 		// The default publisher for all packages is Pulumi.
 		// Change this to your personal name (or a company name) that you
 		// would like to be shown in the Pulumi Registry if this package is published
 		// there.
-		Publisher: "Pulumi",
+		Publisher: "Theo Gravity",
 		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
 		// if this package is published there.
 		//
 		// You may host a logo on a domain you control or add an SVG logo for your package
 		// in your repository and use the raw content URL for that file as your logo URL.
-		LogoURL: "",
+		LogoURL: "https://avatars.githubusercontent.com/u/41974756?s=200&v=4",
 		// PluginDownloadURL is an optional URL used to download the Provider
 		// for use in Pulumi programs
 		// e.g https://github.com/org/pulumi-provider-name/releases/
-		PluginDownloadURL: "",
-		Description:       "A Pulumi package for creating and managing xyz cloud resources.",
+		PluginDownloadURL: "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+		Description:       "A Pulumi package for managing FusionAuth instances.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "xyz", "category/cloud"},
-		License:    "Apache-2.0",
-		Homepage:   "https://www.pulumi.com",
-		Repository: "https://github.com/pulumi/pulumi-xyz",
+		Keywords:   []string{"pulumi", "fusionauth", "category/infrastructure"},
+		License:    "MIT",
+		Homepage:   "https://github.com/theogravity/pulumi-fusionauth",
+		Repository: "https://github.com/theogravity/pulumi-fusionauth",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "",
-		Config:    map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			// "region": {
-			// 	Type: tfbridge.MakeType("region", "Region"),
-			// 	Default: &tfbridge.DefaultInfo{
-			// 		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
-			// 	},
-			// },
+		GitHubOrg: "gpsinsight",
+		Config: map[string]*tfbridge.SchemaInfo{
+			"api_key": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"FUSION_AUTH_API_KEY"},
+				},
+			},
+			"host": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"FUSION_AUTH_HOST_URL"},
+				},
+			},
 		},
 		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi type. Two examples
-			// are below - the single line form is the common case. The multi-line form is
-			// needed only if you wish to override types or other default options.
-			//
-			// "aws_iam_role": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IamRole")}
-			//
-			// "aws_acm_certificate": {
-			// 	Tok: tfbridge.MakeResource(mainPkg, mainMod, "Certificate"),
-			// 	Fields: map[string]*tfbridge.SchemaInfo{
-			// 		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
-			// 	},
-			// },
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"fusionauth_lambda":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthLambda")},
+			"fusionauth_application":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthApplication")},
+			"fusionauth_user":                {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthUser")},
+			"fusionauth_theme":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthTheme")},
+			"fusionauth_tenant":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthTenant")},
+			"fusionauth_email":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEMail")},
+			"fusionauth_key":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthKey")},
+			"fusionauth_webhook":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthWebhook")},
+			"fusionauth_group":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthGroup")},
+			"fusionauth_application_role":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthApplicationRole")},
+			"fusionauth_idp_open_id_connect": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpOpenIdConnect")},
+			"fusionauth_idp_google":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpGoogle")},
+			"fusionauth_registration":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthRegistration")},
+			"fusionauth_system_configuration": {
+				Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthSystemConfiguration"),
+			},
+			"fusionauth_form_field":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthFormField")},
+			"fusionauth_form":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthForm")},
+			"fusionauth_idp_apple":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpApple")},
+			"fusionauth_imported_key":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthImportedKey")},
+			"fusionauth_user_action":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthUserAction")},
+			"fusionauth_idp_external_jwt": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpExternalJwt")},
+			"fusionauth_idp_saml_v2":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpSamlv2")},
+			"fusionauth_api_key":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthApiKey")},
+			"fusionauth_idp_saml_v2_idp_initated": {
+				Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpSamlV2IdpInitiated"),
+			},
+			"fusionauth_idp_xbox":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpXBox")},
+			"fusionauth_idp_sony_psn": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpPsn")},
+			"fusionauth_idp_steam":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpSteam")},
+			"fusionauth_idp_twitch":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpTwitch")},
+			"fusionauth_idp_facebook": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpFacebook")},
+			"fusionauth_entity":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntity")},
+			"fusionauth_entity_type":  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntityType")},
+			"fusionauth_entity_type_permission": {
+				Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntityTypePermission"),
+			},
+			"fusionauth_entity_grant":      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntityGrant")},
+			"fusionauth_generic_connector": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthGenericConnector")},
+			"fusionauth_reactor":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthReactor")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi function. An example
-			// is below.
-			// "aws_ami": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getAmi")},
+			"fusionauth_lambda":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLambda")},
+			"fusionauth_application":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplication")},
+			"fusionauth_form":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getForm")},
+			"fusionauth_tenant":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getTenant")},
+			"fusionauth_application_role": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplicationRole")},
+			"fusionauth_idp":              {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getIdp")},
+			"fusionauth_user":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getUser")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
+			PackageName: "@theogravity/pulumi-fusionauth",
 			// List any npm dependencies and their versions
 			Dependencies: map[string]string{
 				"@pulumi/pulumi": "^3.0.0",
@@ -126,6 +161,7 @@ func Provider() tfbridge.ProviderInfo {
 			//Overlay: &tfbridge.OverlayInfo{},
 		},
 		Python: &tfbridge.PythonInfo{
+			PackageName: "theogravity_pulumi-fusionauth",
 			// List any Python dependencies and their version ranges
 			Requires: map[string]string{
 				"pulumi": ">=3.0.0,<4.0.0",
@@ -133,7 +169,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
-				fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", mainPkg),
+				fmt.Sprintf("github.com/theogravity/pulumi-%[1]s/sdk/", mainPkg),
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
@@ -141,6 +177,7 @@ func Provider() tfbridge.ProviderInfo {
 			GenerateResourceContainerTypes: true,
 		},
 		CSharp: &tfbridge.CSharpInfo{
+			RootNamespace: "theogravity",
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
