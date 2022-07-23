@@ -29,7 +29,7 @@ jobs:
         issue-type: pull-request
         permission: write
         reaction-token: ${{ secrets.GITHUB_TOKEN }}
-        repository: pulumi/pulumi-fusionauth
+        repository: theogravity/pulumi-fusionauth
         token: ${{ secrets.PULUMI_BOT_TOKEN }}
 name: command-dispatch
 on:

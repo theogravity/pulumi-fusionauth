@@ -1,4 +1,4 @@
-PROJECT_NAME := fusionauth Package
+PROJECT_NAME := FusionAuth Package
 
 SHELL            := /bin/bash
 PACK             := fusionauth
