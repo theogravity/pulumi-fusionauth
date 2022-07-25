@@ -20,20 +20,10 @@
     "config": {
         "variables": {
             "apiKey": {
-                "type": "string",
-                "defaultInfo": {
-                    "environment": [
-                        "FUSION_AUTH_API_KEY"
-                    ]
-                }
+                "type": "string"
             },
             "host": {
-                "type": "string",
-                "defaultInfo": {
-                    "environment": [
-                        "FUSION_AUTH_HOST_URL"
-                    ]
-                }
+                "type": "string"
             }
         },
         "defaults": [
@@ -4437,24 +4427,22 @@
                 "type": "string"
             }
         },
+        "required": [
+            "apiKey",
+            "host"
+        ],
         "inputProperties": {
             "apiKey": {
-                "type": "string",
-                "defaultInfo": {
-                    "environment": [
-                        "FUSION_AUTH_API_KEY"
-                    ]
-                }
+                "type": "string"
             },
             "host": {
-                "type": "string",
-                "defaultInfo": {
-                    "environment": [
-                        "FUSION_AUTH_HOST_URL"
-                    ]
-                }
+                "type": "string"
             }
-        }
+        },
+        "requiredInputs": [
+            "apiKey",
+            "host"
+        ]
     },
     "resources": {
         "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey": {

@@ -10,7 +10,7 @@ const __config = new pulumi.Config("fusionauth");
 export declare const apiKey: string | undefined;
 Object.defineProperty(exports, "apiKey", {
     get() {
-        return __config.get("apiKey") ?? utilities.getEnv("FUSION_AUTH_API_KEY");
+        return __config.get("apiKey");
     },
     enumerable: true,
 });
@@ -18,7 +18,7 @@ Object.defineProperty(exports, "apiKey", {
 export declare const host: string | undefined;
 Object.defineProperty(exports, "host", {
     get() {
-        return __config.get("host") ?? utilities.getEnv("FUSION_AUTH_HOST_URL");
+        return __config.get("host");
     },
     enumerable: true,
 });

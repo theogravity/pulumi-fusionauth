@@ -16,9 +16,9 @@ __config__ = pulumi.Config('fusionauth')
 class _ExportableConfig(types.ModuleType):
     @property
     def api_key(self) -> Optional[str]:
-        return __config__.get('apiKey') or _utilities.get_env('FUSION_AUTH_API_KEY')
+        return __config__.get('apiKey')
 
     @property
     def host(self) -> Optional[str]:
-        return __config__.get('host') or _utilities.get_env('FUSION_AUTH_HOST_URL')
+        return __config__.get('host')
 

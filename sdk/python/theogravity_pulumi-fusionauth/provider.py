@@ -13,36 +13,30 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 api_key: Optional[pulumi.Input[str]] = None,
-                 host: Optional[pulumi.Input[str]] = None):
+                 api_key: pulumi.Input[str],
+                 host: pulumi.Input[str]):
         """
         The set of arguments for constructing a Provider resource.
         """
-        if api_key is None:
-            api_key = _utilities.get_env('FUSION_AUTH_API_KEY')
-        if api_key is not None:
-            pulumi.set(__self__, "api_key", api_key)
-        if host is None:
-            host = _utilities.get_env('FUSION_AUTH_HOST_URL')
-        if host is not None:
-            pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "api_key", api_key)
+        pulumi.set(__self__, "host", host)
 
     @property
     @pulumi.getter(name="apiKey")
-    def api_key(self) -> Optional[pulumi.Input[str]]:
+    def api_key(self) -> pulumi.Input[str]:
         return pulumi.get(self, "api_key")
 
     @api_key.setter
-    def api_key(self, value: Optional[pulumi.Input[str]]):
+    def api_key(self, value: pulumi.Input[str]):
         pulumi.set(self, "api_key", value)
 
     @property
     @pulumi.getter
-    def host(self) -> Optional[pulumi.Input[str]]:
+    def host(self) -> pulumi.Input[str]:
         return pulumi.get(self, "host")
 
     @host.setter
-    def host(self, value: Optional[pulumi.Input[str]]):
+    def host(self, value: pulumi.Input[str]):
         pulumi.set(self, "host", value)
 
 
@@ -67,7 +61,7 @@ class Provider(pulumi.ProviderResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[ProviderArgs] = None,
+                 args: ProviderArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         The provider type for the fusionauth package. By default, resources use package-wide configuration
@@ -106,11 +100,11 @@ class Provider(pulumi.ProviderResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ProviderArgs.__new__(ProviderArgs)
 
-            if api_key is None:
-                api_key = _utilities.get_env('FUSION_AUTH_API_KEY')
+            if api_key is None and not opts.urn:
+                raise TypeError("Missing required property 'api_key'")
             __props__.__dict__["api_key"] = api_key
-            if host is None:
-                host = _utilities.get_env('FUSION_AUTH_HOST_URL')
+            if host is None and not opts.urn:
+                raise TypeError("Missing required property 'host'")
             __props__.__dict__["host"] = host
         super(Provider, __self__).__init__(
             'fusionauth',
@@ -120,11 +114,11 @@ class Provider(pulumi.ProviderResource):
 
     @property
     @pulumi.getter(name="apiKey")
-    def api_key(self) -> pulumi.Output[Optional[str]]:
+    def api_key(self) -> pulumi.Output[str]:
         return pulumi.get(self, "api_key")
 
     @property
     @pulumi.getter
-    def host(self) -> pulumi.Output[Optional[str]]:
+    def host(self) -> pulumi.Output[str]:
         return pulumi.get(self, "host")
 

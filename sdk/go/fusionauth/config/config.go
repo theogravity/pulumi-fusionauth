@@ -9,16 +9,8 @@ import (
 )
 
 func GetApiKey(ctx *pulumi.Context) string {
-	v, err := config.Try(ctx, "fusionauth:apiKey")
-	if err == nil {
-		return v
-	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string)
+	return config.Get(ctx, "fusionauth:apiKey")
 }
 func GetHost(ctx *pulumi.Context) string {
-	v, err := config.Try(ctx, "fusionauth:host")
-	if err == nil {
-		return v
-	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string)
+	return config.Get(ctx, "fusionauth:host")
 }
