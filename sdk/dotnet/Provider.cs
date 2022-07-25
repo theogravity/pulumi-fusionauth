@@ -20,10 +20,10 @@ namespace theogravity.Fusionauth
     public partial class Provider : Pulumi.ProviderResource
     {
         [Output("apiKey")]
-        public Output<string> ApiKey { get; private set; } = null!;
+        public Output<string?> ApiKey { get; private set; } = null!;
 
         [Output("host")]
-        public Output<string> Host { get; private set; } = null!;
+        public Output<string?> Host { get; private set; } = null!;
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace theogravity.Fusionauth
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Provider(string name, ProviderArgs args, CustomResourceOptions? options = null)
+        public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
             : base("fusionauth", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -54,14 +54,16 @@ namespace theogravity.Fusionauth
 
     public sealed class ProviderArgs : Pulumi.ResourceArgs
     {
-        [Input("apiKey", required: true)]
-        public Input<string> ApiKey { get; set; } = null!;
+        [Input("apiKey")]
+        public Input<string>? ApiKey { get; set; }
 
-        [Input("host", required: true)]
-        public Input<string> Host { get; set; } = null!;
+        [Input("host")]
+        public Input<string>? Host { get; set; }
 
         public ProviderArgs()
         {
+            ApiKey = Utilities.GetEnv("FUSION_AUTH_API_KEY");
+            Host = Utilities.GetEnv("FUSION_AUTH_HOST_URL");
         }
     }
 }

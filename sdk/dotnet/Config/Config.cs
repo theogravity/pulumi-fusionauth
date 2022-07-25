@@ -32,14 +32,14 @@ namespace theogravity.Fusionauth
 
         private static readonly Pulumi.Config __config = new Pulumi.Config("fusionauth");
 
-        private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey"));
+        private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey") ?? Utilities.GetEnv("FUSION_AUTH_API_KEY"));
         public static string? ApiKey
         {
             get => _apiKey.Get();
             set => _apiKey.Set(value);
         }
 
-        private static readonly __Value<string?> _host = new __Value<string?>(() => __config.Get("host"));
+        private static readonly __Value<string?> _host = new __Value<string?>(() => __config.Get("host") ?? Utilities.GetEnv("FUSION_AUTH_HOST_URL"));
         public static string? Host
         {
             get => _host.Get();

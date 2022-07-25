@@ -80,7 +80,19 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/theogravity/pulumi-fusionauth",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg:            "gpsinsight",
+		GitHubOrg: "gpsinsight",
+		Config: map[string]*tfbridge.SchemaInfo{
+			"api_key": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"FUSION_AUTH_API_KEY"},
+				},
+			},
+			"host": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"FUSION_AUTH_HOST_URL"},
+				},
+			},
+		},
 		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"fusionauth_lambda":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthLambda")},

@@ -25,8 +25,8 @@ export class Provider extends pulumi.ProviderResource {
         return obj['__pulumiType'] === Provider.__pulumiType;
     }
 
-    public readonly apiKey!: pulumi.Output<string>;
-    public readonly host!: pulumi.Output<string>;
+    public readonly apiKey!: pulumi.Output<string | undefined>;
+    public readonly host!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -35,18 +35,12 @@ export class Provider extends pulumi.ProviderResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: ProviderArgs, opts?: pulumi.ResourceOptions) {
+    constructor(name: string, args?: ProviderArgs, opts?: pulumi.ResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            if ((!args || args.apiKey === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'apiKey'");
-            }
-            if ((!args || args.host === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'host'");
-            }
-            resourceInputs["apiKey"] = args ? args.apiKey : undefined;
-            resourceInputs["host"] = args ? args.host : undefined;
+            resourceInputs["apiKey"] = (args ? args.apiKey : undefined) ?? utilities.getEnv("FUSION_AUTH_API_KEY");
+            resourceInputs["host"] = (args ? args.host : undefined) ?? utilities.getEnv("FUSION_AUTH_HOST_URL");
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Provider.__pulumiType, name, resourceInputs, opts);
@@ -57,6 +51,6 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
-    apiKey: pulumi.Input<string>;
-    host: pulumi.Input<string>;
+    apiKey?: pulumi.Input<string>;
+    host?: pulumi.Input<string>;
 }

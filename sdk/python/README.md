@@ -50,5 +50,5 @@ dotnet add package theogravity.Fusionauth
 
 The following configuration points are available for the `fusionauth` provider:
 
-- `fusionauth:api_key` (environment: `FA_API_KEY`) - the API key for `fusionauth`
-- `fusionauth:host` (environment: `FA_DOMAIN`) - the URL to the FusionAuth instance with the trailing slash omitted (ex: `https://instance.fusionauth.io`)
+- `fusionauth:api_key` (environment: `FUSION_AUTH_API_KEY`) - the API key for `fusionauth`
+- `fusionauth:host` (environment: `FUSION_AUTH_HOST_URL`) - the URL to the FusionAuth instance with the trailing slash omitted (ex: `https://instance.fusionauth.io`)

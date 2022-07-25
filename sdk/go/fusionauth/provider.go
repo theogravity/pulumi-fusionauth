@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -18,22 +17,22 @@ import (
 type Provider struct {
 	pulumi.ProviderResourceState
 
-	ApiKey pulumi.StringOutput `pulumi:"apiKey"`
-	Host   pulumi.StringOutput `pulumi:"host"`
+	ApiKey pulumi.StringPtrOutput `pulumi:"apiKey"`
+	Host   pulumi.StringPtrOutput `pulumi:"host"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
 func NewProvider(ctx *pulumi.Context,
 	name string, args *ProviderArgs, opts ...pulumi.ResourceOption) (*Provider, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &ProviderArgs{}
 	}
 
-	if args.ApiKey == nil {
-		return nil, errors.New("invalid value for required argument 'ApiKey'")
+	if isZero(args.ApiKey) {
+		args.ApiKey = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string))
 	}
-	if args.Host == nil {
-		return nil, errors.New("invalid value for required argument 'Host'")
+	if isZero(args.Host) {
+		args.Host = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string))
 	}
 	opts = pkgResourceDefaultOpts(opts)
 	var resource Provider
@@ -45,14 +44,14 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
-	ApiKey string `pulumi:"apiKey"`
-	Host   string `pulumi:"host"`
+	ApiKey *string `pulumi:"apiKey"`
+	Host   *string `pulumi:"host"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
-	ApiKey pulumi.StringInput
-	Host   pulumi.StringInput
+	ApiKey pulumi.StringPtrInput
+	Host   pulumi.StringPtrInput
 }
 
 func (ProviderArgs) ElementType() reflect.Type {
@@ -92,12 +91,12 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 	return o
 }
 
-func (o ProviderOutput) ApiKey() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiKey }).(pulumi.StringOutput)
+func (o ProviderOutput) ApiKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ApiKey }).(pulumi.StringPtrOutput)
 }
 
-func (o ProviderOutput) Host() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
+func (o ProviderOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Host }).(pulumi.StringPtrOutput)
 }
 
 func init() {
