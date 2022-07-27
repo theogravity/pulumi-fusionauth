@@ -6,6 +6,11 @@ layout: overview
 
 FusionAuth for Pulumi can be used to configure FusionAuth instances.
 
+This is bridged using the [gpsinsight Terraform FusionAuth package](https://github.com/gpsinsight/terraform-provider-fusionauth).
+
+You can look at the [Terraform FusionAuth docs by gpsinsight](https://registry.terraform.io/providers/gpsinsight/fusionauth/latest/docs)
+to get an idea of what is available in this package.
+
 ## Example
 
 {{< chooser language "typescript" >}}

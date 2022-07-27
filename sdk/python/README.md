@@ -2,7 +2,10 @@
 
 The FusionAuth Resource Provider lets you manage [FusionAuth](http://fusionauth.io/) resources.
 
-This is bridged using the [Terraform FusionAuth](https://github.com/gpsinsight/terraform-provider-fusionauth) package
+This is bridged using the [Terraform FusionAuth](https://github.com/gpsinsight/terraform-provider-fusionauth) package.
+
+You can look at the [Terraform FusionAuth docs by gpsinsight](https://registry.terraform.io/providers/gpsinsight/fusionauth/latest/docs)
+to get an idea of what is available in this package.
 
 ## Installing
 
