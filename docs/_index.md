@@ -1,6 +1,6 @@
 ---
 title: FusionAuth
-meta_desc: Provides configuration management for FusionAuth
+meta_desc: Provides configuration management for FusionAuth Provider
 layout: overview
 ---
 
