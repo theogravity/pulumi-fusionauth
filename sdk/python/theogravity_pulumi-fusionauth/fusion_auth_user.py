@@ -66,7 +66,7 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] timezone: The User’s preferred timezone. The string must be in an IANA time zone format.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] two_factor_recovery_codes: A list of recovery codes. These may be used in place of a code provided by an MFA factor. They are single use. If a recovery code is used in a disable request, all MFA methods are removed. If, after that, a Multi-Factor method is added, a new set of recovery codes will be generated.
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
-        :param pulumi.Input[str] username: Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
                * `two_factor_methods`
         """
@@ -412,7 +412,7 @@ class FusionAuthUserArgs:
     @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
         """
-        Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         """
         return pulumi.get(self, "username")
 
@@ -488,7 +488,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] timezone: The User’s preferred timezone. The string must be in an IANA time zone format.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] two_factor_recovery_codes: A list of recovery codes. These may be used in place of a code provided by an MFA factor. They are single use. If a recovery code is used in a disable request, all MFA methods are removed. If, after that, a Multi-Factor method is added, a new set of recovery codes will be generated.
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
-        :param pulumi.Input[str] username: Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
                * `two_factor_methods`
         """
@@ -834,7 +834,7 @@ class _FusionAuthUserState:
     @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
         """
-        Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         """
         return pulumi.get(self, "username")
 
@@ -954,7 +954,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] timezone: The User’s preferred timezone. The string must be in an IANA time zone format.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] two_factor_recovery_codes: A list of recovery codes. These may be used in place of a code provided by an MFA factor. They are single use. If a recovery code is used in a disable request, all MFA methods are removed. If, after that, a Multi-Factor method is added, a new set of recovery codes will be generated.
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
-        :param pulumi.Input[str] username: Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
                * `two_factor_methods`
         """
@@ -1152,7 +1152,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] timezone: The User’s preferred timezone. The string must be in an IANA time zone format.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] two_factor_recovery_codes: A list of recovery codes. These may be used in place of a code provided by an MFA factor. They are single use. If a recovery code is used in a disable request, all MFA methods are removed. If, after that, a Multi-Factor method is added, a new set of recovery codes will be generated.
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
-        :param pulumi.Input[str] username: Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
                * `two_factor_methods`
         """
@@ -1381,7 +1381,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter
     def username(self) -> pulumi.Output[Optional[str]]:
         """
-        Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         """
         return pulumi.get(self, "username")
 

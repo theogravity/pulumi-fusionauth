@@ -105,6 +105,12 @@ namespace theogravity.Fusionauth
         public Output<bool?> Temporal { get; private set; } = null!;
 
         /// <summary>
+        /// The id of this User Action.
+        /// </summary>
+        [Output("userActionId")]
+        public Output<string> UserActionId { get; private set; } = null!;
+
+        /// <summary>
         /// Whether or not email is enabled for this User Action.
         /// </summary>
         [Output("userEmailingEnabled")]
@@ -242,6 +248,12 @@ namespace theogravity.Fusionauth
         public Input<bool>? Temporal { get; set; }
 
         /// <summary>
+        /// The id of this User Action.
+        /// </summary>
+        [Input("userActionId")]
+        public Input<string>? UserActionId { get; set; }
+
+        /// <summary>
         /// Whether or not email is enabled for this User Action.
         /// </summary>
         [Input("userEmailingEnabled")]
@@ -337,6 +349,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("temporal")]
         public Input<bool>? Temporal { get; set; }
+
+        /// <summary>
+        /// The id of this User Action.
+        /// </summary>
+        [Input("userActionId")]
+        public Input<string>? UserActionId { get; set; }
 
         /// <summary>
         /// Whether or not email is enabled for this User Action.

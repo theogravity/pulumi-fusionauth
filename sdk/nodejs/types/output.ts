@@ -1683,6 +1683,7 @@ export interface FusionAuthUserTwoFactorMethod {
      * A base64 encoded secret
      */
     secret?: string;
+    twoFactorMethodId: string;
 }
 
 export interface FusionAuthWebhookEventsEnabled {

@@ -15523,7 +15523,8 @@ type FusionAuthUserTwoFactorMethod struct {
 	// The value of the mobile phone for this method.
 	MobilePhone *string `pulumi:"mobilePhone"`
 	// A base64 encoded secret
-	Secret *string `pulumi:"secret"`
+	Secret            *string `pulumi:"secret"`
+	TwoFactorMethodId *string `pulumi:"twoFactorMethodId"`
 }
 
 // FusionAuthUserTwoFactorMethodInput is an input type that accepts FusionAuthUserTwoFactorMethodArgs and FusionAuthUserTwoFactorMethodOutput values.
@@ -15551,7 +15552,8 @@ type FusionAuthUserTwoFactorMethodArgs struct {
 	// The value of the mobile phone for this method.
 	MobilePhone pulumi.StringPtrInput `pulumi:"mobilePhone"`
 	// A base64 encoded secret
-	Secret pulumi.StringPtrInput `pulumi:"secret"`
+	Secret            pulumi.StringPtrInput `pulumi:"secret"`
+	TwoFactorMethodId pulumi.StringPtrInput `pulumi:"twoFactorMethodId"`
 }
 
 func (FusionAuthUserTwoFactorMethodArgs) ElementType() reflect.Type {
@@ -15638,6 +15640,10 @@ func (o FusionAuthUserTwoFactorMethodOutput) MobilePhone() pulumi.StringPtrOutpu
 // A base64 encoded secret
 func (o FusionAuthUserTwoFactorMethodOutput) Secret() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthUserTwoFactorMethod) *string { return v.Secret }).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthUserTwoFactorMethodOutput) TwoFactorMethodId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthUserTwoFactorMethod) *string { return v.TwoFactorMethodId }).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthUserTwoFactorMethodArrayOutput struct{ *pulumi.OutputState }

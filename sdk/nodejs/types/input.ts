@@ -1683,6 +1683,7 @@ export interface FusionAuthUserTwoFactorMethod {
      * A base64 encoded secret
      */
     secret?: pulumi.Input<string>;
+    twoFactorMethodId?: pulumi.Input<string>;
 }
 
 export interface FusionAuthWebhookEventsEnabled {

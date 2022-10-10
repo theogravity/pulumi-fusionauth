@@ -30,8 +30,6 @@ import * as utilities from "./utilities";
  *         createRegistration: true,
  *         enabled: true,
  *     }],
- *     buttonText: "Login with OpenID Connect",
- *     debug: false,
  *     oauth2AuthorizationEndpoint: "https://acme.com/oauth2/authorization",
  *     oauth2ClientId: "191c23dc-b772-4558-bd21-dc1cbf74ae21",
  *     oauth2ClientSecret: "SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
@@ -39,6 +37,14 @@ import * as utilities from "./utilities";
  *     oauth2Scope: "openid offline_access",
  *     oauth2TokenEndpoint: "https://acme.com/oauth2/token",
  *     oauth2UserInfoEndpoint: "https://acme.com/oauth2/userinfo",
+ *     buttonText: "Login with OpenID Connect",
+ *     debug: false,
+ *     enabled: true,
+ *     tenantConfigurations: [{
+ *         tenantId: fusionauth_tenant.example.id,
+ *         limitUserLinkCountEnabled: false,
+ *         limitUserLinkCountMaximumLinks: 42,
+ *     }],
  * });
  * ```
  */
@@ -143,12 +149,19 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
      */
     public readonly oauth2TokenEndpoint!: pulumi.Output<string | undefined>;
     /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+     */
+    public readonly oauth2UniqueIdClaim!: pulumi.Output<string | undefined>;
+    /**
      * The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
      */
     public readonly oauth2UserInfoEndpoint!: pulumi.Output<string | undefined>;
     /**
-     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-     * value of false means that a redirect binding which uses a GET request will be used.
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+     */
+    public readonly oauth2UsernameClaim!: pulumi.Output<string | undefined>;
+    /**
+     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
      */
     public readonly postRequest!: pulumi.Output<boolean | undefined>;
     /**
@@ -187,7 +200,9 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["oauth2Issuer"] = state ? state.oauth2Issuer : undefined;
             resourceInputs["oauth2Scope"] = state ? state.oauth2Scope : undefined;
             resourceInputs["oauth2TokenEndpoint"] = state ? state.oauth2TokenEndpoint : undefined;
+            resourceInputs["oauth2UniqueIdClaim"] = state ? state.oauth2UniqueIdClaim : undefined;
             resourceInputs["oauth2UserInfoEndpoint"] = state ? state.oauth2UserInfoEndpoint : undefined;
+            resourceInputs["oauth2UsernameClaim"] = state ? state.oauth2UsernameClaim : undefined;
             resourceInputs["postRequest"] = state ? state.postRequest : undefined;
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
         } else {
@@ -216,7 +231,9 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["oauth2Issuer"] = args ? args.oauth2Issuer : undefined;
             resourceInputs["oauth2Scope"] = args ? args.oauth2Scope : undefined;
             resourceInputs["oauth2TokenEndpoint"] = args ? args.oauth2TokenEndpoint : undefined;
+            resourceInputs["oauth2UniqueIdClaim"] = args ? args.oauth2UniqueIdClaim : undefined;
             resourceInputs["oauth2UserInfoEndpoint"] = args ? args.oauth2UserInfoEndpoint : undefined;
+            resourceInputs["oauth2UsernameClaim"] = args ? args.oauth2UsernameClaim : undefined;
             resourceInputs["postRequest"] = args ? args.postRequest : undefined;
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
         }
@@ -302,12 +319,19 @@ export interface FusionAuthIdpOpenIdConnectState {
      */
     oauth2TokenEndpoint?: pulumi.Input<string>;
     /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+     */
+    oauth2UniqueIdClaim?: pulumi.Input<string>;
+    /**
      * The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
      */
     oauth2UserInfoEndpoint?: pulumi.Input<string>;
     /**
-     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-     * value of false means that a redirect binding which uses a GET request will be used.
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+     */
+    oauth2UsernameClaim?: pulumi.Input<string>;
+    /**
+     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
      */
     postRequest?: pulumi.Input<boolean>;
     /**
@@ -393,12 +417,19 @@ export interface FusionAuthIdpOpenIdConnectArgs {
      */
     oauth2TokenEndpoint?: pulumi.Input<string>;
     /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+     */
+    oauth2UniqueIdClaim?: pulumi.Input<string>;
+    /**
      * The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
      */
     oauth2UserInfoEndpoint?: pulumi.Input<string>;
     /**
-     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-     * value of false means that a redirect binding which uses a GET request will be used.
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+     */
+    oauth2UsernameClaim?: pulumi.Input<string>;
+    /**
+     * Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
      */
     postRequest?: pulumi.Input<boolean>;
     /**

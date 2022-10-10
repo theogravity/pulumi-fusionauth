@@ -62,6 +62,8 @@ type FusionAuthUserAction struct {
 	StartEmailTemplateId pulumi.StringPtrOutput `pulumi:"startEmailTemplateId"`
 	// Whether or not this User Action is time-based (temporal).
 	Temporal pulumi.BoolPtrOutput `pulumi:"temporal"`
+	// The id of this User Action.
+	UserActionId pulumi.StringOutput `pulumi:"userActionId"`
 	// Whether or not email is enabled for this User Action.
 	UserEmailingEnabled pulumi.BoolPtrOutput `pulumi:"userEmailingEnabled"`
 	// Whether or not user notifications are enabled for this User Action.
@@ -120,6 +122,8 @@ type fusionAuthUserActionState struct {
 	StartEmailTemplateId *string `pulumi:"startEmailTemplateId"`
 	// Whether or not this User Action is time-based (temporal).
 	Temporal *bool `pulumi:"temporal"`
+	// The id of this User Action.
+	UserActionId *string `pulumi:"userActionId"`
 	// Whether or not email is enabled for this User Action.
 	UserEmailingEnabled *bool `pulumi:"userEmailingEnabled"`
 	// Whether or not user notifications are enabled for this User Action.
@@ -149,6 +153,8 @@ type FusionAuthUserActionState struct {
 	StartEmailTemplateId pulumi.StringPtrInput
 	// Whether or not this User Action is time-based (temporal).
 	Temporal pulumi.BoolPtrInput
+	// The id of this User Action.
+	UserActionId pulumi.StringPtrInput
 	// Whether or not email is enabled for this User Action.
 	UserEmailingEnabled pulumi.BoolPtrInput
 	// Whether or not user notifications are enabled for this User Action.
@@ -182,6 +188,8 @@ type fusionAuthUserActionArgs struct {
 	StartEmailTemplateId *string `pulumi:"startEmailTemplateId"`
 	// Whether or not this User Action is time-based (temporal).
 	Temporal *bool `pulumi:"temporal"`
+	// The id of this User Action.
+	UserActionId *string `pulumi:"userActionId"`
 	// Whether or not email is enabled for this User Action.
 	UserEmailingEnabled *bool `pulumi:"userEmailingEnabled"`
 	// Whether or not user notifications are enabled for this User Action.
@@ -212,6 +220,8 @@ type FusionAuthUserActionArgs struct {
 	StartEmailTemplateId pulumi.StringPtrInput
 	// Whether or not this User Action is time-based (temporal).
 	Temporal pulumi.BoolPtrInput
+	// The id of this User Action.
+	UserActionId pulumi.StringPtrInput
 	// Whether or not email is enabled for this User Action.
 	UserEmailingEnabled pulumi.BoolPtrInput
 	// Whether or not user notifications are enabled for this User Action.
@@ -358,6 +368,11 @@ func (o FusionAuthUserActionOutput) StartEmailTemplateId() pulumi.StringPtrOutpu
 // Whether or not this User Action is time-based (temporal).
 func (o FusionAuthUserActionOutput) Temporal() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUserAction) pulumi.BoolPtrOutput { return v.Temporal }).(pulumi.BoolPtrOutput)
+}
+
+// The id of this User Action.
+func (o FusionAuthUserActionOutput) UserActionId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthUserAction) pulumi.StringOutput { return v.UserActionId }).(pulumi.StringOutput)
 }
 
 // Whether or not email is enabled for this User Action.

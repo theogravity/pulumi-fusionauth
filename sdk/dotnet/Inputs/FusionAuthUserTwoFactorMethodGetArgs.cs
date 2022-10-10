@@ -55,6 +55,9 @@ namespace theogravity.Fusionauth.Inputs
         [Input("secret")]
         public Input<string>? Secret { get; set; }
 
+        [Input("twoFactorMethodId")]
+        public Input<string>? TwoFactorMethodId { get; set; }
+
         public FusionAuthUserTwoFactorMethodGetArgs()
         {
         }

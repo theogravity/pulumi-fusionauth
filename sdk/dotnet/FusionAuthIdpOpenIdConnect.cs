@@ -44,8 +44,6 @@ namespace theogravity.Fusionauth
     ///                     Enabled = true,
     ///                 },
     ///             },
-    ///             ButtonText = "Login with OpenID Connect",
-    ///             Debug = false,
     ///             Oauth2AuthorizationEndpoint = "https://acme.com/oauth2/authorization",
     ///             Oauth2ClientId = "191c23dc-b772-4558-bd21-dc1cbf74ae21",
     ///             Oauth2ClientSecret = "SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
@@ -53,6 +51,18 @@ namespace theogravity.Fusionauth
     ///             Oauth2Scope = "openid offline_access",
     ///             Oauth2TokenEndpoint = "https://acme.com/oauth2/token",
     ///             Oauth2UserInfoEndpoint = "https://acme.com/oauth2/userinfo",
+    ///             ButtonText = "Login with OpenID Connect",
+    ///             Debug = false,
+    ///             Enabled = true,
+    ///             TenantConfigurations = 
+    ///             {
+    ///                 new Fusionauth.Inputs.FusionAuthIdpOpenIdConnectTenantConfigurationArgs
+    ///                 {
+    ///                     TenantId = fusionauth_tenant.Example.Id,
+    ///                     LimitUserLinkCountEnabled = false,
+    ///                     LimitUserLinkCountMaximumLinks = 42,
+    ///                 },
+    ///             },
     ///         });
     ///     }
     /// 
@@ -171,14 +181,25 @@ namespace theogravity.Fusionauth
         public Output<string?> Oauth2TokenEndpoint { get; private set; } = null!;
 
         /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        /// </summary>
+        [Output("oauth2UniqueIdClaim")]
+        public Output<string?> Oauth2UniqueIdClaim { get; private set; } = null!;
+
+        /// <summary>
         /// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
         /// </summary>
         [Output("oauth2UserInfoEndpoint")]
         public Output<string?> Oauth2UserInfoEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        /// value of false means that a redirect binding which uses a GET request will be used.
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        /// </summary>
+        [Output("oauth2UsernameClaim")]
+        public Output<string?> Oauth2UsernameClaim { get; private set; } = null!;
+
+        /// <summary>
+        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         /// </summary>
         [Output("postRequest")]
         public Output<bool?> PostRequest { get; private set; } = null!;
@@ -357,14 +378,25 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2TokenEndpoint { get; set; }
 
         /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        /// </summary>
+        [Input("oauth2UniqueIdClaim")]
+        public Input<string>? Oauth2UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
         /// </summary>
         [Input("oauth2UserInfoEndpoint")]
         public Input<string>? Oauth2UserInfoEndpoint { get; set; }
 
         /// <summary>
-        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        /// value of false means that a redirect binding which uses a GET request will be used.
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        /// </summary>
+        [Input("oauth2UsernameClaim")]
+        public Input<string>? Oauth2UsernameClaim { get; set; }
+
+        /// <summary>
+        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         /// </summary>
         [Input("postRequest")]
         public Input<bool>? PostRequest { get; set; }
@@ -509,14 +541,25 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2TokenEndpoint { get; set; }
 
         /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        /// </summary>
+        [Input("oauth2UniqueIdClaim")]
+        public Input<string>? Oauth2UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
         /// </summary>
         [Input("oauth2UserInfoEndpoint")]
         public Input<string>? Oauth2UserInfoEndpoint { get; set; }
 
         /// <summary>
-        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        /// value of false means that a redirect binding which uses a GET request will be used.
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        /// </summary>
+        [Input("oauth2UsernameClaim")]
+        public Input<string>? Oauth2UsernameClaim { get; set; }
+
+        /// <summary>
+        /// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         /// </summary>
         [Input("postRequest")]
         public Input<bool>? PostRequest { get; set; }

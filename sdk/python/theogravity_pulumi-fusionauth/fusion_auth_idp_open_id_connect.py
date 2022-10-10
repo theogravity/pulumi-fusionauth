@@ -33,7 +33,9 @@ class FusionAuthIdpOpenIdConnectArgs:
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] = None):
         """
@@ -56,9 +58,10 @@ class FusionAuthIdpOpenIdConnectArgs:
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
+        :param pulumi.Input[str] oauth2_unique_id_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
-        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-               value of false means that a redirect binding which uses a GET request will be used.
+        :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         pulumi.set(__self__, "button_text", button_text)
@@ -95,8 +98,12 @@ class FusionAuthIdpOpenIdConnectArgs:
             pulumi.set(__self__, "oauth2_scope", oauth2_scope)
         if oauth2_token_endpoint is not None:
             pulumi.set(__self__, "oauth2_token_endpoint", oauth2_token_endpoint)
+        if oauth2_unique_id_claim is not None:
+            pulumi.set(__self__, "oauth2_unique_id_claim", oauth2_unique_id_claim)
         if oauth2_user_info_endpoint is not None:
             pulumi.set(__self__, "oauth2_user_info_endpoint", oauth2_user_info_endpoint)
+        if oauth2_username_claim is not None:
+            pulumi.set(__self__, "oauth2_username_claim", oauth2_username_claim)
         if post_request is not None:
             pulumi.set(__self__, "post_request", post_request)
         if tenant_configurations is not None:
@@ -319,6 +326,18 @@ class FusionAuthIdpOpenIdConnectArgs:
         pulumi.set(self, "oauth2_token_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @oauth2_unique_id_claim.setter
+    def oauth2_unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2UserInfoEndpoint")
     def oauth2_user_info_endpoint(self) -> Optional[pulumi.Input[str]]:
         """
@@ -331,11 +350,22 @@ class FusionAuthIdpOpenIdConnectArgs:
         pulumi.set(self, "oauth2_user_info_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
+
+    @oauth2_username_claim.setter
+    def oauth2_username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_username_claim", value)
+
+    @property
     @pulumi.getter(name="postRequest")
     def post_request(self) -> Optional[pulumi.Input[bool]]:
         """
-        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        value of false means that a redirect binding which uses a GET request will be used.
+        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         """
         return pulumi.get(self, "post_request")
 
@@ -377,7 +407,9 @@ class _FusionAuthIdpOpenIdConnectState:
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] = None):
         """
@@ -400,9 +432,10 @@ class _FusionAuthIdpOpenIdConnectState:
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
+        :param pulumi.Input[str] oauth2_unique_id_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
-        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-               value of false means that a redirect binding which uses a GET request will be used.
+        :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         if application_configurations is not None:
@@ -441,8 +474,12 @@ class _FusionAuthIdpOpenIdConnectState:
             pulumi.set(__self__, "oauth2_scope", oauth2_scope)
         if oauth2_token_endpoint is not None:
             pulumi.set(__self__, "oauth2_token_endpoint", oauth2_token_endpoint)
+        if oauth2_unique_id_claim is not None:
+            pulumi.set(__self__, "oauth2_unique_id_claim", oauth2_unique_id_claim)
         if oauth2_user_info_endpoint is not None:
             pulumi.set(__self__, "oauth2_user_info_endpoint", oauth2_user_info_endpoint)
+        if oauth2_username_claim is not None:
+            pulumi.set(__self__, "oauth2_username_claim", oauth2_username_claim)
         if post_request is not None:
             pulumi.set(__self__, "post_request", post_request)
         if tenant_configurations is not None:
@@ -665,6 +702,18 @@ class _FusionAuthIdpOpenIdConnectState:
         pulumi.set(self, "oauth2_token_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @oauth2_unique_id_claim.setter
+    def oauth2_unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2UserInfoEndpoint")
     def oauth2_user_info_endpoint(self) -> Optional[pulumi.Input[str]]:
         """
@@ -677,11 +726,22 @@ class _FusionAuthIdpOpenIdConnectState:
         pulumi.set(self, "oauth2_user_info_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
+
+    @oauth2_username_claim.setter
+    def oauth2_username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_username_claim", value)
+
+    @property
     @pulumi.getter(name="postRequest")
     def post_request(self) -> Optional[pulumi.Input[bool]]:
         """
-        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        value of false means that a redirect binding which uses a GET request will be used.
+        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         """
         return pulumi.get(self, "post_request")
 
@@ -725,7 +785,9 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None,
                  __props__=None):
@@ -754,15 +816,21 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                 create_registration=True,
                 enabled=True,
             )],
-            button_text="Login with OpenID Connect",
-            debug=False,
             oauth2_authorization_endpoint="https://acme.com/oauth2/authorization",
             oauth2_client_id="191c23dc-b772-4558-bd21-dc1cbf74ae21",
             oauth2_client_secret="SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
             oauth2_client_authentication_method="client_secret_basic",
             oauth2_scope="openid offline_access",
             oauth2_token_endpoint="https://acme.com/oauth2/token",
-            oauth2_user_info_endpoint="https://acme.com/oauth2/userinfo")
+            oauth2_user_info_endpoint="https://acme.com/oauth2/userinfo",
+            button_text="Login with OpenID Connect",
+            debug=False,
+            enabled=True,
+            tenant_configurations=[fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs(
+                tenant_id=fusionauth_tenant["example"]["id"],
+                limit_user_link_count_enabled=False,
+                limit_user_link_count_maximum_links=42,
+            )])
         ```
 
         :param str resource_name: The name of the resource.
@@ -785,9 +853,10 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
+        :param pulumi.Input[str] oauth2_unique_id_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
-        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-               value of false means that a redirect binding which uses a GET request will be used.
+        :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
@@ -821,15 +890,21 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                 create_registration=True,
                 enabled=True,
             )],
-            button_text="Login with OpenID Connect",
-            debug=False,
             oauth2_authorization_endpoint="https://acme.com/oauth2/authorization",
             oauth2_client_id="191c23dc-b772-4558-bd21-dc1cbf74ae21",
             oauth2_client_secret="SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
             oauth2_client_authentication_method="client_secret_basic",
             oauth2_scope="openid offline_access",
             oauth2_token_endpoint="https://acme.com/oauth2/token",
-            oauth2_user_info_endpoint="https://acme.com/oauth2/userinfo")
+            oauth2_user_info_endpoint="https://acme.com/oauth2/userinfo",
+            button_text="Login with OpenID Connect",
+            debug=False,
+            enabled=True,
+            tenant_configurations=[fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs(
+                tenant_id=fusionauth_tenant["example"]["id"],
+                limit_user_link_count_enabled=False,
+                limit_user_link_count_maximum_links=42,
+            )])
         ```
 
         :param str resource_name: The name of the resource.
@@ -865,7 +940,9 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None,
                  __props__=None):
@@ -904,7 +981,9 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             __props__.__dict__["oauth2_issuer"] = oauth2_issuer
             __props__.__dict__["oauth2_scope"] = oauth2_scope
             __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
+            __props__.__dict__["oauth2_unique_id_claim"] = oauth2_unique_id_claim
             __props__.__dict__["oauth2_user_info_endpoint"] = oauth2_user_info_endpoint
+            __props__.__dict__["oauth2_username_claim"] = oauth2_username_claim
             __props__.__dict__["post_request"] = post_request
             __props__.__dict__["tenant_configurations"] = tenant_configurations
         super(FusionAuthIdpOpenIdConnect, __self__).__init__(
@@ -935,7 +1014,9 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             oauth2_issuer: Optional[pulumi.Input[str]] = None,
             oauth2_scope: Optional[pulumi.Input[str]] = None,
             oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+            oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
             oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
+            oauth2_username_claim: Optional[pulumi.Input[str]] = None,
             post_request: Optional[pulumi.Input[bool]] = None,
             tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpOpenIdConnect':
         """
@@ -963,9 +1044,10 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
+        :param pulumi.Input[str] oauth2_unique_id_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
-        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-               value of false means that a redirect binding which uses a GET request will be used.
+        :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -990,7 +1072,9 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         __props__.__dict__["oauth2_issuer"] = oauth2_issuer
         __props__.__dict__["oauth2_scope"] = oauth2_scope
         __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
+        __props__.__dict__["oauth2_unique_id_claim"] = oauth2_unique_id_claim
         __props__.__dict__["oauth2_user_info_endpoint"] = oauth2_user_info_endpoint
+        __props__.__dict__["oauth2_username_claim"] = oauth2_username_claim
         __props__.__dict__["post_request"] = post_request
         __props__.__dict__["tenant_configurations"] = tenant_configurations
         return FusionAuthIdpOpenIdConnect(resource_name, opts=opts, __props__=__props__)
@@ -1140,6 +1224,14 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         return pulumi.get(self, "oauth2_token_endpoint")
 
     @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @property
     @pulumi.getter(name="oauth2UserInfoEndpoint")
     def oauth2_user_info_endpoint(self) -> pulumi.Output[Optional[str]]:
         """
@@ -1148,11 +1240,18 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         return pulumi.get(self, "oauth2_user_info_endpoint")
 
     @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
+
+    @property
     @pulumi.getter(name="postRequest")
     def post_request(self) -> pulumi.Output[Optional[bool]]:
         """
-        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-        value of false means that a redirect binding which uses a GET request will be used.
+        Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
         """
         return pulumi.get(self, "post_request")
 

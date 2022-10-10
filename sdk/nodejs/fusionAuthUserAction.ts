@@ -95,6 +95,10 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
      */
     public readonly temporal!: pulumi.Output<boolean | undefined>;
     /**
+     * The id of this User Action.
+     */
+    public readonly userActionId!: pulumi.Output<string>;
+    /**
      * Whether or not email is enabled for this User Action.
      */
     public readonly userEmailingEnabled!: pulumi.Output<boolean | undefined>;
@@ -127,6 +131,7 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
             resourceInputs["sendEndEvent"] = state ? state.sendEndEvent : undefined;
             resourceInputs["startEmailTemplateId"] = state ? state.startEmailTemplateId : undefined;
             resourceInputs["temporal"] = state ? state.temporal : undefined;
+            resourceInputs["userActionId"] = state ? state.userActionId : undefined;
             resourceInputs["userEmailingEnabled"] = state ? state.userEmailingEnabled : undefined;
             resourceInputs["userNotificationsEnabled"] = state ? state.userNotificationsEnabled : undefined;
         } else {
@@ -142,6 +147,7 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
             resourceInputs["sendEndEvent"] = args ? args.sendEndEvent : undefined;
             resourceInputs["startEmailTemplateId"] = args ? args.startEmailTemplateId : undefined;
             resourceInputs["temporal"] = args ? args.temporal : undefined;
+            resourceInputs["userActionId"] = args ? args.userActionId : undefined;
             resourceInputs["userEmailingEnabled"] = args ? args.userEmailingEnabled : undefined;
             resourceInputs["userNotificationsEnabled"] = args ? args.userNotificationsEnabled : undefined;
         }
@@ -198,6 +204,10 @@ export interface FusionAuthUserActionState {
      * Whether or not this User Action is time-based (temporal).
      */
     temporal?: pulumi.Input<boolean>;
+    /**
+     * The id of this User Action.
+     */
+    userActionId?: pulumi.Input<string>;
     /**
      * Whether or not email is enabled for this User Action.
      */
@@ -256,6 +266,10 @@ export interface FusionAuthUserActionArgs {
      * Whether or not this User Action is time-based (temporal).
      */
     temporal?: pulumi.Input<boolean>;
+    /**
+     * The id of this User Action.
+     */
+    userActionId?: pulumi.Input<string>;
     /**
      * Whether or not email is enabled for this User Action.
      */

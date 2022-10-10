@@ -118,7 +118,7 @@ type FusionAuthUser struct {
 	TwoFactorRecoveryCodes pulumi.StringArrayOutput `pulumi:"twoFactorRecoveryCodes"`
 	// The Id to use for the new User. If not specified a secure random UUID will be generated..
 	UserId pulumi.StringOutput `pulumi:"userId"`
-	// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrOutput `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
 	// * `twoFactorMethods`
@@ -202,7 +202,7 @@ type fusionAuthUserState struct {
 	TwoFactorRecoveryCodes []string `pulumi:"twoFactorRecoveryCodes"`
 	// The Id to use for the new User. If not specified a secure random UUID will be generated..
 	UserId *string `pulumi:"userId"`
-	// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username *string `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
 	// * `twoFactorMethods`
@@ -257,7 +257,7 @@ type FusionAuthUserState struct {
 	TwoFactorRecoveryCodes pulumi.StringArrayInput
 	// The Id to use for the new User. If not specified a secure random UUID will be generated..
 	UserId pulumi.StringPtrInput
-	// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrInput
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
 	// * `twoFactorMethods`
@@ -316,7 +316,7 @@ type fusionAuthUserArgs struct {
 	TwoFactorRecoveryCodes []string `pulumi:"twoFactorRecoveryCodes"`
 	// The Id to use for the new User. If not specified a secure random UUID will be generated..
 	UserId *string `pulumi:"userId"`
-	// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username *string `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
 	// * `twoFactorMethods`
@@ -372,7 +372,7 @@ type FusionAuthUserArgs struct {
 	TwoFactorRecoveryCodes pulumi.StringArrayInput
 	// The Id to use for the new User. If not specified a secure random UUID will be generated..
 	UserId pulumi.StringPtrInput
-	// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrInput
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
 	// * `twoFactorMethods`
@@ -585,7 +585,7 @@ func (o FusionAuthUserOutput) UserId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringOutput { return v.UserId }).(pulumi.StringOutput)
 }
 
-// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 func (o FusionAuthUserOutput) Username() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.Username }).(pulumi.StringPtrOutput)
 }

@@ -168,7 +168,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
      */
     public readonly userId!: pulumi.Output<string>;
     /**
-     * Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+     * The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
      */
     public readonly username!: pulumi.Output<string | undefined>;
     /**
@@ -348,7 +348,7 @@ export interface FusionAuthUserState {
      */
     userId?: pulumi.Input<string>;
     /**
-     * Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+     * The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
      */
     username?: pulumi.Input<string>;
     /**
@@ -456,7 +456,7 @@ export interface FusionAuthUserArgs {
      */
     userId?: pulumi.Input<string>;
     /**
-     * Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+     * The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
      */
     username?: pulumi.Input<string>;
     /**

@@ -42,6 +42,7 @@ namespace theogravity.Fusionauth.Outputs
         /// A base64 encoded secret
         /// </summary>
         public readonly string? Secret;
+        public readonly string? TwoFactorMethodId;
 
         [OutputConstructor]
         private FusionAuthUserTwoFactorMethod(
@@ -57,7 +58,9 @@ namespace theogravity.Fusionauth.Outputs
 
             string? mobilePhone,
 
-            string? secret)
+            string? secret,
+
+            string? twoFactorMethodId)
         {
             AuthenticatorAlgorithm = authenticatorAlgorithm;
             AuthenticatorCodeLength = authenticatorCodeLength;
@@ -66,6 +69,7 @@ namespace theogravity.Fusionauth.Outputs
             Method = method;
             MobilePhone = mobilePhone;
             Secret = secret;
+            TwoFactorMethodId = twoFactorMethodId;
         }
     }
 }

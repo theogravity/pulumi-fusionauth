@@ -26,6 +26,7 @@ class FusionAuthUserActionArgs:
                  send_end_event: Optional[pulumi.Input[bool]] = None,
                  start_email_template_id: Optional[pulumi.Input[str]] = None,
                  temporal: Optional[pulumi.Input[bool]] = None,
+                 user_action_id: Optional[pulumi.Input[str]] = None,
                  user_emailing_enabled: Optional[pulumi.Input[bool]] = None,
                  user_notifications_enabled: Optional[pulumi.Input[bool]] = None):
         """
@@ -41,6 +42,7 @@ class FusionAuthUserActionArgs:
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
         :param pulumi.Input[str] start_email_template_id: The Id of the Email Template that is used when User Actions are started (created).
         :param pulumi.Input[bool] temporal: Whether or not this User Action is time-based (temporal).
+        :param pulumi.Input[str] user_action_id: The id of this User Action.
         :param pulumi.Input[bool] user_emailing_enabled: Whether or not email is enabled for this User Action.
         :param pulumi.Input[bool] user_notifications_enabled: Whether or not user notifications are enabled for this User Action.
         """
@@ -66,6 +68,8 @@ class FusionAuthUserActionArgs:
             pulumi.set(__self__, "start_email_template_id", start_email_template_id)
         if temporal is not None:
             pulumi.set(__self__, "temporal", temporal)
+        if user_action_id is not None:
+            pulumi.set(__self__, "user_action_id", user_action_id)
         if user_emailing_enabled is not None:
             pulumi.set(__self__, "user_emailing_enabled", user_emailing_enabled)
         if user_notifications_enabled is not None:
@@ -202,6 +206,18 @@ class FusionAuthUserActionArgs:
     @temporal.setter
     def temporal(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "temporal", value)
+
+    @property
+    @pulumi.getter(name="userActionId")
+    def user_action_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The id of this User Action.
+        """
+        return pulumi.get(self, "user_action_id")
+
+    @user_action_id.setter
+    def user_action_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_action_id", value)
 
     @property
     @pulumi.getter(name="userEmailingEnabled")
@@ -242,6 +258,7 @@ class _FusionAuthUserActionState:
                  send_end_event: Optional[pulumi.Input[bool]] = None,
                  start_email_template_id: Optional[pulumi.Input[str]] = None,
                  temporal: Optional[pulumi.Input[bool]] = None,
+                 user_action_id: Optional[pulumi.Input[str]] = None,
                  user_emailing_enabled: Optional[pulumi.Input[bool]] = None,
                  user_notifications_enabled: Optional[pulumi.Input[bool]] = None):
         """
@@ -257,6 +274,7 @@ class _FusionAuthUserActionState:
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
         :param pulumi.Input[str] start_email_template_id: The Id of the Email Template that is used when User Actions are started (created).
         :param pulumi.Input[bool] temporal: Whether or not this User Action is time-based (temporal).
+        :param pulumi.Input[str] user_action_id: The id of this User Action.
         :param pulumi.Input[bool] user_emailing_enabled: Whether or not email is enabled for this User Action.
         :param pulumi.Input[bool] user_notifications_enabled: Whether or not user notifications are enabled for this User Action.
         """
@@ -282,6 +300,8 @@ class _FusionAuthUserActionState:
             pulumi.set(__self__, "start_email_template_id", start_email_template_id)
         if temporal is not None:
             pulumi.set(__self__, "temporal", temporal)
+        if user_action_id is not None:
+            pulumi.set(__self__, "user_action_id", user_action_id)
         if user_emailing_enabled is not None:
             pulumi.set(__self__, "user_emailing_enabled", user_emailing_enabled)
         if user_notifications_enabled is not None:
@@ -418,6 +438,18 @@ class _FusionAuthUserActionState:
     @temporal.setter
     def temporal(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "temporal", value)
+
+    @property
+    @pulumi.getter(name="userActionId")
+    def user_action_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The id of this User Action.
+        """
+        return pulumi.get(self, "user_action_id")
+
+    @user_action_id.setter
+    def user_action_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_action_id", value)
 
     @property
     @pulumi.getter(name="userEmailingEnabled")
@@ -460,6 +492,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
                  send_end_event: Optional[pulumi.Input[bool]] = None,
                  start_email_template_id: Optional[pulumi.Input[str]] = None,
                  temporal: Optional[pulumi.Input[bool]] = None,
+                 user_action_id: Optional[pulumi.Input[str]] = None,
                  user_emailing_enabled: Optional[pulumi.Input[bool]] = None,
                  user_notifications_enabled: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
@@ -492,6 +525,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
         :param pulumi.Input[str] start_email_template_id: The Id of the Email Template that is used when User Actions are started (created).
         :param pulumi.Input[bool] temporal: Whether or not this User Action is time-based (temporal).
+        :param pulumi.Input[str] user_action_id: The id of this User Action.
         :param pulumi.Input[bool] user_emailing_enabled: Whether or not email is enabled for this User Action.
         :param pulumi.Input[bool] user_notifications_enabled: Whether or not user notifications are enabled for this User Action.
         """
@@ -543,6 +577,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
                  send_end_event: Optional[pulumi.Input[bool]] = None,
                  start_email_template_id: Optional[pulumi.Input[str]] = None,
                  temporal: Optional[pulumi.Input[bool]] = None,
+                 user_action_id: Optional[pulumi.Input[str]] = None,
                  user_emailing_enabled: Optional[pulumi.Input[bool]] = None,
                  user_notifications_enabled: Optional[pulumi.Input[bool]] = None,
                  __props__=None):
@@ -570,6 +605,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
             __props__.__dict__["send_end_event"] = send_end_event
             __props__.__dict__["start_email_template_id"] = start_email_template_id
             __props__.__dict__["temporal"] = temporal
+            __props__.__dict__["user_action_id"] = user_action_id
             __props__.__dict__["user_emailing_enabled"] = user_emailing_enabled
             __props__.__dict__["user_notifications_enabled"] = user_notifications_enabled
         super(FusionAuthUserAction, __self__).__init__(
@@ -593,6 +629,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
             send_end_event: Optional[pulumi.Input[bool]] = None,
             start_email_template_id: Optional[pulumi.Input[str]] = None,
             temporal: Optional[pulumi.Input[bool]] = None,
+            user_action_id: Optional[pulumi.Input[str]] = None,
             user_emailing_enabled: Optional[pulumi.Input[bool]] = None,
             user_notifications_enabled: Optional[pulumi.Input[bool]] = None) -> 'FusionAuthUserAction':
         """
@@ -613,6 +650,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
         :param pulumi.Input[str] start_email_template_id: The Id of the Email Template that is used when User Actions are started (created).
         :param pulumi.Input[bool] temporal: Whether or not this User Action is time-based (temporal).
+        :param pulumi.Input[str] user_action_id: The id of this User Action.
         :param pulumi.Input[bool] user_emailing_enabled: Whether or not email is enabled for this User Action.
         :param pulumi.Input[bool] user_notifications_enabled: Whether or not user notifications are enabled for this User Action.
         """
@@ -631,6 +669,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
         __props__.__dict__["send_end_event"] = send_end_event
         __props__.__dict__["start_email_template_id"] = start_email_template_id
         __props__.__dict__["temporal"] = temporal
+        __props__.__dict__["user_action_id"] = user_action_id
         __props__.__dict__["user_emailing_enabled"] = user_emailing_enabled
         __props__.__dict__["user_notifications_enabled"] = user_notifications_enabled
         return FusionAuthUserAction(resource_name, opts=opts, __props__=__props__)
@@ -722,6 +761,14 @@ class FusionAuthUserAction(pulumi.CustomResource):
         Whether or not this User Action is time-based (temporal).
         """
         return pulumi.get(self, "temporal")
+
+    @property
+    @pulumi.getter(name="userActionId")
+    def user_action_id(self) -> pulumi.Output[str]:
+        """
+        The id of this User Action.
+        """
+        return pulumi.get(self, "user_action_id")
 
     @property
     @pulumi.getter(name="userEmailingEnabled")

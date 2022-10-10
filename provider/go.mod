@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/gpsinsight/terraform-provider-fusionauth v0.1.72
+	github.com/gpsinsight/terraform-provider-fusionauth v0.1.73
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.24.1
 	github.com/pulumi/pulumi/sdk/v3 v3.33.1
 )

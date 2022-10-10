@@ -44,8 +44,6 @@ import (
 // 					Enabled:            pulumi.Bool(true),
 // 				},
 // 			},
-// 			ButtonText:                       pulumi.String("Login with OpenID Connect"),
-// 			Debug:                            pulumi.Bool(false),
 // 			Oauth2AuthorizationEndpoint:      pulumi.String("https://acme.com/oauth2/authorization"),
 // 			Oauth2ClientId:                   pulumi.String("191c23dc-b772-4558-bd21-dc1cbf74ae21"),
 // 			Oauth2ClientSecret:               pulumi.String("SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO"),
@@ -53,6 +51,16 @@ import (
 // 			Oauth2Scope:                      pulumi.String("openid offline_access"),
 // 			Oauth2TokenEndpoint:              pulumi.String("https://acme.com/oauth2/token"),
 // 			Oauth2UserInfoEndpoint:           pulumi.String("https://acme.com/oauth2/userinfo"),
+// 			ButtonText:                       pulumi.String("Login with OpenID Connect"),
+// 			Debug:                            pulumi.Bool(false),
+// 			Enabled:                          pulumi.Bool(true),
+// 			TenantConfigurations: FusionAuthIdpOpenIdConnectTenantConfigurationArray{
+// 				&FusionAuthIdpOpenIdConnectTenantConfigurationArgs{
+// 					TenantId:                       pulumi.Any(fusionauth_tenant.Example.Id),
+// 					LimitUserLinkCountEnabled:      pulumi.Bool(false),
+// 					LimitUserLinkCountMaximumLinks: pulumi.Int(42),
+// 				},
+// 			},
 // 		})
 // 		if err != nil {
 // 			return err
@@ -100,10 +108,13 @@ type FusionAuthIdpOpenIdConnect struct {
 	Oauth2Scope pulumi.StringPtrOutput `pulumi:"oauth2Scope"`
 	// The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2TokenEndpoint pulumi.StringPtrOutput `pulumi:"oauth2TokenEndpoint"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+	Oauth2UniqueIdClaim pulumi.StringPtrOutput `pulumi:"oauth2UniqueIdClaim"`
 	// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2UserInfoEndpoint pulumi.StringPtrOutput `pulumi:"oauth2UserInfoEndpoint"`
-	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-	// value of false means that a redirect binding which uses a GET request will be used.
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+	Oauth2UsernameClaim pulumi.StringPtrOutput `pulumi:"oauth2UsernameClaim"`
+	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrOutput `pulumi:"postRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpOpenIdConnectTenantConfigurationArrayOutput `pulumi:"tenantConfigurations"`
@@ -181,10 +192,13 @@ type fusionAuthIdpOpenIdConnectState struct {
 	Oauth2Scope *string `pulumi:"oauth2Scope"`
 	// The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2TokenEndpoint *string `pulumi:"oauth2TokenEndpoint"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+	Oauth2UniqueIdClaim *string `pulumi:"oauth2UniqueIdClaim"`
 	// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2UserInfoEndpoint *string `pulumi:"oauth2UserInfoEndpoint"`
-	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-	// value of false means that a redirect binding which uses a GET request will be used.
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+	Oauth2UsernameClaim *string `pulumi:"oauth2UsernameClaim"`
+	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest *bool `pulumi:"postRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpOpenIdConnectTenantConfiguration `pulumi:"tenantConfigurations"`
@@ -227,10 +241,13 @@ type FusionAuthIdpOpenIdConnectState struct {
 	Oauth2Scope pulumi.StringPtrInput
 	// The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2TokenEndpoint pulumi.StringPtrInput
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+	Oauth2UniqueIdClaim pulumi.StringPtrInput
 	// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2UserInfoEndpoint pulumi.StringPtrInput
-	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-	// value of false means that a redirect binding which uses a GET request will be used.
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+	Oauth2UsernameClaim pulumi.StringPtrInput
+	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpOpenIdConnectTenantConfigurationArrayInput
@@ -277,10 +294,13 @@ type fusionAuthIdpOpenIdConnectArgs struct {
 	Oauth2Scope *string `pulumi:"oauth2Scope"`
 	// The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2TokenEndpoint *string `pulumi:"oauth2TokenEndpoint"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+	Oauth2UniqueIdClaim *string `pulumi:"oauth2UniqueIdClaim"`
 	// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2UserInfoEndpoint *string `pulumi:"oauth2UserInfoEndpoint"`
-	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-	// value of false means that a redirect binding which uses a GET request will be used.
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+	Oauth2UsernameClaim *string `pulumi:"oauth2UsernameClaim"`
+	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest *bool `pulumi:"postRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpOpenIdConnectTenantConfiguration `pulumi:"tenantConfigurations"`
@@ -324,10 +344,13 @@ type FusionAuthIdpOpenIdConnectArgs struct {
 	Oauth2Scope pulumi.StringPtrInput
 	// The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2TokenEndpoint pulumi.StringPtrInput
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+	Oauth2UniqueIdClaim pulumi.StringPtrInput
 	// The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 	Oauth2UserInfoEndpoint pulumi.StringPtrInput
-	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-	// value of false means that a redirect binding which uses a GET request will be used.
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+	Oauth2UsernameClaim pulumi.StringPtrInput
+	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpOpenIdConnectTenantConfigurationArrayInput
@@ -512,13 +535,22 @@ func (o FusionAuthIdpOpenIdConnectOutput) Oauth2TokenEndpoint() pulumi.StringPtr
 	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2TokenEndpoint }).(pulumi.StringPtrOutput)
 }
 
+// An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.
+func (o FusionAuthIdpOpenIdConnectOutput) Oauth2UniqueIdClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2UniqueIdClaim }).(pulumi.StringPtrOutput)
+}
+
 // The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
 func (o FusionAuthIdpOpenIdConnectOutput) Oauth2UserInfoEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2UserInfoEndpoint }).(pulumi.StringPtrOutput)
 }
 
-// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default
-// value of false means that a redirect binding which uses a GET request will be used.
+// An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
+func (o FusionAuthIdpOpenIdConnectOutput) Oauth2UsernameClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2UsernameClaim }).(pulumi.StringPtrOutput)
+}
+
+// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 func (o FusionAuthIdpOpenIdConnectOutput) PostRequest() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.BoolPtrOutput { return v.PostRequest }).(pulumi.BoolPtrOutput)
 }

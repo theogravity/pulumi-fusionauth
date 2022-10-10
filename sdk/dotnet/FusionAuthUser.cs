@@ -210,7 +210,7 @@ namespace theogravity.Fusionauth
         public Output<string> UserId { get; private set; } = null!;
 
         /// <summary>
-        /// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        /// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         /// </summary>
         [Output("username")]
         public Output<string?> Username { get; private set; } = null!;
@@ -428,7 +428,7 @@ namespace theogravity.Fusionauth
         public Input<string>? UserId { get; set; }
 
         /// <summary>
-        /// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        /// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         /// </summary>
         [Input("username")]
         public Input<string>? Username { get; set; }
@@ -606,7 +606,7 @@ namespace theogravity.Fusionauth
         public Input<string>? UserId { get; set; }
 
         /// <summary>
-        /// Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
+        /// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         /// </summary>
         [Input("username")]
         public Input<string>? Username { get; set; }
