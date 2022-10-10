@@ -4047,6 +4047,14 @@
                             "mapCase": false
                         }
                     }
+                },
+                "twoFactorMethodId": {
+                    "type": "string",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
                 }
             },
             "type": "object",
@@ -4055,7 +4063,8 @@
                     "requiredOutputs": [
                         "authenticatorAlgorithm",
                         "authenticatorCodeLength",
-                        "authenticatorTimeStep"
+                        "authenticatorTimeStep",
+                        "twoFactorMethodId"
                     ]
                 }
             }
@@ -6810,7 +6819,7 @@
             }
         },
         "fusionauth:index/fusionAuthIdpOpenIdConnect:FusionAuthIdpOpenIdConnect": {
-            "description": "## # OpenID Connect Identity Provider Resource\n\nOpenID Connect identity providers connect to external OpenID Connect login systems. This type of login will optionally provide a Login with …​ button on FusionAuth’s login page. This button is customizable by using different properties of the identity provider.\n\nOptionally, this identity provider can define one or more domains it is associated with. This is useful for allowing employees to log in with their corporate credentials. As long as the company has an identity solution that provides OpenID Connect, you can leverage this feature. This is referred to as a Domain Based Identity Provider. If you enable domains for an identity provider, the Login with …​ button will not be displayed. Instead, only the email form field will be displayed initially on the FusionAuth login page. Once the user types in their email address, FusionAuth will determine if the user is logging in locally or if they should be redirected to this identity provider. This is determined by extracting the domain from their email address and comparing it to the domains associated with the identity provider.\n\nFusionAuth will also leverage the /userinfo API that is part of the OpenID Connect specification. The email address returned from the Userinfo response will be used to create or lookup the existing user. Additional claims from the Userinfo response can be used to reconcile the User in FusionAuth by using an OpenID Connect Reconcile Lambda. Unless you assign a reconcile lambda to this provider, on the email address will be used from the available claims returned by the OpenID Connect identity provider.\n\nIf the external OpenID Connect identity provider returns a refresh token, it will be stored in the UserRegistration object inside the tokens Map. This Map stores the tokens from the various identity providers so that you can use them in your application to call their APIs.\n\n[OpenID Connect Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/openid-connect)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pulumi_fusionauth from \"pulumi-fusionauth\";\n\nconst openID = new fusionauth.FusionAuthIdpOpenIdConnect(\"openID\", {\n    applicationConfigurations: [{\n        applicationId: fusionauth_application.myapp.id,\n        createRegistration: true,\n        enabled: true,\n    }],\n    buttonText: \"Login with OpenID Connect\",\n    debug: false,\n    oauth2AuthorizationEndpoint: \"https://acme.com/oauth2/authorization\",\n    oauth2ClientId: \"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n    oauth2ClientSecret: \"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n    oauth2ClientAuthenticationMethod: \"client_secret_basic\",\n    oauth2Scope: \"openid offline_access\",\n    oauth2TokenEndpoint: \"https://acme.com/oauth2/token\",\n    oauth2UserInfoEndpoint: \"https://acme.com/oauth2/userinfo\",\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi-fusionauth as fusionauth\n\nopen_id = fusionauth.FusionAuthIdpOpenIdConnect(\"openID\",\n    application_configurations=[fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs(\n        application_id=fusionauth_application[\"myapp\"][\"id\"],\n        create_registration=True,\n        enabled=True,\n    )],\n    button_text=\"Login with OpenID Connect\",\n    debug=False,\n    oauth2_authorization_endpoint=\"https://acme.com/oauth2/authorization\",\n    oauth2_client_id=\"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n    oauth2_client_secret=\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n    oauth2_client_authentication_method=\"client_secret_basic\",\n    oauth2_scope=\"openid offline_access\",\n    oauth2_token_endpoint=\"https://acme.com/oauth2/token\",\n    oauth2_user_info_endpoint=\"https://acme.com/oauth2/userinfo\")\n```\n```csharp\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var openID = new Fusionauth.FusionAuthIdpOpenIdConnect(\"openID\", new Fusionauth.FusionAuthIdpOpenIdConnectArgs\n        {\n            ApplicationConfigurations = \n            {\n                new Fusionauth.Inputs.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs\n                {\n                    ApplicationId = fusionauth_application.Myapp.Id,\n                    CreateRegistration = true,\n                    Enabled = true,\n                },\n            },\n            ButtonText = \"Login with OpenID Connect\",\n            Debug = false,\n            Oauth2AuthorizationEndpoint = \"https://acme.com/oauth2/authorization\",\n            Oauth2ClientId = \"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n            Oauth2ClientSecret = \"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n            Oauth2ClientAuthenticationMethod = \"client_secret_basic\",\n            Oauth2Scope = \"openid offline_access\",\n            Oauth2TokenEndpoint = \"https://acme.com/oauth2/token\",\n            Oauth2UserInfoEndpoint = \"https://acme.com/oauth2/userinfo\",\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-fusionauth/sdk/go/fusionauth\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthIdpOpenIdConnect(ctx, \"openID\", \u0026fusionauth.FusionAuthIdpOpenIdConnectArgs{\n\t\t\tApplicationConfigurations: FusionAuthIdpOpenIdConnectApplicationConfigurationArray{\n\t\t\t\t\u0026FusionAuthIdpOpenIdConnectApplicationConfigurationArgs{\n\t\t\t\t\tApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),\n\t\t\t\t\tCreateRegistration: pulumi.Bool(true),\n\t\t\t\t\tEnabled:            pulumi.Bool(true),\n\t\t\t\t},\n\t\t\t},\n\t\t\tButtonText:                       pulumi.String(\"Login with OpenID Connect\"),\n\t\t\tDebug:                            pulumi.Bool(false),\n\t\t\tOauth2AuthorizationEndpoint:      pulumi.String(\"https://acme.com/oauth2/authorization\"),\n\t\t\tOauth2ClientId:                   pulumi.String(\"191c23dc-b772-4558-bd21-dc1cbf74ae21\"),\n\t\t\tOauth2ClientSecret:               pulumi.String(\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\"),\n\t\t\tOauth2ClientAuthenticationMethod: pulumi.String(\"client_secret_basic\"),\n\t\t\tOauth2Scope:                      pulumi.String(\"openid offline_access\"),\n\t\t\tOauth2TokenEndpoint:              pulumi.String(\"https://acme.com/oauth2/token\"),\n\t\t\tOauth2UserInfoEndpoint:           pulumi.String(\"https://acme.com/oauth2/userinfo\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var openID = new FusionAuthIdpOpenIdConnect(\"openID\", FusionAuthIdpOpenIdConnectArgs.builder()        \n            .applicationConfigurations(FusionAuthIdpOpenIdConnectApplicationConfigurationArgs.builder()\n                .applicationId(fusionauth_application.myapp().id())\n                .createRegistration(true)\n                .enabled(true)\n                .build())\n            .buttonText(\"Login with OpenID Connect\")\n            .debug(false)\n            .oauth2AuthorizationEndpoint(\"https://acme.com/oauth2/authorization\")\n            .oauth2ClientId(\"191c23dc-b772-4558-bd21-dc1cbf74ae21\")\n            .oauth2ClientSecret(\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\")\n            .oauth2ClientAuthenticationMethod(\"client_secret_basic\")\n            .oauth2Scope(\"openid offline_access\")\n            .oauth2TokenEndpoint(\"https://acme.com/oauth2/token\")\n            .oauth2UserInfoEndpoint(\"https://acme.com/oauth2/userinfo\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  openID:\n    type: fusionauth:FusionAuthIdpOpenIdConnect\n    properties:\n      applicationConfigurations:\n        - applicationId: ${fusionauth_application.myapp.id}\n          createRegistration: true\n          enabled: true\n      buttonText: Login with OpenID Connect\n      debug: false\n      oauth2AuthorizationEndpoint: https://acme.com/oauth2/authorization\n      oauth2ClientId: 191c23dc-b772-4558-bd21-dc1cbf74ae21\n      oauth2ClientSecret: SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\n      oauth2ClientAuthenticationMethod: client_secret_basic\n      oauth2Scope: openid offline_access\n      oauth2TokenEndpoint: https://acme.com/oauth2/token\n      oauth2UserInfoEndpoint: https://acme.com/oauth2/userinfo\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "## # OpenID Connect Identity Provider Resource\n\nOpenID Connect identity providers connect to external OpenID Connect login systems. This type of login will optionally provide a Login with …​ button on FusionAuth’s login page. This button is customizable by using different properties of the identity provider.\n\nOptionally, this identity provider can define one or more domains it is associated with. This is useful for allowing employees to log in with their corporate credentials. As long as the company has an identity solution that provides OpenID Connect, you can leverage this feature. This is referred to as a Domain Based Identity Provider. If you enable domains for an identity provider, the Login with …​ button will not be displayed. Instead, only the email form field will be displayed initially on the FusionAuth login page. Once the user types in their email address, FusionAuth will determine if the user is logging in locally or if they should be redirected to this identity provider. This is determined by extracting the domain from their email address and comparing it to the domains associated with the identity provider.\n\nFusionAuth will also leverage the /userinfo API that is part of the OpenID Connect specification. The email address returned from the Userinfo response will be used to create or lookup the existing user. Additional claims from the Userinfo response can be used to reconcile the User in FusionAuth by using an OpenID Connect Reconcile Lambda. Unless you assign a reconcile lambda to this provider, on the email address will be used from the available claims returned by the OpenID Connect identity provider.\n\nIf the external OpenID Connect identity provider returns a refresh token, it will be stored in the UserRegistration object inside the tokens Map. This Map stores the tokens from the various identity providers so that you can use them in your application to call their APIs.\n\n[OpenID Connect Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/openid-connect)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as pulumi_fusionauth from \"pulumi-fusionauth\";\n\nconst openID = new fusionauth.FusionAuthIdpOpenIdConnect(\"openID\", {\n    applicationConfigurations: [{\n        applicationId: fusionauth_application.myapp.id,\n        createRegistration: true,\n        enabled: true,\n    }],\n    oauth2AuthorizationEndpoint: \"https://acme.com/oauth2/authorization\",\n    oauth2ClientId: \"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n    oauth2ClientSecret: \"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n    oauth2ClientAuthenticationMethod: \"client_secret_basic\",\n    oauth2Scope: \"openid offline_access\",\n    oauth2TokenEndpoint: \"https://acme.com/oauth2/token\",\n    oauth2UserInfoEndpoint: \"https://acme.com/oauth2/userinfo\",\n    buttonText: \"Login with OpenID Connect\",\n    debug: false,\n    enabled: true,\n    tenantConfigurations: [{\n        tenantId: fusionauth_tenant.example.id,\n        limitUserLinkCountEnabled: false,\n        limitUserLinkCountMaximumLinks: 42,\n    }],\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi-fusionauth as fusionauth\n\nopen_id = fusionauth.FusionAuthIdpOpenIdConnect(\"openID\",\n    application_configurations=[fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs(\n        application_id=fusionauth_application[\"myapp\"][\"id\"],\n        create_registration=True,\n        enabled=True,\n    )],\n    oauth2_authorization_endpoint=\"https://acme.com/oauth2/authorization\",\n    oauth2_client_id=\"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n    oauth2_client_secret=\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n    oauth2_client_authentication_method=\"client_secret_basic\",\n    oauth2_scope=\"openid offline_access\",\n    oauth2_token_endpoint=\"https://acme.com/oauth2/token\",\n    oauth2_user_info_endpoint=\"https://acme.com/oauth2/userinfo\",\n    button_text=\"Login with OpenID Connect\",\n    debug=False,\n    enabled=True,\n    tenant_configurations=[fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs(\n        tenant_id=fusionauth_tenant[\"example\"][\"id\"],\n        limit_user_link_count_enabled=False,\n        limit_user_link_count_maximum_links=42,\n    )])\n```\n```csharp\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nclass MyStack : Stack\n{\n    public MyStack()\n    {\n        var openID = new Fusionauth.FusionAuthIdpOpenIdConnect(\"openID\", new Fusionauth.FusionAuthIdpOpenIdConnectArgs\n        {\n            ApplicationConfigurations = \n            {\n                new Fusionauth.Inputs.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs\n                {\n                    ApplicationId = fusionauth_application.Myapp.Id,\n                    CreateRegistration = true,\n                    Enabled = true,\n                },\n            },\n            Oauth2AuthorizationEndpoint = \"https://acme.com/oauth2/authorization\",\n            Oauth2ClientId = \"191c23dc-b772-4558-bd21-dc1cbf74ae21\",\n            Oauth2ClientSecret = \"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\",\n            Oauth2ClientAuthenticationMethod = \"client_secret_basic\",\n            Oauth2Scope = \"openid offline_access\",\n            Oauth2TokenEndpoint = \"https://acme.com/oauth2/token\",\n            Oauth2UserInfoEndpoint = \"https://acme.com/oauth2/userinfo\",\n            ButtonText = \"Login with OpenID Connect\",\n            Debug = false,\n            Enabled = true,\n            TenantConfigurations = \n            {\n                new Fusionauth.Inputs.FusionAuthIdpOpenIdConnectTenantConfigurationArgs\n                {\n                    TenantId = fusionauth_tenant.Example.Id,\n                    LimitUserLinkCountEnabled = false,\n                    LimitUserLinkCountMaximumLinks = 42,\n                },\n            },\n        });\n    }\n\n}\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi-fusionauth/sdk/go/fusionauth\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthIdpOpenIdConnect(ctx, \"openID\", \u0026fusionauth.FusionAuthIdpOpenIdConnectArgs{\n\t\t\tApplicationConfigurations: FusionAuthIdpOpenIdConnectApplicationConfigurationArray{\n\t\t\t\t\u0026FusionAuthIdpOpenIdConnectApplicationConfigurationArgs{\n\t\t\t\t\tApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),\n\t\t\t\t\tCreateRegistration: pulumi.Bool(true),\n\t\t\t\t\tEnabled:            pulumi.Bool(true),\n\t\t\t\t},\n\t\t\t},\n\t\t\tOauth2AuthorizationEndpoint:      pulumi.String(\"https://acme.com/oauth2/authorization\"),\n\t\t\tOauth2ClientId:                   pulumi.String(\"191c23dc-b772-4558-bd21-dc1cbf74ae21\"),\n\t\t\tOauth2ClientSecret:               pulumi.String(\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\"),\n\t\t\tOauth2ClientAuthenticationMethod: pulumi.String(\"client_secret_basic\"),\n\t\t\tOauth2Scope:                      pulumi.String(\"openid offline_access\"),\n\t\t\tOauth2TokenEndpoint:              pulumi.String(\"https://acme.com/oauth2/token\"),\n\t\t\tOauth2UserInfoEndpoint:           pulumi.String(\"https://acme.com/oauth2/userinfo\"),\n\t\t\tButtonText:                       pulumi.String(\"Login with OpenID Connect\"),\n\t\t\tDebug:                            pulumi.Bool(false),\n\t\t\tEnabled:                          pulumi.Bool(true),\n\t\t\tTenantConfigurations: FusionAuthIdpOpenIdConnectTenantConfigurationArray{\n\t\t\t\t\u0026FusionAuthIdpOpenIdConnectTenantConfigurationArgs{\n\t\t\t\t\tTenantId:                       pulumi.Any(fusionauth_tenant.Example.Id),\n\t\t\t\t\tLimitUserLinkCountEnabled:      pulumi.Bool(false),\n\t\t\t\t\tLimitUserLinkCountMaximumLinks: pulumi.Int(42),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport java.util.*;\nimport java.io.*;\nimport java.nio.*;\nimport com.pulumi.*;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var openID = new FusionAuthIdpOpenIdConnect(\"openID\", FusionAuthIdpOpenIdConnectArgs.builder()        \n            .applicationConfigurations(FusionAuthIdpOpenIdConnectApplicationConfigurationArgs.builder()\n                .applicationId(fusionauth_application.myapp().id())\n                .createRegistration(true)\n                .enabled(true)\n                .build())\n            .oauth2AuthorizationEndpoint(\"https://acme.com/oauth2/authorization\")\n            .oauth2ClientId(\"191c23dc-b772-4558-bd21-dc1cbf74ae21\")\n            .oauth2ClientSecret(\"SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\")\n            .oauth2ClientAuthenticationMethod(\"client_secret_basic\")\n            .oauth2Scope(\"openid offline_access\")\n            .oauth2TokenEndpoint(\"https://acme.com/oauth2/token\")\n            .oauth2UserInfoEndpoint(\"https://acme.com/oauth2/userinfo\")\n            .buttonText(\"Login with OpenID Connect\")\n            .debug(false)\n            .enabled(true)\n            .tenantConfigurations(FusionAuthIdpOpenIdConnectTenantConfigurationArgs.builder()\n                .tenantId(fusionauth_tenant.example().id())\n                .limitUserLinkCountEnabled(false)\n                .limitUserLinkCountMaximumLinks(42)\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  openID:\n    type: fusionauth:FusionAuthIdpOpenIdConnect\n    properties:\n      applicationConfigurations:\n        - applicationId: ${fusionauth_application.myapp.id}\n          createRegistration: true\n          enabled: true\n      oauth2AuthorizationEndpoint: https://acme.com/oauth2/authorization\n      oauth2ClientId: 191c23dc-b772-4558-bd21-dc1cbf74ae21\n      oauth2ClientSecret: SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO\n      oauth2ClientAuthenticationMethod: client_secret_basic\n      oauth2Scope: openid offline_access\n      oauth2TokenEndpoint: https://acme.com/oauth2/token\n      oauth2UserInfoEndpoint: https://acme.com/oauth2/userinfo\n      buttonText: Login with OpenID Connect\n      debug: false\n      enabled: true\n      tenantConfigurations:\n        - tenantId: ${fusionauth_tenant.example.id}\n          limitUserLinkCountEnabled: false\n          limitUserLinkCountMaximumLinks: 42\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "applicationConfigurations": {
                     "type": "array",
@@ -6890,13 +6899,21 @@
                     "type": "string",
                     "description": "The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.\n"
                 },
+                "oauth2UniqueIdClaim": {
+                    "type": "string",
+                    "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.\n"
+                },
                 "oauth2UserInfoEndpoint": {
                     "type": "string",
                     "description": "The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.\n"
                 },
+                "oauth2UsernameClaim": {
+                    "type": "string",
+                    "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.\n"
+                },
                 "postRequest": {
                     "type": "boolean",
-                    "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default\nvalue of false means that a redirect binding which uses a GET request will be used.\n"
+                    "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.\n"
                 },
                 "tenantConfigurations": {
                     "type": "array",
@@ -6992,13 +7009,21 @@
                     "type": "string",
                     "description": "The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.\n"
                 },
+                "oauth2UniqueIdClaim": {
+                    "type": "string",
+                    "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.\n"
+                },
                 "oauth2UserInfoEndpoint": {
                     "type": "string",
                     "description": "The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.\n"
                 },
+                "oauth2UsernameClaim": {
+                    "type": "string",
+                    "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.\n"
+                },
                 "postRequest": {
                     "type": "boolean",
-                    "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default\nvalue of false means that a redirect binding which uses a GET request will be used.\n"
+                    "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.\n"
                 },
                 "tenantConfigurations": {
                     "type": "array",
@@ -7094,13 +7119,21 @@
                         "type": "string",
                         "description": "The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.\n"
                     },
+                    "oauth2UniqueIdClaim": {
+                        "type": "string",
+                        "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the user Id.\n"
+                    },
                     "oauth2UserInfoEndpoint": {
                         "type": "string",
                         "description": "The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.\n"
                     },
+                    "oauth2UsernameClaim": {
+                        "type": "string",
+                        "description": "An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.\n"
+                    },
                     "postRequest": {
                         "type": "boolean",
-                        "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default\nvalue of false means that a redirect binding which uses a GET request will be used.\n"
+                        "description": "Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.\n"
                     },
                     "tenantConfigurations": {
                         "type": "array",
@@ -9976,7 +10009,7 @@
                 },
                 "username": {
                     "type": "string",
-                    "description": "Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
+                    "description": "The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
                 },
                 "usernameStatus": {
                     "type": "string",
@@ -10098,7 +10131,7 @@
                 },
                 "username": {
                     "type": "string",
-                    "description": "Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
+                    "description": "The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
                 },
                 "usernameStatus": {
                     "type": "string",
@@ -10217,7 +10250,7 @@
                     },
                     "username": {
                         "type": "string",
-                        "description": "Optional The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
+                        "description": "The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.\n"
                     },
                     "usernameStatus": {
                         "type": "string",
@@ -10280,6 +10313,10 @@
                     "type": "boolean",
                     "description": "Whether or not this User Action is time-based (temporal).\n"
                 },
+                "userActionId": {
+                    "type": "string",
+                    "description": "The id of this User Action.\n"
+                },
                 "userEmailingEnabled": {
                     "type": "boolean",
                     "description": "Whether or not email is enabled for this User Action.\n"
@@ -10290,7 +10327,8 @@
                 }
             },
             "required": [
-                "name"
+                "name",
+                "userActionId"
             ],
             "inputProperties": {
                 "cancelEmailTemplateId": {
@@ -10342,6 +10380,10 @@
                 "temporal": {
                     "type": "boolean",
                     "description": "Whether or not this User Action is time-based (temporal).\n"
+                },
+                "userActionId": {
+                    "type": "string",
+                    "description": "The id of this User Action.\n"
                 },
                 "userEmailingEnabled": {
                     "type": "boolean",
@@ -10404,6 +10446,10 @@
                     "temporal": {
                         "type": "boolean",
                         "description": "Whether or not this User Action is time-based (temporal).\n"
+                    },
+                    "userActionId": {
+                        "type": "string",
+                        "description": "The id of this User Action.\n"
                     },
                     "userEmailingEnabled": {
                         "type": "boolean",

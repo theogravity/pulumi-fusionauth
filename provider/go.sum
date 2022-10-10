@@ -472,8 +472,8 @@ github.com/googleapis/go-type-adapters v1.0.0/go.mod h1:zHW75FOG2aur7gAO2B+MLby+
 github.com/gorilla/mux v1.7.4 h1:VuZ8uybHlWmqV03+zRzdwKL4tUnIp1MAQtp1mIFE1bc=
 github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
-github.com/gpsinsight/terraform-provider-fusionauth v0.1.72 h1:QAOrQCf/0VB3UzGXC6MbozfwtWDlb8xt7UbVdggyA+M=
-github.com/gpsinsight/terraform-provider-fusionauth v0.1.72/go.mod h1:wV4GlmQdfROGTgGRDwAH/xKTAb+R98FzaraD1G9wDJk=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.73 h1:a8XeeRb2kOKHpyP8BVxei/9qImKeBvtQEX3Z8QJgMgc=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.73/go.mod h1:wV4GlmQdfROGTgGRDwAH/xKTAb+R98FzaraD1G9wDJk=
 github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFbcEtjT1g+wF4CSlocrBnw=
 github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 h1:MJG/KsmcqMwFAkh8mTnAwhyKoB+sTAnY4CACC110tbU=
 github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645/go.mod h1:6iZfnjpejD4L/4DwD7NryNaJyCQdzwWwH2MWhCA90Kw=
