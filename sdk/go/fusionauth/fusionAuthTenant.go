@@ -27,9 +27,9 @@ import (
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-fusionauth/sdk/go/fusionauth"
+// 	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 // 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth"
+// 	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 // )
 //
 // func main() {
@@ -134,6 +134,16 @@ import (
 // 				},
 // 				&FusionAuthTenantEventConfigurationArgs{
 // 					Event:           pulumi.String("user.email.verified"),
+// 					Enabled:         pulumi.Bool(true),
+// 					TransactionType: pulumi.String("Any"),
+// 				},
+// 				&FusionAuthTenantEventConfigurationArgs{
+// 					Event:           pulumi.String("user.identity-provider.link"),
+// 					Enabled:         pulumi.Bool(true),
+// 					TransactionType: pulumi.String("Any"),
+// 				},
+// 				&FusionAuthTenantEventConfigurationArgs{
+// 					Event:           pulumi.String("user.identity-provider.unlink"),
 // 					Enabled:         pulumi.Bool(true),
 // 					TransactionType: pulumi.String("Any"),
 // 				},

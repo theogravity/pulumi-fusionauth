@@ -158,6 +158,18 @@ namespace theogravity.Fusionauth
     ///                 },
     ///                 new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///                 {
+    ///                     Event = "user.identity-provider.link",
+    ///                     Enabled = true,
+    ///                     TransactionType = "Any",
+    ///                 },
+    ///                 new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///                 {
+    ///                     Event = "user.identity-provider.unlink",
+    ///                     Enabled = true,
+    ///                     TransactionType = "Any",
+    ///                 },
+    ///                 new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///                 {
     ///                     Event = "user.password.breach",
     ///                     Enabled = false,
     ///                     TransactionType = "None",

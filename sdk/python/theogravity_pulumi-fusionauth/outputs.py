@@ -6650,6 +6650,10 @@ class FusionAuthWebhookEventsEnabled(dict):
             suggest = "user_email_update"
         elif key == "userEmailVerified":
             suggest = "user_email_verified"
+        elif key == "userIdentityProviderLink":
+            suggest = "user_identity_provider_link"
+        elif key == "userIdentityProviderUnlink":
+            suggest = "user_identity_provider_unlink"
         elif key == "userLoginFailed":
             suggest = "user_login_failed"
         elif key == "userLoginIdDuplicateCreate":
@@ -6724,6 +6728,8 @@ class FusionAuthWebhookEventsEnabled(dict):
                  user_delete_complete: Optional[bool] = None,
                  user_email_update: Optional[bool] = None,
                  user_email_verified: Optional[bool] = None,
+                 user_identity_provider_link: Optional[bool] = None,
+                 user_identity_provider_unlink: Optional[bool] = None,
                  user_login_failed: Optional[bool] = None,
                  user_login_id_duplicate_create: Optional[bool] = None,
                  user_login_id_duplicate_update: Optional[bool] = None,
@@ -6763,6 +6769,8 @@ class FusionAuthWebhookEventsEnabled(dict):
         :param bool user_delete_complete: When a user delete transaction has completed
         :param bool user_email_update: When a user updates their email address
         :param bool user_email_verified: When a user verifies their email address
+        :param bool user_identity_provider_link: When a user is linked to an identity provider
+        :param bool user_identity_provider_unlink: When a link to an identity provider is removed
         :param bool user_login_failed: When a user fails a login request
         :param bool user_login_id_duplicate_create: When a request to create a user with a login Id (email or username) which is already in use has been received
         :param bool user_login_id_duplicate_update: When a request to update a user and change their login Id (email or username) to one that is already in use has been received
@@ -6817,6 +6825,10 @@ class FusionAuthWebhookEventsEnabled(dict):
             pulumi.set(__self__, "user_email_update", user_email_update)
         if user_email_verified is not None:
             pulumi.set(__self__, "user_email_verified", user_email_verified)
+        if user_identity_provider_link is not None:
+            pulumi.set(__self__, "user_identity_provider_link", user_identity_provider_link)
+        if user_identity_provider_unlink is not None:
+            pulumi.set(__self__, "user_identity_provider_unlink", user_identity_provider_unlink)
         if user_login_failed is not None:
             pulumi.set(__self__, "user_login_failed", user_login_failed)
         if user_login_id_duplicate_create is not None:
@@ -6983,6 +6995,22 @@ class FusionAuthWebhookEventsEnabled(dict):
         When a user verifies their email address
         """
         return pulumi.get(self, "user_email_verified")
+
+    @property
+    @pulumi.getter(name="userIdentityProviderLink")
+    def user_identity_provider_link(self) -> Optional[bool]:
+        """
+        When a user is linked to an identity provider
+        """
+        return pulumi.get(self, "user_identity_provider_link")
+
+    @property
+    @pulumi.getter(name="userIdentityProviderUnlink")
+    def user_identity_provider_unlink(self) -> Optional[bool]:
+        """
+        When a link to an identity provider is removed
+        """
+        return pulumi.get(self, "user_identity_provider_unlink")
 
     @property
     @pulumi.getter(name="userLoginFailed")

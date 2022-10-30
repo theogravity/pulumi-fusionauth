@@ -208,12 +208,6 @@ namespace theogravity.Fusionauth
         [Output("verifyRegistration")]
         public Output<bool?> VerifyRegistration { get; private set; } = null!;
 
-        /// <summary>
-        /// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        /// </summary>
-        [Output("webhookIds")]
-        public Output<ImmutableArray<string>> WebhookIds { get; private set; } = null!;
-
 
         /// <summary>
         /// Create a FusionAuthApplication resource with the given unique name, arguments, and options.
@@ -354,18 +348,6 @@ namespace theogravity.Fusionauth
         [Input("verifyRegistration")]
         public Input<bool>? VerifyRegistration { get; set; }
 
-        [Input("webhookIds")]
-        private InputList<string>? _webhookIds;
-
-        /// <summary>
-        /// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        /// </summary>
-        public InputList<string> WebhookIds
-        {
-            get => _webhookIds ?? (_webhookIds = new InputList<string>());
-            set => _webhookIds = value;
-        }
-
         public FusionAuthApplicationArgs()
         {
         }
@@ -465,18 +447,6 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("verifyRegistration")]
         public Input<bool>? VerifyRegistration { get; set; }
-
-        [Input("webhookIds")]
-        private InputList<string>? _webhookIds;
-
-        /// <summary>
-        /// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        /// </summary>
-        public InputList<string> WebhookIds
-        {
-            get => _webhookIds ?? (_webhookIds = new InputList<string>());
-            set => _webhookIds = value;
-        }
 
         public FusionAuthApplicationState()
         {

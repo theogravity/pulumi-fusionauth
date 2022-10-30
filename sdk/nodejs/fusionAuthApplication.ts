@@ -161,10 +161,6 @@ export class FusionAuthApplication extends pulumi.CustomResource {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     public readonly verifyRegistration!: pulumi.Output<boolean | undefined>;
-    /**
-     * An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-     */
-    public readonly webhookIds!: pulumi.Output<string[] | undefined>;
 
     /**
      * Create a FusionAuthApplication resource with the given unique name, arguments, and options.
@@ -200,7 +196,6 @@ export class FusionAuthApplication extends pulumi.CustomResource {
             resourceInputs["themeId"] = state ? state.themeId : undefined;
             resourceInputs["verificationEmailTemplateId"] = state ? state.verificationEmailTemplateId : undefined;
             resourceInputs["verifyRegistration"] = state ? state.verifyRegistration : undefined;
-            resourceInputs["webhookIds"] = state ? state.webhookIds : undefined;
         } else {
             const args = argsOrState as FusionAuthApplicationArgs | undefined;
             if ((!args || args.tenantId === undefined) && !opts.urn) {
@@ -227,7 +222,6 @@ export class FusionAuthApplication extends pulumi.CustomResource {
             resourceInputs["themeId"] = args ? args.themeId : undefined;
             resourceInputs["verificationEmailTemplateId"] = args ? args.verificationEmailTemplateId : undefined;
             resourceInputs["verifyRegistration"] = args ? args.verifyRegistration : undefined;
-            resourceInputs["webhookIds"] = args ? args.webhookIds : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FusionAuthApplication.__pulumiType, name, resourceInputs, opts);
@@ -283,10 +277,6 @@ export interface FusionAuthApplicationState {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     verifyRegistration?: pulumi.Input<boolean>;
-    /**
-     * An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-     */
-    webhookIds?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 /**
@@ -338,8 +328,4 @@ export interface FusionAuthApplicationArgs {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     verifyRegistration?: pulumi.Input<boolean>;
-    /**
-     * An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-     */
-    webhookIds?: pulumi.Input<pulumi.Input<string>[]>;
 }

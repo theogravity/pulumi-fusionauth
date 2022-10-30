@@ -1748,6 +1748,14 @@ export interface FusionAuthWebhookEventsEnabled {
      */
     userEmailVerified?: pulumi.Input<boolean>;
     /**
+     * When a user is linked to an identity provider
+     */
+    userIdentityProviderLink?: pulumi.Input<boolean>;
+    /**
+     * When a link to an identity provider is removed
+     */
+    userIdentityProviderUnlink?: pulumi.Input<boolean>;
+    /**
      * When a user fails a login request
      */
     userLoginFailed?: pulumi.Input<boolean>;

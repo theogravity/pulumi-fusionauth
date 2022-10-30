@@ -75,6 +75,14 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? UserEmailVerified;
         /// <summary>
+        /// When a user is linked to an identity provider
+        /// </summary>
+        public readonly bool? UserIdentityProviderLink;
+        /// <summary>
+        /// When a link to an identity provider is removed
+        /// </summary>
+        public readonly bool? UserIdentityProviderUnlink;
+        /// <summary>
         /// When a user fails a login request
         /// </summary>
         public readonly bool? UserLoginFailed;
@@ -199,6 +207,10 @@ namespace theogravity.Fusionauth.Outputs
 
             bool? userEmailVerified,
 
+            bool? userIdentityProviderLink,
+
+            bool? userIdentityProviderUnlink,
+
             bool? userLoginFailed,
 
             bool? userLoginIdDuplicateCreate,
@@ -260,6 +272,8 @@ namespace theogravity.Fusionauth.Outputs
             UserDeleteComplete = userDeleteComplete;
             UserEmailUpdate = userEmailUpdate;
             UserEmailVerified = userEmailVerified;
+            UserIdentityProviderLink = userIdentityProviderLink;
+            UserIdentityProviderUnlink = userIdentityProviderUnlink;
             UserLoginFailed = userLoginFailed;
             UserLoginIdDuplicateCreate = userLoginIdDuplicateCreate;
             UserLoginIdDuplicateUpdate = userLoginIdDuplicateUpdate;

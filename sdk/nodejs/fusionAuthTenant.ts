@@ -122,6 +122,16 @@ import * as utilities from "./utilities";
  *             transactionType: "Any",
  *         },
  *         {
+ *             event: "user.identity-provider.link",
+ *             enabled: true,
+ *             transactionType: "Any",
+ *         },
+ *         {
+ *             event: "user.identity-provider.unlink",
+ *             enabled: true,
+ *             transactionType: "Any",
+ *         },
+ *         {
  *             event: "user.password.breach",
  *             enabled: false,
  *             transactionType: "None",

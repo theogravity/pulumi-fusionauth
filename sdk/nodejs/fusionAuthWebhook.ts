@@ -19,9 +19,9 @@ import * as utilities from "./utilities";
  * import * as pulumi_fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthWebhook("example", {
- *     applicationIds: [
+ *     tenantIds: [
  *         "00000000-0000-0000-0000-000000000003",
- *         fusionauth_application.example.id,
+ *         fusionauth_tenant.example.id,
  *     ],
  *     connectTimeout: 1000,
  *     description: "The standard game Webhook",
@@ -71,10 +71,6 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
     }
 
     /**
-     * The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-     */
-    public readonly applicationIds!: pulumi.Output<string[] | undefined>;
-    /**
      * The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
      */
     public readonly connectTimeout!: pulumi.Output<number>;
@@ -111,6 +107,10 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
      */
     public readonly sslCertificate!: pulumi.Output<string | undefined>;
     /**
+     * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+     */
+    public readonly tenantIds!: pulumi.Output<string[] | undefined>;
+    /**
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */
     public readonly url!: pulumi.Output<string>;
@@ -128,7 +128,6 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as FusionAuthWebhookState | undefined;
-            resourceInputs["applicationIds"] = state ? state.applicationIds : undefined;
             resourceInputs["connectTimeout"] = state ? state.connectTimeout : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
             resourceInputs["eventsEnabled"] = state ? state.eventsEnabled : undefined;
@@ -138,6 +137,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             resourceInputs["httpAuthenticationUsername"] = state ? state.httpAuthenticationUsername : undefined;
             resourceInputs["readTimeout"] = state ? state.readTimeout : undefined;
             resourceInputs["sslCertificate"] = state ? state.sslCertificate : undefined;
+            resourceInputs["tenantIds"] = state ? state.tenantIds : undefined;
             resourceInputs["url"] = state ? state.url : undefined;
         } else {
             const args = argsOrState as FusionAuthWebhookArgs | undefined;
@@ -150,7 +150,6 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             if ((!args || args.url === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["applicationIds"] = args ? args.applicationIds : undefined;
             resourceInputs["connectTimeout"] = args ? args.connectTimeout : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["eventsEnabled"] = args ? args.eventsEnabled : undefined;
@@ -160,6 +159,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             resourceInputs["httpAuthenticationUsername"] = args ? args.httpAuthenticationUsername : undefined;
             resourceInputs["readTimeout"] = args ? args.readTimeout : undefined;
             resourceInputs["sslCertificate"] = args ? args.sslCertificate : undefined;
+            resourceInputs["tenantIds"] = args ? args.tenantIds : undefined;
             resourceInputs["url"] = args ? args.url : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -171,10 +171,6 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
  * Input properties used for looking up and filtering FusionAuthWebhook resources.
  */
 export interface FusionAuthWebhookState {
-    /**
-     * The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-     */
-    applicationIds?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
      */
@@ -212,6 +208,10 @@ export interface FusionAuthWebhookState {
      */
     sslCertificate?: pulumi.Input<string>;
     /**
+     * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+     */
+    tenantIds?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */
     url?: pulumi.Input<string>;
@@ -221,10 +221,6 @@ export interface FusionAuthWebhookState {
  * The set of arguments for constructing a FusionAuthWebhook resource.
  */
 export interface FusionAuthWebhookArgs {
-    /**
-     * The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-     */
-    applicationIds?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
      */
@@ -261,6 +257,10 @@ export interface FusionAuthWebhookArgs {
      * An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
      */
     sslCertificate?: pulumi.Input<string>;
+    /**
+     * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+     */
+    tenantIds?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */

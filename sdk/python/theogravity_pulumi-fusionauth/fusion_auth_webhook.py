@@ -18,20 +18,19 @@ class FusionAuthWebhookArgs:
                  connect_timeout: pulumi.Input[int],
                  read_timeout: pulumi.Input[int],
                  url: pulumi.Input[str],
-                 application_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input['FusionAuthWebhookEventsEnabledArgs']] = None,
                  global_: Optional[pulumi.Input[bool]] = None,
                  headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
-                 ssl_certificate: Optional[pulumi.Input[str]] = None):
+                 ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a FusionAuthWebhook resource.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] application_ids: The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input['FusionAuthWebhookEventsEnabledArgs'] events_enabled: A mapping for the events that are enabled for this Webhook.
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
@@ -39,12 +38,11 @@ class FusionAuthWebhookArgs:
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         """
         pulumi.set(__self__, "connect_timeout", connect_timeout)
         pulumi.set(__self__, "read_timeout", read_timeout)
         pulumi.set(__self__, "url", url)
-        if application_ids is not None:
-            pulumi.set(__self__, "application_ids", application_ids)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if events_enabled is not None:
@@ -59,6 +57,8 @@ class FusionAuthWebhookArgs:
             pulumi.set(__self__, "http_authentication_username", http_authentication_username)
         if ssl_certificate is not None:
             pulumi.set(__self__, "ssl_certificate", ssl_certificate)
+        if tenant_ids is not None:
+            pulumi.set(__self__, "tenant_ids", tenant_ids)
 
     @property
     @pulumi.getter(name="connectTimeout")
@@ -95,18 +95,6 @@ class FusionAuthWebhookArgs:
     @url.setter
     def url(self, value: pulumi.Input[str]):
         pulumi.set(self, "url", value)
-
-    @property
-    @pulumi.getter(name="applicationIds")
-    def application_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        """
-        return pulumi.get(self, "application_ids")
-
-    @application_ids.setter
-    def application_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "application_ids", value)
 
     @property
     @pulumi.getter
@@ -192,11 +180,22 @@ class FusionAuthWebhookArgs:
     def ssl_certificate(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "ssl_certificate", value)
 
+    @property
+    @pulumi.getter(name="tenantIds")
+    def tenant_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        """
+        return pulumi.get(self, "tenant_ids")
+
+    @tenant_ids.setter
+    def tenant_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tenant_ids", value)
+
 
 @pulumi.input_type
 class _FusionAuthWebhookState:
     def __init__(__self__, *,
-                 application_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input['FusionAuthWebhookEventsEnabledArgs']] = None,
@@ -206,10 +205,10 @@ class _FusionAuthWebhookState:
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  url: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthWebhook resources.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] application_ids: The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input['FusionAuthWebhookEventsEnabledArgs'] events_enabled: A mapping for the events that are enabled for this Webhook.
@@ -219,10 +218,9 @@ class _FusionAuthWebhookState:
         :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         """
-        if application_ids is not None:
-            pulumi.set(__self__, "application_ids", application_ids)
         if connect_timeout is not None:
             pulumi.set(__self__, "connect_timeout", connect_timeout)
         if description is not None:
@@ -241,20 +239,10 @@ class _FusionAuthWebhookState:
             pulumi.set(__self__, "read_timeout", read_timeout)
         if ssl_certificate is not None:
             pulumi.set(__self__, "ssl_certificate", ssl_certificate)
+        if tenant_ids is not None:
+            pulumi.set(__self__, "tenant_ids", tenant_ids)
         if url is not None:
             pulumi.set(__self__, "url", url)
-
-    @property
-    @pulumi.getter(name="applicationIds")
-    def application_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        """
-        return pulumi.get(self, "application_ids")
-
-    @application_ids.setter
-    def application_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "application_ids", value)
 
     @property
     @pulumi.getter(name="connectTimeout")
@@ -365,6 +353,18 @@ class _FusionAuthWebhookState:
         pulumi.set(self, "ssl_certificate", value)
 
     @property
+    @pulumi.getter(name="tenantIds")
+    def tenant_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        """
+        return pulumi.get(self, "tenant_ids")
+
+    @tenant_ids.setter
+    def tenant_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "tenant_ids", value)
+
+    @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
         """
@@ -382,7 +382,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
@@ -392,6 +391,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -408,9 +408,9 @@ class FusionAuthWebhook(pulumi.CustomResource):
         import theogravity_pulumi-fusionauth as fusionauth
 
         example = fusionauth.FusionAuthWebhook("example",
-            application_ids=[
+            tenant_ids=[
                 "00000000-0000-0000-0000-000000000003",
-                fusionauth_application["example"]["id"],
+                fusionauth_tenant["example"]["id"],
             ],
             connect_timeout=1000,
             description="The standard game Webhook",
@@ -432,7 +432,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] application_ids: The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']] events_enabled: A mapping for the events that are enabled for this Webhook.
@@ -442,6 +441,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         """
         ...
@@ -464,9 +464,9 @@ class FusionAuthWebhook(pulumi.CustomResource):
         import theogravity_pulumi-fusionauth as fusionauth
 
         example = fusionauth.FusionAuthWebhook("example",
-            application_ids=[
+            tenant_ids=[
                 "00000000-0000-0000-0000-000000000003",
-                fusionauth_application["example"]["id"],
+                fusionauth_tenant["example"]["id"],
             ],
             connect_timeout=1000,
             description="The standard game Webhook",
@@ -501,7 +501,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
@@ -511,6 +510,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  url: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         if opts is None:
@@ -526,7 +526,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = FusionAuthWebhookArgs.__new__(FusionAuthWebhookArgs)
 
-            __props__.__dict__["application_ids"] = application_ids
             if connect_timeout is None and not opts.urn:
                 raise TypeError("Missing required property 'connect_timeout'")
             __props__.__dict__["connect_timeout"] = connect_timeout
@@ -540,6 +539,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
                 raise TypeError("Missing required property 'read_timeout'")
             __props__.__dict__["read_timeout"] = read_timeout
             __props__.__dict__["ssl_certificate"] = ssl_certificate
+            __props__.__dict__["tenant_ids"] = tenant_ids
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
@@ -553,7 +553,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             connect_timeout: Optional[pulumi.Input[int]] = None,
             description: Optional[pulumi.Input[str]] = None,
             events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
@@ -563,6 +562,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
             http_authentication_username: Optional[pulumi.Input[str]] = None,
             read_timeout: Optional[pulumi.Input[int]] = None,
             ssl_certificate: Optional[pulumi.Input[str]] = None,
+            tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             url: Optional[pulumi.Input[str]] = None) -> 'FusionAuthWebhook':
         """
         Get an existing FusionAuthWebhook resource's state with the given name, id, and optional extra
@@ -571,7 +571,6 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] application_ids: The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']] events_enabled: A mapping for the events that are enabled for this Webhook.
@@ -581,13 +580,13 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _FusionAuthWebhookState.__new__(_FusionAuthWebhookState)
 
-        __props__.__dict__["application_ids"] = application_ids
         __props__.__dict__["connect_timeout"] = connect_timeout
         __props__.__dict__["description"] = description
         __props__.__dict__["events_enabled"] = events_enabled
@@ -597,16 +596,9 @@ class FusionAuthWebhook(pulumi.CustomResource):
         __props__.__dict__["http_authentication_username"] = http_authentication_username
         __props__.__dict__["read_timeout"] = read_timeout
         __props__.__dict__["ssl_certificate"] = ssl_certificate
+        __props__.__dict__["tenant_ids"] = tenant_ids
         __props__.__dict__["url"] = url
         return FusionAuthWebhook(resource_name, opts=opts, __props__=__props__)
-
-    @property
-    @pulumi.getter(name="applicationIds")
-    def application_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
-        """
-        The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        """
-        return pulumi.get(self, "application_ids")
 
     @property
     @pulumi.getter(name="connectTimeout")
@@ -679,6 +671,14 @@ class FusionAuthWebhook(pulumi.CustomResource):
         An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         """
         return pulumi.get(self, "ssl_certificate")
+
+    @property
+    @pulumi.getter(name="tenantIds")
+    def tenant_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        """
+        return pulumi.get(self, "tenant_ids")
 
     @property
     @pulumi.getter

@@ -15697,6 +15697,10 @@ type FusionAuthWebhookEventsEnabled struct {
 	UserEmailUpdate *bool `pulumi:"userEmailUpdate"`
 	// When a user verifies their email address
 	UserEmailVerified *bool `pulumi:"userEmailVerified"`
+	// When a user is linked to an identity provider
+	UserIdentityProviderLink *bool `pulumi:"userIdentityProviderLink"`
+	// When a link to an identity provider is removed
+	UserIdentityProviderUnlink *bool `pulumi:"userIdentityProviderUnlink"`
 	// When a user fails a login request
 	UserLoginFailed *bool `pulumi:"userLoginFailed"`
 	// When a request to create a user with a login Id (email or username) which is already in use has been received
@@ -15787,6 +15791,10 @@ type FusionAuthWebhookEventsEnabledArgs struct {
 	UserEmailUpdate pulumi.BoolPtrInput `pulumi:"userEmailUpdate"`
 	// When a user verifies their email address
 	UserEmailVerified pulumi.BoolPtrInput `pulumi:"userEmailVerified"`
+	// When a user is linked to an identity provider
+	UserIdentityProviderLink pulumi.BoolPtrInput `pulumi:"userIdentityProviderLink"`
+	// When a link to an identity provider is removed
+	UserIdentityProviderUnlink pulumi.BoolPtrInput `pulumi:"userIdentityProviderUnlink"`
 	// When a user fails a login request
 	UserLoginFailed pulumi.BoolPtrInput `pulumi:"userLoginFailed"`
 	// When a request to create a user with a login Id (email or username) which is already in use has been received
@@ -15985,6 +15993,16 @@ func (o FusionAuthWebhookEventsEnabledOutput) UserEmailUpdate() pulumi.BoolPtrOu
 // When a user verifies their email address
 func (o FusionAuthWebhookEventsEnabledOutput) UserEmailVerified() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthWebhookEventsEnabled) *bool { return v.UserEmailVerified }).(pulumi.BoolPtrOutput)
+}
+
+// When a user is linked to an identity provider
+func (o FusionAuthWebhookEventsEnabledOutput) UserIdentityProviderLink() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthWebhookEventsEnabled) *bool { return v.UserIdentityProviderLink }).(pulumi.BoolPtrOutput)
+}
+
+// When a link to an identity provider is removed
+func (o FusionAuthWebhookEventsEnabledOutput) UserIdentityProviderUnlink() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthWebhookEventsEnabled) *bool { return v.UserIdentityProviderUnlink }).(pulumi.BoolPtrOutput)
 }
 
 // When a user fails a login request
@@ -16273,6 +16291,26 @@ func (o FusionAuthWebhookEventsEnabledPtrOutput) UserEmailVerified() pulumi.Bool
 			return nil
 		}
 		return v.UserEmailVerified
+	}).(pulumi.BoolPtrOutput)
+}
+
+// When a user is linked to an identity provider
+func (o FusionAuthWebhookEventsEnabledPtrOutput) UserIdentityProviderLink() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhookEventsEnabled) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.UserIdentityProviderLink
+	}).(pulumi.BoolPtrOutput)
+}
+
+// When a link to an identity provider is removed
+func (o FusionAuthWebhookEventsEnabledPtrOutput) UserIdentityProviderUnlink() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhookEventsEnabled) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.UserIdentityProviderUnlink
 	}).(pulumi.BoolPtrOutput)
 }
 

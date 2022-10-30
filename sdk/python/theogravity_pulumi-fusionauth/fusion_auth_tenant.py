@@ -893,6 +893,16 @@ class FusionAuthTenant(pulumi.CustomResource):
                     transaction_type="Any",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    event="user.identity-provider.link",
+                    enabled=True,
+                    transaction_type="Any",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    event="user.identity-provider.unlink",
+                    enabled=True,
+                    transaction_type="Any",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
                     event="user.password.breach",
                     enabled=False,
                     transaction_type="None",
@@ -1143,6 +1153,16 @@ class FusionAuthTenant(pulumi.CustomResource):
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
                     event="user.email.verified",
+                    enabled=True,
+                    transaction_type="Any",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    event="user.identity-provider.link",
+                    enabled=True,
+                    transaction_type="Any",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    event="user.identity-provider.unlink",
                     enabled=True,
                     transaction_type="Any",
                 ),

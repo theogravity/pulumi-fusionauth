@@ -29,10 +29,10 @@ namespace theogravity.Fusionauth
     ///     {
     ///         var example = new Fusionauth.FusionAuthWebhook("example", new Fusionauth.FusionAuthWebhookArgs
     ///         {
-    ///             ApplicationIds = 
+    ///             TenantIds = 
     ///             {
     ///                 "00000000-0000-0000-0000-000000000003",
-    ///                 fusionauth_application.Example.Id,
+    ///                 fusionauth_tenant.Example.Id,
     ///             },
     ///             ConnectTimeout = 1000,
     ///             Description = "The standard game Webhook",
@@ -62,12 +62,6 @@ namespace theogravity.Fusionauth
     [FusionauthResourceType("fusionauth:index/fusionAuthWebhook:FusionAuthWebhook")]
     public partial class FusionAuthWebhook : Pulumi.CustomResource
     {
-        /// <summary>
-        /// The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        /// </summary>
-        [Output("applicationIds")]
-        public Output<ImmutableArray<string>> ApplicationIds { get; private set; } = null!;
-
         /// <summary>
         /// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         /// </summary>
@@ -123,6 +117,12 @@ namespace theogravity.Fusionauth
         public Output<string?> SslCertificate { get; private set; } = null!;
 
         /// <summary>
+        /// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        /// </summary>
+        [Output("tenantIds")]
+        public Output<ImmutableArray<string>> TenantIds { get; private set; } = null!;
+
+        /// <summary>
         /// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         /// </summary>
         [Output("url")]
@@ -175,18 +175,6 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthWebhookArgs : Pulumi.ResourceArgs
     {
-        [Input("applicationIds")]
-        private InputList<string>? _applicationIds;
-
-        /// <summary>
-        /// The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        /// </summary>
-        public InputList<string> ApplicationIds
-        {
-            get => _applicationIds ?? (_applicationIds = new InputList<string>());
-            set => _applicationIds = value;
-        }
-
         /// <summary>
         /// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         /// </summary>
@@ -247,6 +235,18 @@ namespace theogravity.Fusionauth
         [Input("sslCertificate")]
         public Input<string>? SslCertificate { get; set; }
 
+        [Input("tenantIds")]
+        private InputList<string>? _tenantIds;
+
+        /// <summary>
+        /// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        /// </summary>
+        public InputList<string> TenantIds
+        {
+            get => _tenantIds ?? (_tenantIds = new InputList<string>());
+            set => _tenantIds = value;
+        }
+
         /// <summary>
         /// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         /// </summary>
@@ -260,18 +260,6 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthWebhookState : Pulumi.ResourceArgs
     {
-        [Input("applicationIds")]
-        private InputList<string>? _applicationIds;
-
-        /// <summary>
-        /// The Ids of the Applications that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
-        /// </summary>
-        public InputList<string> ApplicationIds
-        {
-            get => _applicationIds ?? (_applicationIds = new InputList<string>());
-            set => _applicationIds = value;
-        }
-
         /// <summary>
         /// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         /// </summary>
@@ -331,6 +319,18 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("sslCertificate")]
         public Input<string>? SslCertificate { get; set; }
+
+        [Input("tenantIds")]
+        private InputList<string>? _tenantIds;
+
+        /// <summary>
+        /// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        /// </summary>
+        public InputList<string> TenantIds
+        {
+            get => _tenantIds ?? (_tenantIds = new InputList<string>());
+            set => _tenantIds = value;
+        }
 
         /// <summary>
         /// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.

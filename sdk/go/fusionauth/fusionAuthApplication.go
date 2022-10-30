@@ -21,9 +21,9 @@ import (
 // package main
 //
 // import (
-// 	"github.com/pulumi/pulumi-fusionauth/sdk/go/fusionauth"
+// 	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 // 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-// 	"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth"
+// 	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 // )
 //
 // func main() {
@@ -139,8 +139,6 @@ type FusionAuthApplication struct {
 	VerificationEmailTemplateId pulumi.StringPtrOutput `pulumi:"verificationEmailTemplateId"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 	VerifyRegistration pulumi.BoolPtrOutput `pulumi:"verifyRegistration"`
-	// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-	WebhookIds pulumi.StringArrayOutput `pulumi:"webhookIds"`
 }
 
 // NewFusionAuthApplication registers a new resource with the given unique name, arguments, and options.
@@ -205,8 +203,6 @@ type fusionAuthApplicationState struct {
 	VerificationEmailTemplateId *string `pulumi:"verificationEmailTemplateId"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 	VerifyRegistration *bool `pulumi:"verifyRegistration"`
-	// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-	WebhookIds []string `pulumi:"webhookIds"`
 }
 
 type FusionAuthApplicationState struct {
@@ -239,8 +235,6 @@ type FusionAuthApplicationState struct {
 	VerificationEmailTemplateId pulumi.StringPtrInput
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 	VerifyRegistration pulumi.BoolPtrInput
-	// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-	WebhookIds pulumi.StringArrayInput
 }
 
 func (FusionAuthApplicationState) ElementType() reflect.Type {
@@ -277,8 +271,6 @@ type fusionAuthApplicationArgs struct {
 	VerificationEmailTemplateId *string `pulumi:"verificationEmailTemplateId"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 	VerifyRegistration *bool `pulumi:"verifyRegistration"`
-	// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-	WebhookIds []string `pulumi:"webhookIds"`
 }
 
 // The set of arguments for constructing a FusionAuthApplication resource.
@@ -312,8 +304,6 @@ type FusionAuthApplicationArgs struct {
 	VerificationEmailTemplateId pulumi.StringPtrInput
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 	VerifyRegistration pulumi.BoolPtrInput
-	// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-	WebhookIds pulumi.StringArrayInput
 }
 
 func (FusionAuthApplicationArgs) ElementType() reflect.Type {
@@ -515,11 +505,6 @@ func (o FusionAuthApplicationOutput) VerificationEmailTemplateId() pulumi.String
 // Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 func (o FusionAuthApplicationOutput) VerifyRegistration() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplication) pulumi.BoolPtrOutput { return v.VerifyRegistration }).(pulumi.BoolPtrOutput)
-}
-
-// An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-func (o FusionAuthApplicationOutput) WebhookIds() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *FusionAuthApplication) pulumi.StringArrayOutput { return v.WebhookIds }).(pulumi.StringArrayOutput)
 }
 
 type FusionAuthApplicationArrayOutput struct{ *pulumi.OutputState }

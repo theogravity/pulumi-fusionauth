@@ -6651,6 +6651,8 @@ class FusionAuthWebhookEventsEnabledArgs:
                  user_delete_complete: Optional[pulumi.Input[bool]] = None,
                  user_email_update: Optional[pulumi.Input[bool]] = None,
                  user_email_verified: Optional[pulumi.Input[bool]] = None,
+                 user_identity_provider_link: Optional[pulumi.Input[bool]] = None,
+                 user_identity_provider_unlink: Optional[pulumi.Input[bool]] = None,
                  user_login_failed: Optional[pulumi.Input[bool]] = None,
                  user_login_id_duplicate_create: Optional[pulumi.Input[bool]] = None,
                  user_login_id_duplicate_update: Optional[pulumi.Input[bool]] = None,
@@ -6690,6 +6692,8 @@ class FusionAuthWebhookEventsEnabledArgs:
         :param pulumi.Input[bool] user_delete_complete: When a user delete transaction has completed
         :param pulumi.Input[bool] user_email_update: When a user updates their email address
         :param pulumi.Input[bool] user_email_verified: When a user verifies their email address
+        :param pulumi.Input[bool] user_identity_provider_link: When a user is linked to an identity provider
+        :param pulumi.Input[bool] user_identity_provider_unlink: When a link to an identity provider is removed
         :param pulumi.Input[bool] user_login_failed: When a user fails a login request
         :param pulumi.Input[bool] user_login_id_duplicate_create: When a request to create a user with a login Id (email or username) which is already in use has been received
         :param pulumi.Input[bool] user_login_id_duplicate_update: When a request to update a user and change their login Id (email or username) to one that is already in use has been received
@@ -6744,6 +6748,10 @@ class FusionAuthWebhookEventsEnabledArgs:
             pulumi.set(__self__, "user_email_update", user_email_update)
         if user_email_verified is not None:
             pulumi.set(__self__, "user_email_verified", user_email_verified)
+        if user_identity_provider_link is not None:
+            pulumi.set(__self__, "user_identity_provider_link", user_identity_provider_link)
+        if user_identity_provider_unlink is not None:
+            pulumi.set(__self__, "user_identity_provider_unlink", user_identity_provider_unlink)
         if user_login_failed is not None:
             pulumi.set(__self__, "user_login_failed", user_login_failed)
         if user_login_id_duplicate_create is not None:
@@ -6970,6 +6978,30 @@ class FusionAuthWebhookEventsEnabledArgs:
     @user_email_verified.setter
     def user_email_verified(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "user_email_verified", value)
+
+    @property
+    @pulumi.getter(name="userIdentityProviderLink")
+    def user_identity_provider_link(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When a user is linked to an identity provider
+        """
+        return pulumi.get(self, "user_identity_provider_link")
+
+    @user_identity_provider_link.setter
+    def user_identity_provider_link(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "user_identity_provider_link", value)
+
+    @property
+    @pulumi.getter(name="userIdentityProviderUnlink")
+    def user_identity_provider_unlink(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When a link to an identity provider is removed
+        """
+        return pulumi.get(self, "user_identity_provider_unlink")
+
+    @user_identity_provider_unlink.setter
+    def user_identity_provider_unlink(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "user_identity_provider_unlink", value)
 
     @property
     @pulumi.getter(name="userLoginFailed")

@@ -1748,6 +1748,14 @@ export interface FusionAuthWebhookEventsEnabled {
      */
     userEmailVerified?: boolean;
     /**
+     * When a user is linked to an identity provider
+     */
+    userIdentityProviderLink?: boolean;
+    /**
+     * When a link to an identity provider is removed
+     */
+    userIdentityProviderUnlink?: boolean;
+    /**
      * When a user fails a login request
      */
     userLoginFailed?: boolean;

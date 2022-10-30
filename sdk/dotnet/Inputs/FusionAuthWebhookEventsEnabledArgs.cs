@@ -104,6 +104,18 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? UserEmailVerified { get; set; }
 
         /// <summary>
+        /// When a user is linked to an identity provider
+        /// </summary>
+        [Input("userIdentityProviderLink")]
+        public Input<bool>? UserIdentityProviderLink { get; set; }
+
+        /// <summary>
+        /// When a link to an identity provider is removed
+        /// </summary>
+        [Input("userIdentityProviderUnlink")]
+        public Input<bool>? UserIdentityProviderUnlink { get; set; }
+
+        /// <summary>
         /// When a user fails a login request
         /// </summary>
         [Input("userLoginFailed")]

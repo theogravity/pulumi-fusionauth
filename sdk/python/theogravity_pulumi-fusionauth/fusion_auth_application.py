@@ -35,8 +35,7 @@ class FusionAuthApplicationArgs:
                  samlv2_configuration: Optional[pulumi.Input['FusionAuthApplicationSamlv2ConfigurationArgs']] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
-                 verify_registration: Optional[pulumi.Input[bool]] = None,
-                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+                 verify_registration: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a FusionAuthApplication resource.
         :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
@@ -47,7 +46,6 @@ class FusionAuthApplicationArgs:
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[bool] verify_registration: Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
         """
         pulumi.set(__self__, "tenant_id", tenant_id)
         if access_control_configuration is not None:
@@ -90,8 +88,6 @@ class FusionAuthApplicationArgs:
             pulumi.set(__self__, "verification_email_template_id", verification_email_template_id)
         if verify_registration is not None:
             pulumi.set(__self__, "verify_registration", verify_registration)
-        if webhook_ids is not None:
-            pulumi.set(__self__, "webhook_ids", webhook_ids)
 
     @property
     @pulumi.getter(name="tenantId")
@@ -306,18 +302,6 @@ class FusionAuthApplicationArgs:
     def verify_registration(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "verify_registration", value)
 
-    @property
-    @pulumi.getter(name="webhookIds")
-    def webhook_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        """
-        return pulumi.get(self, "webhook_ids")
-
-    @webhook_ids.setter
-    def webhook_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "webhook_ids", value)
-
 
 @pulumi.input_type
 class _FusionAuthApplicationState:
@@ -342,8 +326,7 @@ class _FusionAuthApplicationState:
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
-                 verify_registration: Optional[pulumi.Input[bool]] = None,
-                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+                 verify_registration: Optional[pulumi.Input[bool]] = None):
         """
         Input properties used for looking up and filtering FusionAuthApplication resources.
         :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
@@ -354,7 +337,6 @@ class _FusionAuthApplicationState:
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[bool] verify_registration: Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
         """
         if access_control_configuration is not None:
             pulumi.set(__self__, "access_control_configuration", access_control_configuration)
@@ -398,8 +380,6 @@ class _FusionAuthApplicationState:
             pulumi.set(__self__, "verification_email_template_id", verification_email_template_id)
         if verify_registration is not None:
             pulumi.set(__self__, "verify_registration", verify_registration)
-        if webhook_ids is not None:
-            pulumi.set(__self__, "webhook_ids", webhook_ids)
 
     @property
     @pulumi.getter(name="accessControlConfiguration")
@@ -614,18 +594,6 @@ class _FusionAuthApplicationState:
     def verify_registration(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "verify_registration", value)
 
-    @property
-    @pulumi.getter(name="webhookIds")
-    def webhook_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        """
-        return pulumi.get(self, "webhook_ids")
-
-    @webhook_ids.setter
-    def webhook_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "webhook_ids", value)
-
 
 class FusionAuthApplication(pulumi.CustomResource):
     @overload
@@ -653,7 +621,6 @@ class FusionAuthApplication(pulumi.CustomResource):
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verify_registration: Optional[pulumi.Input[bool]] = None,
-                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         """
         ## # Application Resource
@@ -747,7 +714,6 @@ class FusionAuthApplication(pulumi.CustomResource):
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[bool] verify_registration: Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
         """
         ...
     @overload
@@ -873,7 +839,6 @@ class FusionAuthApplication(pulumi.CustomResource):
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verify_registration: Optional[pulumi.Input[bool]] = None,
-                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         if opts is None:
             opts = pulumi.ResourceOptions()
@@ -911,7 +876,6 @@ class FusionAuthApplication(pulumi.CustomResource):
             __props__.__dict__["theme_id"] = theme_id
             __props__.__dict__["verification_email_template_id"] = verification_email_template_id
             __props__.__dict__["verify_registration"] = verify_registration
-            __props__.__dict__["webhook_ids"] = webhook_ids
         super(FusionAuthApplication, __self__).__init__(
             'fusionauth:index/fusionAuthApplication:FusionAuthApplication',
             resource_name,
@@ -942,8 +906,7 @@ class FusionAuthApplication(pulumi.CustomResource):
             tenant_id: Optional[pulumi.Input[str]] = None,
             theme_id: Optional[pulumi.Input[str]] = None,
             verification_email_template_id: Optional[pulumi.Input[str]] = None,
-            verify_registration: Optional[pulumi.Input[bool]] = None,
-            webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> 'FusionAuthApplication':
+            verify_registration: Optional[pulumi.Input[bool]] = None) -> 'FusionAuthApplication':
         """
         Get an existing FusionAuthApplication resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -959,7 +922,6 @@ class FusionAuthApplication(pulumi.CustomResource):
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[bool] verify_registration: Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -986,7 +948,6 @@ class FusionAuthApplication(pulumi.CustomResource):
         __props__.__dict__["theme_id"] = theme_id
         __props__.__dict__["verification_email_template_id"] = verification_email_template_id
         __props__.__dict__["verify_registration"] = verify_registration
-        __props__.__dict__["webhook_ids"] = webhook_ids
         return FusionAuthApplication(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -1117,12 +1078,4 @@ class FusionAuthApplication(pulumi.CustomResource):
         Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
         """
         return pulumi.get(self, "verify_registration")
-
-    @property
-    @pulumi.getter(name="webhookIds")
-    def webhook_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
-        """
-        An array of Webhook Ids. For Webhooks that are not already configured for All Applications, specifying an Id on this request will indicate the associated Webhook should handle events for this application.
-        """
-        return pulumi.get(self, "webhook_ids")
 
