@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/gpsinsight/terraform-provider-fusionauth v0.1.73
+	github.com/gpsinsight/terraform-provider-fusionauth v0.1.76
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.24.1
 	github.com/pulumi/pulumi/sdk/v3 v3.33.1
 )
@@ -34,7 +34,7 @@ require (
 	github.com/Azure/go-autorest/autorest/validation v0.3.1 // indirect
 	github.com/Azure/go-autorest/logger v0.2.1 // indirect
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
-	github.com/FusionAuth/go-client v0.0.0-20220429153148-63e95adfac4e // indirect
+	github.com/FusionAuth/go-client v0.0.0-20220928202602-4f85e4f2101f // indirect
 	github.com/Masterminds/goutils v1.1.0 // indirect
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/sprig v2.22.0+incompatible // indirect

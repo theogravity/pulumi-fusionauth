@@ -133,6 +133,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/FusionAuth/go-client v0.0.0-20220429153148-63e95adfac4e h1:1GkB6QE01BlB7+OCwWBBiUM/xBqMA5vpFgr7C/fF2ck=
 github.com/FusionAuth/go-client v0.0.0-20220429153148-63e95adfac4e/go.mod h1:SyRrXMJAzMVQLiJjKfQUR59dRI3jPyZv+BXIZ//HwE4=
+github.com/FusionAuth/go-client v0.0.0-20220928202602-4f85e4f2101f h1:a7M72XffsaShvWiJVyCMEXzXJWVU9GzkUrDxVaxlFnQ=
+github.com/FusionAuth/go-client v0.0.0-20220928202602-4f85e4f2101f/go.mod h1:SyRrXMJAzMVQLiJjKfQUR59dRI3jPyZv+BXIZ//HwE4=
 github.com/GoogleCloudPlatform/cloudsql-proxy v1.24.0/go.mod h1:3tx938GhY4FC+E1KT/jNjDw7Z5qxAEtIiERJ2sXjnII=
 github.com/HdrHistogram/hdrhistogram-go v1.1.2 h1:5IcZpTvzydCQeHzK4Ef/D5rrSqwxob0t8PQPMybUNFM=
 github.com/Masterminds/goutils v1.1.0 h1:zukEsf/1JZwCMgHiK3GZftabmxiCw4apj3a28RPBiVg=
@@ -474,6 +476,8 @@ github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/gpsinsight/terraform-provider-fusionauth v0.1.73 h1:a8XeeRb2kOKHpyP8BVxei/9qImKeBvtQEX3Z8QJgMgc=
 github.com/gpsinsight/terraform-provider-fusionauth v0.1.73/go.mod h1:wV4GlmQdfROGTgGRDwAH/xKTAb+R98FzaraD1G9wDJk=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.76 h1:BpdV92HhAfnYtkB3IGf9pcpQKctg7sRSfEgwGXT4gl4=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.76/go.mod h1:ss43Ic48pXb6zYP/d9manA60D/sDG20fae9mvSon848=
 github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFbcEtjT1g+wF4CSlocrBnw=
 github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 h1:MJG/KsmcqMwFAkh8mTnAwhyKoB+sTAnY4CACC110tbU=
 github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645/go.mod h1:6iZfnjpejD4L/4DwD7NryNaJyCQdzwWwH2MWhCA90Kw=
