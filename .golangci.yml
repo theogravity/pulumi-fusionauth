@@ -21,4 +21,5 @@ run:
   skip-files:
   - schema.go
   - pulumiManifest.go
+  - doc.go
   timeout: 20m
