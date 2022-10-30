@@ -460,6 +460,7 @@ jobs:
         - "3.7"
 name: release
 on:
+  workflow_dispatch:
   push:
     tags:
     - v*.*.*
