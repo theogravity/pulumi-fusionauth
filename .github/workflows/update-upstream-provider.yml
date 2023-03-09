@@ -31,7 +31,7 @@ jobs:
       run: echo ::set-output
         name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
@@ -133,7 +133,7 @@ jobs:
         goversion:
         - 1.18.x
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
 name: Update upstream provider
