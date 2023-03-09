@@ -127,6 +127,7 @@ func Provider() tfbridge.ProviderInfo {
 			"fusionauth_idp_steam":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpSteam")},
 			"fusionauth_idp_twitch":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpTwitch")},
 			"fusionauth_idp_facebook": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpFacebook")},
+			"fusionauth_idp_linkedin": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthIdpLinkedIn")},
 			"fusionauth_entity":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntity")},
 			"fusionauth_entity_type":  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthEntityType")},
 			"fusionauth_entity_type_permission": {
