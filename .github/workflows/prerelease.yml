@@ -23,9 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -89,25 +89,25 @@ jobs:
         dotnetversion:
         - 3.1.301
         goversion:
-        - 1.18.x
+        - 1.19.x
         language:
         - nodejs
         - python
         - dotnet
         - go
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
   lint:
-    container: golangci/golangci-lint:latest
+    container: golangci/golangci-lint:v1.50.1
     name: lint
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -128,17 +128,17 @@ jobs:
       fail-fast: true
       matrix:
         goversion:
-        - 1.18.x
+        - 1.19.x
   lint_sdk:
-    container: golangci/golangci-lint:latest
+    container: golangci/golangci-lint:v1.50.1
     name: lint-sdk
     needs: build_sdk
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -159,15 +159,15 @@ jobs:
       fail-fast: true
       matrix:
         goversion:
-        - 1.18.x
+        - 1.19.x
   prerequisites:
     name: prerequisites
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -222,9 +222,9 @@ jobs:
         dotnetversion:
         - 3.1.301
         goversion:
-        - 1.18.x
+        - 1.19.x
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
   publish:
@@ -233,7 +233,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
@@ -261,9 +261,9 @@ jobs:
         dotnetversion:
         - 3.1.301
         goversion:
-        - 1.18.x
+        - 1.19.x
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
   publish_sdk:
@@ -272,9 +272,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -341,9 +341,9 @@ jobs:
         dotnetversion:
         - 3.1.301
         goversion:
-        - 1.18.x
+        - 1.19.x
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
   test:
@@ -352,9 +352,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ci-scripts
         repository: pulumi/scripts
@@ -424,14 +424,14 @@ jobs:
         dotnetversion:
         - 3.1.301
         goversion:
-        - 1.18.x
+        - 1.19.x
         language:
         - nodejs
         - python
         - dotnet
         - go
         nodeversion:
-        - 14.x
+        - 16.x
         pythonversion:
         - "3.7"
 name: prerelease
