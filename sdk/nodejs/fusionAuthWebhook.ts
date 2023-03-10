@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -16,7 +17,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthWebhook("example", {
  *     tenantIds: [
@@ -95,7 +96,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
      */
     public readonly httpAuthenticationPassword!: pulumi.Output<string | undefined>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     public readonly httpAuthenticationUsername!: pulumi.Output<string | undefined>;
     /**
@@ -155,14 +156,16 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             resourceInputs["eventsEnabled"] = args ? args.eventsEnabled : undefined;
             resourceInputs["global"] = args ? args.global : undefined;
             resourceInputs["headers"] = args ? args.headers : undefined;
-            resourceInputs["httpAuthenticationPassword"] = args ? args.httpAuthenticationPassword : undefined;
-            resourceInputs["httpAuthenticationUsername"] = args ? args.httpAuthenticationUsername : undefined;
+            resourceInputs["httpAuthenticationPassword"] = args?.httpAuthenticationPassword ? pulumi.secret(args.httpAuthenticationPassword) : undefined;
+            resourceInputs["httpAuthenticationUsername"] = args?.httpAuthenticationUsername ? pulumi.secret(args.httpAuthenticationUsername) : undefined;
             resourceInputs["readTimeout"] = args ? args.readTimeout : undefined;
             resourceInputs["sslCertificate"] = args ? args.sslCertificate : undefined;
             resourceInputs["tenantIds"] = args ? args.tenantIds : undefined;
             resourceInputs["url"] = args ? args.url : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["httpAuthenticationPassword", "httpAuthenticationUsername"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthWebhook.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -196,7 +199,7 @@ export interface FusionAuthWebhookState {
      */
     httpAuthenticationPassword?: pulumi.Input<string>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     httpAuthenticationUsername?: pulumi.Input<string>;
     /**
@@ -246,7 +249,7 @@ export interface FusionAuthWebhookArgs {
      */
     httpAuthenticationPassword?: pulumi.Input<string>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     httpAuthenticationUsername?: pulumi.Input<string>;
     /**

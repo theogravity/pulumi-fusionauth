@@ -232,6 +232,10 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "oauth2ClientSecret",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -345,11 +349,21 @@ namespace theogravity.Fusionauth
         [Input("oauth2ClientId", required: true)]
         public Input<string> Oauth2ClientId { get; set; } = null!;
 
+        [Input("oauth2ClientSecret")]
+        private Input<string>? _oauth2ClientSecret;
+
         /// <summary>
         /// The top-level client secret to use with the OpenID Connect identity provider.
         /// </summary>
-        [Input("oauth2ClientSecret")]
-        public Input<string>? Oauth2ClientSecret { get; set; }
+        public Input<string>? Oauth2ClientSecret
+        {
+            get => _oauth2ClientSecret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _oauth2ClientSecret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
@@ -509,11 +523,21 @@ namespace theogravity.Fusionauth
         [Input("oauth2ClientId")]
         public Input<string>? Oauth2ClientId { get; set; }
 
+        [Input("oauth2ClientSecret")]
+        private Input<string>? _oauth2ClientSecret;
+
         /// <summary>
         /// The top-level client secret to use with the OpenID Connect identity provider.
         /// </summary>
-        [Input("oauth2ClientSecret")]
-        public Input<string>? Oauth2ClientSecret { get; set; }
+        public Input<string>? Oauth2ClientSecret
+        {
+            get => _oauth2ClientSecret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _oauth2ClientSecret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.

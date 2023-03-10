@@ -15,18 +15,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const fusionAuth = pulumi.output(fusionauth.getIdp({
+ * const fusionAuth = fusionauth.getIdp({
  *     name: "Apple",
  *     type: "Apple",
- * }));
+ * });
  * ```
  */
 export function getIdp(args: GetIdpArgs, opts?: pulumi.InvokeOptions): Promise<GetIdpResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getIdp:getIdp", {
         "name": args.name,
         "type": args.type,
@@ -58,9 +55,25 @@ export interface GetIdpResult {
     readonly name: string;
     readonly type: string;
 }
-
+/**
+ * ## # Application Resource
+ *
+ * [Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const fusionAuth = fusionauth.getIdp({
+ *     name: "Apple",
+ *     type: "Apple",
+ * });
+ * ```
+ */
 export function getIdpOutput(args: GetIdpOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetIdpResult> {
-    return pulumi.output(args).apply(a => getIdp(a, opts))
+    return pulumi.output(args).apply((a: any) => getIdp(a, opts))
 }
 
 /**

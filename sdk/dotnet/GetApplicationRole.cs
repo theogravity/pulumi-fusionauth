@@ -42,7 +42,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Task<GetApplicationRoleResult> InvokeAsync(GetApplicationRoleArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.InvokeAsync<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Application Role Resource
@@ -74,7 +74,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Output<GetApplicationRoleResult> Invoke(GetApplicationRoleInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleInvokeArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleInvokeArgs(), options.WithDefaults());
     }
 
 

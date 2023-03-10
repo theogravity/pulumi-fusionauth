@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -22,7 +22,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -33,27 +32,27 @@ import (
 //			_, err := fusionauth.NewFusionAuthApplication(ctx, "forum", &fusionauth.FusionAuthApplicationArgs{
 //				TenantId:                                pulumi.Any(fusionauth_tenant.Portal.Id),
 //				AuthenticationTokenConfigurationEnabled: pulumi.Bool(false),
-//				FormConfiguration: &FusionAuthApplicationFormConfigurationArgs{
+//				FormConfiguration: &fusionauth.FusionAuthApplicationFormConfigurationArgs{
 //					AdminRegistrationFormId: pulumi.Any(fusionauth_form.Admin_registration.Id),
 //					SelfServiceFormId:       pulumi.Any(fusionauth_form.Self_service.Id),
 //				},
-//				JwtConfiguration: &FusionAuthApplicationJwtConfigurationArgs{
+//				JwtConfiguration: &fusionauth.FusionAuthApplicationJwtConfigurationArgs{
 //					AccessTokenId:          pulumi.Any(fusionauth_key.Access_token.Id),
 //					Enabled:                pulumi.Bool(true),
 //					IdTokenKeyId:           pulumi.Any(fusionauth_key.Id_token.Id),
 //					RefreshTokenTtlMinutes: pulumi.Int(43200),
 //					TtlSeconds:             pulumi.Int(3600),
 //				},
-//				LambdaConfiguration: &FusionAuthApplicationLambdaConfigurationArgs{
+//				LambdaConfiguration: &fusionauth.FusionAuthApplicationLambdaConfigurationArgs{
 //					AccessTokenPopulateId: pulumi.Any(fusionauth_lambda.Token_populate.Id),
 //					IdTokenPopulateId:     pulumi.Any(fusionauth_lambda.Id_token_populate.Id),
 //				},
-//				LoginConfiguration: &FusionAuthApplicationLoginConfigurationArgs{
+//				LoginConfiguration: &fusionauth.FusionAuthApplicationLoginConfigurationArgs{
 //					AllowTokenRefresh:     pulumi.Bool(false),
 //					GenerateRefreshTokens: pulumi.Bool(false),
 //					RequireAuthentication: pulumi.Bool(true),
 //				},
-//				OauthConfiguration: &FusionAuthApplicationOauthConfigurationArgs{
+//				OauthConfiguration: &fusionauth.FusionAuthApplicationOauthConfigurationArgs{
 //					AuthorizedOriginUrls: pulumi.StringArray{
 //						pulumi.String("http://www.example.com/oauth-callback"),
 //					},
@@ -66,38 +65,38 @@ import (
 //					LogoutUrl:                   pulumi.String("http://www.example.com/logout"),
 //					RequireClientAuthentication: pulumi.Bool(false),
 //				},
-//				RegistrationConfiguration: &FusionAuthApplicationRegistrationConfigurationArgs{
-//					BirthDate: &FusionAuthApplicationRegistrationConfigurationBirthDateArgs{
+//				RegistrationConfiguration: &fusionauth.FusionAuthApplicationRegistrationConfigurationArgs{
+//					BirthDate: &fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
 //					ConfirmPassword: pulumi.Bool(false),
 //					Enabled:         pulumi.Bool(false),
-//					FirstName: &FusionAuthApplicationRegistrationConfigurationFirstNameArgs{
+//					FirstName: &fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
-//					FullName: &FusionAuthApplicationRegistrationConfigurationFullNameArgs{
+//					FullName: &fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
-//					LastName: &FusionAuthApplicationRegistrationConfigurationLastNameArgs{
+//					LastName: &fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
 //					LoginIdType: pulumi.String(""),
-//					MiddleName: &FusionAuthApplicationRegistrationConfigurationMiddleNameArgs{
+//					MiddleName: &fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
-//					MobilePhone: &FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs{
+//					MobilePhone: &fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs{
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
 //					Type: pulumi.String(""),
 //				},
 //				PasswordlessConfigurationEnabled: pulumi.Bool(false),
-//				RegistrationDeletePolicy: &FusionAuthApplicationRegistrationDeletePolicyArgs{
+//				RegistrationDeletePolicy: &fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs{
 //					UnverifiedEnabled:              pulumi.Bool(true),
 //					UnverifiedNumberOfDaysToRetain: pulumi.Int(30),
 //				},
