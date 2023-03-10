@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -28,7 +28,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -37,8 +36,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthTenant(ctx, "example", &fusionauth.FusionAuthTenantArgs{
-//				ConnectorPolicies: FusionAuthTenantConnectorPolicyArray{
-//					&FusionAuthTenantConnectorPolicyArgs{
+//				ConnectorPolicies: fusionauth.FusionAuthTenantConnectorPolicyArray{
+//					&fusionauth.FusionAuthTenantConnectorPolicyArgs{
 //						ConnectorId: pulumi.String("b57b3d0f-f7a4-4831-a838-549717362ea8"),
 //						Domains: pulumi.StringArray{
 //							pulumi.String("*"),
@@ -46,7 +45,7 @@ import (
 //						Migrate: pulumi.Bool(false),
 //					},
 //				},
-//				EmailConfiguration: &FusionAuthTenantEmailConfigurationArgs{
+//				EmailConfiguration: &fusionauth.FusionAuthTenantEmailConfigurationArgs{
 //					ForgotPasswordEmailTemplateId: pulumi.Any(fusionauth_email.ForgotPassword_Example.Id),
 //					Host:                          pulumi.String("smtp.sendgrid.net"),
 //					Password:                      pulumi.String("password"),
@@ -58,160 +57,160 @@ import (
 //					VerifyEmail:                   pulumi.Bool(true),
 //					VerifyEmailWhenChanged:        pulumi.Bool(true),
 //				},
-//				EventConfigurations: FusionAuthTenantEventConfigurationArray{
-//					&FusionAuthTenantEventConfigurationArgs{
+//				EventConfigurations: fusionauth.FusionAuthTenantEventConfigurationArray{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.delete"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("None"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.create"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("None"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.update"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("None"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.deactivate"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.bulk.create"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.reactivate"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("jwt.refresh-token.revoke"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("jwt.refresh"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("jwt.public-key.update"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.login.success"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.login.failed"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.registration.create"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.registration.update"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.registration.delete"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.registration.verified"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.email.verified"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.identity-provider.link"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.identity-provider.unlink"),
 //						Enabled:         pulumi.Bool(true),
 //						TransactionType: pulumi.String("Any"),
 //					},
-//					&FusionAuthTenantEventConfigurationArgs{
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.password.breach"),
 //						Enabled:         pulumi.Bool(false),
 //						TransactionType: pulumi.String("None"),
 //					},
 //				},
-//				ExternalIdentifierConfiguration: &FusionAuthTenantExternalIdentifierConfigurationArgs{
+//				ExternalIdentifierConfiguration: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationArgs{
 //					AuthorizationGrantIdTimeToLiveInSeconds: pulumi.Int(30),
-//					ChangePasswordIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorArgs{
+//					ChangePasswordIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorArgs{
 //						Length: pulumi.Int(32),
 //						Type:   pulumi.String("randomBytes"),
 //					},
 //					ChangePasswordIdTimeToLiveInSeconds: pulumi.Int(600),
 //					DeviceCodeTimeToLiveInSeconds:       pulumi.Int(1800),
-//					DeviceUserCodeIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorArgs{
+//					DeviceUserCodeIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorArgs{
 //						Length: pulumi.Int(6),
 //						Type:   pulumi.String("randomAlphaNumeric"),
 //					},
-//					EmailVerificationIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorArgs{
+//					EmailVerificationIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorArgs{
 //						Length: pulumi.Int(32),
 //						Type:   pulumi.String("randomBytes"),
 //					},
 //					EmailVerificationIdTimeToLiveInSeconds: pulumi.Int(86400),
-//					EmailVerificationOneTimeCodeGenerator: &FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorArgs{
+//					EmailVerificationOneTimeCodeGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorArgs{
 //						Length: pulumi.Int(6),
 //						Type:   pulumi.String("randomAlphaNumeric"),
 //					},
 //					ExternalAuthenticationIdTimeToLiveInSeconds: pulumi.Int(300),
 //					OneTimePasswordTimeToLiveInSeconds:          pulumi.Int(60),
-//					PasswordlessLoginGenerator: &FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs{
+//					PasswordlessLoginGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs{
 //						Length: pulumi.Int(32),
 //						Type:   pulumi.String("randomBytes"),
 //					},
 //					PasswordlessLoginTimeToLiveInSeconds: pulumi.Int(600),
-//					RegistrationVerificationIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorArgs{
+//					RegistrationVerificationIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorArgs{
 //						Length: pulumi.Int(32),
 //						Type:   pulumi.String("randomBytes"),
 //					},
 //					RegistrationVerificationIdTimeToLiveInSeconds: pulumi.Int(86400),
-//					RegistrationVerificationOneTimeCodeGenerator: &FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorArgs{
+//					RegistrationVerificationOneTimeCodeGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorArgs{
 //						Length: pulumi.Int(6),
 //						Type:   pulumi.String("randomAlphaNumeric"),
 //					},
 //					SamlV2AuthnRequestIdTtlSeconds: pulumi.Int(300),
-//					SetupPasswordIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorArgs{
+//					SetupPasswordIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorArgs{
 //						Length: pulumi.Int(32),
 //						Type:   pulumi.String("randomBytes"),
 //					},
 //					SetupPasswordIdTimeToLiveInSeconds: pulumi.Int(86400),
 //					TwoFactorIdTimeToLiveInSeconds:     pulumi.Int(300),
-//					TwoFactorOneTimeCodeIdGenerator: &FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorArgs{
+//					TwoFactorOneTimeCodeIdGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorArgs{
 //						Length: pulumi.Int(6),
 //						Type:   pulumi.String("randomDigits"),
 //					},
 //					TwoFactorTrustIdTimeToLiveInSeconds: pulumi.Int(2592000),
 //				},
-//				FailedAuthenticationConfiguration: &FusionAuthTenantFailedAuthenticationConfigurationArgs{
+//				FailedAuthenticationConfiguration: &fusionauth.FusionAuthTenantFailedAuthenticationConfigurationArgs{
 //					ActionDuration:      pulumi.Int(3),
 //					ActionDurationUnit:  pulumi.String("MINUTES"),
 //					ResetCountInSeconds: pulumi.Int(60),
 //					TooManyAttempts:     pulumi.Int(5),
 //				},
-//				FamilyConfiguration: &FusionAuthTenantFamilyConfigurationArgs{
+//				FamilyConfiguration: &fusionauth.FusionAuthTenantFamilyConfigurationArgs{
 //					AllowChildRegistrations:    pulumi.Bool(true),
 //					DeleteOrphanedAccounts:     pulumi.Bool(false),
 //					DeleteOrphanedAccountsDays: pulumi.Int(30),
@@ -220,46 +219,46 @@ import (
 //					MinimumOwnerAge:            pulumi.Int(21),
 //					ParentEmailRequired:        pulumi.Bool(false),
 //				},
-//				FormConfiguration: &FusionAuthTenantFormConfigurationArgs{
+//				FormConfiguration: &fusionauth.FusionAuthTenantFormConfigurationArgs{
 //					AdminUserFormId: pulumi.String("e92751a5-25f4-4bca-ad91-66cdf67725d2"),
 //				},
 //				HttpSessionMaxInactiveInterval: pulumi.Int(3600),
 //				Issuer:                         pulumi.String("https://example.com"),
-//				JwtConfigurations: FusionAuthTenantJwtConfigurationArray{
-//					&FusionAuthTenantJwtConfigurationArgs{
+//				JwtConfigurations: fusionauth.FusionAuthTenantJwtConfigurationArray{
+//					&fusionauth.FusionAuthTenantJwtConfigurationArgs{
 //						AccessTokenKeyId:                pulumi.Any(fusionauth_key.Accesstoken.Id),
 //						IdTokenKeyId:                    pulumi.Any(fusionauth_key.Idtoken.Id),
 //						RefreshTokenTimeToLiveInMinutes: pulumi.Int(43200),
 //						TimeToLiveInSeconds:             pulumi.Int(3600),
 //					},
 //				},
-//				LoginConfiguration: &FusionAuthTenantLoginConfigurationArgs{
+//				LoginConfiguration: &fusionauth.FusionAuthTenantLoginConfigurationArgs{
 //					RequireAuthentication: pulumi.Bool(true),
 //				},
-//				MaximumPasswordAge: &FusionAuthTenantMaximumPasswordAgeArgs{
+//				MaximumPasswordAge: &fusionauth.FusionAuthTenantMaximumPasswordAgeArgs{
 //					Days:    pulumi.Int(180),
 //					Enabled: pulumi.Bool(false),
 //				},
-//				MinimumPasswordAge: &FusionAuthTenantMinimumPasswordAgeArgs{
+//				MinimumPasswordAge: &fusionauth.FusionAuthTenantMinimumPasswordAgeArgs{
 //					Enabled: pulumi.Bool(false),
 //					Seconds: pulumi.Int(30),
 //				},
-//				OauthConfigurations: FusionAuthTenantOauthConfigurationArray{
-//					&FusionAuthTenantOauthConfigurationArgs{
+//				OauthConfigurations: fusionauth.FusionAuthTenantOauthConfigurationArray{
+//					&fusionauth.FusionAuthTenantOauthConfigurationArgs{
 //						ClientCredentialsAccessTokenPopulateLambdaId: pulumi.Any(fusionauth_lambda.Client_jwt_populate.Id),
 //					},
 //				},
-//				PasswordEncryptionConfigurations: FusionAuthTenantPasswordEncryptionConfigurationArray{
-//					&FusionAuthTenantPasswordEncryptionConfigurationArgs{
+//				PasswordEncryptionConfigurations: fusionauth.FusionAuthTenantPasswordEncryptionConfigurationArray{
+//					&fusionauth.FusionAuthTenantPasswordEncryptionConfigurationArgs{
 //						EncryptionScheme:              pulumi.String("salted-pbkdf2-hmac-sha256"),
 //						EncryptionSchemeFactor:        pulumi.Int(24000),
 //						ModifyEncryptionSchemeOnLogin: pulumi.Bool(false),
 //					},
 //				},
-//				PasswordValidationRules: &FusionAuthTenantPasswordValidationRulesArgs{
+//				PasswordValidationRules: &fusionauth.FusionAuthTenantPasswordValidationRulesArgs{
 //					MaxLength: pulumi.Int(256),
 //					MinLength: pulumi.Int(7),
-//					RememberPreviousPasswords: &FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs{
+//					RememberPreviousPasswords: &fusionauth.FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs{
 //						Count:   pulumi.Int(1),
 //						Enabled: pulumi.Bool(false),
 //					},
@@ -269,7 +268,7 @@ import (
 //					ValidateOnLogin:   pulumi.Bool(false),
 //				},
 //				ThemeId: pulumi.Any(fusionauth_theme.Example_theme.Id),
-//				UserDeletePolicy: &FusionAuthTenantUserDeletePolicyArgs{
+//				UserDeletePolicy: &fusionauth.FusionAuthTenantUserDeletePolicyArgs{
 //					UnverifiedEnabled:              pulumi.Bool(false),
 //					UnverifiedNumberOfDaysToRetain: pulumi.Int(30),
 //				},

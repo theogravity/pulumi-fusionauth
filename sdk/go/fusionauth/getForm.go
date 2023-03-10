@@ -23,7 +23,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -31,7 +30,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := fusionauth.GetForm(ctx, &GetFormArgs{
+//			_, err := fusionauth.GetForm(ctx, &fusionauth.GetFormArgs{
 //				Name: pulumi.StringRef("Default User Self Service provided by FusionAuth"),
 //			}, nil)
 //			if err != nil {

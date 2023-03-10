@@ -49,11 +49,21 @@ namespace theogravity.Fusionauth.Inputs
         [Input("oauth2ClientId")]
         public Input<string>? Oauth2ClientId { get; set; }
 
+        [Input("oauth2ClientSecret")]
+        private Input<string>? _oauth2ClientSecret;
+
         /// <summary>
         /// The top-level client secret to use with the OpenID Connect identity provider.
         /// </summary>
-        [Input("oauth2ClientSecret")]
-        public Input<string>? Oauth2ClientSecret { get; set; }
+        public Input<string>? Oauth2ClientSecret
+        {
+            get => _oauth2ClientSecret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _oauth2ClientSecret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The top-level scope that you are requesting from the OpenID Connect identity provider.

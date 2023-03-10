@@ -17,19 +17,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * // Fetch user by username
- * const example = pulumi.output(fusionauth.getUser({
+ * const example = fusionauth.getUser({
  *     username: "foo@example.com",
- * }));
+ * });
  * ```
  */
 export function getUser(args?: GetUserArgs, opts?: pulumi.InvokeOptions): Promise<GetUserResult> {
     args = args || {};
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getUser:getUser", {
         "tenantId": args.tenantId,
         "userId": args.userId,
@@ -131,9 +127,26 @@ export interface GetUserResult {
      */
     readonly usernameStatus: string;
 }
-
+/**
+ * ## # User Data Source
+ *
+ * This data source can be used to fetch information about a specific user.
+ *
+ * [Users API](https://fusionauth.io/docs/v1/tech/apis/users)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const example = fusionauth.getUser({
+ *     username: "foo@example.com",
+ * });
+ * ```
+ */
 export function getUserOutput(args?: GetUserOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetUserResult> {
-    return pulumi.output(args).apply(a => getUser(a, opts))
+    return pulumi.output(args).apply((a: any) => getUser(a, opts))
 }
 
 /**

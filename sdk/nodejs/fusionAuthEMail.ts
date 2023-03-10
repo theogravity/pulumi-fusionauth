@@ -16,7 +16,7 @@ import * as utilities from "./utilities";
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fs from "fs";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const helloWorld = new fusionauth.FusionAuthEMail("helloWorld", {
  *     defaultFromName: "Welcome Team",

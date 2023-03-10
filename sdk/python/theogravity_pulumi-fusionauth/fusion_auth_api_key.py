@@ -334,10 +334,12 @@ class FusionAuthApiKey(pulumi.CustomResource):
 
             __props__.__dict__["description"] = description
             __props__.__dict__["ip_access_control_list_id"] = ip_access_control_list_id
-            __props__.__dict__["key"] = key
+            __props__.__dict__["key"] = None if key is None else pulumi.Output.secret(key)
             __props__.__dict__["key_id"] = key_id
             __props__.__dict__["permissions_endpoints"] = permissions_endpoints
             __props__.__dict__["tenant_id"] = tenant_id
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["key"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthApiKey, __self__).__init__(
             'fusionauth:index/fusionAuthApiKey:FusionAuthApiKey',
             resource_name,

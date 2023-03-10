@@ -23,7 +23,7 @@ import (
 //
 // import (
 //
-//	"io/ioutil"
+//	"os"
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
@@ -31,7 +31,7 @@ import (
 // )
 //
 //	func readFileOrPanic(path string) pulumi.StringPtrInput {
-//		data, err := ioutil.ReadFile(path)
+//		data, err := os.ReadFile(path)
 //		if err != nil {
 //			panic(err.Error())
 //		}
@@ -72,9 +72,6 @@ type FusionAuthImportedKey struct {
 	// The Key secret. This field is required if importing an HMAC key type.
 	Secret pulumi.StringPtrOutput `pulumi:"secret"`
 	// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-	// - `EC`
-	// - `RSA`
-	// - `HMAC`
 	Type pulumi.StringOutput `pulumi:"type"`
 }
 
@@ -85,6 +82,17 @@ func NewFusionAuthImportedKey(ctx *pulumi.Context,
 		args = &FusionAuthImportedKeyArgs{}
 	}
 
+	if args.PrivateKey != nil {
+		args.PrivateKey = pulumi.ToSecret(args.PrivateKey).(pulumi.StringPtrInput)
+	}
+	if args.Secret != nil {
+		args.Secret = pulumi.ToSecret(args.Secret).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"privateKey",
+		"secret",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthImportedKey
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthImportedKey:FusionAuthImportedKey", name, args, &resource, opts...)
@@ -125,9 +133,6 @@ type fusionAuthImportedKeyState struct {
 	// The Key secret. This field is required if importing an HMAC key type.
 	Secret *string `pulumi:"secret"`
 	// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-	// - `EC`
-	// - `RSA`
-	// - `HMAC`
 	Type *string `pulumi:"type"`
 }
 
@@ -149,9 +154,6 @@ type FusionAuthImportedKeyState struct {
 	// The Key secret. This field is required if importing an HMAC key type.
 	Secret pulumi.StringPtrInput
 	// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-	// - `EC`
-	// - `RSA`
-	// - `HMAC`
 	Type pulumi.StringPtrInput
 }
 
@@ -177,9 +179,6 @@ type fusionAuthImportedKeyArgs struct {
 	// The Key secret. This field is required if importing an HMAC key type.
 	Secret *string `pulumi:"secret"`
 	// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-	// - `EC`
-	// - `RSA`
-	// - `HMAC`
 	Type *string `pulumi:"type"`
 }
 
@@ -202,9 +201,6 @@ type FusionAuthImportedKeyArgs struct {
 	// The Key secret. This field is required if importing an HMAC key type.
 	Secret pulumi.StringPtrInput
 	// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-	// - `EC`
-	// - `RSA`
-	// - `HMAC`
 	Type pulumi.StringPtrInput
 }
 
@@ -336,9 +332,6 @@ func (o FusionAuthImportedKeyOutput) Secret() pulumi.StringPtrOutput {
 }
 
 // The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-// - `EC`
-// - `RSA`
-// - `HMAC`
 func (o FusionAuthImportedKeyOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthImportedKey) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }

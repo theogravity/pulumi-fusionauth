@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -62,6 +62,17 @@ func NewFusionAuthReactor(ctx *pulumi.Context,
 	if args.LicenseId == nil {
 		return nil, errors.New("invalid value for required argument 'LicenseId'")
 	}
+	if args.License != nil {
+		args.License = pulumi.ToSecret(args.License).(pulumi.StringPtrInput)
+	}
+	if args.LicenseId != nil {
+		args.LicenseId = pulumi.ToSecret(args.LicenseId).(pulumi.StringInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"license",
+		"licenseId",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthReactor
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthReactor:FusionAuthReactor", name, args, &resource, opts...)

@@ -28,10 +28,10 @@ func NewProvider(ctx *pulumi.Context,
 		args = &ProviderArgs{}
 	}
 
-	if isZero(args.ApiKey) {
+	if args.ApiKey == nil {
 		args.ApiKey = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string))
 	}
-	if isZero(args.Host) {
+	if args.Host == nil {
 		args.Host = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string))
 	}
 	opts = pkgResourceDefaultOpts(opts)

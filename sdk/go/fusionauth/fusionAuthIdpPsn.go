@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -28,7 +28,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -37,8 +36,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpPsn(ctx, "sonyPsn", &fusionauth.FusionAuthIdpPsnArgs{
-//				ApplicationConfigurations: FusionAuthIdpPsnApplicationConfigurationArray{
-//					&FusionAuthIdpPsnApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpPsnApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpPsnApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.Any(fusionauth_application.My_app.Id),
 //						CreateRegistration: pulumi.Bool(true),
 //						Enabled:            pulumi.Bool(true),

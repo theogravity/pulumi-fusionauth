@@ -34,9 +34,6 @@ class FusionAuthImportedKeyArgs:
         :param pulumi.Input[str] public_key: "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
         :param pulumi.Input[str] secret: The Key secret. This field is required if importing an HMAC key type.
         :param pulumi.Input[str] type: The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-               - `EC`
-               - `RSA`
-               - `HMAC`
         """
         if algorithm is not None:
             pulumi.set(__self__, "algorithm", algorithm)
@@ -158,9 +155,6 @@ class FusionAuthImportedKeyArgs:
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        - `EC`
-        - `RSA`
-        - `HMAC`
         """
         return pulumi.get(self, "type")
 
@@ -192,9 +186,6 @@ class _FusionAuthImportedKeyState:
         :param pulumi.Input[str] public_key: "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
         :param pulumi.Input[str] secret: The Key secret. This field is required if importing an HMAC key type.
         :param pulumi.Input[str] type: The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-               - `EC`
-               - `RSA`
-               - `HMAC`
         """
         if algorithm is not None:
             pulumi.set(__self__, "algorithm", algorithm)
@@ -316,9 +307,6 @@ class _FusionAuthImportedKeyState:
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        - `EC`
-        - `RSA`
-        - `HMAC`
         """
         return pulumi.get(self, "type")
 
@@ -371,9 +359,6 @@ class FusionAuthImportedKey(pulumi.CustomResource):
         :param pulumi.Input[str] public_key: "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
         :param pulumi.Input[str] secret: The Key secret. This field is required if importing an HMAC key type.
         :param pulumi.Input[str] type: The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-               - `EC`
-               - `RSA`
-               - `HMAC`
         """
         ...
     @overload
@@ -437,10 +422,12 @@ class FusionAuthImportedKey(pulumi.CustomResource):
             __props__.__dict__["key_id"] = key_id
             __props__.__dict__["kid"] = kid
             __props__.__dict__["name"] = name
-            __props__.__dict__["private_key"] = private_key
+            __props__.__dict__["private_key"] = None if private_key is None else pulumi.Output.secret(private_key)
             __props__.__dict__["public_key"] = public_key
-            __props__.__dict__["secret"] = secret
+            __props__.__dict__["secret"] = None if secret is None else pulumi.Output.secret(secret)
             __props__.__dict__["type"] = type
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["privateKey", "secret"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthImportedKey, __self__).__init__(
             'fusionauth:index/fusionAuthImportedKey:FusionAuthImportedKey',
             resource_name,
@@ -476,9 +463,6 @@ class FusionAuthImportedKey(pulumi.CustomResource):
         :param pulumi.Input[str] public_key: "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
         :param pulumi.Input[str] secret: The Key secret. This field is required if importing an HMAC key type.
         :param pulumi.Input[str] type: The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-               - `EC`
-               - `RSA`
-               - `HMAC`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -564,9 +548,6 @@ class FusionAuthImportedKey(pulumi.CustomResource):
     def type(self) -> pulumi.Output[str]:
         """
         The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        - `EC`
-        - `RSA`
-        - `HMAC`
         """
         return pulumi.get(self, "type")
 

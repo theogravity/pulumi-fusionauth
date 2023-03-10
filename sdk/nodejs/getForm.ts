@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -18,18 +19,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const defaultForm = pulumi.output(fusionauth.getForm({
+ * const default = fusionauth.getForm({
  *     name: "Default User Self Service provided by FusionAuth",
- * }));
+ * });
  * ```
  */
 export function getForm(args?: GetFormArgs, opts?: pulumi.InvokeOptions): Promise<GetFormResult> {
     args = args || {};
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getForm:getForm", {
         "data": args.data,
         "formId": args.formId,
@@ -91,9 +89,26 @@ export interface GetFormResult {
      */
     readonly type?: string;
 }
-
+/**
+ * ## # Form Resource
+ *
+ * A FusionAuth Form is a customizable object that contains one-to-many ordered steps. Each step is comprised of one or more Form Fields.
+ *
+ * [Forms API](https://fusionauth.io/docs/v1/tech/apis/forms)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const default = fusionauth.getForm({
+ *     name: "Default User Self Service provided by FusionAuth",
+ * });
+ * ```
+ */
 export function getFormOutput(args?: GetFormOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetFormResult> {
-    return pulumi.output(args).apply(a => getForm(a, opts))
+    return pulumi.output(args).apply((a: any) => getForm(a, opts))
 }
 
 /**

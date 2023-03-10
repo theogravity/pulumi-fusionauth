@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthRegistration("example", {
  *     userId: fusionauth_user.example.id,
@@ -126,7 +126,7 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
                 throw new Error("Missing required property 'userId'");
             }
             resourceInputs["applicationId"] = args ? args.applicationId : undefined;
-            resourceInputs["authenticationToken"] = args ? args.authenticationToken : undefined;
+            resourceInputs["authenticationToken"] = args?.authenticationToken ? pulumi.secret(args.authenticationToken) : undefined;
             resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["generateAuthenticationToken"] = args ? args.generateAuthenticationToken : undefined;
             resourceInputs["preferredLanguages"] = args ? args.preferredLanguages : undefined;
@@ -137,6 +137,8 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
             resourceInputs["username"] = args ? args.username : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["authenticationToken"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthRegistration.__pulumiType, name, resourceInputs, opts);
     }
 }

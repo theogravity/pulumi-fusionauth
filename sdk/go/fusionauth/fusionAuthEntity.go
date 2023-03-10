@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -62,6 +62,13 @@ func NewFusionAuthEntity(ctx *pulumi.Context,
 	if args.EntityTypeId == nil {
 		return nil, errors.New("invalid value for required argument 'EntityTypeId'")
 	}
+	if args.ClientSecret != nil {
+		args.ClientSecret = pulumi.ToSecret(args.ClientSecret).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"clientSecret",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthEntity
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthEntity:FusionAuthEntity", name, args, &resource, opts...)

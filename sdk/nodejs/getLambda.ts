@@ -17,18 +17,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const defaultGoogleReconcile = pulumi.output(fusionauth.getLambda({
+ * const defaultGoogleReconcile = fusionauth.getLambda({
  *     name: "Default Google Reconcile provided by FusionAuth",
  *     type: "GoogleReconcile",
- * }));
+ * });
  * ```
  */
 export function getLambda(args: GetLambdaArgs, opts?: pulumi.InvokeOptions): Promise<GetLambdaResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getLambda:getLambda", {
         "id": args.id,
         "name": args.name,
@@ -50,25 +47,6 @@ export interface GetLambdaArgs {
     name?: string;
     /**
      * The Lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `ClientCredentialsJWTPopulate`
      */
     type: string;
 }
@@ -89,9 +67,27 @@ export interface GetLambdaResult {
     readonly name?: string;
     readonly type: string;
 }
-
+/**
+ * ## # Lambda Resource
+ *
+ * Lambdas are user defined JavaScript functions that may be executed at runtime to perform various functions. Lambdas may be used to customize the claims returned in a JWT, reconcile a SAML v2 response or an OpenID Connect response when using these external identity providers.
+ *
+ * [Lambdas API](https://fusionauth.io/docs/v1/tech/apis/lambdas)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const defaultGoogleReconcile = fusionauth.getLambda({
+ *     name: "Default Google Reconcile provided by FusionAuth",
+ *     type: "GoogleReconcile",
+ * });
+ * ```
+ */
 export function getLambdaOutput(args: GetLambdaOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetLambdaResult> {
-    return pulumi.output(args).apply(a => getLambda(a, opts))
+    return pulumi.output(args).apply((a: any) => getLambda(a, opts))
 }
 
 /**
@@ -108,25 +104,6 @@ export interface GetLambdaOutputArgs {
     name?: pulumi.Input<string>;
     /**
      * The Lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `ClientCredentialsJWTPopulate`
      */
     type: pulumi.Input<string>;
 }

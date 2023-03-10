@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -28,7 +28,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -37,8 +36,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpGoogle(ctx, "google", &fusionauth.FusionAuthIdpGoogleArgs{
-//				ApplicationConfigurations: FusionAuthIdpGoogleApplicationConfigurationArray{
-//					&FusionAuthIdpGoogleApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpGoogleApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpGoogleApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),
 //						CreateRegistration: pulumi.Bool(true),
 //						Enabled:            pulumi.Bool(true),
@@ -98,6 +97,13 @@ func NewFusionAuthIdpGoogle(ctx *pulumi.Context,
 	if args.ClientId == nil {
 		return nil, errors.New("invalid value for required argument 'ClientId'")
 	}
+	if args.ClientSecret != nil {
+		args.ClientSecret = pulumi.ToSecret(args.ClientSecret).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"clientSecret",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpGoogle
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpGoogle:FusionAuthIdpGoogle", name, args, &resource, opts...)
