@@ -438,4 +438,4 @@ name: prerelease
 on:
   push:
     tags:
-    - v*.*.*-**
+    - "*.*.*-**"
