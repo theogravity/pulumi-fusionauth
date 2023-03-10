@@ -55,3 +55,13 @@ The following configuration points are available for the `fusionauth` provider:
 
 - `fusionauth:host` (environment: `FUSION_AUTH_HOST_URL`) - the URL to the FusionAuth instance with the trailing slash omitted (ex: `https://instance.fusionauth.io`)
 - `fusionauth:api_key` (environment: `FUSION_AUTH_API_KEY`) - the API key for `fusionauth`
+
+## Publishing new versions
+
+- Update `provider/go.mod` with the appropriate `github.com/gpsinsight/terraform-provider-fusionauth` version
+- Run `make tfgen` in the root of this directory
+- Check the warnings for any new mappings that need to be added to `provider/resources.go` and run `make tfgen` again after
+corrections are made
+- Commit all the generated files and push
+- Make sure the CI passes green.
+- Create a release by making a git tag in the format of `major.minor.patch` and push that tag to origin via `git push origin <tag>`
