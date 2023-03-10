@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -26,7 +26,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -35,8 +34,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpApple(ctx, "apple", &fusionauth.FusionAuthIdpAppleArgs{
-//				ApplicationConfigurations: FusionAuthIdpAppleApplicationConfigurationArray{
-//					&FusionAuthIdpAppleApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpAppleApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpAppleApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.String("1c212e59-0d0e-6b1a-ad48-f4f92793be32"),
 //						CreateRegistration: pulumi.Bool(true),
 //						Enabled:            pulumi.Bool(true),

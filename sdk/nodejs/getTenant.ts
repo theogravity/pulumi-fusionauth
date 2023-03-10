@@ -21,17 +21,14 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const defaultTenant = pulumi.output(fusionauth.getTenant({
+ * const default = fusionauth.getTenant({
  *     name: "Default",
- * }));
+ * });
  * ```
  */
 export function getTenant(args: GetTenantArgs, opts?: pulumi.InvokeOptions): Promise<GetTenantResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getTenant:getTenant", {
         "name": args.name,
     }, opts);
@@ -57,9 +54,30 @@ export interface GetTenantResult {
     readonly id: string;
     readonly name: string;
 }
-
+/**
+ * ## # Tenant Resource
+ *
+ * A FusionAuth Tenant is a named object that represents a discrete namespace for Users, Applications and Groups. A user is unique by email address or username within a tenant.
+ *
+ * Tenants may be useful to support a multi-tenant application where you wish to use a single instance of FusionAuth but require the ability to have duplicate users across the tenants in your own application. In this scenario a user may exist multiple times with the same email address and different passwords across tenants.
+ *
+ * Tenants may also be useful in a test or staging environment to allow multiple users to call APIs and create and modify users without possibility of collision.
+ *
+ * [Tenants API](https://fusionauth.io/docs/v1/tech/apis/tenants)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const default = fusionauth.getTenant({
+ *     name: "Default",
+ * });
+ * ```
+ */
 export function getTenantOutput(args: GetTenantOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetTenantResult> {
-    return pulumi.output(args).apply(a => getTenant(a, opts))
+    return pulumi.output(args).apply((a: any) => getTenant(a, opts))
 }
 
 /**

@@ -23,7 +23,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -34,8 +33,8 @@ import (
 //			_, err := fusionauth.NewFusionAuthApiKey(ctx, "example", &fusionauth.FusionAuthApiKeyArgs{
 //				Description: pulumi.String("my super secret key"),
 //				Key:         pulumi.String("super-secret-key"),
-//				PermissionsEndpoints: FusionAuthApiKeyPermissionsEndpointArray{
-//					&FusionAuthApiKeyPermissionsEndpointArgs{
+//				PermissionsEndpoints: fusionauth.FusionAuthApiKeyPermissionsEndpointArray{
+//					&fusionauth.FusionAuthApiKeyPermissionsEndpointArgs{
 //						Delete:   pulumi.Bool(true),
 //						Endpoint: pulumi.String("/api/application"),
 //						Get:      pulumi.Bool(true),
@@ -78,6 +77,13 @@ func NewFusionAuthApiKey(ctx *pulumi.Context,
 		args = &FusionAuthApiKeyArgs{}
 	}
 
+	if args.Key != nil {
+		args.Key = pulumi.ToSecret(args.Key).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"key",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthApiKey
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthApiKey:FusionAuthApiKey", name, args, &resource, opts...)

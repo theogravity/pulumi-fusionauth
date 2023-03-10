@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -22,7 +23,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const openID = new fusionauth.FusionAuthIdpOpenIdConnect("openID", {
  *     applicationConfigurations: [{
@@ -226,7 +227,7 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["oauth2AuthorizationEndpoint"] = args ? args.oauth2AuthorizationEndpoint : undefined;
             resourceInputs["oauth2ClientAuthenticationMethod"] = args ? args.oauth2ClientAuthenticationMethod : undefined;
             resourceInputs["oauth2ClientId"] = args ? args.oauth2ClientId : undefined;
-            resourceInputs["oauth2ClientSecret"] = args ? args.oauth2ClientSecret : undefined;
+            resourceInputs["oauth2ClientSecret"] = args?.oauth2ClientSecret ? pulumi.secret(args.oauth2ClientSecret) : undefined;
             resourceInputs["oauth2EmailClaim"] = args ? args.oauth2EmailClaim : undefined;
             resourceInputs["oauth2Issuer"] = args ? args.oauth2Issuer : undefined;
             resourceInputs["oauth2Scope"] = args ? args.oauth2Scope : undefined;
@@ -238,6 +239,8 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["oauth2ClientSecret"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthIdpOpenIdConnect.__pulumiType, name, resourceInputs, opts);
     }
 }

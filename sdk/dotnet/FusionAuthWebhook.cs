@@ -97,7 +97,7 @@ namespace theogravity.Fusionauth
         public Output<string?> HttpAuthenticationPassword { get; private set; } = null!;
 
         /// <summary>
-        /// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        /// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         /// </summary>
         [Output("httpAuthenticationUsername")]
         public Output<string?> HttpAuthenticationUsername { get; private set; } = null!;
@@ -150,6 +150,11 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "httpAuthenticationPassword",
+                    "httpAuthenticationUsername",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -209,17 +214,37 @@ namespace theogravity.Fusionauth
             set => _headers = value;
         }
 
+        [Input("httpAuthenticationPassword")]
+        private Input<string>? _httpAuthenticationPassword;
+
         /// <summary>
         /// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         /// </summary>
-        [Input("httpAuthenticationPassword")]
-        public Input<string>? HttpAuthenticationPassword { get; set; }
+        public Input<string>? HttpAuthenticationPassword
+        {
+            get => _httpAuthenticationPassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _httpAuthenticationPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("httpAuthenticationUsername")]
+        private Input<string>? _httpAuthenticationUsername;
 
         /// <summary>
-        /// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        /// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         /// </summary>
-        [Input("httpAuthenticationUsername")]
-        public Input<string>? HttpAuthenticationUsername { get; set; }
+        public Input<string>? HttpAuthenticationUsername
+        {
+            get => _httpAuthenticationUsername;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _httpAuthenticationUsername = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
@@ -295,17 +320,37 @@ namespace theogravity.Fusionauth
             set => _headers = value;
         }
 
+        [Input("httpAuthenticationPassword")]
+        private Input<string>? _httpAuthenticationPassword;
+
         /// <summary>
         /// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         /// </summary>
-        [Input("httpAuthenticationPassword")]
-        public Input<string>? HttpAuthenticationPassword { get; set; }
+        public Input<string>? HttpAuthenticationPassword
+        {
+            get => _httpAuthenticationPassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _httpAuthenticationPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("httpAuthenticationUsername")]
+        private Input<string>? _httpAuthenticationUsername;
 
         /// <summary>
-        /// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        /// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         /// </summary>
-        [Input("httpAuthenticationUsername")]
-        public Input<string>? HttpAuthenticationUsername { get; set; }
+        public Input<string>? HttpAuthenticationUsername
+        {
+            get => _httpAuthenticationUsername;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _httpAuthenticationUsername = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.

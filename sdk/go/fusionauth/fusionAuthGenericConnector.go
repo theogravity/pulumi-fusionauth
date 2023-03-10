@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -70,7 +70,7 @@ type FusionAuthGenericConnector struct {
 	Headers pulumi.MapOutput `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrOutput `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrOutput `pulumi:"httpAuthenticationUsername"`
 	// The unique Connector name.
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -96,6 +96,17 @@ func NewFusionAuthGenericConnector(ctx *pulumi.Context,
 	if args.ReadTimeout == nil {
 		return nil, errors.New("invalid value for required argument 'ReadTimeout'")
 	}
+	if args.HttpAuthenticationPassword != nil {
+		args.HttpAuthenticationPassword = pulumi.ToSecret(args.HttpAuthenticationPassword).(pulumi.StringPtrInput)
+	}
+	if args.HttpAuthenticationUsername != nil {
+		args.HttpAuthenticationUsername = pulumi.ToSecret(args.HttpAuthenticationUsername).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"httpAuthenticationPassword",
+		"httpAuthenticationUsername",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthGenericConnector
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthGenericConnector:FusionAuthGenericConnector", name, args, &resource, opts...)
@@ -131,7 +142,7 @@ type fusionAuthGenericConnectorState struct {
 	Headers map[string]interface{} `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The unique Connector name.
 	Name *string `pulumi:"name"`
@@ -154,7 +165,7 @@ type FusionAuthGenericConnectorState struct {
 	Headers pulumi.MapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The unique Connector name.
 	Name pulumi.StringPtrInput
@@ -181,7 +192,7 @@ type fusionAuthGenericConnectorArgs struct {
 	Headers map[string]interface{} `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The unique Connector name.
 	Name *string `pulumi:"name"`
@@ -205,7 +216,7 @@ type FusionAuthGenericConnectorArgs struct {
 	Headers pulumi.MapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The unique Connector name.
 	Name pulumi.StringPtrInput
@@ -332,7 +343,7 @@ func (o FusionAuthGenericConnectorOutput) HttpAuthenticationPassword() pulumi.St
 	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.StringPtrOutput { return v.HttpAuthenticationPassword }).(pulumi.StringPtrOutput)
 }
 
-// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 func (o FusionAuthGenericConnectorOutput) HttpAuthenticationUsername() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.StringPtrOutput { return v.HttpAuthenticationUsername }).(pulumi.StringPtrOutput)
 }

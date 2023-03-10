@@ -15,14 +15,15 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as fusionauth from "@pulumi/fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
- * const preferred_Username = new fusionauth.FusionAuthLambda("Preferred Username", {
+ * const preferred_Username = new fusionauth.FusionAuthLambda("preferred Username", {
  *     body: `// Using the user and registration parameters add additional values to the jwt object.
  * function populate(jwt, user, registration) {
  *   jwt.preferred_username = registration.username;
  * }
- *   `,
+ *   
+ * `,
  *     enabled: true,
  *     type: "JWTPopulate",
  * });
@@ -80,25 +81,6 @@ export class FusionAuthLambda extends pulumi.CustomResource {
     public readonly name!: pulumi.Output<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `ClientCredentialsJWTPopulate`
      */
     public readonly type!: pulumi.Output<string>;
 
@@ -169,25 +151,6 @@ export interface FusionAuthLambdaState {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `ClientCredentialsJWTPopulate`
      */
     type?: pulumi.Input<string>;
 }
@@ -220,25 +183,6 @@ export interface FusionAuthLambdaArgs {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `ClientCredentialsJWTPopulate`
      */
     type: pulumi.Input<string>;
 }

@@ -972,7 +972,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             if oauth2_client_id is None and not opts.urn:
                 raise TypeError("Missing required property 'oauth2_client_id'")
             __props__.__dict__["oauth2_client_id"] = oauth2_client_id
-            __props__.__dict__["oauth2_client_secret"] = oauth2_client_secret
+            __props__.__dict__["oauth2_client_secret"] = None if oauth2_client_secret is None else pulumi.Output.secret(oauth2_client_secret)
             __props__.__dict__["oauth2_email_claim"] = oauth2_email_claim
             __props__.__dict__["oauth2_issuer"] = oauth2_issuer
             __props__.__dict__["oauth2_scope"] = oauth2_scope
@@ -982,6 +982,8 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             __props__.__dict__["oauth2_username_claim"] = oauth2_username_claim
             __props__.__dict__["post_request"] = post_request
             __props__.__dict__["tenant_configurations"] = tenant_configurations
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["oauth2ClientSecret"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthIdpOpenIdConnect, __self__).__init__(
             'fusionauth:index/fusionAuthIdpOpenIdConnect:FusionAuthIdpOpenIdConnect',
             resource_name,

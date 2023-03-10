@@ -76,25 +76,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -178,25 +159,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
@@ -241,25 +203,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

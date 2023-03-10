@@ -15,17 +15,14 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const fusionAuth = pulumi.output(fusionauth.getApplication({
+ * const fusionAuth = fusionauth.getApplication({
  *     name: "FusionAuth",
- * }));
+ * });
  * ```
  */
 export function getApplication(args: GetApplicationArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getApplication:getApplication", {
         "name": args.name,
     }, opts);
@@ -51,9 +48,24 @@ export interface GetApplicationResult {
     readonly id: string;
     readonly name: string;
 }
-
+/**
+ * ## # Application Resource
+ *
+ * [Applications API](https://fusionauth.io/docs/v1/tech/apis/applications)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const fusionAuth = fusionauth.getApplication({
+ *     name: "FusionAuth",
+ * });
+ * ```
+ */
 export function getApplicationOutput(args: GetApplicationOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetApplicationResult> {
-    return pulumi.output(args).apply(a => getApplication(a, opts))
+    return pulumi.output(args).apply((a: any) => getApplication(a, opts))
 }
 
 /**

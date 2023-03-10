@@ -24,11 +24,8 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getApplicationRole(args: GetApplicationRoleArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationRoleResult> {
-    if (!opts) {
-        opts = {}
-    }
 
-    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getApplicationRole:getApplicationRole", {
         "applicationId": args.applicationId,
         "name": args.name,
@@ -60,9 +57,27 @@ export interface GetApplicationRoleResult {
     readonly id: string;
     readonly name: string;
 }
-
+/**
+ * ## # Application Role Resource
+ *
+ * This Resource is used to create a role for an Application.
+ *
+ * [Application Roles API](https://fusionauth.io/docs/v1/tech/apis/applications)
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as fusionauth from "@pulumi/fusionauth";
+ *
+ * const admin = fusionauth.getApplicationRole({
+ *     applicationId: data.fusionauth_application.FusionAuth.id,
+ *     name: "admin",
+ * });
+ * ```
+ */
 export function getApplicationRoleOutput(args: GetApplicationRoleOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetApplicationRoleResult> {
-    return pulumi.output(args).apply(a => getApplicationRole(a, opts))
+    return pulumi.output(args).apply((a: any) => getApplicationRole(a, opts))
 }
 
 /**

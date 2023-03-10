@@ -74,7 +74,7 @@ import (
 type FusionAuthUser struct {
 	pulumi.CustomResourceState
 
-	// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	ApplicationId pulumi.StringPtrOutput `pulumi:"applicationId"`
 	// An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
 	BirthDate pulumi.StringPtrOutput `pulumi:"birthDate"`
@@ -124,7 +124,6 @@ type FusionAuthUser struct {
 	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrOutput `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-	// * `twoFactorMethods`
 	UsernameStatus pulumi.StringPtrOutput `pulumi:"usernameStatus"`
 }
 
@@ -135,6 +134,17 @@ func NewFusionAuthUser(ctx *pulumi.Context,
 		args = &FusionAuthUserArgs{}
 	}
 
+	if args.Password != nil {
+		args.Password = pulumi.ToSecret(args.Password).(pulumi.StringPtrInput)
+	}
+	if args.TwoFactorRecoveryCodes != nil {
+		args.TwoFactorRecoveryCodes = pulumi.ToSecret(args.TwoFactorRecoveryCodes).(pulumi.StringArrayInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"password",
+		"twoFactorRecoveryCodes",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthUser
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthUser:FusionAuthUser", name, args, &resource, opts...)
@@ -158,7 +168,7 @@ func GetFusionAuthUser(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering FusionAuthUser resources.
 type fusionAuthUserState struct {
-	// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	ApplicationId *string `pulumi:"applicationId"`
 	// An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
 	BirthDate *string `pulumi:"birthDate"`
@@ -208,12 +218,11 @@ type fusionAuthUserState struct {
 	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username *string `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-	// * `twoFactorMethods`
 	UsernameStatus *string `pulumi:"usernameStatus"`
 }
 
 type FusionAuthUserState struct {
-	// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	ApplicationId pulumi.StringPtrInput
 	// An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
 	BirthDate pulumi.StringPtrInput
@@ -263,7 +272,6 @@ type FusionAuthUserState struct {
 	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrInput
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-	// * `twoFactorMethods`
 	UsernameStatus pulumi.StringPtrInput
 }
 
@@ -272,7 +280,7 @@ func (FusionAuthUserState) ElementType() reflect.Type {
 }
 
 type fusionAuthUserArgs struct {
-	// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	ApplicationId *string `pulumi:"applicationId"`
 	// An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
 	BirthDate *string `pulumi:"birthDate"`
@@ -322,13 +330,12 @@ type fusionAuthUserArgs struct {
 	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username *string `pulumi:"username"`
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-	// * `twoFactorMethods`
 	UsernameStatus *string `pulumi:"usernameStatus"`
 }
 
 // The set of arguments for constructing a FusionAuthUser resource.
 type FusionAuthUserArgs struct {
-	// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	ApplicationId pulumi.StringPtrInput
 	// An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
 	BirthDate pulumi.StringPtrInput
@@ -378,7 +385,6 @@ type FusionAuthUserArgs struct {
 	// The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
 	Username pulumi.StringPtrInput
 	// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-	// * `twoFactorMethods`
 	UsernameStatus pulumi.StringPtrInput
 }
 
@@ -469,7 +475,7 @@ func (o FusionAuthUserOutput) ToFusionAuthUserOutputWithContext(ctx context.Cont
 	return o
 }
 
-// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 func (o FusionAuthUserOutput) ApplicationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.ApplicationId }).(pulumi.StringPtrOutput)
 }
@@ -594,7 +600,6 @@ func (o FusionAuthUserOutput) Username() pulumi.StringPtrOutput {
 }
 
 // The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-// * `twoFactorMethods`
 func (o FusionAuthUserOutput) UsernameStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.UsernameStatus }).(pulumi.StringPtrOutput)
 }

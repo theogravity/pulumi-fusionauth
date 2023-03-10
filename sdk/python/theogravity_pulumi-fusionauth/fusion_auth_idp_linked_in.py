@@ -511,13 +511,15 @@ class FusionAuthIdpLinkedIn(pulumi.CustomResource):
             __props__.__dict__["client_id"] = client_id
             if client_secret is None and not opts.urn:
                 raise TypeError("Missing required property 'client_secret'")
-            __props__.__dict__["client_secret"] = client_secret
+            __props__.__dict__["client_secret"] = None if client_secret is None else pulumi.Output.secret(client_secret)
             __props__.__dict__["debug"] = debug
             __props__.__dict__["enabled"] = enabled
             __props__.__dict__["lambda_reconcile_id"] = lambda_reconcile_id
             __props__.__dict__["linking_strategy"] = linking_strategy
             __props__.__dict__["scope"] = scope
             __props__.__dict__["tenant_configurations"] = tenant_configurations
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["clientSecret"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthIdpLinkedIn, __self__).__init__(
             'fusionauth:index/fusionAuthIdpLinkedIn:FusionAuthIdpLinkedIn',
             resource_name,

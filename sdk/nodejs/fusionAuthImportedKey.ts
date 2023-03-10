@@ -16,7 +16,7 @@ import * as utilities from "./utilities";
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fs from "fs";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const name = new fusionauth.FusionAuthImportedKey("name", {
  *     kid: "8675309",
@@ -86,9 +86,6 @@ export class FusionAuthImportedKey extends pulumi.CustomResource {
     public readonly secret!: pulumi.Output<string | undefined>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-     * - `EC`
-     * - `RSA`
-     * - `HMAC`
      */
     public readonly type!: pulumi.Output<string>;
 
@@ -121,12 +118,14 @@ export class FusionAuthImportedKey extends pulumi.CustomResource {
             resourceInputs["keyId"] = args ? args.keyId : undefined;
             resourceInputs["kid"] = args ? args.kid : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["privateKey"] = args ? args.privateKey : undefined;
+            resourceInputs["privateKey"] = args?.privateKey ? pulumi.secret(args.privateKey) : undefined;
             resourceInputs["publicKey"] = args ? args.publicKey : undefined;
-            resourceInputs["secret"] = args ? args.secret : undefined;
+            resourceInputs["secret"] = args?.secret ? pulumi.secret(args.secret) : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["privateKey", "secret"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthImportedKey.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -169,9 +168,6 @@ export interface FusionAuthImportedKeyState {
     secret?: pulumi.Input<string>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-     * - `EC`
-     * - `RSA`
-     * - `HMAC`
      */
     type?: pulumi.Input<string>;
 }
@@ -214,9 +210,6 @@ export interface FusionAuthImportedKeyArgs {
     secret?: pulumi.Input<string>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-     * - `EC`
-     * - `RSA`
-     * - `HMAC`
      */
     type?: pulumi.Input<string>;
 }

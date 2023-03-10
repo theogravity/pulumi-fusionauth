@@ -49,11 +49,21 @@ namespace theogravity.Fusionauth.Inputs
         [Input("mobilePhone")]
         public Input<string>? MobilePhone { get; set; }
 
+        [Input("secret")]
+        private Input<string>? _secret;
+
         /// <summary>
         /// A base64 encoded secret
         /// </summary>
-        [Input("secret")]
-        public Input<string>? Secret { get; set; }
+        public Input<string>? Secret
+        {
+            get => _secret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _secret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("twoFactorMethodId")]
         public Input<string>? TwoFactorMethodId { get; set; }
