@@ -30,7 +30,7 @@ namespace theogravity.Fusionauth
             }
         }
 
-        private static readonly Pulumi.Config __config = new Pulumi.Config("fusionauth");
+        private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("fusionauth");
 
         private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey") ?? Utilities.GetEnv("FUSION_AUTH_API_KEY"));
         public static string? ApiKey

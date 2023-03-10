@@ -171,10 +171,12 @@ class FusionAuthReactor(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = FusionAuthReactorArgs.__new__(FusionAuthReactorArgs)
 
-            __props__.__dict__["license"] = license
+            __props__.__dict__["license"] = None if license is None else pulumi.Output.secret(license)
             if license_id is None and not opts.urn:
                 raise TypeError("Missing required property 'license_id'")
-            __props__.__dict__["license_id"] = license_id
+            __props__.__dict__["license_id"] = None if license_id is None else pulumi.Output.secret(license_id)
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["license", "licenseId"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthReactor, __self__).__init__(
             'fusionauth:index/fusionAuthReactor:FusionAuthReactor',
             resource_name,

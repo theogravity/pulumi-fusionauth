@@ -33,7 +33,7 @@ class FusionAuthGenericConnectorArgs:
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
         :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing [Key](https://fusionauth.io/docs/v1/tech/apis/keys/). The X509 certificate is used for client certificate authentication in requests to the Connector.
         """
@@ -143,7 +143,7 @@ class FusionAuthGenericConnectorArgs:
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> Optional[pulumi.Input[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 
@@ -197,7 +197,7 @@ class _FusionAuthGenericConnectorState:
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing [Key](https://fusionauth.io/docs/v1/tech/apis/keys/). The X509 certificate is used for client certificate authentication in requests to the Connector.
@@ -299,7 +299,7 @@ class _FusionAuthGenericConnectorState:
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> Optional[pulumi.Input[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 
@@ -398,7 +398,7 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing [Key](https://fusionauth.io/docs/v1/tech/apis/keys/). The X509 certificate is used for client certificate authentication in requests to the Connector.
@@ -482,13 +482,15 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
             __props__.__dict__["data"] = data
             __props__.__dict__["debug"] = debug
             __props__.__dict__["headers"] = headers
-            __props__.__dict__["http_authentication_password"] = http_authentication_password
-            __props__.__dict__["http_authentication_username"] = http_authentication_username
+            __props__.__dict__["http_authentication_password"] = None if http_authentication_password is None else pulumi.Output.secret(http_authentication_password)
+            __props__.__dict__["http_authentication_username"] = None if http_authentication_username is None else pulumi.Output.secret(http_authentication_username)
             __props__.__dict__["name"] = name
             if read_timeout is None and not opts.urn:
                 raise TypeError("Missing required property 'read_timeout'")
             __props__.__dict__["read_timeout"] = read_timeout
             __props__.__dict__["ssl_certificate_key_id"] = ssl_certificate_key_id
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["httpAuthenticationPassword", "httpAuthenticationUsername"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthGenericConnector, __self__).__init__(
             'fusionauth:index/fusionAuthGenericConnector:FusionAuthGenericConnector',
             resource_name,
@@ -522,7 +524,7 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing [Key](https://fusionauth.io/docs/v1/tech/apis/keys/). The X509 certificate is used for client certificate authentication in requests to the Connector.
@@ -595,7 +597,7 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> pulumi.Output[Optional[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 

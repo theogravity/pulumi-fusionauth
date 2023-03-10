@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -24,7 +24,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -36,13 +35,13 @@ import (
 //				Data: pulumi.AnyMap{
 //					"description": pulumi.Any("This form customizes the registration experience."),
 //				},
-//				Steps: FusionAuthFormStepArray{
-//					&FusionAuthFormStepArgs{
+//				Steps: fusionauth.FusionAuthFormStepArray{
+//					&fusionauth.FusionAuthFormStepArgs{
 //						Fields: pulumi.StringArray{
 //							pulumi.String("91909721-7d4f-b110-8f21-cfdee2a1edb8"),
 //						},
 //					},
-//					&FusionAuthFormStepArgs{
+//					&fusionauth.FusionAuthFormStepArgs{
 //						Fields: pulumi.StringArray{
 //							pulumi.String("8ed89a31-c325-3156-72ed-6e89183af917"),
 //							pulumi.String("a977cfd4-a9ed-c4cf-650f-f4539268ac38"),

@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -14,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthUser("example", {
  *     userId: "4c4511df-0d0d-4029-8c2b-f6c01b9e138d",
@@ -75,7 +76,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
     }
 
     /**
-     * -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
      */
     public readonly applicationId!: pulumi.Output<string | undefined>;
     /**
@@ -173,7 +174,6 @@ export class FusionAuthUser extends pulumi.CustomResource {
     public readonly username!: pulumi.Output<string | undefined>;
     /**
      * The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-     * * `twoFactorMethods`
      */
     public readonly usernameStatus!: pulumi.Output<string | undefined>;
 
@@ -232,7 +232,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
             resourceInputs["middleName"] = args ? args.middleName : undefined;
             resourceInputs["mobilePhone"] = args ? args.mobilePhone : undefined;
             resourceInputs["parentEmail"] = args ? args.parentEmail : undefined;
-            resourceInputs["password"] = args ? args.password : undefined;
+            resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["passwordChangeRequired"] = args ? args.passwordChangeRequired : undefined;
             resourceInputs["preferredLanguages"] = args ? args.preferredLanguages : undefined;
             resourceInputs["sendSetPasswordEmail"] = args ? args.sendSetPasswordEmail : undefined;
@@ -240,12 +240,14 @@ export class FusionAuthUser extends pulumi.CustomResource {
             resourceInputs["tenantId"] = args ? args.tenantId : undefined;
             resourceInputs["timezone"] = args ? args.timezone : undefined;
             resourceInputs["twoFactorMethods"] = args ? args.twoFactorMethods : undefined;
-            resourceInputs["twoFactorRecoveryCodes"] = args ? args.twoFactorRecoveryCodes : undefined;
+            resourceInputs["twoFactorRecoveryCodes"] = args?.twoFactorRecoveryCodes ? pulumi.secret(args.twoFactorRecoveryCodes) : undefined;
             resourceInputs["userId"] = args ? args.userId : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["usernameStatus"] = args ? args.usernameStatus : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["password", "twoFactorRecoveryCodes"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthUser.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -255,7 +257,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
  */
 export interface FusionAuthUserState {
     /**
-     * -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
      */
     applicationId?: pulumi.Input<string>;
     /**
@@ -353,7 +355,6 @@ export interface FusionAuthUserState {
     username?: pulumi.Input<string>;
     /**
      * The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-     * * `twoFactorMethods`
      */
     usernameStatus?: pulumi.Input<string>;
 }
@@ -363,7 +364,7 @@ export interface FusionAuthUserState {
  */
 export interface FusionAuthUserArgs {
     /**
-     * -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
      */
     applicationId?: pulumi.Input<string>;
     /**
@@ -461,7 +462,6 @@ export interface FusionAuthUserArgs {
     username?: pulumi.Input<string>;
     /**
      * The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-     * * `twoFactorMethods`
      */
     usernameStatus?: pulumi.Input<string>;
 }

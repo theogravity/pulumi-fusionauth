@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as fusionauth from "@pulumi/fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const reactor = new fusionauth.FusionAuthReactor("reactor", {
  *     license: "abc",
@@ -80,10 +80,12 @@ export class FusionAuthReactor extends pulumi.CustomResource {
             if ((!args || args.licenseId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'licenseId'");
             }
-            resourceInputs["license"] = args ? args.license : undefined;
-            resourceInputs["licenseId"] = args ? args.licenseId : undefined;
+            resourceInputs["license"] = args?.license ? pulumi.secret(args.license) : undefined;
+            resourceInputs["licenseId"] = args?.licenseId ? pulumi.secret(args.licenseId) : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["license", "licenseId"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthReactor.__pulumiType, name, resourceInputs, opts);
     }
 }

@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -32,7 +32,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -41,8 +40,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpFacebook(ctx, "facebook", &fusionauth.FusionAuthIdpFacebookArgs{
-//				ApplicationConfigurations: FusionAuthIdpFacebookApplicationConfigurationArray{
-//					&FusionAuthIdpFacebookApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpFacebookApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpFacebookApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),
 //						CreateRegistration: pulumi.Bool(true),
 //						Enabled:            pulumi.Bool(true),
@@ -113,6 +112,13 @@ func NewFusionAuthIdpFacebook(ctx *pulumi.Context,
 	if args.ClientSecret == nil {
 		return nil, errors.New("invalid value for required argument 'ClientSecret'")
 	}
+	if args.ClientSecret != nil {
+		args.ClientSecret = pulumi.ToSecret(args.ClientSecret).(pulumi.StringInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"clientSecret",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpFacebook
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpFacebook:FusionAuthIdpFacebook", name, args, &resource, opts...)

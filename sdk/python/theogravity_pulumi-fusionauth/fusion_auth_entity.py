@@ -371,7 +371,7 @@ class FusionAuthEntity(pulumi.CustomResource):
             __props__ = FusionAuthEntityArgs.__new__(FusionAuthEntityArgs)
 
             __props__.__dict__["client_id"] = client_id
-            __props__.__dict__["client_secret"] = client_secret
+            __props__.__dict__["client_secret"] = None if client_secret is None else pulumi.Output.secret(client_secret)
             __props__.__dict__["data"] = data
             __props__.__dict__["entity_id"] = entity_id
             if entity_type_id is None and not opts.urn:
@@ -379,6 +379,8 @@ class FusionAuthEntity(pulumi.CustomResource):
             __props__.__dict__["entity_type_id"] = entity_type_id
             __props__.__dict__["name"] = name
             __props__.__dict__["tenant_id"] = tenant_id
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["clientSecret"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthEntity, __self__).__init__(
             'fusionauth:index/fusionAuthEntity:FusionAuthEntity',
             resource_name,

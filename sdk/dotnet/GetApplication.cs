@@ -39,7 +39,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Task<GetApplicationResult> InvokeAsync(GetApplicationArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.InvokeAsync<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Application Resource
@@ -68,7 +68,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Output<GetApplicationResult> Invoke(GetApplicationInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationInvokeArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationInvokeArgs(), options.WithDefaults());
     }
 
 

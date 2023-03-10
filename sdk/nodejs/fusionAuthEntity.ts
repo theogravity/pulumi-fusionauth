@@ -111,7 +111,7 @@ export class FusionAuthEntity extends pulumi.CustomResource {
                 throw new Error("Missing required property 'entityTypeId'");
             }
             resourceInputs["clientId"] = args ? args.clientId : undefined;
-            resourceInputs["clientSecret"] = args ? args.clientSecret : undefined;
+            resourceInputs["clientSecret"] = args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined;
             resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["entityId"] = args ? args.entityId : undefined;
             resourceInputs["entityTypeId"] = args ? args.entityTypeId : undefined;
@@ -119,6 +119,8 @@ export class FusionAuthEntity extends pulumi.CustomResource {
             resourceInputs["tenantId"] = args ? args.tenantId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["clientSecret"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthEntity.__pulumiType, name, resourceInputs, opts);
     }
 }
