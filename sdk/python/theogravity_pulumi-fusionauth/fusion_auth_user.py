@@ -44,7 +44,7 @@ class FusionAuthUserArgs:
                  username_status: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthUser resource.
-        :param pulumi.Input[str] application_id: -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
@@ -69,7 +69,6 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
         :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-               * `two_factor_methods`
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -128,7 +127,7 @@ class FusionAuthUserArgs:
     @pulumi.getter(name="applicationId")
     def application_id(self) -> Optional[pulumi.Input[str]]:
         """
-        -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         """
         return pulumi.get(self, "application_id")
 
@@ -426,7 +425,6 @@ class FusionAuthUserArgs:
     def username_status(self) -> Optional[pulumi.Input[str]]:
         """
         The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        * `two_factor_methods`
         """
         return pulumi.get(self, "username_status")
 
@@ -466,7 +464,7 @@ class _FusionAuthUserState:
                  username_status: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthUser resources.
-        :param pulumi.Input[str] application_id: -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
@@ -491,7 +489,6 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
         :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-               * `two_factor_methods`
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -550,7 +547,7 @@ class _FusionAuthUserState:
     @pulumi.getter(name="applicationId")
     def application_id(self) -> Optional[pulumi.Input[str]]:
         """
-        -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         """
         return pulumi.get(self, "application_id")
 
@@ -848,7 +845,6 @@ class _FusionAuthUserState:
     def username_status(self) -> Optional[pulumi.Input[str]]:
         """
         The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        * `two_factor_methods`
         """
         return pulumi.get(self, "username_status")
 
@@ -932,7 +928,7 @@ class FusionAuthUser(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] application_id: -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
@@ -957,7 +953,6 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
         :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-               * `two_factor_methods`
         """
         ...
     @overload
@@ -1070,7 +1065,7 @@ class FusionAuthUser(pulumi.CustomResource):
             __props__.__dict__["middle_name"] = middle_name
             __props__.__dict__["mobile_phone"] = mobile_phone
             __props__.__dict__["parent_email"] = parent_email
-            __props__.__dict__["password"] = password
+            __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
             __props__.__dict__["password_change_required"] = password_change_required
             __props__.__dict__["preferred_languages"] = preferred_languages
             __props__.__dict__["send_set_password_email"] = send_set_password_email
@@ -1078,10 +1073,12 @@ class FusionAuthUser(pulumi.CustomResource):
             __props__.__dict__["tenant_id"] = tenant_id
             __props__.__dict__["timezone"] = timezone
             __props__.__dict__["two_factor_methods"] = two_factor_methods
-            __props__.__dict__["two_factor_recovery_codes"] = two_factor_recovery_codes
+            __props__.__dict__["two_factor_recovery_codes"] = None if two_factor_recovery_codes is None else pulumi.Output.secret(two_factor_recovery_codes)
             __props__.__dict__["user_id"] = user_id
             __props__.__dict__["username"] = username
             __props__.__dict__["username_status"] = username_status
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["password", "twoFactorRecoveryCodes"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthUser, __self__).__init__(
             'fusionauth:index/fusionAuthUser:FusionAuthUser',
             resource_name,
@@ -1125,7 +1122,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] application_id: -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
@@ -1150,7 +1147,6 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] user_id: The Id to use for the new User. If not specified a secure random UUID will be generated..
         :param pulumi.Input[str] username: The username of the User. The username is stored and returned as a case sensitive value, however a username is considered unique regardless of the case. bob is considered equal to BoB so either version of this username can be used whenever providing it as input to an API.
         :param pulumi.Input[str] username_status: The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-               * `two_factor_methods`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -1188,7 +1184,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter(name="applicationId")
     def application_id(self) -> pulumi.Output[Optional[str]]:
         """
-        -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         """
         return pulumi.get(self, "application_id")
 
@@ -1386,7 +1382,6 @@ class FusionAuthUser(pulumi.CustomResource):
     def username_status(self) -> pulumi.Output[Optional[str]]:
         """
         The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        * `two_factor_methods`
         """
         return pulumi.get(self, "username_status")
 

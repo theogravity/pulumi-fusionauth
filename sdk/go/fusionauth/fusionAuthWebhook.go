@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -24,7 +24,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -35,11 +34,11 @@ import (
 //			_, err := fusionauth.NewFusionAuthWebhook(ctx, "example", &fusionauth.FusionAuthWebhookArgs{
 //				TenantIds: pulumi.StringArray{
 //					pulumi.String("00000000-0000-0000-0000-000000000003"),
-//					pulumi.Any(fusionauth_tenant.Example.Id),
+//					fusionauth_tenant.Example.Id,
 //				},
 //				ConnectTimeout: pulumi.Int(1000),
 //				Description:    pulumi.String("The standard game Webhook"),
-//				EventsEnabled: &FusionAuthWebhookEventsEnabledArgs{
+//				EventsEnabled: &fusionauth.FusionAuthWebhookEventsEnabledArgs{
 //					UserCreate: pulumi.Bool(true),
 //					UserDelete: pulumi.Bool(false),
 //				},
@@ -77,7 +76,7 @@ type FusionAuthWebhook struct {
 	Headers pulumi.MapOutput `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrOutput `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrOutput `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntOutput `pulumi:"readTimeout"`
@@ -105,6 +104,17 @@ func NewFusionAuthWebhook(ctx *pulumi.Context,
 	if args.Url == nil {
 		return nil, errors.New("invalid value for required argument 'Url'")
 	}
+	if args.HttpAuthenticationPassword != nil {
+		args.HttpAuthenticationPassword = pulumi.ToSecret(args.HttpAuthenticationPassword).(pulumi.StringPtrInput)
+	}
+	if args.HttpAuthenticationUsername != nil {
+		args.HttpAuthenticationUsername = pulumi.ToSecret(args.HttpAuthenticationUsername).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"httpAuthenticationPassword",
+		"httpAuthenticationUsername",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthWebhook
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthWebhook:FusionAuthWebhook", name, args, &resource, opts...)
@@ -140,7 +150,7 @@ type fusionAuthWebhookState struct {
 	Headers map[string]interface{} `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout *int `pulumi:"readTimeout"`
@@ -165,7 +175,7 @@ type FusionAuthWebhookState struct {
 	Headers pulumi.MapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntPtrInput
@@ -194,7 +204,7 @@ type fusionAuthWebhookArgs struct {
 	Headers map[string]interface{} `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout int `pulumi:"readTimeout"`
@@ -220,7 +230,7 @@ type FusionAuthWebhookArgs struct {
 	Headers pulumi.MapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
-	// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntInput
@@ -349,7 +359,7 @@ func (o FusionAuthWebhookOutput) HttpAuthenticationPassword() pulumi.StringPtrOu
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringPtrOutput { return v.HttpAuthenticationPassword }).(pulumi.StringPtrOutput)
 }
 
-// -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 func (o FusionAuthWebhookOutput) HttpAuthenticationUsername() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringPtrOutput { return v.HttpAuthenticationUsername }).(pulumi.StringPtrOutput)
 }

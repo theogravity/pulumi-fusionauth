@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthGenericConnector("example", {
  *     authenticationUrl: "http://mygameserver.local:7001/fusionauth-connector",
@@ -88,7 +88,7 @@ export class FusionAuthGenericConnector extends pulumi.CustomResource {
      */
     public readonly httpAuthenticationPassword!: pulumi.Output<string | undefined>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     public readonly httpAuthenticationUsername!: pulumi.Output<string | undefined>;
     /**
@@ -143,13 +143,15 @@ export class FusionAuthGenericConnector extends pulumi.CustomResource {
             resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["headers"] = args ? args.headers : undefined;
-            resourceInputs["httpAuthenticationPassword"] = args ? args.httpAuthenticationPassword : undefined;
-            resourceInputs["httpAuthenticationUsername"] = args ? args.httpAuthenticationUsername : undefined;
+            resourceInputs["httpAuthenticationPassword"] = args?.httpAuthenticationPassword ? pulumi.secret(args.httpAuthenticationPassword) : undefined;
+            resourceInputs["httpAuthenticationUsername"] = args?.httpAuthenticationUsername ? pulumi.secret(args.httpAuthenticationUsername) : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["readTimeout"] = args ? args.readTimeout : undefined;
             resourceInputs["sslCertificateKeyId"] = args ? args.sslCertificateKeyId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["httpAuthenticationPassword", "httpAuthenticationUsername"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthGenericConnector.__pulumiType, name, resourceInputs, opts);
     }
 }
@@ -183,7 +185,7 @@ export interface FusionAuthGenericConnectorState {
      */
     httpAuthenticationPassword?: pulumi.Input<string>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     httpAuthenticationUsername?: pulumi.Input<string>;
     /**
@@ -229,7 +231,7 @@ export interface FusionAuthGenericConnectorArgs {
      */
     httpAuthenticationPassword?: pulumi.Input<string>;
     /**
-     * -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+     * The HTTP basic authentication username that is sent as part of the HTTP request for the events.
      */
     httpAuthenticationUsername?: pulumi.Input<string>;
     /**

@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -28,7 +28,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -37,8 +36,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpSamlv2(ctx, "saml", &fusionauth.FusionAuthIdpSamlv2Args{
-//				ApplicationConfigurations: FusionAuthIdpSamlv2ApplicationConfigurationArray{
-//					&FusionAuthIdpSamlv2ApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpSamlv2ApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpSamlv2ApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),
 //						ButtonText:         pulumi.String("Login with SAML (app text)"),
 //						CreateRegistration: pulumi.Bool(true),

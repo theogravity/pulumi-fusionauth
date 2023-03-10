@@ -457,7 +457,7 @@ class FusionAuthRegistration(pulumi.CustomResource):
             if application_id is None and not opts.urn:
                 raise TypeError("Missing required property 'application_id'")
             __props__.__dict__["application_id"] = application_id
-            __props__.__dict__["authentication_token"] = authentication_token
+            __props__.__dict__["authentication_token"] = None if authentication_token is None else pulumi.Output.secret(authentication_token)
             __props__.__dict__["data"] = data
             __props__.__dict__["generate_authentication_token"] = generate_authentication_token
             __props__.__dict__["preferred_languages"] = preferred_languages
@@ -468,6 +468,8 @@ class FusionAuthRegistration(pulumi.CustomResource):
                 raise TypeError("Missing required property 'user_id'")
             __props__.__dict__["user_id"] = user_id
             __props__.__dict__["username"] = username
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["authenticationToken"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthRegistration, __self__).__init__(
             'fusionauth:index/fusionAuthRegistration:FusionAuthRegistration',
             resource_name,

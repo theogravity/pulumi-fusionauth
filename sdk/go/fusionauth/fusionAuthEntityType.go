@@ -25,7 +25,6 @@ import (
 //
 //	"encoding/json"
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -42,7 +41,7 @@ import (
 //			json0 := string(tmpJSON0)
 //			_, err = fusionauth.NewFusionAuthEntityType(ctx, "company", &fusionauth.FusionAuthEntityTypeArgs{
 //				Data: pulumi.String(json0),
-//				JwtConfiguration: &FusionAuthEntityTypeJwtConfigurationArgs{
+//				JwtConfiguration: &fusionauth.FusionAuthEntityTypeJwtConfigurationArgs{
 //					AccessTokenKeyId:    pulumi.String("a7516c7c-6234-4021-b0b4-8870c807aeb2"),
 //					Enabled:             pulumi.Bool(true),
 //					TimeToLiveInSeconds: pulumi.Int(3600),

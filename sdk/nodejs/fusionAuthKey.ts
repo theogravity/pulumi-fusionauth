@@ -15,9 +15,9 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as fusionauth from "@pulumi/fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
- * const adminId = new fusionauth.FusionAuthKey("admin_id", {
+ * const adminId = new fusionauth.FusionAuthKey("adminId", {
  *     algorithm: "RS256",
  *     length: 2048,
  * });

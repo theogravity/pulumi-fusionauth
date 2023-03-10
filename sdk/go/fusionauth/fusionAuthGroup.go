@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -36,7 +36,7 @@ import (
 //			_, err := fusionauth.NewFusionAuthGroup(ctx, "myGroup", &fusionauth.FusionAuthGroupArgs{
 //				TenantId: pulumi.Any(fusionauth_tenant.My_tenant.Id),
 //				RoleIds: pulumi.StringArray{
-//					pulumi.Any(fusionauth_application_role.Admins.Id),
+//					fusionauth_application_role.Admins.Id,
 //				},
 //			})
 //			if err != nil {

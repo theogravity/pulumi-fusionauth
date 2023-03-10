@@ -21,7 +21,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -29,7 +28,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := fusionauth.GetIdp(ctx, &GetIdpArgs{
+//			_, err := fusionauth.GetIdp(ctx, &fusionauth.GetIdpArgs{
 //				Name: "Apple",
 //				Type: "Apple",
 //			}, nil)

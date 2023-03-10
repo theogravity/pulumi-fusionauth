@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -85,6 +85,13 @@ func NewFusionAuthRegistration(ctx *pulumi.Context,
 	if args.UserId == nil {
 		return nil, errors.New("invalid value for required argument 'UserId'")
 	}
+	if args.AuthenticationToken != nil {
+		args.AuthenticationToken = pulumi.ToSecret(args.AuthenticationToken).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"authenticationToken",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthRegistration
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthRegistration:FusionAuthRegistration", name, args, &resource, opts...)

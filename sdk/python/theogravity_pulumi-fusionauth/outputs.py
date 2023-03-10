@@ -5830,7 +5830,6 @@ class FusionAuthTenantJwtConfiguration(dict):
         :param str id_token_key_id: The unique id of the signing key used to sign the Id token.
         :param int refresh_token_time_to_live_in_minutes: The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         :param int time_to_live_in_seconds: The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-               * `login_configuration`
         :param str refresh_token_expiration_policy: The refresh token expiration policy.
         :param bool refresh_token_revocation_policy_on_login_prevented: When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
         :param bool refresh_token_revocation_policy_on_password_change: When enabled, the refresh token will be revoked when a user changes their password."
@@ -5878,7 +5877,6 @@ class FusionAuthTenantJwtConfiguration(dict):
     def time_to_live_in_seconds(self) -> int:
         """
         The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-        * `login_configuration`
         """
         return pulumi.get(self, "time_to_live_in_seconds")
 

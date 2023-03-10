@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -24,7 +25,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const facebook = new fusionauth.FusionAuthIdpFacebook("facebook", {
  *     applicationConfigurations: [{
@@ -162,7 +163,7 @@ export class FusionAuthIdpFacebook extends pulumi.CustomResource {
             resourceInputs["appId"] = args ? args.appId : undefined;
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
             resourceInputs["buttonText"] = args ? args.buttonText : undefined;
-            resourceInputs["clientSecret"] = args ? args.clientSecret : undefined;
+            resourceInputs["clientSecret"] = args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["fields"] = args ? args.fields : undefined;
@@ -173,6 +174,8 @@ export class FusionAuthIdpFacebook extends pulumi.CustomResource {
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["clientSecret"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthIdpFacebook.__pulumiType, name, resourceInputs, opts);
     }
 }

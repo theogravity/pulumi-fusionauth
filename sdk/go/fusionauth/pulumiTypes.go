@@ -13138,7 +13138,6 @@ type FusionAuthTenantJwtConfiguration struct {
 	// The refresh token usage policy.
 	RefreshTokenUsagePolicy *string `pulumi:"refreshTokenUsagePolicy"`
 	// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-	// * `loginConfiguration`
 	TimeToLiveInSeconds int `pulumi:"timeToLiveInSeconds"`
 }
 
@@ -13169,7 +13168,6 @@ type FusionAuthTenantJwtConfigurationArgs struct {
 	// The refresh token usage policy.
 	RefreshTokenUsagePolicy pulumi.StringPtrInput `pulumi:"refreshTokenUsagePolicy"`
 	// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-	// * `loginConfiguration`
 	TimeToLiveInSeconds pulumi.IntInput `pulumi:"timeToLiveInSeconds"`
 }
 
@@ -13260,7 +13258,6 @@ func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenUsagePolicy() pulumi
 }
 
 // The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-// * `loginConfiguration`
 func (o FusionAuthTenantJwtConfigurationOutput) TimeToLiveInSeconds() pulumi.IntOutput {
 	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) int { return v.TimeToLiveInSeconds }).(pulumi.IntOutput)
 }
