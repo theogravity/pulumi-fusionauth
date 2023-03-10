@@ -10,4 +10,5 @@
   * See `Adding Mappings, Building the Provider and SDKs` in `README-BUILD.md` for more info.
 - Commit all the generated files and push.
 - Make sure the CI passes green.
-- Create a release by making a git tag in the format of `major.minor.patch` and push that tag to origin via `git push origin <tag>`
+- Create a release by making a git tag in the format of `vX.Y.Z` and push that tag to origin via `git push origin <tag>`
+- Look at the action tab in the github repo to monitor the build for that version
