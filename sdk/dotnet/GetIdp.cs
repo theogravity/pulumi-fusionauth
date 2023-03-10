@@ -40,7 +40,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Task<GetIdpResult> InvokeAsync(GetIdpArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.InvokeAsync<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Application Resource
@@ -70,7 +70,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Output<GetIdpResult> Invoke(GetIdpInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpInvokeArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.Invoke<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpInvokeArgs(), options.WithDefaults());
     }
 
 

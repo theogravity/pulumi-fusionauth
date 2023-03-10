@@ -127,6 +127,10 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "authenticationToken",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -156,11 +160,21 @@ namespace theogravity.Fusionauth
         [Input("applicationId", required: true)]
         public Input<string> ApplicationId { get; set; } = null!;
 
+        [Input("authenticationToken")]
+        private Input<string>? _authenticationToken;
+
         /// <summary>
         /// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
         /// </summary>
-        [Input("authenticationToken")]
-        public Input<string>? AuthenticationToken { get; set; }
+        public Input<string>? AuthenticationToken
+        {
+            get => _authenticationToken;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _authenticationToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("data")]
         private InputMap<object>? _data;
@@ -242,11 +256,21 @@ namespace theogravity.Fusionauth
         [Input("applicationId")]
         public Input<string>? ApplicationId { get; set; }
 
+        [Input("authenticationToken")]
+        private Input<string>? _authenticationToken;
+
         /// <summary>
         /// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
         /// </summary>
-        [Input("authenticationToken")]
-        public Input<string>? AuthenticationToken { get; set; }
+        public Input<string>? AuthenticationToken
+        {
+            get => _authenticationToken;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _authenticationToken = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         [Input("data")]
         private InputMap<object>? _data;

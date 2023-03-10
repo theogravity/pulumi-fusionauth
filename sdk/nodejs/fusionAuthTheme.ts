@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as fusionauth from "@pulumi/fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const mytheme = new fusionauth.FusionAuthTheme("mytheme", {
  *     accountEdit: "[#ftl/]",
@@ -28,7 +28,6 @@ import * as utilities from "./utilities";
  *     accountWebauthnIndex: "[#ftl/]",
  *     defaultMessages: "[#ftl/]",
  *     emailComplete: "[#ftl/]",
- *     // Deprecated Properties
  *     emailSend: "[#ftl/]",
  *     emailSent: "[#ftl/]",
  *     emailVerificationRequired: "[#ftl/]",

@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "../types";
+import * as inputs from "../types/input";
+import * as outputs from "../types/output";
 
 export interface FusionAuthApiKeyPermissionsEndpoint {
     /**
@@ -1505,7 +1506,6 @@ export interface FusionAuthTenantJwtConfiguration {
     refreshTokenUsagePolicy?: pulumi.Input<string>;
     /**
      * The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-     * * `loginConfiguration`
      */
     timeToLiveInSeconds: pulumi.Input<number>;
 }

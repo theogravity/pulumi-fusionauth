@@ -89,9 +89,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        /// - `EC`
-        /// - `RSA`
-        /// - `HMAC`
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -120,6 +117,11 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "privateKey",
+                    "secret",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -173,11 +175,21 @@ namespace theogravity.Fusionauth
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        [Input("privateKey")]
+        private Input<string>? _privateKey;
+
         /// <summary>
         /// The Key private key. Optional if importing an RSA or EC key. If the key is only to be used for token validation, only a public key is necessary and this field may be omitted.
         /// </summary>
-        [Input("privateKey")]
-        public Input<string>? PrivateKey { get; set; }
+        public Input<string>? PrivateKey
+        {
+            get => _privateKey;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _privateKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
@@ -185,17 +197,24 @@ namespace theogravity.Fusionauth
         [Input("publicKey")]
         public Input<string>? PublicKey { get; set; }
 
+        [Input("secret")]
+        private Input<string>? _secret;
+
         /// <summary>
         /// The Key secret. This field is required if importing an HMAC key type.
         /// </summary>
-        [Input("secret")]
-        public Input<string>? Secret { get; set; }
+        public Input<string>? Secret
+        {
+            get => _secret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _secret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        /// - `EC`
-        /// - `RSA`
-        /// - `HMAC`
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
@@ -238,11 +257,21 @@ namespace theogravity.Fusionauth
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        [Input("privateKey")]
+        private Input<string>? _privateKey;
+
         /// <summary>
         /// The Key private key. Optional if importing an RSA or EC key. If the key is only to be used for token validation, only a public key is necessary and this field may be omitted.
         /// </summary>
-        [Input("privateKey")]
-        public Input<string>? PrivateKey { get; set; }
+        public Input<string>? PrivateKey
+        {
+            get => _privateKey;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _privateKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// "The Key public key. Required if importing an RSA or EC key and a certificate is not provided."
@@ -250,17 +279,24 @@ namespace theogravity.Fusionauth
         [Input("publicKey")]
         public Input<string>? PublicKey { get; set; }
 
+        [Input("secret")]
+        private Input<string>? _secret;
+
         /// <summary>
         /// The Key secret. This field is required if importing an HMAC key type.
         /// </summary>
-        [Input("secret")]
-        public Input<string>? Secret { get; set; }
+        public Input<string>? Secret
+        {
+            get => _secret;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _secret = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
-        /// - `EC`
-        /// - `RSA`
-        /// - `HMAC`
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

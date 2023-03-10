@@ -91,11 +91,21 @@ namespace theogravity.Fusionauth.Inputs
         [Input("loginSuspiciousEmailTemplateId")]
         public Input<string>? LoginSuspiciousEmailTemplateId { get; set; }
 
+        [Input("password")]
+        private Input<string>? _password;
+
         /// <summary>
         /// An optional password FusionAuth will use to authenticate with the SMTP server.
         /// </summary>
-        [Input("password")]
-        public Input<string>? Password { get; set; }
+        public Input<string>? Password
+        {
+            get => _password;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _password = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The Id of the Email Template used to send emails to users when they have completed a 'forgot password' workflow and their password habeen reset.
@@ -121,11 +131,21 @@ namespace theogravity.Fusionauth.Inputs
         [Input("port", required: true)]
         public Input<int> Port { get; set; } = null!;
 
+        [Input("properties")]
+        private Input<string>? _properties;
+
         /// <summary>
         /// Additional Email Configuration in a properties file formatted String.
         /// </summary>
-        [Input("properties")]
-        public Input<string>? Properties { get; set; }
+        public Input<string>? Properties
+        {
+            get => _properties;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _properties = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The type of security protocol FusionAuth will use when connecting to the SMTP server.

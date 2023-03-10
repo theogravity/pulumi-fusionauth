@@ -44,7 +44,6 @@ namespace theogravity.Fusionauth.Outputs
         public readonly string? RefreshTokenUsagePolicy;
         /// <summary>
         /// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-        /// * `login_configuration`
         /// </summary>
         public readonly int TimeToLiveInSeconds;
 

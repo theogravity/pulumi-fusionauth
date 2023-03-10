@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -30,7 +31,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as pulumi_fusionauth from "pulumi-fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const linkedin = new fusionauth.FusionAuthIdpLinkedIn("linkedin", {
  *     applicationConfigurations: [{
@@ -154,7 +155,7 @@ export class FusionAuthIdpLinkedIn extends pulumi.CustomResource {
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
             resourceInputs["buttonText"] = args ? args.buttonText : undefined;
             resourceInputs["clientId"] = args ? args.clientId : undefined;
-            resourceInputs["clientSecret"] = args ? args.clientSecret : undefined;
+            resourceInputs["clientSecret"] = args?.clientSecret ? pulumi.secret(args.clientSecret) : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["lambdaReconcileId"] = args ? args.lambdaReconcileId : undefined;
@@ -163,6 +164,8 @@ export class FusionAuthIdpLinkedIn extends pulumi.CustomResource {
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["clientSecret"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthIdpLinkedIn.__pulumiType, name, resourceInputs, opts);
     }
 }

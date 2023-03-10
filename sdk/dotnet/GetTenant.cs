@@ -45,7 +45,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Task<GetTenantResult> InvokeAsync(GetTenantArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.InvokeAsync<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.InvokeAsync<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Tenant Resource
@@ -80,7 +80,7 @@ namespace theogravity.Fusionauth
         /// {{% /examples %}}
         /// </summary>
         public static Output<GetTenantResult> Invoke(GetTenantInvokeArgs args, InvokeOptions? options = null)
-            => Pulumi.Deployment.Instance.Invoke<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantInvokeArgs(), options.WithDefaults());
+            => global::Pulumi.Deployment.Instance.Invoke<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantInvokeArgs(), options.WithDefaults());
     }
 
 

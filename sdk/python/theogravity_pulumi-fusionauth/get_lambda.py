@@ -108,25 +108,6 @@ def get_lambda(id: Optional[str] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
-           - `JWTPopulate`
-           - `OpenIDReconcile`
-           - `SAMLv2Reconcile`
-           - `SAMLv2Populate`
-           - `AppleReconcile`
-           - `ExternalJWTReconcile`
-           - `FacebookReconcile`
-           - `GoogleReconcile`
-           - `HYPRReconcile`
-           - `TwitterReconcile`
-           - `LDAPConnectorReconcile`
-           - `LinkedInReconcile`
-           - `EpicGamesReconcile`
-           - `NintendoReconcile`
-           - `SonyPSNReconcile`
-           - `SteamReconcile`
-           - `TwitchReconcile`
-           - `XboxReconcile`
-           - `ClientCredentialsJWTPopulate`
     """
     __args__ = dict()
     __args__['id'] = id
@@ -169,24 +150,5 @@ def get_lambda_output(id: Optional[pulumi.Input[Optional[str]]] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
-           - `JWTPopulate`
-           - `OpenIDReconcile`
-           - `SAMLv2Reconcile`
-           - `SAMLv2Populate`
-           - `AppleReconcile`
-           - `ExternalJWTReconcile`
-           - `FacebookReconcile`
-           - `GoogleReconcile`
-           - `HYPRReconcile`
-           - `TwitterReconcile`
-           - `LDAPConnectorReconcile`
-           - `LinkedInReconcile`
-           - `EpicGamesReconcile`
-           - `NintendoReconcile`
-           - `SonyPSNReconcile`
-           - `SteamReconcile`
-           - `TwitchReconcile`
-           - `XboxReconcile`
-           - `ClientCredentialsJWTPopulate`
     """
     ...
