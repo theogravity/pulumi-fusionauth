@@ -2,7 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
-import { input as inputs, output as outputs } from "./types";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -16,13 +17,13 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as fusionauth from "@pulumi/fusionauth";
+ * import * as fusionauth from "pulumi-fusionauth";
  *
  * const example = new fusionauth.FusionAuthApiKey("example", {
  *     description: "my super secret key",
  *     key: "super-secret-key",
  *     permissionsEndpoints: [{
- *         delete: true,
+ *         "delete": true,
  *         endpoint: "/api/application",
  *         get: true,
  *         patch: true,
@@ -109,12 +110,14 @@ export class FusionAuthApiKey extends pulumi.CustomResource {
             const args = argsOrState as FusionAuthApiKeyArgs | undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["ipAccessControlListId"] = args ? args.ipAccessControlListId : undefined;
-            resourceInputs["key"] = args ? args.key : undefined;
+            resourceInputs["key"] = args?.key ? pulumi.secret(args.key) : undefined;
             resourceInputs["keyId"] = args ? args.keyId : undefined;
             resourceInputs["permissionsEndpoints"] = args ? args.permissionsEndpoints : undefined;
             resourceInputs["tenantId"] = args ? args.tenantId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["key"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(FusionAuthApiKey.__pulumiType, name, resourceInputs, opts);
     }
 }

@@ -74,6 +74,11 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "license",
+                    "licenseId",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -97,17 +102,37 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthReactorArgs : global::Pulumi.ResourceArgs
     {
+        [Input("license")]
+        private Input<string>? _license;
+
         /// <summary>
         /// The Base64 encoded license value. This value is necessary in an air gapped configuration where outbound network access is not available.
         /// </summary>
-        [Input("license")]
-        public Input<string>? License { get; set; }
+        public Input<string>? License
+        {
+            get => _license;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _license = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("licenseId", required: true)]
+        private Input<string>? _licenseId;
 
         /// <summary>
         /// The license Id to activate.
         /// </summary>
-        [Input("licenseId", required: true)]
-        public Input<string> LicenseId { get; set; } = null!;
+        public Input<string>? LicenseId
+        {
+            get => _licenseId;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _licenseId = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public FusionAuthReactorArgs()
         {
@@ -117,17 +142,37 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthReactorState : global::Pulumi.ResourceArgs
     {
+        [Input("license")]
+        private Input<string>? _license;
+
         /// <summary>
         /// The Base64 encoded license value. This value is necessary in an air gapped configuration where outbound network access is not available.
         /// </summary>
-        [Input("license")]
-        public Input<string>? License { get; set; }
+        public Input<string>? License
+        {
+            get => _license;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _license = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("licenseId")]
+        private Input<string>? _licenseId;
 
         /// <summary>
         /// The license Id to activate.
         /// </summary>
-        [Input("licenseId")]
-        public Input<string>? LicenseId { get; set; }
+        public Input<string>? LicenseId
+        {
+            get => _licenseId;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _licenseId = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         public FusionAuthReactorState()
         {

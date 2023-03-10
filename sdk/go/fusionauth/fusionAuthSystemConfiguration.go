@@ -23,7 +23,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -32,13 +31,13 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthSystemConfiguration(ctx, "example", &fusionauth.FusionAuthSystemConfigurationArgs{
-//				AuditLogConfiguration: &FusionAuthSystemConfigurationAuditLogConfigurationArgs{
-//					Delete: &FusionAuthSystemConfigurationAuditLogConfigurationDeleteArgs{
+//				AuditLogConfiguration: &fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationArgs{
+//					Delete: &fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationDeleteArgs{
 //						Enabled:              pulumi.Bool(true),
 //						NumberOfDaysToRetain: pulumi.Int(367),
 //					},
 //				},
-//				CorsConfiguration: &FusionAuthSystemConfigurationCorsConfigurationArgs{
+//				CorsConfiguration: &fusionauth.FusionAuthSystemConfigurationCorsConfigurationArgs{
 //					AllowedMethods: pulumi.StringArray{
 //						pulumi.String("POST"),
 //						pulumi.String("PUT"),

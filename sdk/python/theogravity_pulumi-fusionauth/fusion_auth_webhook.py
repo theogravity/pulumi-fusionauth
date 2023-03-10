@@ -37,7 +37,7 @@ class FusionAuthWebhookArgs:
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         """
@@ -161,7 +161,7 @@ class FusionAuthWebhookArgs:
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> Optional[pulumi.Input[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 
@@ -216,7 +216,7 @@ class _FusionAuthWebhookState:
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
@@ -321,7 +321,7 @@ class _FusionAuthWebhookState:
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> Optional[pulumi.Input[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 
@@ -439,7 +439,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
@@ -529,8 +529,8 @@ class FusionAuthWebhook(pulumi.CustomResource):
             __props__.__dict__["events_enabled"] = events_enabled
             __props__.__dict__["global_"] = global_
             __props__.__dict__["headers"] = headers
-            __props__.__dict__["http_authentication_password"] = http_authentication_password
-            __props__.__dict__["http_authentication_username"] = http_authentication_username
+            __props__.__dict__["http_authentication_password"] = None if http_authentication_password is None else pulumi.Output.secret(http_authentication_password)
+            __props__.__dict__["http_authentication_username"] = None if http_authentication_username is None else pulumi.Output.secret(http_authentication_username)
             if read_timeout is None and not opts.urn:
                 raise TypeError("Missing required property 'read_timeout'")
             __props__.__dict__["read_timeout"] = read_timeout
@@ -539,6 +539,8 @@ class FusionAuthWebhook(pulumi.CustomResource):
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["httpAuthenticationPassword", "httpAuthenticationUsername"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthWebhook, __self__).__init__(
             'fusionauth:index/fusionAuthWebhook:FusionAuthWebhook',
             resource_name,
@@ -573,7 +575,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
         :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
-        :param pulumi.Input[str] http_authentication_username: -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
@@ -648,7 +650,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
     @pulumi.getter(name="httpAuthenticationUsername")
     def http_authentication_username(self) -> pulumi.Output[Optional[str]]:
         """
-        -(Optional) The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "http_authentication_username")
 

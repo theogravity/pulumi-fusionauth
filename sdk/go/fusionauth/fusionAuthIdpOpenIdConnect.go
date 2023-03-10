@@ -7,7 +7,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -30,7 +30,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -39,8 +38,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpOpenIdConnect(ctx, "openID", &fusionauth.FusionAuthIdpOpenIdConnectArgs{
-//				ApplicationConfigurations: FusionAuthIdpOpenIdConnectApplicationConfigurationArray{
-//					&FusionAuthIdpOpenIdConnectApplicationConfigurationArgs{
+//				ApplicationConfigurations: fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArray{
+//					&fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs{
 //						ApplicationId:      pulumi.Any(fusionauth_application.Myapp.Id),
 //						CreateRegistration: pulumi.Bool(true),
 //						Enabled:            pulumi.Bool(true),
@@ -56,8 +55,8 @@ import (
 //				ButtonText:                       pulumi.String("Login with OpenID Connect"),
 //				Debug:                            pulumi.Bool(false),
 //				Enabled:                          pulumi.Bool(true),
-//				TenantConfigurations: FusionAuthIdpOpenIdConnectTenantConfigurationArray{
-//					&FusionAuthIdpOpenIdConnectTenantConfigurationArgs{
+//				TenantConfigurations: fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArray{
+//					&fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs{
 //						TenantId:                       pulumi.Any(fusionauth_tenant.Example.Id),
 //						LimitUserLinkCountEnabled:      pulumi.Bool(false),
 //						LimitUserLinkCountMaximumLinks: pulumi.Int(42),
@@ -136,6 +135,13 @@ func NewFusionAuthIdpOpenIdConnect(ctx *pulumi.Context,
 	if args.Oauth2ClientId == nil {
 		return nil, errors.New("invalid value for required argument 'Oauth2ClientId'")
 	}
+	if args.Oauth2ClientSecret != nil {
+		args.Oauth2ClientSecret = pulumi.ToSecret(args.Oauth2ClientSecret).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"oauth2ClientSecret",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpOpenIdConnect
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpOpenIdConnect:FusionAuthIdpOpenIdConnect", name, args, &resource, opts...)

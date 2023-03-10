@@ -57,7 +57,6 @@ namespace theogravity.Fusionauth.Inputs
 
         /// <summary>
         /// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-        /// * `login_configuration`
         /// </summary>
         [Input("timeToLiveInSeconds", required: true)]
         public Input<int> TimeToLiveInSeconds { get; set; } = null!;

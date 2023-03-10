@@ -65,7 +65,7 @@ namespace theogravity.Fusionauth
     public partial class FusionAuthUser : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         /// </summary>
         [Output("applicationId")]
         public Output<string?> ApplicationId { get; private set; } = null!;
@@ -213,7 +213,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        /// * `two_factor_methods`
         /// </summary>
         [Output("usernameStatus")]
         public Output<string?> UsernameStatus { get; private set; } = null!;
@@ -242,6 +241,11 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+                AdditionalSecretOutputs =
+                {
+                    "password",
+                    "twoFactorRecoveryCodes",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -266,7 +270,7 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthUserArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         /// </summary>
         [Input("applicationId")]
         public Input<string>? ApplicationId { get; set; }
@@ -349,11 +353,21 @@ namespace theogravity.Fusionauth
         [Input("parentEmail")]
         public Input<string>? ParentEmail { get; set; }
 
+        [Input("password")]
+        private Input<string>? _password;
+
         /// <summary>
         /// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         /// </summary>
-        [Input("password")]
-        public Input<string>? Password { get; set; }
+        public Input<string>? Password
+        {
+            get => _password;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _password = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// Indicates that the User’s password needs to be changed during their next login attempt.
@@ -414,7 +428,11 @@ namespace theogravity.Fusionauth
         public InputList<string> TwoFactorRecoveryCodes
         {
             get => _twoFactorRecoveryCodes ?? (_twoFactorRecoveryCodes = new InputList<string>());
-            set => _twoFactorRecoveryCodes = value;
+            set
+            {
+                var emptySecret = Output.CreateSecret(ImmutableArray.Create<string>());
+                _twoFactorRecoveryCodes = Output.All(value, emptySecret).Apply(v => v[0]);
+            }
         }
 
         /// <summary>
@@ -431,7 +449,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        /// * `two_factor_methods`
         /// </summary>
         [Input("usernameStatus")]
         public Input<string>? UsernameStatus { get; set; }
@@ -445,7 +462,7 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthUserState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// -An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         /// </summary>
         [Input("applicationId")]
         public Input<string>? ApplicationId { get; set; }
@@ -528,11 +545,21 @@ namespace theogravity.Fusionauth
         [Input("parentEmail")]
         public Input<string>? ParentEmail { get; set; }
 
+        [Input("password")]
+        private Input<string>? _password;
+
         /// <summary>
         /// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         /// </summary>
-        [Input("password")]
-        public Input<string>? Password { get; set; }
+        public Input<string>? Password
+        {
+            get => _password;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _password = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// Indicates that the User’s password needs to be changed during their next login attempt.
@@ -593,7 +620,11 @@ namespace theogravity.Fusionauth
         public InputList<string> TwoFactorRecoveryCodes
         {
             get => _twoFactorRecoveryCodes ?? (_twoFactorRecoveryCodes = new InputList<string>());
-            set => _twoFactorRecoveryCodes = value;
+            set
+            {
+                var emptySecret = Output.CreateSecret(ImmutableArray.Create<string>());
+                _twoFactorRecoveryCodes = Output.All(value, emptySecret).Apply(v => v[0]);
+            }
         }
 
         /// <summary>
@@ -610,7 +641,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The current status of the username. This is used if you are moderating usernames via CleanSpeak.
-        /// * `two_factor_methods`
         /// </summary>
         [Input("usernameStatus")]
         public Input<string>? UsernameStatus { get; set; }

@@ -23,7 +23,6 @@ import (
 //
 // import (
 //
-//	"github.com/pulumi/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //	"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth"
 //
@@ -31,7 +30,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := fusionauth.GetLambda(ctx, &GetLambdaArgs{
+//			_, err := fusionauth.GetLambda(ctx, &fusionauth.GetLambdaArgs{
 //				Name: pulumi.StringRef("Default Google Reconcile provided by FusionAuth"),
 //				Type: "GoogleReconcile",
 //			}, nil)
@@ -60,25 +59,6 @@ type GetLambdaArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name *string `pulumi:"name"`
 	// The Lambda type. The possible values are:
-	// - `JWTPopulate`
-	// - `OpenIDReconcile`
-	// - `SAMLv2Reconcile`
-	// - `SAMLv2Populate`
-	// - `AppleReconcile`
-	// - `ExternalJWTReconcile`
-	// - `FacebookReconcile`
-	// - `GoogleReconcile`
-	// - `HYPRReconcile`
-	// - `TwitterReconcile`
-	// - `LDAPConnectorReconcile`
-	// - `LinkedInReconcile`
-	// - `EpicGamesReconcile`
-	// - `NintendoReconcile`
-	// - `SonyPSNReconcile`
-	// - `SteamReconcile`
-	// - `TwitchReconcile`
-	// - `XboxReconcile`
-	// - `ClientCredentialsJWTPopulate`
 	Type string `pulumi:"type"`
 }
 
@@ -113,25 +93,6 @@ type GetLambdaOutputArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The Lambda type. The possible values are:
-	// - `JWTPopulate`
-	// - `OpenIDReconcile`
-	// - `SAMLv2Reconcile`
-	// - `SAMLv2Populate`
-	// - `AppleReconcile`
-	// - `ExternalJWTReconcile`
-	// - `FacebookReconcile`
-	// - `GoogleReconcile`
-	// - `HYPRReconcile`
-	// - `TwitterReconcile`
-	// - `LDAPConnectorReconcile`
-	// - `LinkedInReconcile`
-	// - `EpicGamesReconcile`
-	// - `NintendoReconcile`
-	// - `SonyPSNReconcile`
-	// - `SteamReconcile`
-	// - `TwitchReconcile`
-	// - `XboxReconcile`
-	// - `ClientCredentialsJWTPopulate`
 	Type pulumi.StringInput `pulumi:"type"`
 }
 
