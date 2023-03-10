@@ -1,5 +1,5 @@
 {
   "resource": true,
   "name": "fusionauth",
-  "server": "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}"
+  "server": "https://github.com/theogravity/pulumi-fusionauth/releases/download/${VERSION}"
 }

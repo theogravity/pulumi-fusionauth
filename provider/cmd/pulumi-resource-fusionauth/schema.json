@@ -12,7 +12,7 @@
     "attribution": "This Pulumi package is based on the [`fusionauth` Terraform Provider](https://github.com/gpsinsight/terraform-provider-fusionauth).",
     "repository": "https://github.com/theogravity/pulumi-fusionauth",
     "logoUrl": "https://avatars.githubusercontent.com/u/41974756?s=200\u0026v=4",
-    "pluginDownloadURL": "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
+    "pluginDownloadURL": "https://github.com/theogravity/pulumi-fusionauth/releases/download/${VERSION}",
     "publisher": "Theo Gravity",
     "meta": {
         "moduleFormat": "(.*)(?:/[^/]*)"

@@ -15,7 +15,7 @@ class InstallPluginCommand(install):
     def run(self):
         install.run(self)
         try:
-            check_call(['pulumi', 'plugin', 'install', 'resource', 'fusionauth', PLUGIN_VERSION, '--server', 'https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}'])
+            check_call(['pulumi', 'plugin', 'install', 'resource', 'fusionauth', PLUGIN_VERSION, '--server', 'https://github.com/theogravity/pulumi-fusionauth/releases/download/${VERSION}'])
         except OSError as error:
             if error.errno == errno.ENOENT:
                 print(f"""
