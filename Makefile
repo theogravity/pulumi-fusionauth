@@ -47,7 +47,6 @@ build_nodejs:: install_plugins tfgen # build the node sdk
         cp ../../README.md ../../LICENSE package.json yarn.lock ./bin/ && \
 		mkdir -p bin/scripts && cp scripts/install-pulumi-plugin.js bin/scripts && \
 		sed -i.bak -e "s/v\$${VERSION}/$(VERSION)/g" ./bin/scripts/install-pulumi-plugin.js && \
-		sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/scripts/install-pulumi-plugin.js && \
         sed -i.bak -e "s/v\$${VERSION}/$(VERSION)/g" ./bin/package.json && \
         sed -i.bak -e "s/\$${VERSION}/$(VERSION)/g" ./bin/package.json
 
