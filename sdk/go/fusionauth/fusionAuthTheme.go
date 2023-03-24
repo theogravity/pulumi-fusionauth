@@ -60,6 +60,8 @@ import (
 //				Oauth2Register:                            pulumi.String("[#ftl/]"),
 //				Oauth2StartIdpLink:                        pulumi.String("[#ftl/]"),
 //				Oauth2TwoFactor:                           pulumi.String("[#ftl/]"),
+//				Oauth2TwoFactorEnable:                     pulumi.String("[#ftl/]"),
+//				Oauth2TwoFactorEnableComplete:             pulumi.String("[#ftl/]"),
 //				Oauth2TwoFactorMethods:                    pulumi.String("[#ftl/]"),
 //				Oauth2Wait:                                pulumi.String("[#ftl/]"),
 //				Oauth2Webauthn:                            pulumi.String("[#ftl/]"),
@@ -153,6 +155,10 @@ type FusionAuthTheme struct {
 	Oauth2StartIdpLink pulumi.StringOutput `pulumi:"oauth2StartIdpLink"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 	Oauth2TwoFactor pulumi.StringOutput `pulumi:"oauth2TwoFactor"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable form.
+	Oauth2TwoFactorEnable pulumi.StringOutput `pulumi:"oauth2TwoFactorEnable"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+	Oauth2TwoFactorEnableComplete pulumi.StringOutput `pulumi:"oauth2TwoFactorEnableComplete"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
 	Oauth2TwoFactorMethods pulumi.StringOutput `pulumi:"oauth2TwoFactorMethods"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
@@ -287,6 +293,10 @@ type fusionAuthThemeState struct {
 	Oauth2StartIdpLink *string `pulumi:"oauth2StartIdpLink"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 	Oauth2TwoFactor *string `pulumi:"oauth2TwoFactor"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable form.
+	Oauth2TwoFactorEnable *string `pulumi:"oauth2TwoFactorEnable"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+	Oauth2TwoFactorEnableComplete *string `pulumi:"oauth2TwoFactorEnableComplete"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
 	Oauth2TwoFactorMethods *string `pulumi:"oauth2TwoFactorMethods"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
@@ -392,6 +402,10 @@ type FusionAuthThemeState struct {
 	Oauth2StartIdpLink pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 	Oauth2TwoFactor pulumi.StringPtrInput
+	// A FreeMarker template that contains the OAuth2 two-factor enable form.
+	Oauth2TwoFactorEnable pulumi.StringPtrInput
+	// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+	Oauth2TwoFactorEnableComplete pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
 	Oauth2TwoFactorMethods pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
@@ -501,6 +515,10 @@ type fusionAuthThemeArgs struct {
 	Oauth2StartIdpLink *string `pulumi:"oauth2StartIdpLink"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 	Oauth2TwoFactor *string `pulumi:"oauth2TwoFactor"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable form.
+	Oauth2TwoFactorEnable *string `pulumi:"oauth2TwoFactorEnable"`
+	// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+	Oauth2TwoFactorEnableComplete *string `pulumi:"oauth2TwoFactorEnableComplete"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
 	Oauth2TwoFactorMethods *string `pulumi:"oauth2TwoFactorMethods"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
@@ -607,6 +625,10 @@ type FusionAuthThemeArgs struct {
 	Oauth2StartIdpLink pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 	Oauth2TwoFactor pulumi.StringPtrInput
+	// A FreeMarker template that contains the OAuth2 two-factor enable form.
+	Oauth2TwoFactorEnable pulumi.StringPtrInput
+	// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+	Oauth2TwoFactorEnableComplete pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
 	Oauth2TwoFactorMethods pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
@@ -889,6 +911,16 @@ func (o FusionAuthThemeOutput) Oauth2StartIdpLink() pulumi.StringOutput {
 // A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
 func (o FusionAuthThemeOutput) Oauth2TwoFactor() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.Oauth2TwoFactor }).(pulumi.StringOutput)
+}
+
+// A FreeMarker template that contains the OAuth2 two-factor enable form.
+func (o FusionAuthThemeOutput) Oauth2TwoFactorEnable() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.Oauth2TwoFactorEnable }).(pulumi.StringOutput)
+}
+
+// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+func (o FusionAuthThemeOutput) Oauth2TwoFactorEnableComplete() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.Oauth2TwoFactorEnableComplete }).(pulumi.StringOutput)
 }
 
 // A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.

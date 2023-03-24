@@ -14,12 +14,12 @@ __all__ = ['FusionAuthEMailArgs', 'FusionAuthEMail']
 @pulumi.input_type
 class FusionAuthEMailArgs:
     def __init__(__self__, *,
-                 default_from_name: pulumi.Input[str],
                  default_html_template: pulumi.Input[str],
                  default_subject: pulumi.Input[str],
                  default_text_template: pulumi.Input[str],
-                 from_email: pulumi.Input[str],
+                 default_from_name: Optional[pulumi.Input[str]] = None,
                  email_id: Optional[pulumi.Input[str]] = None,
+                 from_email: Optional[pulumi.Input[str]] = None,
                  localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
@@ -27,25 +27,27 @@ class FusionAuthEMailArgs:
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthEMail resource.
-        :param pulumi.Input[str] default_from_name: The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
         :param pulumi.Input[str] default_html_template: The default HTML Email Template.
         :param pulumi.Input[str] default_subject: The default Subject used when sending emails.
         :param pulumi.Input[str] default_text_template: The default Text Email Template.
-        :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
+        :param pulumi.Input[str] default_from_name: The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
         :param pulumi.Input[str] email_id: The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
         :param pulumi.Input[Mapping[str, Any]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         :param pulumi.Input[Mapping[str, Any]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[Mapping[str, Any]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         :param pulumi.Input[Mapping[str, Any]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[str] name: A descriptive name for the email template (i.e. "April 2016 Coupon Email")
         """
-        pulumi.set(__self__, "default_from_name", default_from_name)
         pulumi.set(__self__, "default_html_template", default_html_template)
         pulumi.set(__self__, "default_subject", default_subject)
         pulumi.set(__self__, "default_text_template", default_text_template)
-        pulumi.set(__self__, "from_email", from_email)
+        if default_from_name is not None:
+            pulumi.set(__self__, "default_from_name", default_from_name)
         if email_id is not None:
             pulumi.set(__self__, "email_id", email_id)
+        if from_email is not None:
+            pulumi.set(__self__, "from_email", from_email)
         if localized_from_names is not None:
             pulumi.set(__self__, "localized_from_names", localized_from_names)
         if localized_html_templates is not None:
@@ -56,18 +58,6 @@ class FusionAuthEMailArgs:
             pulumi.set(__self__, "localized_text_templates", localized_text_templates)
         if name is not None:
             pulumi.set(__self__, "name", name)
-
-    @property
-    @pulumi.getter(name="defaultFromName")
-    def default_from_name(self) -> pulumi.Input[str]:
-        """
-        The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
-        """
-        return pulumi.get(self, "default_from_name")
-
-    @default_from_name.setter
-    def default_from_name(self, value: pulumi.Input[str]):
-        pulumi.set(self, "default_from_name", value)
 
     @property
     @pulumi.getter(name="defaultHtmlTemplate")
@@ -106,16 +96,16 @@ class FusionAuthEMailArgs:
         pulumi.set(self, "default_text_template", value)
 
     @property
-    @pulumi.getter(name="fromEmail")
-    def from_email(self) -> pulumi.Input[str]:
+    @pulumi.getter(name="defaultFromName")
+    def default_from_name(self) -> Optional[pulumi.Input[str]]:
         """
-        The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
+        The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
         """
-        return pulumi.get(self, "from_email")
+        return pulumi.get(self, "default_from_name")
 
-    @from_email.setter
-    def from_email(self, value: pulumi.Input[str]):
-        pulumi.set(self, "from_email", value)
+    @default_from_name.setter
+    def default_from_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "default_from_name", value)
 
     @property
     @pulumi.getter(name="emailId")
@@ -128,6 +118,18 @@ class FusionAuthEMailArgs:
     @email_id.setter
     def email_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "email_id", value)
+
+    @property
+    @pulumi.getter(name="fromEmail")
+    def from_email(self) -> Optional[pulumi.Input[str]]:
+        """
+        The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
+        """
+        return pulumi.get(self, "from_email")
+
+    @from_email.setter
+    def from_email(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "from_email", value)
 
     @property
     @pulumi.getter(name="localizedFromNames")
@@ -488,8 +490,6 @@ class FusionAuthEMail(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = FusionAuthEMailArgs.__new__(FusionAuthEMailArgs)
 
-            if default_from_name is None and not opts.urn:
-                raise TypeError("Missing required property 'default_from_name'")
             __props__.__dict__["default_from_name"] = default_from_name
             if default_html_template is None and not opts.urn:
                 raise TypeError("Missing required property 'default_html_template'")
@@ -501,8 +501,6 @@ class FusionAuthEMail(pulumi.CustomResource):
                 raise TypeError("Missing required property 'default_text_template'")
             __props__.__dict__["default_text_template"] = default_text_template
             __props__.__dict__["email_id"] = email_id
-            if from_email is None and not opts.urn:
-                raise TypeError("Missing required property 'from_email'")
             __props__.__dict__["from_email"] = from_email
             __props__.__dict__["localized_from_names"] = localized_from_names
             __props__.__dict__["localized_html_templates"] = localized_html_templates
@@ -568,7 +566,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="defaultFromName")
-    def default_from_name(self) -> pulumi.Output[str]:
+    def default_from_name(self) -> pulumi.Output[Optional[str]]:
         """
         The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
         """
@@ -608,7 +606,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="fromEmail")
-    def from_email(self) -> pulumi.Output[str]:
+    def from_email(self) -> pulumi.Output[Optional[str]]:
         """
         The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
         """

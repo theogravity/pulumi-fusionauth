@@ -61,7 +61,7 @@ type FusionAuthEMail struct {
 	pulumi.CustomResourceState
 
 	// The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
-	DefaultFromName pulumi.StringOutput `pulumi:"defaultFromName"`
+	DefaultFromName pulumi.StringPtrOutput `pulumi:"defaultFromName"`
 	// The default HTML Email Template.
 	DefaultHtmlTemplate pulumi.StringOutput `pulumi:"defaultHtmlTemplate"`
 	// The default Subject used when sending emails.
@@ -71,7 +71,7 @@ type FusionAuthEMail struct {
 	// The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
 	EmailId pulumi.StringPtrOutput `pulumi:"emailId"`
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-	FromEmail pulumi.StringOutput `pulumi:"fromEmail"`
+	FromEmail pulumi.StringPtrOutput `pulumi:"fromEmail"`
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
 	LocalizedFromNames pulumi.MapOutput `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
@@ -91,9 +91,6 @@ func NewFusionAuthEMail(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.DefaultFromName == nil {
-		return nil, errors.New("invalid value for required argument 'DefaultFromName'")
-	}
 	if args.DefaultHtmlTemplate == nil {
 		return nil, errors.New("invalid value for required argument 'DefaultHtmlTemplate'")
 	}
@@ -102,9 +99,6 @@ func NewFusionAuthEMail(ctx *pulumi.Context,
 	}
 	if args.DefaultTextTemplate == nil {
 		return nil, errors.New("invalid value for required argument 'DefaultTextTemplate'")
-	}
-	if args.FromEmail == nil {
-		return nil, errors.New("invalid value for required argument 'FromEmail'")
 	}
 	opts = pkgResourceDefaultOpts(opts)
 	var resource FusionAuthEMail
@@ -184,7 +178,7 @@ func (FusionAuthEMailState) ElementType() reflect.Type {
 
 type fusionAuthEMailArgs struct {
 	// The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
-	DefaultFromName string `pulumi:"defaultFromName"`
+	DefaultFromName *string `pulumi:"defaultFromName"`
 	// The default HTML Email Template.
 	DefaultHtmlTemplate string `pulumi:"defaultHtmlTemplate"`
 	// The default Subject used when sending emails.
@@ -194,7 +188,7 @@ type fusionAuthEMailArgs struct {
 	// The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
 	EmailId *string `pulumi:"emailId"`
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-	FromEmail string `pulumi:"fromEmail"`
+	FromEmail *string `pulumi:"fromEmail"`
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
 	LocalizedFromNames map[string]interface{} `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
@@ -210,7 +204,7 @@ type fusionAuthEMailArgs struct {
 // The set of arguments for constructing a FusionAuthEMail resource.
 type FusionAuthEMailArgs struct {
 	// The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
-	DefaultFromName pulumi.StringInput
+	DefaultFromName pulumi.StringPtrInput
 	// The default HTML Email Template.
 	DefaultHtmlTemplate pulumi.StringInput
 	// The default Subject used when sending emails.
@@ -220,7 +214,7 @@ type FusionAuthEMailArgs struct {
 	// The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
 	EmailId pulumi.StringPtrInput
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-	FromEmail pulumi.StringInput
+	FromEmail pulumi.StringPtrInput
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
 	LocalizedFromNames pulumi.MapInput
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
@@ -321,8 +315,8 @@ func (o FusionAuthEMailOutput) ToFusionAuthEMailOutputWithContext(ctx context.Co
 }
 
 // The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
-func (o FusionAuthEMailOutput) DefaultFromName() pulumi.StringOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringOutput { return v.DefaultFromName }).(pulumi.StringOutput)
+func (o FusionAuthEMailOutput) DefaultFromName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringPtrOutput { return v.DefaultFromName }).(pulumi.StringPtrOutput)
 }
 
 // The default HTML Email Template.
@@ -346,8 +340,8 @@ func (o FusionAuthEMailOutput) EmailId() pulumi.StringPtrOutput {
 }
 
 // The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-func (o FusionAuthEMailOutput) FromEmail() pulumi.StringOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringOutput { return v.FromEmail }).(pulumi.StringOutput)
+func (o FusionAuthEMailOutput) FromEmail() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringPtrOutput { return v.FromEmail }).(pulumi.StringPtrOutput)
 }
 
 // The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.

@@ -45,6 +45,8 @@ class FusionAuthThemeArgs:
                  oauth2_register: Optional[pulumi.Input[str]] = None,
                  oauth2_start_idp_link: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor_methods: Optional[pulumi.Input[str]] = None,
                  oauth2_wait: Optional[pulumi.Input[str]] = None,
                  oauth2_webauthn: Optional[pulumi.Input[str]] = None,
@@ -96,6 +98,8 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] oauth2_register: A FreeMarker template that is rendered when the user requests the /oauth2/register path. This page is used to register or sign up the user for the application when self-service registration is enabled.
         :param pulumi.Input[str] oauth2_start_idp_link: A FreeMarker template that is rendered when the user requests the /oauth2/start-idp-link path. This page is used if the Identity Provider is configured to have a pending link. The user is presented with the option to link their account with an existing FusionAuth user account.
         :param pulumi.Input[str] oauth2_two_factor: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
+        :param pulumi.Input[str] oauth2_two_factor_enable: A FreeMarker template that contains the OAuth2 two-factor enable form.
+        :param pulumi.Input[str] oauth2_two_factor_enable_complete: A FreeMarker template that contains the OAuth2 two-factor enable complete form.
         :param pulumi.Input[str] oauth2_two_factor_methods: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
         :param pulumi.Input[str] oauth2_wait: A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
         :param pulumi.Input[str] oauth2_webauthn: A FreeMarker template that is rendered when the user requests the /oauth2/webauthn path. This page contains a form where a user can enter their loginId (username or email address) to authenticate with one of their registered WebAuthn passkeys. This page uses the WebAuthn bootstrap workflow.
@@ -180,6 +184,10 @@ class FusionAuthThemeArgs:
             pulumi.set(__self__, "oauth2_start_idp_link", oauth2_start_idp_link)
         if oauth2_two_factor is not None:
             pulumi.set(__self__, "oauth2_two_factor", oauth2_two_factor)
+        if oauth2_two_factor_enable is not None:
+            pulumi.set(__self__, "oauth2_two_factor_enable", oauth2_two_factor_enable)
+        if oauth2_two_factor_enable_complete is not None:
+            pulumi.set(__self__, "oauth2_two_factor_enable_complete", oauth2_two_factor_enable_complete)
         if oauth2_two_factor_methods is not None:
             pulumi.set(__self__, "oauth2_two_factor_methods", oauth2_two_factor_methods)
         if oauth2_wait is not None:
@@ -591,6 +599,30 @@ class FusionAuthThemeArgs:
     @oauth2_two_factor.setter
     def oauth2_two_factor(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_two_factor", value)
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnable")
+    def oauth2_two_factor_enable(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable")
+
+    @oauth2_two_factor_enable.setter
+    def oauth2_two_factor_enable(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_two_factor_enable", value)
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnableComplete")
+    def oauth2_two_factor_enable_complete(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable_complete")
+
+    @oauth2_two_factor_enable_complete.setter
+    def oauth2_two_factor_enable_complete(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_two_factor_enable_complete", value)
 
     @property
     @pulumi.getter(name="oauth2TwoFactorMethods")
@@ -843,6 +875,8 @@ class _FusionAuthThemeState:
                  oauth2_register: Optional[pulumi.Input[str]] = None,
                  oauth2_start_idp_link: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor_methods: Optional[pulumi.Input[str]] = None,
                  oauth2_wait: Optional[pulumi.Input[str]] = None,
                  oauth2_webauthn: Optional[pulumi.Input[str]] = None,
@@ -894,6 +928,8 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] oauth2_register: A FreeMarker template that is rendered when the user requests the /oauth2/register path. This page is used to register or sign up the user for the application when self-service registration is enabled.
         :param pulumi.Input[str] oauth2_start_idp_link: A FreeMarker template that is rendered when the user requests the /oauth2/start-idp-link path. This page is used if the Identity Provider is configured to have a pending link. The user is presented with the option to link their account with an existing FusionAuth user account.
         :param pulumi.Input[str] oauth2_two_factor: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
+        :param pulumi.Input[str] oauth2_two_factor_enable: A FreeMarker template that contains the OAuth2 two-factor enable form.
+        :param pulumi.Input[str] oauth2_two_factor_enable_complete: A FreeMarker template that contains the OAuth2 two-factor enable complete form.
         :param pulumi.Input[str] oauth2_two_factor_methods: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
         :param pulumi.Input[str] oauth2_wait: A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
         :param pulumi.Input[str] oauth2_webauthn: A FreeMarker template that is rendered when the user requests the /oauth2/webauthn path. This page contains a form where a user can enter their loginId (username or email address) to authenticate with one of their registered WebAuthn passkeys. This page uses the WebAuthn bootstrap workflow.
@@ -978,6 +1014,10 @@ class _FusionAuthThemeState:
             pulumi.set(__self__, "oauth2_start_idp_link", oauth2_start_idp_link)
         if oauth2_two_factor is not None:
             pulumi.set(__self__, "oauth2_two_factor", oauth2_two_factor)
+        if oauth2_two_factor_enable is not None:
+            pulumi.set(__self__, "oauth2_two_factor_enable", oauth2_two_factor_enable)
+        if oauth2_two_factor_enable_complete is not None:
+            pulumi.set(__self__, "oauth2_two_factor_enable_complete", oauth2_two_factor_enable_complete)
         if oauth2_two_factor_methods is not None:
             pulumi.set(__self__, "oauth2_two_factor_methods", oauth2_two_factor_methods)
         if oauth2_wait is not None:
@@ -1389,6 +1429,30 @@ class _FusionAuthThemeState:
     @oauth2_two_factor.setter
     def oauth2_two_factor(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_two_factor", value)
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnable")
+    def oauth2_two_factor_enable(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable")
+
+    @oauth2_two_factor_enable.setter
+    def oauth2_two_factor_enable(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_two_factor_enable", value)
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnableComplete")
+    def oauth2_two_factor_enable_complete(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable_complete")
+
+    @oauth2_two_factor_enable_complete.setter
+    def oauth2_two_factor_enable_complete(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_two_factor_enable_complete", value)
 
     @property
     @pulumi.getter(name="oauth2TwoFactorMethods")
@@ -1643,6 +1707,8 @@ class FusionAuthTheme(pulumi.CustomResource):
                  oauth2_register: Optional[pulumi.Input[str]] = None,
                  oauth2_start_idp_link: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor_methods: Optional[pulumi.Input[str]] = None,
                  oauth2_wait: Optional[pulumi.Input[str]] = None,
                  oauth2_webauthn: Optional[pulumi.Input[str]] = None,
@@ -1705,6 +1771,8 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_register="[#ftl/]",
             oauth2_start_idp_link="[#ftl/]",
             oauth2_two_factor="[#ftl/]",
+            oauth2_two_factor_enable="[#ftl/]",
+            oauth2_two_factor_enable_complete="[#ftl/]",
             oauth2_two_factor_methods="[#ftl/]",
             oauth2_wait="[#ftl/]",
             oauth2_webauthn="[#ftl/]",
@@ -1757,6 +1825,8 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_register: A FreeMarker template that is rendered when the user requests the /oauth2/register path. This page is used to register or sign up the user for the application when self-service registration is enabled.
         :param pulumi.Input[str] oauth2_start_idp_link: A FreeMarker template that is rendered when the user requests the /oauth2/start-idp-link path. This page is used if the Identity Provider is configured to have a pending link. The user is presented with the option to link their account with an existing FusionAuth user account.
         :param pulumi.Input[str] oauth2_two_factor: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
+        :param pulumi.Input[str] oauth2_two_factor_enable: A FreeMarker template that contains the OAuth2 two-factor enable form.
+        :param pulumi.Input[str] oauth2_two_factor_enable_complete: A FreeMarker template that contains the OAuth2 two-factor enable complete form.
         :param pulumi.Input[str] oauth2_two_factor_methods: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
         :param pulumi.Input[str] oauth2_wait: A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
         :param pulumi.Input[str] oauth2_webauthn: A FreeMarker template that is rendered when the user requests the /oauth2/webauthn path. This page contains a form where a user can enter their loginId (username or email address) to authenticate with one of their registered WebAuthn passkeys. This page uses the WebAuthn bootstrap workflow.
@@ -1825,6 +1895,8 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_register="[#ftl/]",
             oauth2_start_idp_link="[#ftl/]",
             oauth2_two_factor="[#ftl/]",
+            oauth2_two_factor_enable="[#ftl/]",
+            oauth2_two_factor_enable_complete="[#ftl/]",
             oauth2_two_factor_methods="[#ftl/]",
             oauth2_wait="[#ftl/]",
             oauth2_webauthn="[#ftl/]",
@@ -1890,6 +1962,8 @@ class FusionAuthTheme(pulumi.CustomResource):
                  oauth2_register: Optional[pulumi.Input[str]] = None,
                  oauth2_start_idp_link: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable: Optional[pulumi.Input[str]] = None,
+                 oauth2_two_factor_enable_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_two_factor_methods: Optional[pulumi.Input[str]] = None,
                  oauth2_wait: Optional[pulumi.Input[str]] = None,
                  oauth2_webauthn: Optional[pulumi.Input[str]] = None,
@@ -1951,6 +2025,8 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["oauth2_register"] = oauth2_register
             __props__.__dict__["oauth2_start_idp_link"] = oauth2_start_idp_link
             __props__.__dict__["oauth2_two_factor"] = oauth2_two_factor
+            __props__.__dict__["oauth2_two_factor_enable"] = oauth2_two_factor_enable
+            __props__.__dict__["oauth2_two_factor_enable_complete"] = oauth2_two_factor_enable_complete
             __props__.__dict__["oauth2_two_factor_methods"] = oauth2_two_factor_methods
             __props__.__dict__["oauth2_wait"] = oauth2_wait
             __props__.__dict__["oauth2_webauthn"] = oauth2_webauthn
@@ -2013,6 +2089,8 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_register: Optional[pulumi.Input[str]] = None,
             oauth2_start_idp_link: Optional[pulumi.Input[str]] = None,
             oauth2_two_factor: Optional[pulumi.Input[str]] = None,
+            oauth2_two_factor_enable: Optional[pulumi.Input[str]] = None,
+            oauth2_two_factor_enable_complete: Optional[pulumi.Input[str]] = None,
             oauth2_two_factor_methods: Optional[pulumi.Input[str]] = None,
             oauth2_wait: Optional[pulumi.Input[str]] = None,
             oauth2_webauthn: Optional[pulumi.Input[str]] = None,
@@ -2069,6 +2147,8 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_register: A FreeMarker template that is rendered when the user requests the /oauth2/register path. This page is used to register or sign up the user for the application when self-service registration is enabled.
         :param pulumi.Input[str] oauth2_start_idp_link: A FreeMarker template that is rendered when the user requests the /oauth2/start-idp-link path. This page is used if the Identity Provider is configured to have a pending link. The user is presented with the option to link their account with an existing FusionAuth user account.
         :param pulumi.Input[str] oauth2_two_factor: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
+        :param pulumi.Input[str] oauth2_two_factor_enable: A FreeMarker template that contains the OAuth2 two-factor enable form.
+        :param pulumi.Input[str] oauth2_two_factor_enable_complete: A FreeMarker template that contains the OAuth2 two-factor enable complete form.
         :param pulumi.Input[str] oauth2_two_factor_methods: A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
         :param pulumi.Input[str] oauth2_wait: A FreeMarker template that is rendered when the user requests the /oauth2/wait path. This page is rendered when FusionAuth is waiting for an external provider to complete an out of band authentication request. For example, during a HYPR login this page will be displayed until the user completes authentication.
         :param pulumi.Input[str] oauth2_webauthn: A FreeMarker template that is rendered when the user requests the /oauth2/webauthn path. This page contains a form where a user can enter their loginId (username or email address) to authenticate with one of their registered WebAuthn passkeys. This page uses the WebAuthn bootstrap workflow.
@@ -2123,6 +2203,8 @@ class FusionAuthTheme(pulumi.CustomResource):
         __props__.__dict__["oauth2_register"] = oauth2_register
         __props__.__dict__["oauth2_start_idp_link"] = oauth2_start_idp_link
         __props__.__dict__["oauth2_two_factor"] = oauth2_two_factor
+        __props__.__dict__["oauth2_two_factor_enable"] = oauth2_two_factor_enable
+        __props__.__dict__["oauth2_two_factor_enable_complete"] = oauth2_two_factor_enable_complete
         __props__.__dict__["oauth2_two_factor_methods"] = oauth2_two_factor_methods
         __props__.__dict__["oauth2_wait"] = oauth2_wait
         __props__.__dict__["oauth2_webauthn"] = oauth2_webauthn
@@ -2390,6 +2472,22 @@ class FusionAuthTheme(pulumi.CustomResource):
         A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
         """
         return pulumi.get(self, "oauth2_two_factor")
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnable")
+    def oauth2_two_factor_enable(self) -> pulumi.Output[str]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable")
+
+    @property
+    @pulumi.getter(name="oauth2TwoFactorEnableComplete")
+    def oauth2_two_factor_enable_complete(self) -> pulumi.Output[str]:
+        """
+        A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        """
+        return pulumi.get(self, "oauth2_two_factor_enable_complete")
 
     @property
     @pulumi.getter(name="oauth2TwoFactorMethods")

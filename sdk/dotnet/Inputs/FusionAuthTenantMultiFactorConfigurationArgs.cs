@@ -19,6 +19,12 @@ namespace theogravity.Fusionauth.Inputs
         [Input("email")]
         public Input<Inputs.FusionAuthTenantMultiFactorConfigurationEmailArgs>? Email { get; set; }
 
+        /// <summary>
+        /// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        /// </summary>
+        [Input("loginPolicy")]
+        public Input<string>? LoginPolicy { get; set; }
+
         [Input("sms")]
         public Input<Inputs.FusionAuthTenantMultiFactorConfigurationSmsArgs>? Sms { get; set; }
 

@@ -6058,11 +6058,17 @@ class FusionAuthTenantMultiFactorConfigurationArgs:
     def __init__(__self__, *,
                  authenticator: Optional[pulumi.Input['FusionAuthTenantMultiFactorConfigurationAuthenticatorArgs']] = None,
                  email: Optional[pulumi.Input['FusionAuthTenantMultiFactorConfigurationEmailArgs']] = None,
+                 login_policy: Optional[pulumi.Input[str]] = None,
                  sms: Optional[pulumi.Input['FusionAuthTenantMultiFactorConfigurationSmsArgs']] = None):
+        """
+        :param pulumi.Input[str] login_policy: When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        """
         if authenticator is not None:
             pulumi.set(__self__, "authenticator", authenticator)
         if email is not None:
             pulumi.set(__self__, "email", email)
+        if login_policy is not None:
+            pulumi.set(__self__, "login_policy", login_policy)
         if sms is not None:
             pulumi.set(__self__, "sms", sms)
 
@@ -6083,6 +6089,18 @@ class FusionAuthTenantMultiFactorConfigurationArgs:
     @email.setter
     def email(self, value: Optional[pulumi.Input['FusionAuthTenantMultiFactorConfigurationEmailArgs']]):
         pulumi.set(self, "email", value)
+
+    @property
+    @pulumi.getter(name="loginPolicy")
+    def login_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        """
+        return pulumi.get(self, "login_policy")
+
+    @login_policy.setter
+    def login_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "login_policy", value)
 
     @property
     @pulumi.getter

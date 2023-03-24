@@ -47,6 +47,8 @@ import * as utilities from "./utilities";
  *     oauth2Register: "[#ftl/]",
  *     oauth2StartIdpLink: "[#ftl/]",
  *     oauth2TwoFactor: "[#ftl/]",
+ *     oauth2TwoFactorEnable: "[#ftl/]",
+ *     oauth2TwoFactorEnableComplete: "[#ftl/]",
  *     oauth2TwoFactorMethods: "[#ftl/]",
  *     oauth2Wait: "[#ftl/]",
  *     oauth2Webauthn: "[#ftl/]",
@@ -222,6 +224,14 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly oauth2TwoFactor!: pulumi.Output<string>;
     /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable form.
+     */
+    public readonly oauth2TwoFactorEnable!: pulumi.Output<string>;
+    /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+     */
+    public readonly oauth2TwoFactorEnableComplete!: pulumi.Output<string>;
+    /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
      */
     public readonly oauth2TwoFactorMethods!: pulumi.Output<string>;
@@ -340,6 +350,8 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["oauth2Register"] = state ? state.oauth2Register : undefined;
             resourceInputs["oauth2StartIdpLink"] = state ? state.oauth2StartIdpLink : undefined;
             resourceInputs["oauth2TwoFactor"] = state ? state.oauth2TwoFactor : undefined;
+            resourceInputs["oauth2TwoFactorEnable"] = state ? state.oauth2TwoFactorEnable : undefined;
+            resourceInputs["oauth2TwoFactorEnableComplete"] = state ? state.oauth2TwoFactorEnableComplete : undefined;
             resourceInputs["oauth2TwoFactorMethods"] = state ? state.oauth2TwoFactorMethods : undefined;
             resourceInputs["oauth2Wait"] = state ? state.oauth2Wait : undefined;
             resourceInputs["oauth2Webauthn"] = state ? state.oauth2Webauthn : undefined;
@@ -391,6 +403,8 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["oauth2Register"] = args ? args.oauth2Register : undefined;
             resourceInputs["oauth2StartIdpLink"] = args ? args.oauth2StartIdpLink : undefined;
             resourceInputs["oauth2TwoFactor"] = args ? args.oauth2TwoFactor : undefined;
+            resourceInputs["oauth2TwoFactorEnable"] = args ? args.oauth2TwoFactorEnable : undefined;
+            resourceInputs["oauth2TwoFactorEnableComplete"] = args ? args.oauth2TwoFactorEnableComplete : undefined;
             resourceInputs["oauth2TwoFactorMethods"] = args ? args.oauth2TwoFactorMethods : undefined;
             resourceInputs["oauth2Wait"] = args ? args.oauth2Wait : undefined;
             resourceInputs["oauth2Webauthn"] = args ? args.oauth2Webauthn : undefined;
@@ -545,6 +559,14 @@ export interface FusionAuthThemeState {
      * A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
      */
     oauth2TwoFactor?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable form.
+     */
+    oauth2TwoFactorEnable?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+     */
+    oauth2TwoFactorEnableComplete?: pulumi.Input<string>;
     /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
      */
@@ -751,6 +773,14 @@ export interface FusionAuthThemeArgs {
      * A FreeMarker template that is rendered when the user requests the /oauth2/two-factor path. This page is used if the user has two-factor authentication enabled and they need to type in their code again. FusionAuth will properly handle the processing on the back end. This page contains the form that the user will put their code into.
      */
     oauth2TwoFactor?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable form.
+     */
+    oauth2TwoFactorEnable?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+     */
+    oauth2TwoFactorEnableComplete?: pulumi.Input<string>;
     /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
      */

@@ -279,8 +279,8 @@ github.com/AzureAD/microsoft-authentication-library-for-go v0.4.0/go.mod h1:Vt9s
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
-github.com/FusionAuth/go-client v0.0.0-20221122022225-f59b115f1ce4 h1:CbUKbP2hpU1hCthmn7cUnbdwO54HCZwTYedBVacZ6R4=
-github.com/FusionAuth/go-client v0.0.0-20221122022225-f59b115f1ce4/go.mod h1:SyRrXMJAzMVQLiJjKfQUR59dRI3jPyZv+BXIZ//HwE4=
+github.com/FusionAuth/go-client v0.0.0-20230109034857-35e1b8c0fa82 h1:J5G0yXeCdftSggDSSLxJrL9iLSFVB/T2wLqdPWV+iJQ=
+github.com/FusionAuth/go-client v0.0.0-20230109034857-35e1b8c0fa82/go.mod h1:SyRrXMJAzMVQLiJjKfQUR59dRI3jPyZv+BXIZ//HwE4=
 github.com/GoogleCloudPlatform/cloudsql-proxy v1.31.2/go.mod h1:qR6jVnZTKDCW3j+fC9mOEPHm++1nKDMkqbbkD6KNsfo=
 github.com/HdrHistogram/hdrhistogram-go v1.1.2 h1:5IcZpTvzydCQeHzK4Ef/D5rrSqwxob0t8PQPMybUNFM=
 github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
@@ -1042,8 +1042,8 @@ github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c/go.mod h1:E7qHFY
 github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
-github.com/gpsinsight/terraform-provider-fusionauth v0.1.79 h1:Cuzk1Sq/ehdvW2Ptk+eaeJMHwArcmjDq5ZJ87dg7ySM=
-github.com/gpsinsight/terraform-provider-fusionauth v0.1.79/go.mod h1:dh0dNkU9N99b/+ySehzbZtPSWDm+Eavd0U3fMdx/394=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.82 h1:twdBX0P8mABCuGO5N7fjUwmjcqsT7JjSPt4sHn2xhrQ=
+github.com/gpsinsight/terraform-provider-fusionauth v0.1.82/go.mod h1:aYPVUGOJba9IIkFUO+pS6Ibxx/hym8CdlVto4tMp0NM=
 github.com/grafana/regexp v0.0.0-20220304095617-2e8d9baf4ac2/go.mod h1:M5qHK+eWfAv8VR/265dIuEpL3fNfeC21tXXp9itM24A=
 github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=

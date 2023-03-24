@@ -46,7 +46,7 @@ namespace theogravity.Fusionauth
         /// The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
         /// </summary>
         [Output("defaultFromName")]
-        public Output<string> DefaultFromName { get; private set; } = null!;
+        public Output<string?> DefaultFromName { get; private set; } = null!;
 
         /// <summary>
         /// The default HTML Email Template.
@@ -76,7 +76,7 @@ namespace theogravity.Fusionauth
         /// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
         /// </summary>
         [Output("fromEmail")]
-        public Output<string> FromEmail { get; private set; } = null!;
+        public Output<string?> FromEmail { get; private set; } = null!;
 
         /// <summary>
         /// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
@@ -158,8 +158,8 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
         /// </summary>
-        [Input("defaultFromName", required: true)]
-        public Input<string> DefaultFromName { get; set; } = null!;
+        [Input("defaultFromName")]
+        public Input<string>? DefaultFromName { get; set; }
 
         /// <summary>
         /// The default HTML Email Template.
@@ -188,8 +188,8 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
         /// </summary>
-        [Input("fromEmail", required: true)]
-        public Input<string> FromEmail { get; set; } = null!;
+        [Input("fromEmail")]
+        public Input<string>? FromEmail { get; set; }
 
         [Input("localizedFromNames")]
         private InputMap<object>? _localizedFromNames;

@@ -58,7 +58,7 @@ export class FusionAuthEMail extends pulumi.CustomResource {
     /**
      * The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
      */
-    public readonly defaultFromName!: pulumi.Output<string>;
+    public readonly defaultFromName!: pulumi.Output<string | undefined>;
     /**
      * The default HTML Email Template.
      */
@@ -78,7 +78,7 @@ export class FusionAuthEMail extends pulumi.CustomResource {
     /**
      * The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
      */
-    public readonly fromEmail!: pulumi.Output<string>;
+    public readonly fromEmail!: pulumi.Output<string | undefined>;
     /**
      * The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
      */
@@ -126,9 +126,6 @@ export class FusionAuthEMail extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
         } else {
             const args = argsOrState as FusionAuthEMailArgs | undefined;
-            if ((!args || args.defaultFromName === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'defaultFromName'");
-            }
             if ((!args || args.defaultHtmlTemplate === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'defaultHtmlTemplate'");
             }
@@ -137,9 +134,6 @@ export class FusionAuthEMail extends pulumi.CustomResource {
             }
             if ((!args || args.defaultTextTemplate === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'defaultTextTemplate'");
-            }
-            if ((!args || args.fromEmail === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'fromEmail'");
             }
             resourceInputs["defaultFromName"] = args ? args.defaultFromName : undefined;
             resourceInputs["defaultHtmlTemplate"] = args ? args.defaultHtmlTemplate : undefined;
@@ -215,7 +209,7 @@ export interface FusionAuthEMailArgs {
     /**
      * The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
      */
-    defaultFromName: pulumi.Input<string>;
+    defaultFromName?: pulumi.Input<string>;
     /**
      * The default HTML Email Template.
      */
@@ -235,7 +229,7 @@ export interface FusionAuthEMailArgs {
     /**
      * The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
      */
-    fromEmail: pulumi.Input<string>;
+    fromEmail?: pulumi.Input<string>;
     /**
      * The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
      */

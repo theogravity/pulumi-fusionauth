@@ -1542,6 +1542,10 @@ export interface FusionAuthTenantMinimumPasswordAge {
 export interface FusionAuthTenantMultiFactorConfiguration {
     authenticator?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationAuthenticator>;
     email?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationEmail>;
+    /**
+     * When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+     */
+    loginPolicy?: pulumi.Input<string>;
     sms?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationSms>;
 }
 

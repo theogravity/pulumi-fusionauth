@@ -6013,14 +6013,37 @@ class FusionAuthTenantMinimumPasswordAge(dict):
 
 @pulumi.output_type
 class FusionAuthTenantMultiFactorConfiguration(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "loginPolicy":
+            suggest = "login_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in FusionAuthTenantMultiFactorConfiguration. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        FusionAuthTenantMultiFactorConfiguration.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        FusionAuthTenantMultiFactorConfiguration.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
                  authenticator: Optional['outputs.FusionAuthTenantMultiFactorConfigurationAuthenticator'] = None,
                  email: Optional['outputs.FusionAuthTenantMultiFactorConfigurationEmail'] = None,
+                 login_policy: Optional[str] = None,
                  sms: Optional['outputs.FusionAuthTenantMultiFactorConfigurationSms'] = None):
+        """
+        :param str login_policy: When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        """
         if authenticator is not None:
             pulumi.set(__self__, "authenticator", authenticator)
         if email is not None:
             pulumi.set(__self__, "email", email)
+        if login_policy is not None:
+            pulumi.set(__self__, "login_policy", login_policy)
         if sms is not None:
             pulumi.set(__self__, "sms", sms)
 
@@ -6033,6 +6056,14 @@ class FusionAuthTenantMultiFactorConfiguration(dict):
     @pulumi.getter
     def email(self) -> Optional['outputs.FusionAuthTenantMultiFactorConfigurationEmail']:
         return pulumi.get(self, "email")
+
+    @property
+    @pulumi.getter(name="loginPolicy")
+    def login_policy(self) -> Optional[str]:
+        """
+        When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        """
+        return pulumi.get(self, "login_policy")
 
     @property
     @pulumi.getter

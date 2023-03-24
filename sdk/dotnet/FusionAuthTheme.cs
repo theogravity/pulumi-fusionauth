@@ -57,6 +57,8 @@ namespace theogravity.Fusionauth
     ///         Oauth2Register = "[#ftl/]",
     ///         Oauth2StartIdpLink = "[#ftl/]",
     ///         Oauth2TwoFactor = "[#ftl/]",
+    ///         Oauth2TwoFactorEnable = "[#ftl/]",
+    ///         Oauth2TwoFactorEnableComplete = "[#ftl/]",
     ///         Oauth2TwoFactorMethods = "[#ftl/]",
     ///         Oauth2Wait = "[#ftl/]",
     ///         Oauth2Webauthn = "[#ftl/]",
@@ -267,6 +269,18 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("oauth2TwoFactor")]
         public Output<string> Oauth2TwoFactor { get; private set; } = null!;
+
+        /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable form.
+        /// </summary>
+        [Output("oauth2TwoFactorEnable")]
+        public Output<string> Oauth2TwoFactorEnable { get; private set; } = null!;
+
+        /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        /// </summary>
+        [Output("oauth2TwoFactorEnableComplete")]
+        public Output<string> Oauth2TwoFactorEnableComplete { get; private set; } = null!;
 
         /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
@@ -616,6 +630,18 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2TwoFactor { get; set; }
 
         /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable form.
+        /// </summary>
+        [Input("oauth2TwoFactorEnable")]
+        public Input<string>? Oauth2TwoFactorEnable { get; set; }
+
+        /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        /// </summary>
+        [Input("oauth2TwoFactorEnableComplete")]
+        public Input<string>? Oauth2TwoFactorEnableComplete { get; set; }
+
+        /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.
         /// </summary>
         [Input("oauth2TwoFactorMethods")]
@@ -922,6 +948,18 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("oauth2TwoFactor")]
         public Input<string>? Oauth2TwoFactor { get; set; }
+
+        /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable form.
+        /// </summary>
+        [Input("oauth2TwoFactorEnable")]
+        public Input<string>? Oauth2TwoFactorEnable { get; set; }
+
+        /// <summary>
+        /// A FreeMarker template that contains the OAuth2 two-factor enable complete form.
+        /// </summary>
+        [Input("oauth2TwoFactorEnableComplete")]
+        public Input<string>? Oauth2TwoFactorEnableComplete { get; set; }
 
         /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/two-factor-methods path. This page contains a form providing a user with their configured multi-factor authentication options that they may use to complete the authentication challenge.

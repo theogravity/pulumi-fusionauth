@@ -13734,7 +13734,9 @@ func (o FusionAuthTenantMinimumPasswordAgePtrOutput) Seconds() pulumi.IntPtrOutp
 type FusionAuthTenantMultiFactorConfiguration struct {
 	Authenticator *FusionAuthTenantMultiFactorConfigurationAuthenticator `pulumi:"authenticator"`
 	Email         *FusionAuthTenantMultiFactorConfigurationEmail         `pulumi:"email"`
-	Sms           *FusionAuthTenantMultiFactorConfigurationSms           `pulumi:"sms"`
+	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+	LoginPolicy *string                                      `pulumi:"loginPolicy"`
+	Sms         *FusionAuthTenantMultiFactorConfigurationSms `pulumi:"sms"`
 }
 
 // FusionAuthTenantMultiFactorConfigurationInput is an input type that accepts FusionAuthTenantMultiFactorConfigurationArgs and FusionAuthTenantMultiFactorConfigurationOutput values.
@@ -13751,7 +13753,9 @@ type FusionAuthTenantMultiFactorConfigurationInput interface {
 type FusionAuthTenantMultiFactorConfigurationArgs struct {
 	Authenticator FusionAuthTenantMultiFactorConfigurationAuthenticatorPtrInput `pulumi:"authenticator"`
 	Email         FusionAuthTenantMultiFactorConfigurationEmailPtrInput         `pulumi:"email"`
-	Sms           FusionAuthTenantMultiFactorConfigurationSmsPtrInput           `pulumi:"sms"`
+	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+	LoginPolicy pulumi.StringPtrInput                               `pulumi:"loginPolicy"`
+	Sms         FusionAuthTenantMultiFactorConfigurationSmsPtrInput `pulumi:"sms"`
 }
 
 func (FusionAuthTenantMultiFactorConfigurationArgs) ElementType() reflect.Type {
@@ -13843,6 +13847,11 @@ func (o FusionAuthTenantMultiFactorConfigurationOutput) Email() FusionAuthTenant
 	}).(FusionAuthTenantMultiFactorConfigurationEmailPtrOutput)
 }
 
+// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+func (o FusionAuthTenantMultiFactorConfigurationOutput) LoginPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantMultiFactorConfiguration) *string { return v.LoginPolicy }).(pulumi.StringPtrOutput)
+}
+
 func (o FusionAuthTenantMultiFactorConfigurationOutput) Sms() FusionAuthTenantMultiFactorConfigurationSmsPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantMultiFactorConfiguration) *FusionAuthTenantMultiFactorConfigurationSms {
 		return v.Sms
@@ -13889,6 +13898,16 @@ func (o FusionAuthTenantMultiFactorConfigurationPtrOutput) Email() FusionAuthTen
 		}
 		return v.Email
 	}).(FusionAuthTenantMultiFactorConfigurationEmailPtrOutput)
+}
+
+// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+func (o FusionAuthTenantMultiFactorConfigurationPtrOutput) LoginPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantMultiFactorConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.LoginPolicy
+	}).(pulumi.StringPtrOutput)
 }
 
 func (o FusionAuthTenantMultiFactorConfigurationPtrOutput) Sms() FusionAuthTenantMultiFactorConfigurationSmsPtrOutput {
