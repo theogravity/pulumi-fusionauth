@@ -69,6 +69,12 @@ namespace theogravity.Fusionauth
         public Output<string?> EngineType { get; private set; } = null!;
 
         /// <summary>
+        /// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Output("lambdaId")]
+        public Output<string> LambdaId { get; private set; } = null!;
+
+        /// <summary>
         /// The name of the lambda.
         /// </summary>
         [Output("name")]
@@ -152,6 +158,12 @@ namespace theogravity.Fusionauth
         public Input<string>? EngineType { get; set; }
 
         /// <summary>
+        /// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("lambdaId")]
+        public Input<string>? LambdaId { get; set; }
+
+        /// <summary>
         /// The name of the lambda.
         /// </summary>
         [Input("name")]
@@ -194,6 +206,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("engineType")]
         public Input<string>? EngineType { get; set; }
+
+        /// <summary>
+        /// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("lambdaId")]
+        public Input<string>? LambdaId { get; set; }
 
         /// <summary>
         /// The name of the lambda.

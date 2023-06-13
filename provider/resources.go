@@ -140,7 +140,9 @@ func Provider() tfbridge.ProviderInfo {
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"fusionauth_lambda":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLambda")},
 			"fusionauth_application":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplication")},
+			"fusionauth_email":            {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getEMail")},
 			"fusionauth_form":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getForm")},
+			"fusionauth_form_field":       {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getFormField")},
 			"fusionauth_tenant":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getTenant")},
 			"fusionauth_application_role": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplicationRole")},
 			"fusionauth_idp":              {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getIdp")},

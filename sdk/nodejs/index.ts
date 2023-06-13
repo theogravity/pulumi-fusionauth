@@ -190,10 +190,20 @@ export const getApplicationRole: typeof import("./getApplicationRole").getApplic
 export const getApplicationRoleOutput: typeof import("./getApplicationRole").getApplicationRoleOutput = null as any;
 utilities.lazyLoad(exports, ["getApplicationRole","getApplicationRoleOutput"], () => require("./getApplicationRole"));
 
+export { GetEMailArgs, GetEMailResult, GetEMailOutputArgs } from "./getEMail";
+export const getEMail: typeof import("./getEMail").getEMail = null as any;
+export const getEMailOutput: typeof import("./getEMail").getEMailOutput = null as any;
+utilities.lazyLoad(exports, ["getEMail","getEMailOutput"], () => require("./getEMail"));
+
 export { GetFormArgs, GetFormResult, GetFormOutputArgs } from "./getForm";
 export const getForm: typeof import("./getForm").getForm = null as any;
 export const getFormOutput: typeof import("./getForm").getFormOutput = null as any;
 utilities.lazyLoad(exports, ["getForm","getFormOutput"], () => require("./getForm"));
+
+export { GetFormFieldArgs, GetFormFieldResult, GetFormFieldOutputArgs } from "./getFormField";
+export const getFormField: typeof import("./getFormField").getFormField = null as any;
+export const getFormFieldOutput: typeof import("./getFormField").getFormFieldOutput = null as any;
+utilities.lazyLoad(exports, ["getFormField","getFormFieldOutput"], () => require("./getFormField"));
 
 export { GetIdpArgs, GetIdpResult, GetIdpOutputArgs } from "./getIdp";
 export const getIdp: typeof import("./getIdp").getIdp = null as any;

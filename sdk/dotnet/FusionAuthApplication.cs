@@ -58,6 +58,7 @@ namespace theogravity.Fusionauth
     ///             {
     ///                 "http://www.example.com/oauth-callback",
     ///             },
+    ///             AuthorizedUrlValidationPolicy = "ExactMatch",
     ///             EnabledGrants = new[]
     ///             {
     ///                 "authorization_code",

@@ -42,6 +42,7 @@ import * as utilities from "./utilities";
  *     },
  *     oauthConfiguration: {
  *         authorizedOriginUrls: ["http://www.example.com/oauth-callback"],
+ *         authorizedUrlValidationPolicy: "ExactMatch",
  *         enabledGrants: [
  *             "authorization_code",
  *             "implicit",
