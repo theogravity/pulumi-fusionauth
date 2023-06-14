@@ -105,6 +105,7 @@ __all__ = [
     'FusionAuthUserActionOption',
     'FusionAuthUserTwoFactorMethod',
     'FusionAuthWebhookEventsEnabled',
+    'GetFormFieldValidatorResult',
     'GetFormStepResult',
 ]
 
@@ -857,8 +858,12 @@ class FusionAuthApplicationOauthConfiguration(dict):
             suggest = "authorized_origin_urls"
         elif key == "authorizedRedirectUrls":
             suggest = "authorized_redirect_urls"
+        elif key == "authorizedUrlValidationPolicy":
+            suggest = "authorized_url_validation_policy"
         elif key == "clientAuthenticationPolicy":
             suggest = "client_authentication_policy"
+        elif key == "clientId":
+            suggest = "client_id"
         elif key == "clientSecret":
             suggest = "client_secret"
         elif key == "deviceVerificationUrl":
@@ -892,7 +897,9 @@ class FusionAuthApplicationOauthConfiguration(dict):
     def __init__(__self__, *,
                  authorized_origin_urls: Optional[Sequence[str]] = None,
                  authorized_redirect_urls: Optional[Sequence[str]] = None,
+                 authorized_url_validation_policy: Optional[str] = None,
                  client_authentication_policy: Optional[str] = None,
+                 client_id: Optional[str] = None,
                  client_secret: Optional[str] = None,
                  debug: Optional[bool] = None,
                  device_verification_url: Optional[str] = None,
@@ -906,6 +913,7 @@ class FusionAuthApplicationOauthConfiguration(dict):
         """
         :param Sequence[str] authorized_origin_urls: An array of URLs that are the authorized origins for FusionAuth OAuth.
         :param Sequence[str] authorized_redirect_urls: An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
+        :param str authorized_url_validation_policy: Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.
         :param str client_authentication_policy: Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
         :param str client_secret: The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
         :param bool debug: Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
@@ -922,8 +930,12 @@ class FusionAuthApplicationOauthConfiguration(dict):
             pulumi.set(__self__, "authorized_origin_urls", authorized_origin_urls)
         if authorized_redirect_urls is not None:
             pulumi.set(__self__, "authorized_redirect_urls", authorized_redirect_urls)
+        if authorized_url_validation_policy is not None:
+            pulumi.set(__self__, "authorized_url_validation_policy", authorized_url_validation_policy)
         if client_authentication_policy is not None:
             pulumi.set(__self__, "client_authentication_policy", client_authentication_policy)
+        if client_id is not None:
+            pulumi.set(__self__, "client_id", client_id)
         if client_secret is not None:
             pulumi.set(__self__, "client_secret", client_secret)
         if debug is not None:
@@ -962,12 +974,25 @@ class FusionAuthApplicationOauthConfiguration(dict):
         return pulumi.get(self, "authorized_redirect_urls")
 
     @property
+    @pulumi.getter(name="authorizedUrlValidationPolicy")
+    def authorized_url_validation_policy(self) -> Optional[str]:
+        """
+        Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.
+        """
+        return pulumi.get(self, "authorized_url_validation_policy")
+
+    @property
     @pulumi.getter(name="clientAuthenticationPolicy")
     def client_authentication_policy(self) -> Optional[str]:
         """
         Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
         """
         return pulumi.get(self, "client_authentication_policy")
+
+    @property
+    @pulumi.getter(name="clientId")
+    def client_id(self) -> Optional[str]:
+        return pulumi.get(self, "client_id")
 
     @property
     @pulumi.getter(name="clientSecret")
@@ -5788,14 +5813,14 @@ class FusionAuthTenantJwtConfiguration(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "accessTokenKeyId":
-            suggest = "access_token_key_id"
-        elif key == "idTokenKeyId":
-            suggest = "id_token_key_id"
-        elif key == "refreshTokenTimeToLiveInMinutes":
+        if key == "refreshTokenTimeToLiveInMinutes":
             suggest = "refresh_token_time_to_live_in_minutes"
         elif key == "timeToLiveInSeconds":
             suggest = "time_to_live_in_seconds"
+        elif key == "accessTokenKeyId":
+            suggest = "access_token_key_id"
+        elif key == "idTokenKeyId":
+            suggest = "id_token_key_id"
         elif key == "refreshTokenExpirationPolicy":
             suggest = "refresh_token_expiration_policy"
         elif key == "refreshTokenRevocationPolicyOnLoginPrevented":
@@ -5817,28 +5842,30 @@ class FusionAuthTenantJwtConfiguration(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 access_token_key_id: str,
-                 id_token_key_id: str,
                  refresh_token_time_to_live_in_minutes: int,
                  time_to_live_in_seconds: int,
+                 access_token_key_id: Optional[str] = None,
+                 id_token_key_id: Optional[str] = None,
                  refresh_token_expiration_policy: Optional[str] = None,
                  refresh_token_revocation_policy_on_login_prevented: Optional[bool] = None,
                  refresh_token_revocation_policy_on_password_change: Optional[bool] = None,
                  refresh_token_usage_policy: Optional[str] = None):
         """
-        :param str access_token_key_id: The unique id of the signing key used to sign the access token.
-        :param str id_token_key_id: The unique id of the signing key used to sign the Id token.
         :param int refresh_token_time_to_live_in_minutes: The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         :param int time_to_live_in_seconds: The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
+        :param str access_token_key_id: The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
+        :param str id_token_key_id: The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
         :param str refresh_token_expiration_policy: The refresh token expiration policy.
         :param bool refresh_token_revocation_policy_on_login_prevented: When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
         :param bool refresh_token_revocation_policy_on_password_change: When enabled, the refresh token will be revoked when a user changes their password."
         :param str refresh_token_usage_policy: The refresh token usage policy.
         """
-        pulumi.set(__self__, "access_token_key_id", access_token_key_id)
-        pulumi.set(__self__, "id_token_key_id", id_token_key_id)
         pulumi.set(__self__, "refresh_token_time_to_live_in_minutes", refresh_token_time_to_live_in_minutes)
         pulumi.set(__self__, "time_to_live_in_seconds", time_to_live_in_seconds)
+        if access_token_key_id is not None:
+            pulumi.set(__self__, "access_token_key_id", access_token_key_id)
+        if id_token_key_id is not None:
+            pulumi.set(__self__, "id_token_key_id", id_token_key_id)
         if refresh_token_expiration_policy is not None:
             pulumi.set(__self__, "refresh_token_expiration_policy", refresh_token_expiration_policy)
         if refresh_token_revocation_policy_on_login_prevented is not None:
@@ -5847,22 +5874,6 @@ class FusionAuthTenantJwtConfiguration(dict):
             pulumi.set(__self__, "refresh_token_revocation_policy_on_password_change", refresh_token_revocation_policy_on_password_change)
         if refresh_token_usage_policy is not None:
             pulumi.set(__self__, "refresh_token_usage_policy", refresh_token_usage_policy)
-
-    @property
-    @pulumi.getter(name="accessTokenKeyId")
-    def access_token_key_id(self) -> str:
-        """
-        The unique id of the signing key used to sign the access token.
-        """
-        return pulumi.get(self, "access_token_key_id")
-
-    @property
-    @pulumi.getter(name="idTokenKeyId")
-    def id_token_key_id(self) -> str:
-        """
-        The unique id of the signing key used to sign the Id token.
-        """
-        return pulumi.get(self, "id_token_key_id")
 
     @property
     @pulumi.getter(name="refreshTokenTimeToLiveInMinutes")
@@ -5879,6 +5890,22 @@ class FusionAuthTenantJwtConfiguration(dict):
         The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
         """
         return pulumi.get(self, "time_to_live_in_seconds")
+
+    @property
+    @pulumi.getter(name="accessTokenKeyId")
+    def access_token_key_id(self) -> Optional[str]:
+        """
+        The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
+        """
+        return pulumi.get(self, "access_token_key_id")
+
+    @property
+    @pulumi.getter(name="idTokenKeyId")
+    def id_token_key_id(self) -> Optional[str]:
+        """
+        The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
+        """
+        return pulumi.get(self, "id_token_key_id")
 
     @property
     @pulumi.getter(name="refreshTokenExpirationPolicy")
@@ -7421,6 +7448,37 @@ class FusionAuthWebhookEventsEnabled(dict):
         When a user update transaction has completed
         """
         return pulumi.get(self, "user_update_complete")
+
+
+@pulumi.output_type
+class GetFormFieldValidatorResult(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 expression: Optional[str] = None):
+        """
+        :param bool enabled: Determines if user input should be validated.
+        :param str expression: A regular expression used to validate user input. Must be a valid regular expression pattern.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if expression is not None:
+            pulumi.set(__self__, "expression", expression)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        """
+        Determines if user input should be validated.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def expression(self) -> Optional[str]:
+        """
+        A regular expression used to validate user input. Must be a valid regular expression pattern.
+        """
+        return pulumi.get(self, "expression")
 
 
 @pulumi.output_type

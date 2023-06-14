@@ -56,6 +56,7 @@ import (
 //					AuthorizedOriginUrls: pulumi.StringArray{
 //						pulumi.String("http://www.example.com/oauth-callback"),
 //					},
+//					AuthorizedUrlValidationPolicy: pulumi.String("ExactMatch"),
 //					EnabledGrants: pulumi.StringArray{
 //						pulumi.String("authorization_code"),
 //						pulumi.String("implicit"),

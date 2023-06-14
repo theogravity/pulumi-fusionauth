@@ -520,9 +520,26 @@
                         }
                     }
                 },
+                "authorizedUrlValidationPolicy": {
+                    "type": "string",
+                    "description": "Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
                 "clientAuthenticationPolicy": {
                     "type": "string",
                     "description": "Determines the client authentication requirements for the OAuth 2.0 Token endpoint.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "clientId": {
+                    "type": "string",
                     "language": {
                         "python": {
                             "mapCase": false
@@ -628,6 +645,7 @@
             "language": {
                 "nodejs": {
                     "requiredOutputs": [
+                        "clientId",
                         "clientSecret"
                     ]
                 }
@@ -3586,7 +3604,7 @@
             "properties": {
                 "accessTokenKeyId": {
                     "type": "string",
-                    "description": "The unique id of the signing key used to sign the access token.\n",
+                    "description": "The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.\n",
                     "language": {
                         "python": {
                             "mapCase": false
@@ -3595,7 +3613,7 @@
                 },
                 "idTokenKeyId": {
                     "type": "string",
-                    "description": "The unique id of the signing key used to sign the Id token.\n",
+                    "description": "The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.\n",
                     "language": {
                         "python": {
                             "mapCase": false
@@ -3659,8 +3677,6 @@
             },
             "type": "object",
             "required": [
-                "accessTokenKeyId",
-                "idTokenKeyId",
                 "refreshTokenTimeToLiveInMinutes",
                 "timeToLiveInSeconds"
             ]
@@ -4598,6 +4614,29 @@
             },
             "type": "object"
         },
+        "fusionauth:index/getFormFieldValidator:getFormFieldValidator": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Determines if user input should be validated.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "expression": {
+                    "type": "string",
+                    "description": "A regular expression used to validate user input. Must be a valid regular expression pattern.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        },
         "fusionauth:index/getFormStep:getFormStep": {
             "properties": {
                 "fields": {
@@ -4753,7 +4792,7 @@
             }
         },
         "fusionauth:index/fusionAuthApplication:FusionAuthApplication": {
-            "description": "## # Application Resource\n\n[Applications API](https://fusionauth.io/docs/v1/tech/apis/applications)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst forum = new fusionauth.FusionAuthApplication(\"forum\", {\n    tenantId: fusionauth_tenant.portal.id,\n    authenticationTokenConfigurationEnabled: false,\n    formConfiguration: {\n        adminRegistrationFormId: fusionauth_form.admin_registration.id,\n        selfServiceFormId: fusionauth_form.self_service.id,\n    },\n    jwtConfiguration: {\n        accessTokenId: fusionauth_key.access_token.id,\n        enabled: true,\n        idTokenKeyId: fusionauth_key.id_token.id,\n        refreshTokenTtlMinutes: 43200,\n        ttlSeconds: 3600,\n    },\n    lambdaConfiguration: {\n        accessTokenPopulateId: fusionauth_lambda.token_populate.id,\n        idTokenPopulateId: fusionauth_lambda.id_token_populate.id,\n    },\n    loginConfiguration: {\n        allowTokenRefresh: false,\n        generateRefreshTokens: false,\n        requireAuthentication: true,\n    },\n    oauthConfiguration: {\n        authorizedOriginUrls: [\"http://www.example.com/oauth-callback\"],\n        enabledGrants: [\n            \"authorization_code\",\n            \"implicit\",\n        ],\n        generateRefreshTokens: false,\n        logoutBehavior: \"AllApplications\",\n        logoutUrl: \"http://www.example.com/logout\",\n        requireClientAuthentication: false,\n    },\n    registrationConfiguration: {\n        birthDate: {\n            enabled: false,\n            required: false,\n        },\n        confirmPassword: false,\n        enabled: false,\n        firstName: {\n            enabled: false,\n            required: false,\n        },\n        fullName: {\n            enabled: false,\n            required: false,\n        },\n        lastName: {\n            enabled: false,\n            required: false,\n        },\n        loginIdType: \"\",\n        middleName: {\n            enabled: false,\n            required: false,\n        },\n        mobilePhone: {\n            enabled: false,\n            required: false,\n        },\n        type: \"\",\n    },\n    passwordlessConfigurationEnabled: false,\n    registrationDeletePolicy: {\n        unverifiedEnabled: true,\n        unverifiedNumberOfDaysToRetain: 30,\n    },\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi-fusionauth as fusionauth\n\nforum = fusionauth.FusionAuthApplication(\"forum\",\n    tenant_id=fusionauth_tenant[\"portal\"][\"id\"],\n    authentication_token_configuration_enabled=False,\n    form_configuration=fusionauth.FusionAuthApplicationFormConfigurationArgs(\n        admin_registration_form_id=fusionauth_form[\"admin_registration\"][\"id\"],\n        self_service_form_id=fusionauth_form[\"self_service\"][\"id\"],\n    ),\n    jwt_configuration=fusionauth.FusionAuthApplicationJwtConfigurationArgs(\n        access_token_id=fusionauth_key[\"access_token\"][\"id\"],\n        enabled=True,\n        id_token_key_id=fusionauth_key[\"id_token\"][\"id\"],\n        refresh_token_ttl_minutes=43200,\n        ttl_seconds=3600,\n    ),\n    lambda_configuration=fusionauth.FusionAuthApplicationLambdaConfigurationArgs(\n        access_token_populate_id=fusionauth_lambda[\"token_populate\"][\"id\"],\n        id_token_populate_id=fusionauth_lambda[\"id_token_populate\"][\"id\"],\n    ),\n    login_configuration=fusionauth.FusionAuthApplicationLoginConfigurationArgs(\n        allow_token_refresh=False,\n        generate_refresh_tokens=False,\n        require_authentication=True,\n    ),\n    oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(\n        authorized_origin_urls=[\"http://www.example.com/oauth-callback\"],\n        enabled_grants=[\n            \"authorization_code\",\n            \"implicit\",\n        ],\n        generate_refresh_tokens=False,\n        logout_behavior=\"AllApplications\",\n        logout_url=\"http://www.example.com/logout\",\n        require_client_authentication=False,\n    ),\n    registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(\n        birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(\n            enabled=False,\n            required=False,\n        ),\n        confirm_password=False,\n        enabled=False,\n        first_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        full_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        last_name=fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        login_id_type=\"\",\n        middle_name=fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        mobile_phone=fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs(\n            enabled=False,\n            required=False,\n        ),\n        type=\"\",\n    ),\n    passwordless_configuration_enabled=False,\n    registration_delete_policy=fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs(\n        unverified_enabled=True,\n        unverified_number_of_days_to_retain=30,\n    ))\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var forum = new Fusionauth.FusionAuthApplication(\"forum\", new()\n    {\n        TenantId = fusionauth_tenant.Portal.Id,\n        AuthenticationTokenConfigurationEnabled = false,\n        FormConfiguration = new Fusionauth.Inputs.FusionAuthApplicationFormConfigurationArgs\n        {\n            AdminRegistrationFormId = fusionauth_form.Admin_registration.Id,\n            SelfServiceFormId = fusionauth_form.Self_service.Id,\n        },\n        JwtConfiguration = new Fusionauth.Inputs.FusionAuthApplicationJwtConfigurationArgs\n        {\n            AccessTokenId = fusionauth_key.Access_token.Id,\n            Enabled = true,\n            IdTokenKeyId = fusionauth_key.Id_token.Id,\n            RefreshTokenTtlMinutes = 43200,\n            TtlSeconds = 3600,\n        },\n        LambdaConfiguration = new Fusionauth.Inputs.FusionAuthApplicationLambdaConfigurationArgs\n        {\n            AccessTokenPopulateId = fusionauth_lambda.Token_populate.Id,\n            IdTokenPopulateId = fusionauth_lambda.Id_token_populate.Id,\n        },\n        LoginConfiguration = new Fusionauth.Inputs.FusionAuthApplicationLoginConfigurationArgs\n        {\n            AllowTokenRefresh = false,\n            GenerateRefreshTokens = false,\n            RequireAuthentication = true,\n        },\n        OauthConfiguration = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationArgs\n        {\n            AuthorizedOriginUrls = new[]\n            {\n                \"http://www.example.com/oauth-callback\",\n            },\n            EnabledGrants = new[]\n            {\n                \"authorization_code\",\n                \"implicit\",\n            },\n            GenerateRefreshTokens = false,\n            LogoutBehavior = \"AllApplications\",\n            LogoutUrl = \"http://www.example.com/logout\",\n            RequireClientAuthentication = false,\n        },\n        RegistrationConfiguration = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationArgs\n        {\n            BirthDate = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationBirthDateArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            ConfirmPassword = false,\n            Enabled = false,\n            FirstName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationFirstNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            FullName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationFullNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            LastName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationLastNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            LoginIdType = \"\",\n            MiddleName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            MobilePhone = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            Type = \"\",\n        },\n        PasswordlessConfigurationEnabled = false,\n        RegistrationDeletePolicy = new Fusionauth.Inputs.FusionAuthApplicationRegistrationDeletePolicyArgs\n        {\n            UnverifiedEnabled = true,\n            UnverifiedNumberOfDaysToRetain = 30,\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthApplication(ctx, \"forum\", \u0026fusionauth.FusionAuthApplicationArgs{\n\t\t\tTenantId:                                pulumi.Any(fusionauth_tenant.Portal.Id),\n\t\t\tAuthenticationTokenConfigurationEnabled: pulumi.Bool(false),\n\t\t\tFormConfiguration: \u0026fusionauth.FusionAuthApplicationFormConfigurationArgs{\n\t\t\t\tAdminRegistrationFormId: pulumi.Any(fusionauth_form.Admin_registration.Id),\n\t\t\t\tSelfServiceFormId:       pulumi.Any(fusionauth_form.Self_service.Id),\n\t\t\t},\n\t\t\tJwtConfiguration: \u0026fusionauth.FusionAuthApplicationJwtConfigurationArgs{\n\t\t\t\tAccessTokenId:          pulumi.Any(fusionauth_key.Access_token.Id),\n\t\t\t\tEnabled:                pulumi.Bool(true),\n\t\t\t\tIdTokenKeyId:           pulumi.Any(fusionauth_key.Id_token.Id),\n\t\t\t\tRefreshTokenTtlMinutes: pulumi.Int(43200),\n\t\t\t\tTtlSeconds:             pulumi.Int(3600),\n\t\t\t},\n\t\t\tLambdaConfiguration: \u0026fusionauth.FusionAuthApplicationLambdaConfigurationArgs{\n\t\t\t\tAccessTokenPopulateId: pulumi.Any(fusionauth_lambda.Token_populate.Id),\n\t\t\t\tIdTokenPopulateId:     pulumi.Any(fusionauth_lambda.Id_token_populate.Id),\n\t\t\t},\n\t\t\tLoginConfiguration: \u0026fusionauth.FusionAuthApplicationLoginConfigurationArgs{\n\t\t\t\tAllowTokenRefresh:     pulumi.Bool(false),\n\t\t\t\tGenerateRefreshTokens: pulumi.Bool(false),\n\t\t\t\tRequireAuthentication: pulumi.Bool(true),\n\t\t\t},\n\t\t\tOauthConfiguration: \u0026fusionauth.FusionAuthApplicationOauthConfigurationArgs{\n\t\t\t\tAuthorizedOriginUrls: pulumi.StringArray{\n\t\t\t\t\tpulumi.String(\"http://www.example.com/oauth-callback\"),\n\t\t\t\t},\n\t\t\t\tEnabledGrants: pulumi.StringArray{\n\t\t\t\t\tpulumi.String(\"authorization_code\"),\n\t\t\t\t\tpulumi.String(\"implicit\"),\n\t\t\t\t},\n\t\t\t\tGenerateRefreshTokens:       pulumi.Bool(false),\n\t\t\t\tLogoutBehavior:              pulumi.String(\"AllApplications\"),\n\t\t\t\tLogoutUrl:                   pulumi.String(\"http://www.example.com/logout\"),\n\t\t\t\tRequireClientAuthentication: pulumi.Bool(false),\n\t\t\t},\n\t\t\tRegistrationConfiguration: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationArgs{\n\t\t\t\tBirthDate: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tConfirmPassword: pulumi.Bool(false),\n\t\t\t\tEnabled:         pulumi.Bool(false),\n\t\t\t\tFirstName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tFullName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tLastName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tLoginIdType: pulumi.String(\"\"),\n\t\t\t\tMiddleName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tMobilePhone: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tType: pulumi.String(\"\"),\n\t\t\t},\n\t\t\tPasswordlessConfigurationEnabled: pulumi.Bool(false),\n\t\t\tRegistrationDeletePolicy: \u0026fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs{\n\t\t\t\tUnverifiedEnabled:              pulumi.Bool(true),\n\t\t\t\tUnverifiedNumberOfDaysToRetain: pulumi.Int(30),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthApplication;\nimport com.pulumi.fusionauth.FusionAuthApplicationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationFormConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationJwtConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationLambdaConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationLoginConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationOauthConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationBirthDateArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationFirstNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationFullNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationLastNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationDeletePolicyArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var forum = new FusionAuthApplication(\"forum\", FusionAuthApplicationArgs.builder()        \n            .tenantId(fusionauth_tenant.portal().id())\n            .authenticationTokenConfigurationEnabled(false)\n            .formConfiguration(FusionAuthApplicationFormConfigurationArgs.builder()\n                .adminRegistrationFormId(fusionauth_form.admin_registration().id())\n                .selfServiceFormId(fusionauth_form.self_service().id())\n                .build())\n            .jwtConfiguration(FusionAuthApplicationJwtConfigurationArgs.builder()\n                .accessTokenId(fusionauth_key.access_token().id())\n                .enabled(true)\n                .idTokenKeyId(fusionauth_key.id_token().id())\n                .refreshTokenTtlMinutes(43200)\n                .ttlSeconds(3600)\n                .build())\n            .lambdaConfiguration(FusionAuthApplicationLambdaConfigurationArgs.builder()\n                .accessTokenPopulateId(fusionauth_lambda.token_populate().id())\n                .idTokenPopulateId(fusionauth_lambda.id_token_populate().id())\n                .build())\n            .loginConfiguration(FusionAuthApplicationLoginConfigurationArgs.builder()\n                .allowTokenRefresh(false)\n                .generateRefreshTokens(false)\n                .requireAuthentication(true)\n                .build())\n            .oauthConfiguration(FusionAuthApplicationOauthConfigurationArgs.builder()\n                .authorizedOriginUrls(\"http://www.example.com/oauth-callback\")\n                .enabledGrants(                \n                    \"authorization_code\",\n                    \"implicit\")\n                .generateRefreshTokens(false)\n                .logoutBehavior(\"AllApplications\")\n                .logoutUrl(\"http://www.example.com/logout\")\n                .requireClientAuthentication(false)\n                .build())\n            .registrationConfiguration(FusionAuthApplicationRegistrationConfigurationArgs.builder()\n                .birthDate(FusionAuthApplicationRegistrationConfigurationBirthDateArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .confirmPassword(false)\n                .enabled(false)\n                .firstName(FusionAuthApplicationRegistrationConfigurationFirstNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .fullName(FusionAuthApplicationRegistrationConfigurationFullNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .lastName(FusionAuthApplicationRegistrationConfigurationLastNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .loginIdType(\"\")\n                .middleName(FusionAuthApplicationRegistrationConfigurationMiddleNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .mobilePhone(FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .type(\"\")\n                .build())\n            .passwordlessConfigurationEnabled(false)\n            .registrationDeletePolicy(FusionAuthApplicationRegistrationDeletePolicyArgs.builder()\n                .unverifiedEnabled(true)\n                .unverifiedNumberOfDaysToRetain(30)\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  forum:\n    type: fusionauth:FusionAuthApplication\n    properties:\n      tenantId: ${fusionauth_tenant.portal.id}\n      authenticationTokenConfigurationEnabled: false\n      formConfiguration:\n        adminRegistrationFormId: ${fusionauth_form.admin_registration.id}\n        selfServiceFormId: ${fusionauth_form.self_service.id}\n      jwtConfiguration:\n        accessTokenId: ${fusionauth_key.access_token.id}\n        enabled: true\n        idTokenKeyId: ${fusionauth_key.id_token.id}\n        refreshTokenTtlMinutes: 43200\n        ttlSeconds: 3600\n      lambdaConfiguration:\n        accessTokenPopulateId: ${fusionauth_lambda.token_populate.id}\n        idTokenPopulateId: ${fusionauth_lambda.id_token_populate.id}\n      loginConfiguration:\n        allowTokenRefresh: false\n        generateRefreshTokens: false\n        requireAuthentication: true\n      oauthConfiguration:\n        authorizedOriginUrls:\n          - http://www.example.com/oauth-callback\n        enabledGrants:\n          - authorization_code\n          - implicit\n        generateRefreshTokens: false\n        logoutBehavior: AllApplications\n        logoutUrl: http://www.example.com/logout\n        requireClientAuthentication: false\n      registrationConfiguration:\n        birthDate:\n          enabled: false\n          required: false\n        confirmPassword: false\n        enabled: false\n        firstName:\n          enabled: false\n          required: false\n        fullName:\n          enabled: false\n          required: false\n        lastName:\n          enabled: false\n          required: false\n        loginIdType:\n        middleName:\n          enabled: false\n          required: false\n        mobilePhone:\n          enabled: false\n          required: false\n        type:\n      passwordlessConfigurationEnabled: false\n      registrationDeletePolicy:\n        unverifiedEnabled: true\n        unverifiedNumberOfDaysToRetain: 30\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "## # Application Resource\n\n[Applications API](https://fusionauth.io/docs/v1/tech/apis/applications)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst forum = new fusionauth.FusionAuthApplication(\"forum\", {\n    tenantId: fusionauth_tenant.portal.id,\n    authenticationTokenConfigurationEnabled: false,\n    formConfiguration: {\n        adminRegistrationFormId: fusionauth_form.admin_registration.id,\n        selfServiceFormId: fusionauth_form.self_service.id,\n    },\n    jwtConfiguration: {\n        accessTokenId: fusionauth_key.access_token.id,\n        enabled: true,\n        idTokenKeyId: fusionauth_key.id_token.id,\n        refreshTokenTtlMinutes: 43200,\n        ttlSeconds: 3600,\n    },\n    lambdaConfiguration: {\n        accessTokenPopulateId: fusionauth_lambda.token_populate.id,\n        idTokenPopulateId: fusionauth_lambda.id_token_populate.id,\n    },\n    loginConfiguration: {\n        allowTokenRefresh: false,\n        generateRefreshTokens: false,\n        requireAuthentication: true,\n    },\n    oauthConfiguration: {\n        authorizedOriginUrls: [\"http://www.example.com/oauth-callback\"],\n        authorizedUrlValidationPolicy: \"ExactMatch\",\n        enabledGrants: [\n            \"authorization_code\",\n            \"implicit\",\n        ],\n        generateRefreshTokens: false,\n        logoutBehavior: \"AllApplications\",\n        logoutUrl: \"http://www.example.com/logout\",\n        requireClientAuthentication: false,\n    },\n    registrationConfiguration: {\n        birthDate: {\n            enabled: false,\n            required: false,\n        },\n        confirmPassword: false,\n        enabled: false,\n        firstName: {\n            enabled: false,\n            required: false,\n        },\n        fullName: {\n            enabled: false,\n            required: false,\n        },\n        lastName: {\n            enabled: false,\n            required: false,\n        },\n        loginIdType: \"\",\n        middleName: {\n            enabled: false,\n            required: false,\n        },\n        mobilePhone: {\n            enabled: false,\n            required: false,\n        },\n        type: \"\",\n    },\n    passwordlessConfigurationEnabled: false,\n    registrationDeletePolicy: {\n        unverifiedEnabled: true,\n        unverifiedNumberOfDaysToRetain: 30,\n    },\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi-fusionauth as fusionauth\n\nforum = fusionauth.FusionAuthApplication(\"forum\",\n    tenant_id=fusionauth_tenant[\"portal\"][\"id\"],\n    authentication_token_configuration_enabled=False,\n    form_configuration=fusionauth.FusionAuthApplicationFormConfigurationArgs(\n        admin_registration_form_id=fusionauth_form[\"admin_registration\"][\"id\"],\n        self_service_form_id=fusionauth_form[\"self_service\"][\"id\"],\n    ),\n    jwt_configuration=fusionauth.FusionAuthApplicationJwtConfigurationArgs(\n        access_token_id=fusionauth_key[\"access_token\"][\"id\"],\n        enabled=True,\n        id_token_key_id=fusionauth_key[\"id_token\"][\"id\"],\n        refresh_token_ttl_minutes=43200,\n        ttl_seconds=3600,\n    ),\n    lambda_configuration=fusionauth.FusionAuthApplicationLambdaConfigurationArgs(\n        access_token_populate_id=fusionauth_lambda[\"token_populate\"][\"id\"],\n        id_token_populate_id=fusionauth_lambda[\"id_token_populate\"][\"id\"],\n    ),\n    login_configuration=fusionauth.FusionAuthApplicationLoginConfigurationArgs(\n        allow_token_refresh=False,\n        generate_refresh_tokens=False,\n        require_authentication=True,\n    ),\n    oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(\n        authorized_origin_urls=[\"http://www.example.com/oauth-callback\"],\n        authorized_url_validation_policy=\"ExactMatch\",\n        enabled_grants=[\n            \"authorization_code\",\n            \"implicit\",\n        ],\n        generate_refresh_tokens=False,\n        logout_behavior=\"AllApplications\",\n        logout_url=\"http://www.example.com/logout\",\n        require_client_authentication=False,\n    ),\n    registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(\n        birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(\n            enabled=False,\n            required=False,\n        ),\n        confirm_password=False,\n        enabled=False,\n        first_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        full_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        last_name=fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        login_id_type=\"\",\n        middle_name=fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs(\n            enabled=False,\n            required=False,\n        ),\n        mobile_phone=fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs(\n            enabled=False,\n            required=False,\n        ),\n        type=\"\",\n    ),\n    passwordless_configuration_enabled=False,\n    registration_delete_policy=fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs(\n        unverified_enabled=True,\n        unverified_number_of_days_to_retain=30,\n    ))\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var forum = new Fusionauth.FusionAuthApplication(\"forum\", new()\n    {\n        TenantId = fusionauth_tenant.Portal.Id,\n        AuthenticationTokenConfigurationEnabled = false,\n        FormConfiguration = new Fusionauth.Inputs.FusionAuthApplicationFormConfigurationArgs\n        {\n            AdminRegistrationFormId = fusionauth_form.Admin_registration.Id,\n            SelfServiceFormId = fusionauth_form.Self_service.Id,\n        },\n        JwtConfiguration = new Fusionauth.Inputs.FusionAuthApplicationJwtConfigurationArgs\n        {\n            AccessTokenId = fusionauth_key.Access_token.Id,\n            Enabled = true,\n            IdTokenKeyId = fusionauth_key.Id_token.Id,\n            RefreshTokenTtlMinutes = 43200,\n            TtlSeconds = 3600,\n        },\n        LambdaConfiguration = new Fusionauth.Inputs.FusionAuthApplicationLambdaConfigurationArgs\n        {\n            AccessTokenPopulateId = fusionauth_lambda.Token_populate.Id,\n            IdTokenPopulateId = fusionauth_lambda.Id_token_populate.Id,\n        },\n        LoginConfiguration = new Fusionauth.Inputs.FusionAuthApplicationLoginConfigurationArgs\n        {\n            AllowTokenRefresh = false,\n            GenerateRefreshTokens = false,\n            RequireAuthentication = true,\n        },\n        OauthConfiguration = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationArgs\n        {\n            AuthorizedOriginUrls = new[]\n            {\n                \"http://www.example.com/oauth-callback\",\n            },\n            AuthorizedUrlValidationPolicy = \"ExactMatch\",\n            EnabledGrants = new[]\n            {\n                \"authorization_code\",\n                \"implicit\",\n            },\n            GenerateRefreshTokens = false,\n            LogoutBehavior = \"AllApplications\",\n            LogoutUrl = \"http://www.example.com/logout\",\n            RequireClientAuthentication = false,\n        },\n        RegistrationConfiguration = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationArgs\n        {\n            BirthDate = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationBirthDateArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            ConfirmPassword = false,\n            Enabled = false,\n            FirstName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationFirstNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            FullName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationFullNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            LastName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationLastNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            LoginIdType = \"\",\n            MiddleName = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            MobilePhone = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs\n            {\n                Enabled = false,\n                Required = false,\n            },\n            Type = \"\",\n        },\n        PasswordlessConfigurationEnabled = false,\n        RegistrationDeletePolicy = new Fusionauth.Inputs.FusionAuthApplicationRegistrationDeletePolicyArgs\n        {\n            UnverifiedEnabled = true,\n            UnverifiedNumberOfDaysToRetain = 30,\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthApplication(ctx, \"forum\", \u0026fusionauth.FusionAuthApplicationArgs{\n\t\t\tTenantId:                                pulumi.Any(fusionauth_tenant.Portal.Id),\n\t\t\tAuthenticationTokenConfigurationEnabled: pulumi.Bool(false),\n\t\t\tFormConfiguration: \u0026fusionauth.FusionAuthApplicationFormConfigurationArgs{\n\t\t\t\tAdminRegistrationFormId: pulumi.Any(fusionauth_form.Admin_registration.Id),\n\t\t\t\tSelfServiceFormId:       pulumi.Any(fusionauth_form.Self_service.Id),\n\t\t\t},\n\t\t\tJwtConfiguration: \u0026fusionauth.FusionAuthApplicationJwtConfigurationArgs{\n\t\t\t\tAccessTokenId:          pulumi.Any(fusionauth_key.Access_token.Id),\n\t\t\t\tEnabled:                pulumi.Bool(true),\n\t\t\t\tIdTokenKeyId:           pulumi.Any(fusionauth_key.Id_token.Id),\n\t\t\t\tRefreshTokenTtlMinutes: pulumi.Int(43200),\n\t\t\t\tTtlSeconds:             pulumi.Int(3600),\n\t\t\t},\n\t\t\tLambdaConfiguration: \u0026fusionauth.FusionAuthApplicationLambdaConfigurationArgs{\n\t\t\t\tAccessTokenPopulateId: pulumi.Any(fusionauth_lambda.Token_populate.Id),\n\t\t\t\tIdTokenPopulateId:     pulumi.Any(fusionauth_lambda.Id_token_populate.Id),\n\t\t\t},\n\t\t\tLoginConfiguration: \u0026fusionauth.FusionAuthApplicationLoginConfigurationArgs{\n\t\t\t\tAllowTokenRefresh:     pulumi.Bool(false),\n\t\t\t\tGenerateRefreshTokens: pulumi.Bool(false),\n\t\t\t\tRequireAuthentication: pulumi.Bool(true),\n\t\t\t},\n\t\t\tOauthConfiguration: \u0026fusionauth.FusionAuthApplicationOauthConfigurationArgs{\n\t\t\t\tAuthorizedOriginUrls: pulumi.StringArray{\n\t\t\t\t\tpulumi.String(\"http://www.example.com/oauth-callback\"),\n\t\t\t\t},\n\t\t\t\tAuthorizedUrlValidationPolicy: pulumi.String(\"ExactMatch\"),\n\t\t\t\tEnabledGrants: pulumi.StringArray{\n\t\t\t\t\tpulumi.String(\"authorization_code\"),\n\t\t\t\t\tpulumi.String(\"implicit\"),\n\t\t\t\t},\n\t\t\t\tGenerateRefreshTokens:       pulumi.Bool(false),\n\t\t\t\tLogoutBehavior:              pulumi.String(\"AllApplications\"),\n\t\t\t\tLogoutUrl:                   pulumi.String(\"http://www.example.com/logout\"),\n\t\t\t\tRequireClientAuthentication: pulumi.Bool(false),\n\t\t\t},\n\t\t\tRegistrationConfiguration: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationArgs{\n\t\t\t\tBirthDate: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tConfirmPassword: pulumi.Bool(false),\n\t\t\t\tEnabled:         pulumi.Bool(false),\n\t\t\t\tFirstName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tFullName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tLastName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tLoginIdType: pulumi.String(\"\"),\n\t\t\t\tMiddleName: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tMobilePhone: \u0026fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs{\n\t\t\t\t\tEnabled:  pulumi.Bool(false),\n\t\t\t\t\tRequired: pulumi.Bool(false),\n\t\t\t\t},\n\t\t\t\tType: pulumi.String(\"\"),\n\t\t\t},\n\t\t\tPasswordlessConfigurationEnabled: pulumi.Bool(false),\n\t\t\tRegistrationDeletePolicy: \u0026fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs{\n\t\t\t\tUnverifiedEnabled:              pulumi.Bool(true),\n\t\t\t\tUnverifiedNumberOfDaysToRetain: pulumi.Int(30),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthApplication;\nimport com.pulumi.fusionauth.FusionAuthApplicationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationFormConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationJwtConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationLambdaConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationLoginConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationOauthConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationBirthDateArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationFirstNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationFullNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationLastNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApplicationRegistrationDeletePolicyArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var forum = new FusionAuthApplication(\"forum\", FusionAuthApplicationArgs.builder()        \n            .tenantId(fusionauth_tenant.portal().id())\n            .authenticationTokenConfigurationEnabled(false)\n            .formConfiguration(FusionAuthApplicationFormConfigurationArgs.builder()\n                .adminRegistrationFormId(fusionauth_form.admin_registration().id())\n                .selfServiceFormId(fusionauth_form.self_service().id())\n                .build())\n            .jwtConfiguration(FusionAuthApplicationJwtConfigurationArgs.builder()\n                .accessTokenId(fusionauth_key.access_token().id())\n                .enabled(true)\n                .idTokenKeyId(fusionauth_key.id_token().id())\n                .refreshTokenTtlMinutes(43200)\n                .ttlSeconds(3600)\n                .build())\n            .lambdaConfiguration(FusionAuthApplicationLambdaConfigurationArgs.builder()\n                .accessTokenPopulateId(fusionauth_lambda.token_populate().id())\n                .idTokenPopulateId(fusionauth_lambda.id_token_populate().id())\n                .build())\n            .loginConfiguration(FusionAuthApplicationLoginConfigurationArgs.builder()\n                .allowTokenRefresh(false)\n                .generateRefreshTokens(false)\n                .requireAuthentication(true)\n                .build())\n            .oauthConfiguration(FusionAuthApplicationOauthConfigurationArgs.builder()\n                .authorizedOriginUrls(\"http://www.example.com/oauth-callback\")\n                .authorizedUrlValidationPolicy(\"ExactMatch\")\n                .enabledGrants(                \n                    \"authorization_code\",\n                    \"implicit\")\n                .generateRefreshTokens(false)\n                .logoutBehavior(\"AllApplications\")\n                .logoutUrl(\"http://www.example.com/logout\")\n                .requireClientAuthentication(false)\n                .build())\n            .registrationConfiguration(FusionAuthApplicationRegistrationConfigurationArgs.builder()\n                .birthDate(FusionAuthApplicationRegistrationConfigurationBirthDateArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .confirmPassword(false)\n                .enabled(false)\n                .firstName(FusionAuthApplicationRegistrationConfigurationFirstNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .fullName(FusionAuthApplicationRegistrationConfigurationFullNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .lastName(FusionAuthApplicationRegistrationConfigurationLastNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .loginIdType(\"\")\n                .middleName(FusionAuthApplicationRegistrationConfigurationMiddleNameArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .mobilePhone(FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs.builder()\n                    .enabled(false)\n                    .required(false)\n                    .build())\n                .type(\"\")\n                .build())\n            .passwordlessConfigurationEnabled(false)\n            .registrationDeletePolicy(FusionAuthApplicationRegistrationDeletePolicyArgs.builder()\n                .unverifiedEnabled(true)\n                .unverifiedNumberOfDaysToRetain(30)\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  forum:\n    type: fusionauth:FusionAuthApplication\n    properties:\n      tenantId: ${fusionauth_tenant.portal.id}\n      authenticationTokenConfigurationEnabled: false\n      formConfiguration:\n        adminRegistrationFormId: ${fusionauth_form.admin_registration.id}\n        selfServiceFormId: ${fusionauth_form.self_service.id}\n      jwtConfiguration:\n        accessTokenId: ${fusionauth_key.access_token.id}\n        enabled: true\n        idTokenKeyId: ${fusionauth_key.id_token.id}\n        refreshTokenTtlMinutes: 43200\n        ttlSeconds: 3600\n      lambdaConfiguration:\n        accessTokenPopulateId: ${fusionauth_lambda.token_populate.id}\n        idTokenPopulateId: ${fusionauth_lambda.id_token_populate.id}\n      loginConfiguration:\n        allowTokenRefresh: false\n        generateRefreshTokens: false\n        requireAuthentication: true\n      oauthConfiguration:\n        authorizedOriginUrls:\n          - http://www.example.com/oauth-callback\n        authorizedUrlValidationPolicy: ExactMatch\n        enabledGrants:\n          - authorization_code\n          - implicit\n        generateRefreshTokens: false\n        logoutBehavior: AllApplications\n        logoutUrl: http://www.example.com/logout\n        requireClientAuthentication: false\n      registrationConfiguration:\n        birthDate:\n          enabled: false\n          required: false\n        confirmPassword: false\n        enabled: false\n        firstName:\n          enabled: false\n          required: false\n        fullName:\n          enabled: false\n          required: false\n        lastName:\n          enabled: false\n          required: false\n        loginIdType:\n        middleName:\n          enabled: false\n          required: false\n        mobilePhone:\n          enabled: false\n          required: false\n        type:\n      passwordlessConfigurationEnabled: false\n      registrationDeletePolicy:\n        unverifiedEnabled: true\n        unverifiedNumberOfDaysToRetain: 30\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "accessControlConfiguration": {
                     "$ref": "#/types/fusionauth:index/FusionAuthApplicationAccessControlConfiguration:FusionAuthApplicationAccessControlConfiguration"
@@ -8940,6 +8979,10 @@
                     "type": "string",
                     "description": "The JavaScript execution engine for the lambda.\n"
                 },
+                "lambdaId": {
+                    "type": "string",
+                    "description": "The Id to use for the new lambda. If not specified a secure random UUID will be generated.\n"
+                },
                 "name": {
                     "type": "string",
                     "description": "The name of the lambda.\n"
@@ -8951,6 +8994,7 @@
             },
             "required": [
                 "body",
+                "lambdaId",
                 "name",
                 "type"
             ],
@@ -8971,6 +9015,10 @@
                 "engineType": {
                     "type": "string",
                     "description": "The JavaScript execution engine for the lambda.\n"
+                },
+                "lambdaId": {
+                    "type": "string",
+                    "description": "The Id to use for the new lambda. If not specified a secure random UUID will be generated.\n"
                 },
                 "name": {
                     "type": "string",
@@ -9004,6 +9052,10 @@
                     "engineType": {
                         "type": "string",
                         "description": "The JavaScript execution engine for the lambda.\n"
+                    },
+                    "lambdaId": {
+                        "type": "string",
+                        "description": "The Id to use for the new lambda. If not specified a secure random UUID will be generated.\n"
                     },
                     "name": {
                         "type": "string",
@@ -11203,6 +11255,99 @@
                 ]
             }
         },
+        "fusionauth:index/getEMail:getEMail": {
+            "description": "## # Email Resource\n\nThis data source is used to fetch information about a specific Email Template.\n\n[Emails API](https://fusionauth.io/docs/v1/tech/apis/emails)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst defaultBreachedPassword = fusionauth.getEMail({\n    name: \"[FusionAuth Default] Breached Password Notification\",\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\ndefault_breached_password = fusionauth.get_e_mail(name=\"[FusionAuth Default] Breached Password Notification\")\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var defaultBreachedPassword = Fusionauth.GetEMail.Invoke(new()\n    {\n        Name = \"[FusionAuth Default] Breached Password Notification\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.GetEMail(ctx, \u0026fusionauth.GetEMailArgs{\n\t\t\tName: \"[FusionAuth Default] Breached Password Notification\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetEMailArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var defaultBreachedPassword = FusionauthFunctions.getEMail(GetEMailArgs.builder()\n            .name(\"[FusionAuth Default] Breached Password Notification\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  defaultBreachedPassword:\n    fn::invoke:\n      Function: fusionauth:getEMail\n      Arguments:\n        name: '[FusionAuth Default] Breached Password Notification'\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getEMail.\n",
+                "properties": {
+                    "fromEmail": {
+                        "type": "string",
+                        "description": "The email address that this email will be sent from.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the Email Template.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getEMail.\n",
+                "properties": {
+                    "defaultFromName": {
+                        "type": "string",
+                        "description": "The default From Name used when sending emails.\n"
+                    },
+                    "defaultHtmlTemplate": {
+                        "type": "string",
+                        "description": "The default HTML Email Template.\n"
+                    },
+                    "defaultSubject": {
+                        "type": "string",
+                        "description": "The default Subject used when sending emails.\n"
+                    },
+                    "defaultTextTemplate": {
+                        "type": "string",
+                        "description": "The default Text Email Template.\n"
+                    },
+                    "fromEmail": {
+                        "type": "string",
+                        "description": "The email address that this email will be sent from.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The Id of the Email Template.\n"
+                    },
+                    "localizedFromNames": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The From Name used when sending emails to users who speak other languages.\n"
+                    },
+                    "localizedHtmlTemplates": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The HTML Email Template used when sending emails to users who speak other languages.\n"
+                    },
+                    "localizedSubjects": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The Subject used when sending emails to users who speak other languages.\n"
+                    },
+                    "localizedTextTemplates": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The Text Email Template used when sending emails to users who speak other languages.\n"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "defaultFromName",
+                    "defaultHtmlTemplate",
+                    "defaultSubject",
+                    "defaultTextTemplate",
+                    "id",
+                    "localizedFromNames",
+                    "localizedHtmlTemplates",
+                    "localizedSubjects",
+                    "localizedTextTemplates",
+                    "name"
+                ]
+            }
+        },
         "fusionauth:index/getForm:getForm": {
             "description": "## # Form Resource\n\nA FusionAuth Form is a customizable object that contains one-to-many ordered steps. Each step is comprised of one or more Form Fields.\n\n[Forms API](https://fusionauth.io/docs/v1/tech/apis/forms)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst default = fusionauth.getForm({\n    name: \"Default User Self Service provided by FusionAuth\",\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\ndefault = fusionauth.get_form(name=\"Default User Self Service provided by FusionAuth\")\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @default = Fusionauth.GetForm.Invoke(new()\n    {\n        Name = \"Default User Self Service provided by FusionAuth\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.GetForm(ctx, \u0026fusionauth.GetFormArgs{\n\t\t\tName: pulumi.StringRef(\"Default User Self Service provided by FusionAuth\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetFormArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var default = FusionauthFunctions.getForm(GetFormArgs.builder()\n            .name(\"Default User Self Service provided by FusionAuth\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  default:\n    fn::invoke:\n      Function: fusionauth:getForm\n      Arguments:\n        name: Default User Self Service provided by FusionAuth\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
@@ -11274,6 +11419,129 @@
                 "type": "object",
                 "required": [
                     "formId",
+                    "id"
+                ]
+            }
+        },
+        "fusionauth:index/getFormField:getFormField": {
+            "description": "## # Form Field Resource\n\nA FusionAuth Form Field is an object that can be customized to receive input within a FusionAuth [Form](https://fusionauth.io/docs/v1/tech/apis/forms).\n\n[Form Field API](https://fusionauth.io/docs/v1/tech/apis/form-fields)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst default = fusionauth.getFormField({\n    name: \"Email\",\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\ndefault = fusionauth.get_form_field(name=\"Email\")\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @default = Fusionauth.GetFormField.Invoke(new()\n    {\n        Name = \"Email\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/v2/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.GetFormField(ctx, \u0026fusionauth.GetFormFieldArgs{\n\t\t\tName: pulumi.StringRef(\"Email\"),\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetFormFieldArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var default = FusionauthFunctions.getFormField(GetFormFieldArgs.builder()\n            .name(\"Email\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  default:\n    fn::invoke:\n      Function: fusionauth:getFormField\n      Arguments:\n        name: Email\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getFormField.\n",
+                "properties": {
+                    "confirm": {
+                        "type": "boolean",
+                        "description": "Determines if the user input should be confirmed by requiring the value to be entered twice.\n- consent_id\n- control\n"
+                    },
+                    "consentId": {
+                        "type": "string"
+                    },
+                    "control": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "An object that can hold any information about the Form Field that should be persisted.\n- description\n- key\n"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "formFieldId": {
+                        "type": "string",
+                        "description": "The unique id of the Form Field. Either `form_field_id` or `name` must be specified.\n"
+                    },
+                    "key": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the Form field. Either `form_field_id` or `name` must be specified.\n"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of options that are applied to checkbox, radio, or select controls.\n"
+                    },
+                    "required": {
+                        "type": "boolean",
+                        "description": "Determines if a value is required to complete the form.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The form field type. The possible values are:\n"
+                    },
+                    "validator": {
+                        "$ref": "#/types/fusionauth:index/getFormFieldValidator:getFormFieldValidator"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getFormField.\n",
+                "properties": {
+                    "confirm": {
+                        "type": "boolean",
+                        "description": "Determines if the user input should be confirmed by requiring the value to be entered twice.\n- consent_id\n- control\n"
+                    },
+                    "consentId": {
+                        "type": "string"
+                    },
+                    "control": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "An object that can hold any information about the Form Field that should be persisted.\n- description\n- key\n"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "formFieldId": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The unique name of the Form Field.\n"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of options that are applied to checkbox, radio, or select controls.\n"
+                    },
+                    "required": {
+                        "type": "boolean",
+                        "description": "Determines if a value is required to complete the form.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The form field type. The possible values are:\n"
+                    },
+                    "validator": {
+                        "$ref": "#/types/fusionauth:index/getFormFieldValidator:getFormFieldValidator"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "control",
+                    "formFieldId",
+                    "validator",
                     "id"
                 ]
             }

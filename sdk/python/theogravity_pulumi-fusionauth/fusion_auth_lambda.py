@@ -19,6 +19,7 @@ class FusionAuthLambdaArgs:
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  engine_type: Optional[pulumi.Input[str]] = None,
+                 lambda_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthLambda resource.
@@ -27,6 +28,7 @@ class FusionAuthLambdaArgs:
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
+        :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         """
         pulumi.set(__self__, "body", body)
@@ -40,6 +42,8 @@ class FusionAuthLambdaArgs:
             pulumi.set(__self__, "enabled", enabled)
         if engine_type is not None:
             pulumi.set(__self__, "engine_type", engine_type)
+        if lambda_id is not None:
+            pulumi.set(__self__, "lambda_id", lambda_id)
         if name is not None:
             pulumi.set(__self__, "name", name)
 
@@ -104,6 +108,18 @@ class FusionAuthLambdaArgs:
         pulumi.set(self, "engine_type", value)
 
     @property
+    @pulumi.getter(name="lambdaId")
+    def lambda_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "lambda_id")
+
+    @lambda_id.setter
+    def lambda_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "lambda_id", value)
+
+    @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
         """
@@ -123,6 +139,7 @@ class _FusionAuthLambdaState:
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  engine_type: Optional[pulumi.Input[str]] = None,
+                 lambda_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
@@ -131,6 +148,7 @@ class _FusionAuthLambdaState:
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
+        :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
         """
@@ -145,6 +163,8 @@ class _FusionAuthLambdaState:
             pulumi.set(__self__, "enabled", enabled)
         if engine_type is not None:
             pulumi.set(__self__, "engine_type", engine_type)
+        if lambda_id is not None:
+            pulumi.set(__self__, "lambda_id", lambda_id)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if type is not None:
@@ -199,6 +219,18 @@ class _FusionAuthLambdaState:
         pulumi.set(self, "engine_type", value)
 
     @property
+    @pulumi.getter(name="lambdaId")
+    def lambda_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "lambda_id")
+
+    @lambda_id.setter
+    def lambda_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "lambda_id", value)
+
+    @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
         """
@@ -232,6 +264,7 @@ class FusionAuthLambda(pulumi.CustomResource):
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  engine_type: Optional[pulumi.Input[str]] = None,
+                 lambda_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -265,6 +298,7 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
+        :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
         """
@@ -317,6 +351,7 @@ class FusionAuthLambda(pulumi.CustomResource):
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  engine_type: Optional[pulumi.Input[str]] = None,
+                 lambda_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -337,6 +372,7 @@ class FusionAuthLambda(pulumi.CustomResource):
                 pulumi.log.warn("""enabled is deprecated: Not currently used and may be removed in a future version.""")
             __props__.__dict__["enabled"] = enabled
             __props__.__dict__["engine_type"] = engine_type
+            __props__.__dict__["lambda_id"] = lambda_id
             __props__.__dict__["name"] = name
             if type is None and not opts.urn:
                 raise TypeError("Missing required property 'type'")
@@ -355,6 +391,7 @@ class FusionAuthLambda(pulumi.CustomResource):
             debug: Optional[pulumi.Input[bool]] = None,
             enabled: Optional[pulumi.Input[bool]] = None,
             engine_type: Optional[pulumi.Input[str]] = None,
+            lambda_id: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
             type: Optional[pulumi.Input[str]] = None) -> 'FusionAuthLambda':
         """
@@ -368,6 +405,7 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
+        :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
         """
@@ -379,6 +417,7 @@ class FusionAuthLambda(pulumi.CustomResource):
         __props__.__dict__["debug"] = debug
         __props__.__dict__["enabled"] = enabled
         __props__.__dict__["engine_type"] = engine_type
+        __props__.__dict__["lambda_id"] = lambda_id
         __props__.__dict__["name"] = name
         __props__.__dict__["type"] = type
         return FusionAuthLambda(resource_name, opts=opts, __props__=__props__)
@@ -414,6 +453,14 @@ class FusionAuthLambda(pulumi.CustomResource):
         The JavaScript execution engine for the lambda.
         """
         return pulumi.get(self, "engine_type")
+
+    @property
+    @pulumi.getter(name="lambdaId")
+    def lambda_id(self) -> pulumi.Output[str]:
+        """
+        The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "lambda_id")
 
     @property
     @pulumi.getter

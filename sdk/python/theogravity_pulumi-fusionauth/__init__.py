@@ -42,7 +42,9 @@ from .fusion_auth_user_action import *
 from .fusion_auth_webhook import *
 from .get_application import *
 from .get_application_role import *
+from .get_e_mail import *
 from .get_form import *
+from .get_form_field import *
 from .get_idp import *
 from .get_lambda import *
 from .get_tenant import *
