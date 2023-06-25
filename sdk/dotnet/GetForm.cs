@@ -25,6 +25,7 @@ namespace theogravity.Fusionauth
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -56,6 +57,7 @@ namespace theogravity.Fusionauth
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 

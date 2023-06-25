@@ -19,6 +19,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using System.Text.Json;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;

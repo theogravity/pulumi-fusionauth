@@ -13,12 +13,20 @@ func GetApiKey(ctx *pulumi.Context) string {
 	if err == nil {
 		return v
 	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string)
+	var value string
+	if d := getEnvOrDefault(nil, nil, "FUSION_AUTH_API_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
 }
 func GetHost(ctx *pulumi.Context) string {
 	v, err := config.Try(ctx, "fusionauth:host")
 	if err == nil {
 		return v
 	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string)
+	var value string
+	if d := getEnvOrDefault(nil, nil, "FUSION_AUTH_HOST_URL"); d != nil {
+		value = d.(string)
+	}
+	return value
 }

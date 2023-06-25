@@ -45,6 +45,9 @@ type FusionAuthEntity struct {
 	// The ID to use for the new Entity. If not specified a secure random UUID will be generated.
 	EntityId pulumi.StringOutput `pulumi:"entityId"`
 	// The ID of the Entity Type. Types are consulted for permission checks.
+	//
+	// For more information see:
+	// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 	EntityTypeId pulumi.StringOutput `pulumi:"entityTypeId"`
 	// A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -105,6 +108,9 @@ type fusionAuthEntityState struct {
 	// The ID to use for the new Entity. If not specified a secure random UUID will be generated.
 	EntityId *string `pulumi:"entityId"`
 	// The ID of the Entity Type. Types are consulted for permission checks.
+	//
+	// For more information see:
+	// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 	EntityTypeId *string `pulumi:"entityTypeId"`
 	// A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
 	Name *string `pulumi:"name"`
@@ -126,6 +132,9 @@ type FusionAuthEntityState struct {
 	// The ID to use for the new Entity. If not specified a secure random UUID will be generated.
 	EntityId pulumi.StringPtrInput
 	// The ID of the Entity Type. Types are consulted for permission checks.
+	//
+	// For more information see:
+	// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 	EntityTypeId pulumi.StringPtrInput
 	// A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
 	Name pulumi.StringPtrInput
@@ -151,6 +160,9 @@ type fusionAuthEntityArgs struct {
 	// The ID to use for the new Entity. If not specified a secure random UUID will be generated.
 	EntityId *string `pulumi:"entityId"`
 	// The ID of the Entity Type. Types are consulted for permission checks.
+	//
+	// For more information see:
+	// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 	EntityTypeId string `pulumi:"entityTypeId"`
 	// A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
 	Name *string `pulumi:"name"`
@@ -173,6 +185,9 @@ type FusionAuthEntityArgs struct {
 	// The ID to use for the new Entity. If not specified a secure random UUID will be generated.
 	EntityId pulumi.StringPtrInput
 	// The ID of the Entity Type. Types are consulted for permission checks.
+	//
+	// For more information see:
+	// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 	EntityTypeId pulumi.StringInput
 	// A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
 	Name pulumi.StringPtrInput
@@ -292,6 +307,9 @@ func (o FusionAuthEntityOutput) EntityId() pulumi.StringOutput {
 }
 
 // The ID of the Entity Type. Types are consulted for permission checks.
+//
+// For more information see:
+// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
 func (o FusionAuthEntityOutput) EntityTypeId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthEntity) pulumi.StringOutput { return v.EntityTypeId }).(pulumi.StringOutput)
 }
