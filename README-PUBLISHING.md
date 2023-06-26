@@ -7,6 +7,7 @@
     corrections are made.
   * See `Adding Mappings, Building the Provider and SDKs` in `README-BUILD.md` for more info.
   * You'll have to run `gofmt -s provider/resources.go > provider/resources.go.new` and delete `resources.go` and rename `resources.go.new` to `resources.go` to get the formatting correct. 
+  * Run `make tfgen` again after the corrections
 - Run `cd sdk && go mod tidy && cd -`
 - Run `make build_sdks`
 - Commit all the generated files and push to a branch.
