@@ -12,5 +12,5 @@
 - Run `make build_sdks`
 - Commit all the generated files and push to a branch.
 - Make sure the CI passes green then merge.
-- Create a release in main by making a git tag in the format of `vX.Y.Z` and push that tag to origin via `git push origin <tag>`
+- Create a release in `main` by making a git tag in the format of `vX.Y.Z` and push that tag to origin via `git tag <tag>` (lightweight tag) followed by `git push origin <tag>`
 - Look at the action tab in the github repo to monitor the build for that version
