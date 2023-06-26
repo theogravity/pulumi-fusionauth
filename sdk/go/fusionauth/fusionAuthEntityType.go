@@ -26,7 +26,7 @@ import (
 //	"encoding/json"
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
 //
 // )
 //
