@@ -19,6 +19,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -58,6 +59,7 @@ namespace theogravity.Fusionauth
     ///             {
     ///                 "http://www.example.com/oauth-callback",
     ///             },
+    ///             AuthorizedUrlValidationPolicy = "ExactMatch",
     ///             EnabledGrants = new[]
     ///             {
     ///                 "authorization_code",

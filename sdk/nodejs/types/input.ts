@@ -199,9 +199,14 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     authorizedRedirectUrls?: pulumi.Input<pulumi.Input<string>[]>;
     /**
+     * Determines whether wildcard expressions will be allowed in the authorizedRedirectUrls and authorized_origin_urls.
+     */
+    authorizedUrlValidationPolicy?: pulumi.Input<string>;
+    /**
      * Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
      */
     clientAuthenticationPolicy?: pulumi.Input<string>;
+    clientId?: pulumi.Input<string>;
     /**
      * The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
      */
@@ -1477,13 +1482,13 @@ export interface FusionAuthTenantFormConfiguration {
 
 export interface FusionAuthTenantJwtConfiguration {
     /**
-     * The unique id of the signing key used to sign the access token.
+     * The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
      */
-    accessTokenKeyId: pulumi.Input<string>;
+    accessTokenKeyId?: pulumi.Input<string>;
     /**
-     * The unique id of the signing key used to sign the Id token.
+     * The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
      */
-    idTokenKeyId: pulumi.Input<string>;
+    idTokenKeyId?: pulumi.Input<string>;
     /**
      * The refresh token expiration policy.
      */
@@ -1901,6 +1906,28 @@ export interface FusionAuthWebhookEventsEnabled {
      * When a user update transaction has completed
      */
     userUpdateComplete?: pulumi.Input<boolean>;
+}
+
+export interface GetFormFieldValidator {
+    /**
+     * Determines if user input should be validated.
+     */
+    enabled?: boolean;
+    /**
+     * A regular expression used to validate user input. Must be a valid regular expression pattern.
+     */
+    expression?: string;
+}
+
+export interface GetFormFieldValidatorArgs {
+    /**
+     * Determines if user input should be validated.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * A regular expression used to validate user input. Must be a valid regular expression pattern.
+     */
+    expression?: pulumi.Input<string>;
 }
 
 export interface GetFormStep {

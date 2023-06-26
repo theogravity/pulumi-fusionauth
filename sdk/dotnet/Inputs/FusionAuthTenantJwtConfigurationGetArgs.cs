@@ -14,16 +14,16 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantJwtConfigurationGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The unique id of the signing key used to sign the access token.
+        /// The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
         /// </summary>
-        [Input("accessTokenKeyId", required: true)]
-        public Input<string> AccessTokenKeyId { get; set; } = null!;
+        [Input("accessTokenKeyId")]
+        public Input<string>? AccessTokenKeyId { get; set; }
 
         /// <summary>
-        /// The unique id of the signing key used to sign the Id token.
+        /// The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
         /// </summary>
-        [Input("idTokenKeyId", required: true)]
-        public Input<string> IdTokenKeyId { get; set; } = null!;
+        [Input("idTokenKeyId")]
+        public Input<string>? IdTokenKeyId { get; set; }
 
         /// <summary>
         /// The refresh token expiration policy.

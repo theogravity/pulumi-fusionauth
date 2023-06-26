@@ -692,6 +692,7 @@ class FusionAuthApplication(pulumi.CustomResource):
             ),
             oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
                 authorized_origin_urls=["http://www.example.com/oauth-callback"],
+                authorized_url_validation_policy="ExactMatch",
                 enabled_grants=[
                     "authorization_code",
                     "implicit",
@@ -792,6 +793,7 @@ class FusionAuthApplication(pulumi.CustomResource):
             ),
             oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
                 authorized_origin_urls=["http://www.example.com/oauth-callback"],
+                authorized_url_validation_policy="ExactMatch",
                 enabled_grants=[
                     "authorization_code",
                     "implicit",

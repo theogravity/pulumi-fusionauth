@@ -23,9 +23,14 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly ImmutableArray<string> AuthorizedRedirectUrls;
         /// <summary>
+        /// Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.
+        /// </summary>
+        public readonly string? AuthorizedUrlValidationPolicy;
+        /// <summary>
         /// Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
         /// </summary>
         public readonly string? ClientAuthenticationPolicy;
+        public readonly string? ClientId;
         /// <summary>
         /// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
         /// </summary>
@@ -73,7 +78,11 @@ namespace theogravity.Fusionauth.Outputs
 
             ImmutableArray<string> authorizedRedirectUrls,
 
+            string? authorizedUrlValidationPolicy,
+
             string? clientAuthenticationPolicy,
+
+            string? clientId,
 
             string? clientSecret,
 
@@ -97,7 +106,9 @@ namespace theogravity.Fusionauth.Outputs
         {
             AuthorizedOriginUrls = authorizedOriginUrls;
             AuthorizedRedirectUrls = authorizedRedirectUrls;
+            AuthorizedUrlValidationPolicy = authorizedUrlValidationPolicy;
             ClientAuthenticationPolicy = clientAuthenticationPolicy;
+            ClientId = clientId;
             ClientSecret = clientSecret;
             Debug = debug;
             DeviceVerificationUrl = deviceVerificationUrl;

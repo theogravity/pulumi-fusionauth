@@ -24,6 +24,9 @@ class FusionAuthEntityArgs:
         """
         The set of arguments for constructing a FusionAuthEntity resource.
         :param pulumi.Input[str] entity_type_id: The ID of the Entity Type. Types are consulted for permission checks.
+               
+               For more information see:
+               [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         :param pulumi.Input[str] client_id: The OAuth 2.0 client ID. If you leave this blank on create, the value of the Entity ID will
                be used. Must be a UUID.
         :param pulumi.Input[str] client_secret: The OAuth 2.0 client secret. If you leave this blank on create, a secure secret will be
@@ -54,6 +57,9 @@ class FusionAuthEntityArgs:
     def entity_type_id(self) -> pulumi.Input[str]:
         """
         The ID of the Entity Type. Types are consulted for permission checks.
+
+        For more information see:
+        [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         """
         return pulumi.get(self, "entity_type_id")
 
@@ -159,6 +165,9 @@ class _FusionAuthEntityState:
                the limits on data field types as you plan for and build your custom data schema. Must be a JSON serialised string.
         :param pulumi.Input[str] entity_id: The ID to use for the new Entity. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] entity_type_id: The ID of the Entity Type. Types are consulted for permission checks.
+               
+               For more information see:
+               [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         :param pulumi.Input[str] name: A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
         :param pulumi.Input[str] tenant_id: The unique ID of the tenant used to scope this API request.
         """
@@ -234,6 +243,9 @@ class _FusionAuthEntityState:
     def entity_type_id(self) -> Optional[pulumi.Input[str]]:
         """
         The ID of the Entity Type. Types are consulted for permission checks.
+
+        For more information see:
+        [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         """
         return pulumi.get(self, "entity_type_id")
 
@@ -310,6 +322,9 @@ class FusionAuthEntity(pulumi.CustomResource):
                the limits on data field types as you plan for and build your custom data schema. Must be a JSON serialised string.
         :param pulumi.Input[str] entity_id: The ID to use for the new Entity. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] entity_type_id: The ID of the Entity Type. Types are consulted for permission checks.
+               
+               For more information see:
+               [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         :param pulumi.Input[str] name: A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
         :param pulumi.Input[str] tenant_id: The unique ID of the tenant used to scope this API request.
         """
@@ -414,6 +429,9 @@ class FusionAuthEntity(pulumi.CustomResource):
                the limits on data field types as you plan for and build your custom data schema. Must be a JSON serialised string.
         :param pulumi.Input[str] entity_id: The ID to use for the new Entity. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] entity_type_id: The ID of the Entity Type. Types are consulted for permission checks.
+               
+               For more information see:
+               [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         :param pulumi.Input[str] name: A descriptive name for the Entity (i.e. "Raviga" or "Email Service").
         :param pulumi.Input[str] tenant_id: The unique ID of the tenant used to scope this API request.
         """
@@ -471,6 +489,9 @@ class FusionAuthEntity(pulumi.CustomResource):
     def entity_type_id(self) -> pulumi.Output[str]:
         """
         The ID of the Entity Type. Types are consulted for permission checks.
+
+        For more information see:
+        [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         """
         return pulumi.get(self, "entity_type_id")
 

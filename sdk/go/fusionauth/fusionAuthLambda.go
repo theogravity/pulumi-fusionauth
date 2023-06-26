@@ -57,6 +57,8 @@ type FusionAuthLambda struct {
 	Enabled pulumi.BoolPtrOutput `pulumi:"enabled"`
 	// The JavaScript execution engine for the lambda.
 	EngineType pulumi.StringPtrOutput `pulumi:"engineType"`
+	// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+	LambdaId pulumi.StringOutput `pulumi:"lambdaId"`
 	// The name of the lambda.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The lambda type. The possible values are:
@@ -109,6 +111,8 @@ type fusionAuthLambdaState struct {
 	Enabled *bool `pulumi:"enabled"`
 	// The JavaScript execution engine for the lambda.
 	EngineType *string `pulumi:"engineType"`
+	// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+	LambdaId *string `pulumi:"lambdaId"`
 	// The name of the lambda.
 	Name *string `pulumi:"name"`
 	// The lambda type. The possible values are:
@@ -126,6 +130,8 @@ type FusionAuthLambdaState struct {
 	Enabled pulumi.BoolPtrInput
 	// The JavaScript execution engine for the lambda.
 	EngineType pulumi.StringPtrInput
+	// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+	LambdaId pulumi.StringPtrInput
 	// The name of the lambda.
 	Name pulumi.StringPtrInput
 	// The lambda type. The possible values are:
@@ -147,6 +153,8 @@ type fusionAuthLambdaArgs struct {
 	Enabled *bool `pulumi:"enabled"`
 	// The JavaScript execution engine for the lambda.
 	EngineType *string `pulumi:"engineType"`
+	// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+	LambdaId *string `pulumi:"lambdaId"`
 	// The name of the lambda.
 	Name *string `pulumi:"name"`
 	// The lambda type. The possible values are:
@@ -165,6 +173,8 @@ type FusionAuthLambdaArgs struct {
 	Enabled pulumi.BoolPtrInput
 	// The JavaScript execution engine for the lambda.
 	EngineType pulumi.StringPtrInput
+	// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+	LambdaId pulumi.StringPtrInput
 	// The name of the lambda.
 	Name pulumi.StringPtrInput
 	// The lambda type. The possible values are:
@@ -278,6 +288,11 @@ func (o FusionAuthLambdaOutput) Enabled() pulumi.BoolPtrOutput {
 // The JavaScript execution engine for the lambda.
 func (o FusionAuthLambdaOutput) EngineType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthLambda) pulumi.StringPtrOutput { return v.EngineType }).(pulumi.StringPtrOutput)
+}
+
+// The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+func (o FusionAuthLambdaOutput) LambdaId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthLambda) pulumi.StringOutput { return v.LambdaId }).(pulumi.StringOutput)
 }
 
 // The name of the lambda.

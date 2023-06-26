@@ -15,13 +15,13 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantJwtConfiguration
     {
         /// <summary>
-        /// The unique id of the signing key used to sign the access token.
+        /// The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
         /// </summary>
-        public readonly string AccessTokenKeyId;
+        public readonly string? AccessTokenKeyId;
         /// <summary>
-        /// The unique id of the signing key used to sign the Id token.
+        /// The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
         /// </summary>
-        public readonly string IdTokenKeyId;
+        public readonly string? IdTokenKeyId;
         /// <summary>
         /// The refresh token expiration policy.
         /// </summary>
@@ -49,9 +49,9 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthTenantJwtConfiguration(
-            string accessTokenKeyId,
+            string? accessTokenKeyId,
 
-            string idTokenKeyId,
+            string? idTokenKeyId,
 
             string? refreshTokenExpirationPolicy,
 

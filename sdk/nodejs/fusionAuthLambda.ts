@@ -76,6 +76,10 @@ export class FusionAuthLambda extends pulumi.CustomResource {
      */
     public readonly engineType!: pulumi.Output<string | undefined>;
     /**
+     * The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+     */
+    public readonly lambdaId!: pulumi.Output<string>;
+    /**
      * The name of the lambda.
      */
     public readonly name!: pulumi.Output<string>;
@@ -101,6 +105,7 @@ export class FusionAuthLambda extends pulumi.CustomResource {
             resourceInputs["debug"] = state ? state.debug : undefined;
             resourceInputs["enabled"] = state ? state.enabled : undefined;
             resourceInputs["engineType"] = state ? state.engineType : undefined;
+            resourceInputs["lambdaId"] = state ? state.lambdaId : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["type"] = state ? state.type : undefined;
         } else {
@@ -115,6 +120,7 @@ export class FusionAuthLambda extends pulumi.CustomResource {
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["engineType"] = args ? args.engineType : undefined;
+            resourceInputs["lambdaId"] = args ? args.lambdaId : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["type"] = args ? args.type : undefined;
         }
@@ -145,6 +151,10 @@ export interface FusionAuthLambdaState {
      * The JavaScript execution engine for the lambda.
      */
     engineType?: pulumi.Input<string>;
+    /**
+     * The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+     */
+    lambdaId?: pulumi.Input<string>;
     /**
      * The name of the lambda.
      */
@@ -177,6 +187,10 @@ export interface FusionAuthLambdaArgs {
      * The JavaScript execution engine for the lambda.
      */
     engineType?: pulumi.Input<string>;
+    /**
+     * The Id to use for the new lambda. If not specified a secure random UUID will be generated.
+     */
+    lambdaId?: pulumi.Input<string>;
     /**
      * The name of the lambda.
      */

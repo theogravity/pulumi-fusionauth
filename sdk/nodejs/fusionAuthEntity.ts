@@ -74,6 +74,9 @@ export class FusionAuthEntity extends pulumi.CustomResource {
     public readonly entityId!: pulumi.Output<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     public readonly entityTypeId!: pulumi.Output<string>;
     /**
@@ -151,6 +154,9 @@ export interface FusionAuthEntityState {
     entityId?: pulumi.Input<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     entityTypeId?: pulumi.Input<string>;
     /**
@@ -189,6 +195,9 @@ export interface FusionAuthEntityArgs {
     entityId?: pulumi.Input<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     entityTypeId: pulumi.Input<string>;
     /**

@@ -38,10 +38,19 @@ namespace theogravity.Fusionauth.Inputs
         }
 
         /// <summary>
+        /// Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.
+        /// </summary>
+        [Input("authorizedUrlValidationPolicy")]
+        public Input<string>? AuthorizedUrlValidationPolicy { get; set; }
+
+        /// <summary>
         /// Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
         /// </summary>
         [Input("clientAuthenticationPolicy")]
         public Input<string>? ClientAuthenticationPolicy { get; set; }
+
+        [Input("clientId")]
+        public Input<string>? ClientId { get; set; }
 
         /// <summary>
         /// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.

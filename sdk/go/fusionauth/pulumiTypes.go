@@ -1860,8 +1860,11 @@ type FusionAuthApplicationOauthConfiguration struct {
 	AuthorizedOriginUrls []string `pulumi:"authorizedOriginUrls"`
 	// An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
 	AuthorizedRedirectUrls []string `pulumi:"authorizedRedirectUrls"`
+	// Determines whether wildcard expressions will be allowed in the authorizedRedirectUrls and authorized_origin_urls.
+	AuthorizedUrlValidationPolicy *string `pulumi:"authorizedUrlValidationPolicy"`
 	// Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
 	ClientAuthenticationPolicy *string `pulumi:"clientAuthenticationPolicy"`
+	ClientId                   *string `pulumi:"clientId"`
 	// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
 	ClientSecret *string `pulumi:"clientSecret"`
 	// Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
@@ -1902,8 +1905,11 @@ type FusionAuthApplicationOauthConfigurationArgs struct {
 	AuthorizedOriginUrls pulumi.StringArrayInput `pulumi:"authorizedOriginUrls"`
 	// An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
 	AuthorizedRedirectUrls pulumi.StringArrayInput `pulumi:"authorizedRedirectUrls"`
+	// Determines whether wildcard expressions will be allowed in the authorizedRedirectUrls and authorized_origin_urls.
+	AuthorizedUrlValidationPolicy pulumi.StringPtrInput `pulumi:"authorizedUrlValidationPolicy"`
 	// Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
 	ClientAuthenticationPolicy pulumi.StringPtrInput `pulumi:"clientAuthenticationPolicy"`
+	ClientId                   pulumi.StringPtrInput `pulumi:"clientId"`
 	// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
 	ClientSecret pulumi.StringPtrInput `pulumi:"clientSecret"`
 	// Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
@@ -2015,9 +2021,18 @@ func (o FusionAuthApplicationOauthConfigurationOutput) AuthorizedRedirectUrls() 
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) []string { return v.AuthorizedRedirectUrls }).(pulumi.StringArrayOutput)
 }
 
+// Determines whether wildcard expressions will be allowed in the authorizedRedirectUrls and authorized_origin_urls.
+func (o FusionAuthApplicationOauthConfigurationOutput) AuthorizedUrlValidationPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) *string { return v.AuthorizedUrlValidationPolicy }).(pulumi.StringPtrOutput)
+}
+
 // Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
 func (o FusionAuthApplicationOauthConfigurationOutput) ClientAuthenticationPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) *string { return v.ClientAuthenticationPolicy }).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthApplicationOauthConfigurationOutput) ClientId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) *string { return v.ClientId }).(pulumi.StringPtrOutput)
 }
 
 // The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
@@ -2116,6 +2131,16 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) AuthorizedRedirectUrls
 	}).(pulumi.StringArrayOutput)
 }
 
+// Determines whether wildcard expressions will be allowed in the authorizedRedirectUrls and authorized_origin_urls.
+func (o FusionAuthApplicationOauthConfigurationPtrOutput) AuthorizedUrlValidationPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.AuthorizedUrlValidationPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
 // Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
 func (o FusionAuthApplicationOauthConfigurationPtrOutput) ClientAuthenticationPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
@@ -2123,6 +2148,15 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) ClientAuthenticationPo
 			return nil
 		}
 		return v.ClientAuthenticationPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthApplicationOauthConfigurationPtrOutput) ClientId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ClientId
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -13123,10 +13157,10 @@ func (o FusionAuthTenantFormConfigurationPtrOutput) AdminUserFormId() pulumi.Str
 }
 
 type FusionAuthTenantJwtConfiguration struct {
-	// The unique id of the signing key used to sign the access token.
-	AccessTokenKeyId string `pulumi:"accessTokenKeyId"`
-	// The unique id of the signing key used to sign the Id token.
-	IdTokenKeyId string `pulumi:"idTokenKeyId"`
+	// The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
+	AccessTokenKeyId *string `pulumi:"accessTokenKeyId"`
+	// The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
+	IdTokenKeyId *string `pulumi:"idTokenKeyId"`
 	// The refresh token expiration policy.
 	RefreshTokenExpirationPolicy *string `pulumi:"refreshTokenExpirationPolicy"`
 	// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
@@ -13153,10 +13187,10 @@ type FusionAuthTenantJwtConfigurationInput interface {
 }
 
 type FusionAuthTenantJwtConfigurationArgs struct {
-	// The unique id of the signing key used to sign the access token.
-	AccessTokenKeyId pulumi.StringInput `pulumi:"accessTokenKeyId"`
-	// The unique id of the signing key used to sign the Id token.
-	IdTokenKeyId pulumi.StringInput `pulumi:"idTokenKeyId"`
+	// The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
+	AccessTokenKeyId pulumi.StringPtrInput `pulumi:"accessTokenKeyId"`
+	// The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
+	IdTokenKeyId pulumi.StringPtrInput `pulumi:"idTokenKeyId"`
 	// The refresh token expiration policy.
 	RefreshTokenExpirationPolicy pulumi.StringPtrInput `pulumi:"refreshTokenExpirationPolicy"`
 	// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
@@ -13222,14 +13256,14 @@ func (o FusionAuthTenantJwtConfigurationOutput) ToFusionAuthTenantJwtConfigurati
 	return o
 }
 
-// The unique id of the signing key used to sign the access token.
-func (o FusionAuthTenantJwtConfigurationOutput) AccessTokenKeyId() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) string { return v.AccessTokenKeyId }).(pulumi.StringOutput)
+// The unique id of the signing key used to sign the access token. Required prior to `1.30.0`.
+func (o FusionAuthTenantJwtConfigurationOutput) AccessTokenKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *string { return v.AccessTokenKeyId }).(pulumi.StringPtrOutput)
 }
 
-// The unique id of the signing key used to sign the Id token.
-func (o FusionAuthTenantJwtConfigurationOutput) IdTokenKeyId() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) string { return v.IdTokenKeyId }).(pulumi.StringOutput)
+// The unique id of the signing key used to sign the Id token. Required prior to `1.30.0`.
+func (o FusionAuthTenantJwtConfigurationOutput) IdTokenKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *string { return v.IdTokenKeyId }).(pulumi.StringPtrOutput)
 }
 
 // The refresh token expiration policy.
@@ -16845,6 +16879,162 @@ func (o FusionAuthWebhookEventsEnabledPtrOutput) UserUpdateComplete() pulumi.Boo
 	}).(pulumi.BoolPtrOutput)
 }
 
+type GetFormFieldValidator struct {
+	// Determines if user input should be validated.
+	Enabled *bool `pulumi:"enabled"`
+	// A regular expression used to validate user input. Must be a valid regular expression pattern.
+	Expression *string `pulumi:"expression"`
+}
+
+// GetFormFieldValidatorInput is an input type that accepts GetFormFieldValidatorArgs and GetFormFieldValidatorOutput values.
+// You can construct a concrete instance of `GetFormFieldValidatorInput` via:
+//
+//	GetFormFieldValidatorArgs{...}
+type GetFormFieldValidatorInput interface {
+	pulumi.Input
+
+	ToGetFormFieldValidatorOutput() GetFormFieldValidatorOutput
+	ToGetFormFieldValidatorOutputWithContext(context.Context) GetFormFieldValidatorOutput
+}
+
+type GetFormFieldValidatorArgs struct {
+	// Determines if user input should be validated.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// A regular expression used to validate user input. Must be a valid regular expression pattern.
+	Expression pulumi.StringPtrInput `pulumi:"expression"`
+}
+
+func (GetFormFieldValidatorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetFormFieldValidator)(nil)).Elem()
+}
+
+func (i GetFormFieldValidatorArgs) ToGetFormFieldValidatorOutput() GetFormFieldValidatorOutput {
+	return i.ToGetFormFieldValidatorOutputWithContext(context.Background())
+}
+
+func (i GetFormFieldValidatorArgs) ToGetFormFieldValidatorOutputWithContext(ctx context.Context) GetFormFieldValidatorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetFormFieldValidatorOutput)
+}
+
+func (i GetFormFieldValidatorArgs) ToGetFormFieldValidatorPtrOutput() GetFormFieldValidatorPtrOutput {
+	return i.ToGetFormFieldValidatorPtrOutputWithContext(context.Background())
+}
+
+func (i GetFormFieldValidatorArgs) ToGetFormFieldValidatorPtrOutputWithContext(ctx context.Context) GetFormFieldValidatorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetFormFieldValidatorOutput).ToGetFormFieldValidatorPtrOutputWithContext(ctx)
+}
+
+// GetFormFieldValidatorPtrInput is an input type that accepts GetFormFieldValidatorArgs, GetFormFieldValidatorPtr and GetFormFieldValidatorPtrOutput values.
+// You can construct a concrete instance of `GetFormFieldValidatorPtrInput` via:
+//
+//	        GetFormFieldValidatorArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetFormFieldValidatorPtrInput interface {
+	pulumi.Input
+
+	ToGetFormFieldValidatorPtrOutput() GetFormFieldValidatorPtrOutput
+	ToGetFormFieldValidatorPtrOutputWithContext(context.Context) GetFormFieldValidatorPtrOutput
+}
+
+type getFormFieldValidatorPtrType GetFormFieldValidatorArgs
+
+func GetFormFieldValidatorPtr(v *GetFormFieldValidatorArgs) GetFormFieldValidatorPtrInput {
+	return (*getFormFieldValidatorPtrType)(v)
+}
+
+func (*getFormFieldValidatorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetFormFieldValidator)(nil)).Elem()
+}
+
+func (i *getFormFieldValidatorPtrType) ToGetFormFieldValidatorPtrOutput() GetFormFieldValidatorPtrOutput {
+	return i.ToGetFormFieldValidatorPtrOutputWithContext(context.Background())
+}
+
+func (i *getFormFieldValidatorPtrType) ToGetFormFieldValidatorPtrOutputWithContext(ctx context.Context) GetFormFieldValidatorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetFormFieldValidatorPtrOutput)
+}
+
+type GetFormFieldValidatorOutput struct{ *pulumi.OutputState }
+
+func (GetFormFieldValidatorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetFormFieldValidator)(nil)).Elem()
+}
+
+func (o GetFormFieldValidatorOutput) ToGetFormFieldValidatorOutput() GetFormFieldValidatorOutput {
+	return o
+}
+
+func (o GetFormFieldValidatorOutput) ToGetFormFieldValidatorOutputWithContext(ctx context.Context) GetFormFieldValidatorOutput {
+	return o
+}
+
+func (o GetFormFieldValidatorOutput) ToGetFormFieldValidatorPtrOutput() GetFormFieldValidatorPtrOutput {
+	return o.ToGetFormFieldValidatorPtrOutputWithContext(context.Background())
+}
+
+func (o GetFormFieldValidatorOutput) ToGetFormFieldValidatorPtrOutputWithContext(ctx context.Context) GetFormFieldValidatorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetFormFieldValidator) *GetFormFieldValidator {
+		return &v
+	}).(GetFormFieldValidatorPtrOutput)
+}
+
+// Determines if user input should be validated.
+func (o GetFormFieldValidatorOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetFormFieldValidator) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// A regular expression used to validate user input. Must be a valid regular expression pattern.
+func (o GetFormFieldValidatorOutput) Expression() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetFormFieldValidator) *string { return v.Expression }).(pulumi.StringPtrOutput)
+}
+
+type GetFormFieldValidatorPtrOutput struct{ *pulumi.OutputState }
+
+func (GetFormFieldValidatorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetFormFieldValidator)(nil)).Elem()
+}
+
+func (o GetFormFieldValidatorPtrOutput) ToGetFormFieldValidatorPtrOutput() GetFormFieldValidatorPtrOutput {
+	return o
+}
+
+func (o GetFormFieldValidatorPtrOutput) ToGetFormFieldValidatorPtrOutputWithContext(ctx context.Context) GetFormFieldValidatorPtrOutput {
+	return o
+}
+
+func (o GetFormFieldValidatorPtrOutput) Elem() GetFormFieldValidatorOutput {
+	return o.ApplyT(func(v *GetFormFieldValidator) GetFormFieldValidator {
+		if v != nil {
+			return *v
+		}
+		var ret GetFormFieldValidator
+		return ret
+	}).(GetFormFieldValidatorOutput)
+}
+
+// Determines if user input should be validated.
+func (o GetFormFieldValidatorPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetFormFieldValidator) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// A regular expression used to validate user input. Must be a valid regular expression pattern.
+func (o GetFormFieldValidatorPtrOutput) Expression() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetFormFieldValidator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Expression
+	}).(pulumi.StringPtrOutput)
+}
+
 type GetFormStep struct {
 	Fields []string `pulumi:"fields"`
 }
@@ -17128,6 +17318,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthUserTwoFactorMethodArrayInput)(nil)).Elem(), FusionAuthUserTwoFactorMethodArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookEventsEnabledInput)(nil)).Elem(), FusionAuthWebhookEventsEnabledArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookEventsEnabledPtrInput)(nil)).Elem(), FusionAuthWebhookEventsEnabledArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetFormFieldValidatorInput)(nil)).Elem(), GetFormFieldValidatorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetFormFieldValidatorPtrInput)(nil)).Elem(), GetFormFieldValidatorArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFormStepInput)(nil)).Elem(), GetFormStepArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFormStepArrayInput)(nil)).Elem(), GetFormStepArray{})
 	pulumi.RegisterOutputType(FusionAuthApiKeyPermissionsEndpointOutput{})
@@ -17318,6 +17510,8 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthUserTwoFactorMethodArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthWebhookEventsEnabledOutput{})
 	pulumi.RegisterOutputType(FusionAuthWebhookEventsEnabledPtrOutput{})
+	pulumi.RegisterOutputType(GetFormFieldValidatorOutput{})
+	pulumi.RegisterOutputType(GetFormFieldValidatorPtrOutput{})
 	pulumi.RegisterOutputType(GetFormStepOutput{})
 	pulumi.RegisterOutputType(GetFormStepArrayOutput{})
 }
