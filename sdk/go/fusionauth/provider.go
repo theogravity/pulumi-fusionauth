@@ -29,14 +29,10 @@ func NewProvider(ctx *pulumi.Context,
 	}
 
 	if args.ApiKey == nil {
-		if d := getEnvOrDefault(nil, nil, "FUSION_AUTH_API_KEY"); d != nil {
-			args.ApiKey = pulumi.StringPtr(d.(string))
-		}
+		args.ApiKey = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string))
 	}
 	if args.Host == nil {
-		if d := getEnvOrDefault(nil, nil, "FUSION_AUTH_HOST_URL"); d != nil {
-			args.Host = pulumi.StringPtr(d.(string))
-		}
+		args.Host = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string))
 	}
 	opts = pkgResourceDefaultOpts(opts)
 	var resource Provider
