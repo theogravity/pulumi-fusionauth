@@ -63,9 +63,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The ID of the Entity Type. Types are consulted for permission checks.
-        /// 
-        /// For more information see:
-        /// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         /// </summary>
         [Output("entityTypeId")]
         public Output<string> EntityTypeId { get; private set; } = null!;
@@ -173,9 +170,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The ID of the Entity Type. Types are consulted for permission checks.
-        /// 
-        /// For more information see:
-        /// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         /// </summary>
         [Input("entityTypeId", required: true)]
         public Input<string> EntityTypeId { get; set; } = null!;
@@ -240,9 +234,6 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The ID of the Entity Type. Types are consulted for permission checks.
-        /// 
-        /// For more information see:
-        /// [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
         /// </summary>
         [Input("entityTypeId")]
         public Input<string>? EntityTypeId { get; set; }

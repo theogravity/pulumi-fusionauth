@@ -38,7 +38,6 @@ def readme():
 
 
 setup(name='theogravity_pulumi-fusionauth',
-      python_requires='>=3.7',
       version=VERSION,
       description="A Pulumi package for managing FusionAuth instances.",
       long_description=readme(),
