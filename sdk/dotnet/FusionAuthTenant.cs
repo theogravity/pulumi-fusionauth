@@ -61,116 +61,296 @@ namespace theogravity.Fusionauth
     ///         {
     ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///             {
-    ///                 Event = "user.delete",
-    ///                 Enabled = true,
+    ///                 Enabled = false,
+    ///                 Event = "jwt.public-key.update",
     ///                 TransactionType = "None",
     ///             },
     ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///             {
-    ///                 Event = "user.create",
-    ///                 Enabled = true,
+    ///                 Enabled = false,
+    ///                 Event = "jwt.refresh-token.revoke",
     ///                 TransactionType = "None",
     ///             },
     ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///             {
-    ///                 Event = "user.update",
-    ///                 Enabled = true,
+    ///                 Enabled = false,
+    ///                 Event = "jwt.refresh",
     ///                 TransactionType = "None",
     ///             },
     ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///             {
-    ///                 Event = "user.deactivate",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
+    ///                 Enabled = false,
+    ///                 Event = "group.create",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.create.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.delete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.delete.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.add",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.add.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.remove",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.remove.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.member.update.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "group.update.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.action",
+    ///                 TransactionType = "None",
     ///             },
     ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
     ///             {
     ///                 Event = "user.bulk.create",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.reactivate",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "jwt.refresh-token.revoke",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "jwt.refresh",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "jwt.public-key.update",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.login.success",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.login.failed",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.registration.create",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.registration.update",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.registration.delete",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.registration.verified",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.email.verified",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.identity-provider.link",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.identity-provider.unlink",
-    ///                 Enabled = true,
-    ///                 TransactionType = "Any",
-    ///             },
-    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
-    ///             {
-    ///                 Event = "user.password.breach",
     ///                 Enabled = false,
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.create",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.create.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.deactivate",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.delete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.delete.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.email.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.email.verified",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.identity-provider.link",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.identity-provider.unlink",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.loginId.duplicate.create",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.loginId.duplicate.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.login.failed",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.login.new-device",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.login.success",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.login.suspicious",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.password.breach",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.password.reset.send",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.password.reset.start",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.password.reset.success",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.password.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.reactivate",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.create",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.create.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.delete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.delete.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.update.complete",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.registration.verified",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.two-factor.method.add",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.two-factor.method.remove",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.update",
+    ///                 TransactionType = "None",
+    ///             },
+    ///             new Fusionauth.Inputs.FusionAuthTenantEventConfigurationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Event = "user.update.complete",
     ///                 TransactionType = "None",
     ///             },
     ///         },
@@ -311,6 +491,60 @@ namespace theogravity.Fusionauth
     ///             RequireNumber = false,
     ///             ValidateOnLogin = false,
     ///         },
+    ///         RateLimitConfiguration = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationArgs
+    ///         {
+    ///             FailedLogin = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationFailedLoginArgs
+    ///             {
+    ///                 Enabled = true,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///             ForgotPassword = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationForgotPasswordArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///             SendEmailVerification = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///             SendPasswordless = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///             SendRegistrationVerification = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///             SendTwoFactor = new Fusionauth.Inputs.FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Limit = 5,
+    ///                 TimePeriodInSeconds = 60,
+    ///             },
+    ///         },
+    ///         RegistrationConfiguration = new Fusionauth.Inputs.FusionAuthTenantRegistrationConfigurationArgs
+    ///         {
+    ///             BlockedDomains = new[]
+    ///             {
+    ///                 "example.com",
+    ///             },
+    ///         },
+    ///         CaptchaConfiguration = new Fusionauth.Inputs.FusionAuthTenantCaptchaConfigurationArgs
+    ///         {
+    ///             Enabled = true,
+    ///             CaptchaMethod = "GoogleRecaptchaV3",
+    ///             SiteKey = "captcha_site_key",
+    ///             SecretKey = "captcha_secret_key",
+    ///             Threshold = 0.5,
+    ///         },
     ///         ThemeId = fusionauth_theme.Example_theme.Id,
     ///         UserDeletePolicy = new Fusionauth.Inputs.FusionAuthTenantUserDeletePolicyArgs
     ///         {
@@ -408,6 +642,12 @@ namespace theogravity.Fusionauth
 
         [Output("passwordValidationRules")]
         public Output<Outputs.FusionAuthTenantPasswordValidationRules> PasswordValidationRules { get; private set; } = null!;
+
+        [Output("rateLimitConfiguration")]
+        public Output<Outputs.FusionAuthTenantRateLimitConfiguration> RateLimitConfiguration { get; private set; } = null!;
+
+        [Output("registrationConfiguration")]
+        public Output<Outputs.FusionAuthTenantRegistrationConfiguration> RegistrationConfiguration { get; private set; } = null!;
 
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
@@ -596,6 +836,12 @@ namespace theogravity.Fusionauth
         [Input("passwordValidationRules")]
         public Input<Inputs.FusionAuthTenantPasswordValidationRulesArgs>? PasswordValidationRules { get; set; }
 
+        [Input("rateLimitConfiguration")]
+        public Input<Inputs.FusionAuthTenantRateLimitConfigurationArgs>? RateLimitConfiguration { get; set; }
+
+        [Input("registrationConfiguration")]
+        public Input<Inputs.FusionAuthTenantRegistrationConfigurationArgs>? RegistrationConfiguration { get; set; }
+
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         /// </summary>
@@ -743,6 +989,12 @@ namespace theogravity.Fusionauth
 
         [Input("passwordValidationRules")]
         public Input<Inputs.FusionAuthTenantPasswordValidationRulesGetArgs>? PasswordValidationRules { get; set; }
+
+        [Input("rateLimitConfiguration")]
+        public Input<Inputs.FusionAuthTenantRateLimitConfigurationGetArgs>? RateLimitConfiguration { get; set; }
+
+        [Input("registrationConfiguration")]
+        public Input<Inputs.FusionAuthTenantRegistrationConfigurationGetArgs>? RegistrationConfiguration { get; set; }
 
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.

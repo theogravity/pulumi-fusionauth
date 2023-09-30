@@ -52,6 +52,12 @@ import (
 //					GenerateRefreshTokens: pulumi.Bool(false),
 //					RequireAuthentication: pulumi.Bool(true),
 //				},
+//				MultiFactorConfiguration: &fusionauth.FusionAuthApplicationMultiFactorConfigurationArgs{
+//					EmailTemplateId: pulumi.String("859f394b-22a6-4fa6-ba55-de700df9e950"),
+//					SmsTemplateId:   pulumi.String("17760f96-dca7-448b-9a8f-c49016aa7210"),
+//					LoginPolicy:     pulumi.String("Required"),
+//					TrustPolicy:     pulumi.String("Any"),
+//				},
 //				OauthConfiguration: &fusionauth.FusionAuthApplicationOauthConfigurationArgs{
 //					AuthorizedOriginUrls: pulumi.StringArray{
 //						pulumi.String("http://www.example.com/oauth-callback"),

@@ -40,6 +40,12 @@ import * as utilities from "./utilities";
  *         generateRefreshTokens: false,
  *         requireAuthentication: true,
  *     },
+ *     multiFactorConfiguration: {
+ *         emailTemplateId: "859f394b-22a6-4fa6-ba55-de700df9e950",
+ *         smsTemplateId: "17760f96-dca7-448b-9a8f-c49016aa7210",
+ *         loginPolicy: "Required",
+ *         trustPolicy: "Any",
+ *     },
  *     oauthConfiguration: {
  *         authorizedOriginUrls: ["http://www.example.com/oauth-callback"],
  *         authorizedUrlValidationPolicy: "ExactMatch",

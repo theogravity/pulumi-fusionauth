@@ -39,6 +39,8 @@ class FusionAuthTenantArgs:
                  oauth_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthTenantOauthConfigurationArgs']]]] = None,
                  password_encryption_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthTenantPasswordEncryptionConfigurationArgs']]]] = None,
                  password_validation_rules: Optional[pulumi.Input['FusionAuthTenantPasswordValidationRulesArgs']] = None,
+                 rate_limit_configuration: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']] = None,
+                 registration_configuration: Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']] = None,
                  source_tenant_id: Optional[pulumi.Input[str]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  user_delete_policy: Optional[pulumi.Input['FusionAuthTenantUserDeletePolicyArgs']] = None,
@@ -96,6 +98,10 @@ class FusionAuthTenantArgs:
             pulumi.set(__self__, "password_encryption_configurations", password_encryption_configurations)
         if password_validation_rules is not None:
             pulumi.set(__self__, "password_validation_rules", password_validation_rules)
+        if rate_limit_configuration is not None:
+            pulumi.set(__self__, "rate_limit_configuration", rate_limit_configuration)
+        if registration_configuration is not None:
+            pulumi.set(__self__, "registration_configuration", registration_configuration)
         if source_tenant_id is not None:
             pulumi.set(__self__, "source_tenant_id", source_tenant_id)
         if tenant_id is not None:
@@ -334,6 +340,24 @@ class FusionAuthTenantArgs:
         pulumi.set(self, "password_validation_rules", value)
 
     @property
+    @pulumi.getter(name="rateLimitConfiguration")
+    def rate_limit_configuration(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']]:
+        return pulumi.get(self, "rate_limit_configuration")
+
+    @rate_limit_configuration.setter
+    def rate_limit_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']]):
+        pulumi.set(self, "rate_limit_configuration", value)
+
+    @property
+    @pulumi.getter(name="registrationConfiguration")
+    def registration_configuration(self) -> Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']]:
+        return pulumi.get(self, "registration_configuration")
+
+    @registration_configuration.setter
+    def registration_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']]):
+        pulumi.set(self, "registration_configuration", value)
+
+    @property
     @pulumi.getter(name="sourceTenantId")
     def source_tenant_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -401,6 +425,8 @@ class _FusionAuthTenantState:
                  oauth_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthTenantOauthConfigurationArgs']]]] = None,
                  password_encryption_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthTenantPasswordEncryptionConfigurationArgs']]]] = None,
                  password_validation_rules: Optional[pulumi.Input['FusionAuthTenantPasswordValidationRulesArgs']] = None,
+                 rate_limit_configuration: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']] = None,
+                 registration_configuration: Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']] = None,
                  source_tenant_id: Optional[pulumi.Input[str]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
@@ -462,6 +488,10 @@ class _FusionAuthTenantState:
             pulumi.set(__self__, "password_encryption_configurations", password_encryption_configurations)
         if password_validation_rules is not None:
             pulumi.set(__self__, "password_validation_rules", password_validation_rules)
+        if rate_limit_configuration is not None:
+            pulumi.set(__self__, "rate_limit_configuration", rate_limit_configuration)
+        if registration_configuration is not None:
+            pulumi.set(__self__, "registration_configuration", registration_configuration)
         if source_tenant_id is not None:
             pulumi.set(__self__, "source_tenant_id", source_tenant_id)
         if tenant_id is not None:
@@ -690,6 +720,24 @@ class _FusionAuthTenantState:
         pulumi.set(self, "password_validation_rules", value)
 
     @property
+    @pulumi.getter(name="rateLimitConfiguration")
+    def rate_limit_configuration(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']]:
+        return pulumi.get(self, "rate_limit_configuration")
+
+    @rate_limit_configuration.setter
+    def rate_limit_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationArgs']]):
+        pulumi.set(self, "rate_limit_configuration", value)
+
+    @property
+    @pulumi.getter(name="registrationConfiguration")
+    def registration_configuration(self) -> Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']]:
+        return pulumi.get(self, "registration_configuration")
+
+    @registration_configuration.setter
+    def registration_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantRegistrationConfigurationArgs']]):
+        pulumi.set(self, "registration_configuration", value)
+
+    @property
     @pulumi.getter(name="sourceTenantId")
     def source_tenant_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -771,6 +819,8 @@ class FusionAuthTenant(pulumi.CustomResource):
                  oauth_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantOauthConfigurationArgs']]]]] = None,
                  password_encryption_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordEncryptionConfigurationArgs']]]]] = None,
                  password_validation_rules: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordValidationRulesArgs']]] = None,
+                 rate_limit_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRateLimitConfigurationArgs']]] = None,
+                 registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRegistrationConfigurationArgs']]] = None,
                  source_tenant_id: Optional[pulumi.Input[str]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
@@ -814,98 +864,248 @@ class FusionAuthTenant(pulumi.CustomResource):
             ),
             event_configurations=[
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.delete",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.public-key.update",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.create",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.refresh-token.revoke",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.update",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.refresh",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.deactivate",
-                    enabled=True,
-                    transaction_type="Any",
+                    enabled=False,
+                    event="group.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.add",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.add.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.remove",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.remove.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.action",
+                    transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
                     event="user.bulk.create",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.reactivate",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.refresh-token.revoke",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.refresh",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.public-key.update",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.login.success",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.login.failed",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.create",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.update",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.delete",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.verified",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.email.verified",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.identity-provider.link",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.identity-provider.unlink",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.password.breach",
                     enabled=False,
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.deactivate",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.email.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.email.verified",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.identity-provider.link",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.identity-provider.unlink",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.loginId.duplicate.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.loginId.duplicate.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.failed",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.new-device",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.success",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.suspicious",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.breach",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.send",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.start",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.success",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.reactivate",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.verified",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.two-factor.method.add",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.two-factor.method.remove",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.update.complete",
                     transaction_type="None",
                 ),
             ],
@@ -1015,6 +1215,48 @@ class FusionAuthTenant(pulumi.CustomResource):
                 require_non_alpha=False,
                 require_number=False,
                 validate_on_login=False,
+            ),
+            rate_limit_configuration=fusionauth.FusionAuthTenantRateLimitConfigurationArgs(
+                failed_login=fusionauth.FusionAuthTenantRateLimitConfigurationFailedLoginArgs(
+                    enabled=True,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                forgot_password=fusionauth.FusionAuthTenantRateLimitConfigurationForgotPasswordArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_email_verification=fusionauth.FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_passwordless=fusionauth.FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_registration_verification=fusionauth.FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_two_factor=fusionauth.FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+            ),
+            registration_configuration=fusionauth.FusionAuthTenantRegistrationConfigurationArgs(
+                blocked_domains=["example.com"],
+            ),
+            captcha_configuration=fusionauth.FusionAuthTenantCaptchaConfigurationArgs(
+                enabled=True,
+                captcha_method="GoogleRecaptchaV3",
+                site_key="captcha_site_key",
+                secret_key="captcha_secret_key",
+                threshold=0.5,
             ),
             theme_id=fusionauth_theme["example_theme"]["id"],
             user_delete_policy=fusionauth.FusionAuthTenantUserDeletePolicyArgs(
@@ -1078,98 +1320,248 @@ class FusionAuthTenant(pulumi.CustomResource):
             ),
             event_configurations=[
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.delete",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.public-key.update",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.create",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.refresh-token.revoke",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.update",
-                    enabled=True,
+                    enabled=False,
+                    event="jwt.refresh",
                     transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.deactivate",
-                    enabled=True,
-                    transaction_type="Any",
+                    enabled=False,
+                    event="group.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.add",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.add.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.remove",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.remove.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.member.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="group.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.action",
+                    transaction_type="None",
                 ),
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
                     event="user.bulk.create",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.reactivate",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.refresh-token.revoke",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.refresh",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="jwt.public-key.update",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.login.success",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.login.failed",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.create",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.update",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.delete",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.registration.verified",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.email.verified",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.identity-provider.link",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.identity-provider.unlink",
-                    enabled=True,
-                    transaction_type="Any",
-                ),
-                fusionauth.FusionAuthTenantEventConfigurationArgs(
-                    event="user.password.breach",
                     enabled=False,
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.deactivate",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.email.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.email.verified",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.identity-provider.link",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.identity-provider.unlink",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.loginId.duplicate.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.loginId.duplicate.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.failed",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.new-device",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.success",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.login.suspicious",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.breach",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.send",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.start",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.reset.success",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.password.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.reactivate",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.create",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.create.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.delete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.delete.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.update.complete",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.registration.verified",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.two-factor.method.add",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.two-factor.method.remove",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.update",
+                    transaction_type="None",
+                ),
+                fusionauth.FusionAuthTenantEventConfigurationArgs(
+                    enabled=False,
+                    event="user.update.complete",
                     transaction_type="None",
                 ),
             ],
@@ -1280,6 +1672,48 @@ class FusionAuthTenant(pulumi.CustomResource):
                 require_number=False,
                 validate_on_login=False,
             ),
+            rate_limit_configuration=fusionauth.FusionAuthTenantRateLimitConfigurationArgs(
+                failed_login=fusionauth.FusionAuthTenantRateLimitConfigurationFailedLoginArgs(
+                    enabled=True,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                forgot_password=fusionauth.FusionAuthTenantRateLimitConfigurationForgotPasswordArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_email_verification=fusionauth.FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_passwordless=fusionauth.FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_registration_verification=fusionauth.FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+                send_two_factor=fusionauth.FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs(
+                    enabled=False,
+                    limit=5,
+                    time_period_in_seconds=60,
+                ),
+            ),
+            registration_configuration=fusionauth.FusionAuthTenantRegistrationConfigurationArgs(
+                blocked_domains=["example.com"],
+            ),
+            captcha_configuration=fusionauth.FusionAuthTenantCaptchaConfigurationArgs(
+                enabled=True,
+                captcha_method="GoogleRecaptchaV3",
+                site_key="captcha_site_key",
+                secret_key="captcha_secret_key",
+                threshold=0.5,
+            ),
             theme_id=fusionauth_theme["example_theme"]["id"],
             user_delete_policy=fusionauth.FusionAuthTenantUserDeletePolicyArgs(
                 unverified_enabled=False,
@@ -1324,6 +1758,8 @@ class FusionAuthTenant(pulumi.CustomResource):
                  oauth_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantOauthConfigurationArgs']]]]] = None,
                  password_encryption_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordEncryptionConfigurationArgs']]]]] = None,
                  password_validation_rules: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordValidationRulesArgs']]] = None,
+                 rate_limit_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRateLimitConfigurationArgs']]] = None,
+                 registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRegistrationConfigurationArgs']]] = None,
                  source_tenant_id: Optional[pulumi.Input[str]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
@@ -1368,6 +1804,8 @@ class FusionAuthTenant(pulumi.CustomResource):
             __props__.__dict__["oauth_configurations"] = oauth_configurations
             __props__.__dict__["password_encryption_configurations"] = password_encryption_configurations
             __props__.__dict__["password_validation_rules"] = password_validation_rules
+            __props__.__dict__["rate_limit_configuration"] = rate_limit_configuration
+            __props__.__dict__["registration_configuration"] = registration_configuration
             __props__.__dict__["source_tenant_id"] = source_tenant_id
             __props__.__dict__["tenant_id"] = tenant_id
             if theme_id is None and not opts.urn:
@@ -1407,6 +1845,8 @@ class FusionAuthTenant(pulumi.CustomResource):
             oauth_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantOauthConfigurationArgs']]]]] = None,
             password_encryption_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordEncryptionConfigurationArgs']]]]] = None,
             password_validation_rules: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantPasswordValidationRulesArgs']]] = None,
+            rate_limit_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRateLimitConfigurationArgs']]] = None,
+            registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantRegistrationConfigurationArgs']]] = None,
             source_tenant_id: Optional[pulumi.Input[str]] = None,
             tenant_id: Optional[pulumi.Input[str]] = None,
             theme_id: Optional[pulumi.Input[str]] = None,
@@ -1455,6 +1895,8 @@ class FusionAuthTenant(pulumi.CustomResource):
         __props__.__dict__["oauth_configurations"] = oauth_configurations
         __props__.__dict__["password_encryption_configurations"] = password_encryption_configurations
         __props__.__dict__["password_validation_rules"] = password_validation_rules
+        __props__.__dict__["rate_limit_configuration"] = rate_limit_configuration
+        __props__.__dict__["registration_configuration"] = registration_configuration
         __props__.__dict__["source_tenant_id"] = source_tenant_id
         __props__.__dict__["tenant_id"] = tenant_id
         __props__.__dict__["theme_id"] = theme_id
@@ -1589,6 +2031,16 @@ class FusionAuthTenant(pulumi.CustomResource):
     @pulumi.getter(name="passwordValidationRules")
     def password_validation_rules(self) -> pulumi.Output['outputs.FusionAuthTenantPasswordValidationRules']:
         return pulumi.get(self, "password_validation_rules")
+
+    @property
+    @pulumi.getter(name="rateLimitConfiguration")
+    def rate_limit_configuration(self) -> pulumi.Output['outputs.FusionAuthTenantRateLimitConfiguration']:
+        return pulumi.get(self, "rate_limit_configuration")
+
+    @property
+    @pulumi.getter(name="registrationConfiguration")
+    def registration_configuration(self) -> pulumi.Output['outputs.FusionAuthTenantRegistrationConfiguration']:
+        return pulumi.get(self, "registration_configuration")
 
     @property
     @pulumi.getter(name="sourceTenantId")

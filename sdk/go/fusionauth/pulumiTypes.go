@@ -1702,8 +1702,12 @@ func (o FusionAuthApplicationLoginConfigurationPtrOutput) RequireAuthentication(
 type FusionAuthApplicationMultiFactorConfiguration struct {
 	// The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
 	EmailTemplateId *string `pulumi:"emailTemplateId"`
+	// When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+	LoginPolicy *string `pulumi:"loginPolicy"`
 	// The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
 	SmsTemplateId *string `pulumi:"smsTemplateId"`
+	// When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+	TrustPolicy *string `pulumi:"trustPolicy"`
 }
 
 // FusionAuthApplicationMultiFactorConfigurationInput is an input type that accepts FusionAuthApplicationMultiFactorConfigurationArgs and FusionAuthApplicationMultiFactorConfigurationOutput values.
@@ -1720,8 +1724,12 @@ type FusionAuthApplicationMultiFactorConfigurationInput interface {
 type FusionAuthApplicationMultiFactorConfigurationArgs struct {
 	// The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
 	EmailTemplateId pulumi.StringPtrInput `pulumi:"emailTemplateId"`
+	// When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+	LoginPolicy pulumi.StringPtrInput `pulumi:"loginPolicy"`
 	// The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
 	SmsTemplateId pulumi.StringPtrInput `pulumi:"smsTemplateId"`
+	// When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+	TrustPolicy pulumi.StringPtrInput `pulumi:"trustPolicy"`
 }
 
 func (FusionAuthApplicationMultiFactorConfigurationArgs) ElementType() reflect.Type {
@@ -1806,9 +1814,19 @@ func (o FusionAuthApplicationMultiFactorConfigurationOutput) EmailTemplateId() p
 	return o.ApplyT(func(v FusionAuthApplicationMultiFactorConfiguration) *string { return v.EmailTemplateId }).(pulumi.StringPtrOutput)
 }
 
+// When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+func (o FusionAuthApplicationMultiFactorConfigurationOutput) LoginPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationMultiFactorConfiguration) *string { return v.LoginPolicy }).(pulumi.StringPtrOutput)
+}
+
 // The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
 func (o FusionAuthApplicationMultiFactorConfigurationOutput) SmsTemplateId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationMultiFactorConfiguration) *string { return v.SmsTemplateId }).(pulumi.StringPtrOutput)
+}
+
+// When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+func (o FusionAuthApplicationMultiFactorConfigurationOutput) TrustPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationMultiFactorConfiguration) *string { return v.TrustPolicy }).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthApplicationMultiFactorConfigurationPtrOutput struct{ *pulumi.OutputState }
@@ -1845,6 +1863,16 @@ func (o FusionAuthApplicationMultiFactorConfigurationPtrOutput) EmailTemplateId(
 	}).(pulumi.StringPtrOutput)
 }
 
+// When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+func (o FusionAuthApplicationMultiFactorConfigurationPtrOutput) LoginPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationMultiFactorConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.LoginPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
 // The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
 func (o FusionAuthApplicationMultiFactorConfigurationPtrOutput) SmsTemplateId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationMultiFactorConfiguration) *string {
@@ -1852,6 +1880,16 @@ func (o FusionAuthApplicationMultiFactorConfigurationPtrOutput) SmsTemplateId() 
 			return nil
 		}
 		return v.SmsTemplateId
+	}).(pulumi.StringPtrOutput)
+}
+
+// When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+func (o FusionAuthApplicationMultiFactorConfigurationPtrOutput) TrustPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationMultiFactorConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.TrustPolicy
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -9288,6 +9326,8 @@ func (o FusionAuthTenantAccessControlConfigurationPtrOutput) UiIpAccessControlLi
 }
 
 type FusionAuthTenantCaptchaConfiguration struct {
+	// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+	CaptchaMethod *string `pulumi:"captchaMethod"`
 	// When true, FusionAuth will handle username collisions by generating a random suffix.
 	Enabled *bool `pulumi:"enabled"`
 	// The secret key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
@@ -9310,6 +9350,8 @@ type FusionAuthTenantCaptchaConfigurationInput interface {
 }
 
 type FusionAuthTenantCaptchaConfigurationArgs struct {
+	// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+	CaptchaMethod pulumi.StringPtrInput `pulumi:"captchaMethod"`
 	// When true, FusionAuth will handle username collisions by generating a random suffix.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
 	// The secret key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
@@ -9397,6 +9439,11 @@ func (o FusionAuthTenantCaptchaConfigurationOutput) ToFusionAuthTenantCaptchaCon
 	}).(FusionAuthTenantCaptchaConfigurationPtrOutput)
 }
 
+// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+func (o FusionAuthTenantCaptchaConfigurationOutput) CaptchaMethod() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantCaptchaConfiguration) *string { return v.CaptchaMethod }).(pulumi.StringPtrOutput)
+}
+
 // When true, FusionAuth will handle username collisions by generating a random suffix.
 func (o FusionAuthTenantCaptchaConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantCaptchaConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
@@ -9439,6 +9486,16 @@ func (o FusionAuthTenantCaptchaConfigurationPtrOutput) Elem() FusionAuthTenantCa
 		var ret FusionAuthTenantCaptchaConfiguration
 		return ret
 	}).(FusionAuthTenantCaptchaConfigurationOutput)
+}
+
+// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+func (o FusionAuthTenantCaptchaConfigurationPtrOutput) CaptchaMethod() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantCaptchaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CaptchaMethod
+	}).(pulumi.StringPtrOutput)
 }
 
 // When true, FusionAuth will handle username collisions by generating a random suffix.
@@ -12499,10 +12556,14 @@ func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGen
 }
 
 type FusionAuthTenantFailedAuthenticationConfiguration struct {
+	// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+	ActionCancelPolicyOnPasswordReset *bool `pulumi:"actionCancelPolicyOnPasswordReset"`
 	// The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
 	ActionDuration *int `pulumi:"actionDuration"`
 	// The unit of time associated with a duration.
 	ActionDurationUnit *string `pulumi:"actionDurationUnit"`
+	// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+	EmailUser *bool `pulumi:"emailUser"`
 	// The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
 	ResetCountInSeconds *int `pulumi:"resetCountInSeconds"`
 	// The number of failed attempts considered to be too many. Once this threshold is reached the specified User Action will be applied to the user for the duration specified. Value must be greater than 0.
@@ -12523,10 +12584,14 @@ type FusionAuthTenantFailedAuthenticationConfigurationInput interface {
 }
 
 type FusionAuthTenantFailedAuthenticationConfigurationArgs struct {
+	// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+	ActionCancelPolicyOnPasswordReset pulumi.BoolPtrInput `pulumi:"actionCancelPolicyOnPasswordReset"`
 	// The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
 	ActionDuration pulumi.IntPtrInput `pulumi:"actionDuration"`
 	// The unit of time associated with a duration.
 	ActionDurationUnit pulumi.StringPtrInput `pulumi:"actionDurationUnit"`
+	// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+	EmailUser pulumi.BoolPtrInput `pulumi:"emailUser"`
 	// The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
 	ResetCountInSeconds pulumi.IntPtrInput `pulumi:"resetCountInSeconds"`
 	// The number of failed attempts considered to be too many. Once this threshold is reached the specified User Action will be applied to the user for the duration specified. Value must be greater than 0.
@@ -12612,6 +12677,13 @@ func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) ToFusionAuthTen
 	}).(FusionAuthTenantFailedAuthenticationConfigurationPtrOutput)
 }
 
+// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) ActionCancelPolicyOnPasswordReset() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantFailedAuthenticationConfiguration) *bool {
+		return v.ActionCancelPolicyOnPasswordReset
+	}).(pulumi.BoolPtrOutput)
+}
+
 // The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
 func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) ActionDuration() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantFailedAuthenticationConfiguration) *int { return v.ActionDuration }).(pulumi.IntPtrOutput)
@@ -12620,6 +12692,11 @@ func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) ActionDuration(
 // The unit of time associated with a duration.
 func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) ActionDurationUnit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantFailedAuthenticationConfiguration) *string { return v.ActionDurationUnit }).(pulumi.StringPtrOutput)
+}
+
+// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+func (o FusionAuthTenantFailedAuthenticationConfigurationOutput) EmailUser() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantFailedAuthenticationConfiguration) *bool { return v.EmailUser }).(pulumi.BoolPtrOutput)
 }
 
 // The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
@@ -12661,6 +12738,16 @@ func (o FusionAuthTenantFailedAuthenticationConfigurationPtrOutput) Elem() Fusio
 	}).(FusionAuthTenantFailedAuthenticationConfigurationOutput)
 }
 
+// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+func (o FusionAuthTenantFailedAuthenticationConfigurationPtrOutput) ActionCancelPolicyOnPasswordReset() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantFailedAuthenticationConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.ActionCancelPolicyOnPasswordReset
+	}).(pulumi.BoolPtrOutput)
+}
+
 // The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
 func (o FusionAuthTenantFailedAuthenticationConfigurationPtrOutput) ActionDuration() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantFailedAuthenticationConfiguration) *int {
@@ -12679,6 +12766,16 @@ func (o FusionAuthTenantFailedAuthenticationConfigurationPtrOutput) ActionDurati
 		}
 		return v.ActionDurationUnit
 	}).(pulumi.StringPtrOutput)
+}
+
+// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+func (o FusionAuthTenantFailedAuthenticationConfigurationPtrOutput) EmailUser() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantFailedAuthenticationConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.EmailUser
+	}).(pulumi.BoolPtrOutput)
 }
 
 // The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
@@ -13768,7 +13865,7 @@ func (o FusionAuthTenantMinimumPasswordAgePtrOutput) Seconds() pulumi.IntPtrOutp
 type FusionAuthTenantMultiFactorConfiguration struct {
 	Authenticator *FusionAuthTenantMultiFactorConfigurationAuthenticator `pulumi:"authenticator"`
 	Email         *FusionAuthTenantMultiFactorConfigurationEmail         `pulumi:"email"`
-	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
 	LoginPolicy *string                                      `pulumi:"loginPolicy"`
 	Sms         *FusionAuthTenantMultiFactorConfigurationSms `pulumi:"sms"`
 }
@@ -13787,7 +13884,7 @@ type FusionAuthTenantMultiFactorConfigurationInput interface {
 type FusionAuthTenantMultiFactorConfigurationArgs struct {
 	Authenticator FusionAuthTenantMultiFactorConfigurationAuthenticatorPtrInput `pulumi:"authenticator"`
 	Email         FusionAuthTenantMultiFactorConfigurationEmailPtrInput         `pulumi:"email"`
-	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+	// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
 	LoginPolicy pulumi.StringPtrInput                               `pulumi:"loginPolicy"`
 	Sms         FusionAuthTenantMultiFactorConfigurationSmsPtrInput `pulumi:"sms"`
 }
@@ -13881,7 +13978,7 @@ func (o FusionAuthTenantMultiFactorConfigurationOutput) Email() FusionAuthTenant
 	}).(FusionAuthTenantMultiFactorConfigurationEmailPtrOutput)
 }
 
-// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
 func (o FusionAuthTenantMultiFactorConfigurationOutput) LoginPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantMultiFactorConfiguration) *string { return v.LoginPolicy }).(pulumi.StringPtrOutput)
 }
@@ -13934,7 +14031,7 @@ func (o FusionAuthTenantMultiFactorConfigurationPtrOutput) Email() FusionAuthTen
 	}).(FusionAuthTenantMultiFactorConfigurationEmailPtrOutput)
 }
 
-// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
 func (o FusionAuthTenantMultiFactorConfigurationPtrOutput) LoginPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantMultiFactorConfiguration) *string {
 		if v == nil {
@@ -15251,6 +15348,1415 @@ func (o FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsPtrOutpu
 		}
 		return v.Enabled
 	}).(pulumi.BoolPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfiguration struct {
+	FailedLogin                  *FusionAuthTenantRateLimitConfigurationFailedLogin                  `pulumi:"failedLogin"`
+	ForgotPassword               *FusionAuthTenantRateLimitConfigurationForgotPassword               `pulumi:"forgotPassword"`
+	SendEmailVerification        *FusionAuthTenantRateLimitConfigurationSendEmailVerification        `pulumi:"sendEmailVerification"`
+	SendPasswordless             *FusionAuthTenantRateLimitConfigurationSendPasswordless             `pulumi:"sendPasswordless"`
+	SendRegistrationVerification *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification `pulumi:"sendRegistrationVerification"`
+	SendTwoFactor                *FusionAuthTenantRateLimitConfigurationSendTwoFactor                `pulumi:"sendTwoFactor"`
+}
+
+// FusionAuthTenantRateLimitConfigurationInput is an input type that accepts FusionAuthTenantRateLimitConfigurationArgs and FusionAuthTenantRateLimitConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationArgs{...}
+type FusionAuthTenantRateLimitConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationOutput() FusionAuthTenantRateLimitConfigurationOutput
+	ToFusionAuthTenantRateLimitConfigurationOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationArgs struct {
+	FailedLogin                  FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput                  `pulumi:"failedLogin"`
+	ForgotPassword               FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput               `pulumi:"forgotPassword"`
+	SendEmailVerification        FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput        `pulumi:"sendEmailVerification"`
+	SendPasswordless             FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput             `pulumi:"sendPasswordless"`
+	SendRegistrationVerification FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput `pulumi:"sendRegistrationVerification"`
+	SendTwoFactor                FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput                `pulumi:"sendTwoFactor"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationArgs) ToFusionAuthTenantRateLimitConfigurationOutput() FusionAuthTenantRateLimitConfigurationOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationArgs) ToFusionAuthTenantRateLimitConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationArgs) ToFusionAuthTenantRateLimitConfigurationPtrOutput() FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationArgs) ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationOutput).ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationArgs, FusionAuthTenantRateLimitConfigurationPtr and FusionAuthTenantRateLimitConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationPtrOutput() FusionAuthTenantRateLimitConfigurationPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationPtrType FusionAuthTenantRateLimitConfigurationArgs
+
+func FusionAuthTenantRateLimitConfigurationPtr(v *FusionAuthTenantRateLimitConfigurationArgs) FusionAuthTenantRateLimitConfigurationPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationPtrType) ToFusionAuthTenantRateLimitConfigurationPtrOutput() FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationPtrType) ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) ToFusionAuthTenantRateLimitConfigurationOutput() FusionAuthTenantRateLimitConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) ToFusionAuthTenantRateLimitConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) ToFusionAuthTenantRateLimitConfigurationPtrOutput() FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfiguration {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) FailedLogin() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationFailedLogin {
+		return v.FailedLogin
+	}).(FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) ForgotPassword() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationForgotPassword {
+		return v.ForgotPassword
+	}).(FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) SendEmailVerification() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendEmailVerification {
+		return v.SendEmailVerification
+	}).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) SendPasswordless() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendPasswordless {
+		return v.SendPasswordless
+	}).(FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) SendRegistrationVerification() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
+		return v.SendRegistrationVerification
+	}).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationOutput) SendTwoFactor() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendTwoFactor {
+		return v.SendTwoFactor
+	}).(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) ToFusionAuthTenantRateLimitConfigurationPtrOutput() FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) ToFusionAuthTenantRateLimitConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) FusionAuthTenantRateLimitConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfiguration
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) FailedLogin() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationFailedLogin {
+		if v == nil {
+			return nil
+		}
+		return v.FailedLogin
+	}).(FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) ForgotPassword() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationForgotPassword {
+		if v == nil {
+			return nil
+		}
+		return v.ForgotPassword
+	}).(FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) SendEmailVerification() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendEmailVerification {
+		if v == nil {
+			return nil
+		}
+		return v.SendEmailVerification
+	}).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) SendPasswordless() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendPasswordless {
+		if v == nil {
+			return nil
+		}
+		return v.SendPasswordless
+	}).(FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) SendRegistrationVerification() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
+		if v == nil {
+			return nil
+		}
+		return v.SendRegistrationVerification
+	}).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput)
+}
+
+func (o FusionAuthTenantRateLimitConfigurationPtrOutput) SendTwoFactor() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfiguration) *FusionAuthTenantRateLimitConfigurationSendTwoFactor {
+		if v == nil {
+			return nil
+		}
+		return v.SendTwoFactor
+	}).(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationFailedLogin struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationFailedLoginInput is an input type that accepts FusionAuthTenantRateLimitConfigurationFailedLoginArgs and FusionAuthTenantRateLimitConfigurationFailedLoginOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationFailedLoginInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationFailedLoginArgs{...}
+type FusionAuthTenantRateLimitConfigurationFailedLoginInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationFailedLoginOutput() FusionAuthTenantRateLimitConfigurationFailedLoginOutput
+	ToFusionAuthTenantRateLimitConfigurationFailedLoginOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationFailedLoginArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationFailedLoginArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationFailedLogin)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationFailedLoginArgs) ToFusionAuthTenantRateLimitConfigurationFailedLoginOutput() FusionAuthTenantRateLimitConfigurationFailedLoginOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationFailedLoginOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationFailedLoginArgs) ToFusionAuthTenantRateLimitConfigurationFailedLoginOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationFailedLoginOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationFailedLoginArgs) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationFailedLoginArgs) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationFailedLoginOutput).ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationFailedLoginArgs, FusionAuthTenantRateLimitConfigurationFailedLoginPtr and FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationFailedLoginArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationFailedLoginPtrType FusionAuthTenantRateLimitConfigurationFailedLoginArgs
+
+func FusionAuthTenantRateLimitConfigurationFailedLoginPtr(v *FusionAuthTenantRateLimitConfigurationFailedLoginArgs) FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationFailedLoginPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationFailedLoginPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationFailedLogin)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationFailedLoginPtrType) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationFailedLoginPtrType) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationFailedLoginOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationFailedLoginOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationFailedLogin)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginOutput() FusionAuthTenantRateLimitConfigurationFailedLoginOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationFailedLogin) *FusionAuthTenantRateLimitConfigurationFailedLogin {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationFailedLogin) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationFailedLogin) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationFailedLogin) *int { return v.TimePeriodInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationFailedLogin)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput() FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) ToFusionAuthTenantRateLimitConfigurationFailedLoginPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationFailedLoginOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationFailedLogin) FusionAuthTenantRateLimitConfigurationFailedLogin {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationFailedLogin
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationFailedLoginOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationFailedLogin) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationFailedLogin) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationFailedLogin) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationForgotPassword struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationForgotPasswordInput is an input type that accepts FusionAuthTenantRateLimitConfigurationForgotPasswordArgs and FusionAuthTenantRateLimitConfigurationForgotPasswordOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationForgotPasswordInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationForgotPasswordArgs{...}
+type FusionAuthTenantRateLimitConfigurationForgotPasswordInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordOutput
+	ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationForgotPasswordArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationForgotPassword)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationForgotPasswordOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationForgotPasswordOutput).ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationForgotPasswordArgs, FusionAuthTenantRateLimitConfigurationForgotPasswordPtr and FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationForgotPasswordArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationForgotPasswordPtrType FusionAuthTenantRateLimitConfigurationForgotPasswordArgs
+
+func FusionAuthTenantRateLimitConfigurationForgotPasswordPtr(v *FusionAuthTenantRateLimitConfigurationForgotPasswordArgs) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationForgotPasswordPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationForgotPasswordPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationForgotPassword)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationForgotPasswordPtrType) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationForgotPasswordPtrType) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationForgotPasswordOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationForgotPassword)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationForgotPassword) *FusionAuthTenantRateLimitConfigurationForgotPassword {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationForgotPassword) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationForgotPassword) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationForgotPassword) *int { return v.TimePeriodInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationForgotPassword)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput() FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) ToFusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationForgotPasswordOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationForgotPassword) FusionAuthTenantRateLimitConfigurationForgotPassword {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationForgotPassword
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationForgotPasswordOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationForgotPassword) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationForgotPassword) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationForgotPassword) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendEmailVerification struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationSendEmailVerificationInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs and FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendEmailVerificationInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs{...}
+type FusionAuthTenantRateLimitConfigurationSendEmailVerificationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput
+	ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendEmailVerification)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput).ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs, FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtr and FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrType FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs
+
+func FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtr(v *FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendEmailVerification)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrType) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrType) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendEmailVerification)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationSendEmailVerification) *FusionAuthTenantRateLimitConfigurationSendEmailVerification {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendEmailVerification) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendEmailVerification) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendEmailVerification) *int { return v.TimePeriodInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendEmailVerification)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendEmailVerification) FusionAuthTenantRateLimitConfigurationSendEmailVerification {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationSendEmailVerification
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendEmailVerification) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendEmailVerification) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendEmailVerification) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendPasswordless struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationSendPasswordlessInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs and FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendPasswordlessInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs{...}
+type FusionAuthTenantRateLimitConfigurationSendPasswordlessInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput
+	ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendPasswordless)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput).ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs, FusionAuthTenantRateLimitConfigurationSendPasswordlessPtr and FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationSendPasswordlessPtrType FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs
+
+func FusionAuthTenantRateLimitConfigurationSendPasswordlessPtr(v *FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationSendPasswordlessPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationSendPasswordlessPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendPasswordless)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendPasswordlessPtrType) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendPasswordlessPtrType) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendPasswordless)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationSendPasswordless) *FusionAuthTenantRateLimitConfigurationSendPasswordless {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendPasswordless) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendPasswordless) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendPasswordless) *int { return v.TimePeriodInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendPasswordless)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput() FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendPasswordless) FusionAuthTenantRateLimitConfigurationSendPasswordless {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationSendPasswordless
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendPasswordless) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendPasswordless) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendPasswordless) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerification struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs and FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs{...}
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput
+	ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendRegistrationVerification)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput).ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs, FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtr and FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrType FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs
+
+func FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtr(v *FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendRegistrationVerification)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrType) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrType) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendRegistrationVerification)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *int {
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendRegistrationVerification)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationSendRegistrationVerification
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendRegistrationVerification) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendTwoFactor struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit *int `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds *int `pulumi:"timePeriodInSeconds"`
+}
+
+// FusionAuthTenantRateLimitConfigurationSendTwoFactorInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs and FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendTwoFactorInput` via:
+//
+//	FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{...}
+type FusionAuthTenantRateLimitConfigurationSendTwoFactorInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput
+	ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput
+}
+
+type FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs struct {
+	// When true, FusionAuth will handle username collisions by generating a random suffix.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+	Limit pulumi.IntPtrInput `pulumi:"limit"`
+	// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+	TimePeriodInSeconds pulumi.IntPtrInput `pulumi:"timePeriodInSeconds"`
+}
+
+func (FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendTwoFactor)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput)
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput).ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput is an input type that accepts FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs, FusionAuthTenantRateLimitConfigurationSendTwoFactorPtr and FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput` via:
+//
+//	        FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput
+	ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput
+}
+
+type fusionAuthTenantRateLimitConfigurationSendTwoFactorPtrType FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs
+
+func FusionAuthTenantRateLimitConfigurationSendTwoFactorPtr(v *FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput {
+	return (*fusionAuthTenantRateLimitConfigurationSendTwoFactorPtrType)(v)
+}
+
+func (*fusionAuthTenantRateLimitConfigurationSendTwoFactorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendTwoFactor)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendTwoFactorPtrType) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return i.ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRateLimitConfigurationSendTwoFactorPtrType) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendTwoFactor)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o.ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRateLimitConfigurationSendTwoFactor) *FusionAuthTenantRateLimitConfigurationSendTwoFactor {
+		return &v
+	}).(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendTwoFactor) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendTwoFactor) *int { return v.Limit }).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantRateLimitConfigurationSendTwoFactor) *int { return v.TimePeriodInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRateLimitConfigurationSendTwoFactor)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput() FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) ToFusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutputWithContext(ctx context.Context) FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) Elem() FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendTwoFactor) FusionAuthTenantRateLimitConfigurationSendTwoFactor {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRateLimitConfigurationSendTwoFactor
+		return ret
+	}).(FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput)
+}
+
+// When true, FusionAuth will handle username collisions by generating a random suffix.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendTwoFactor) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) Limit() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendTwoFactor) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Limit
+	}).(pulumi.IntPtrOutput)
+}
+
+// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+func (o FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput) TimePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRateLimitConfigurationSendTwoFactor) *int {
+		if v == nil {
+			return nil
+		}
+		return v.TimePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantRegistrationConfiguration struct {
+	// A list of unique domains that are not allowed to register when self service is enabled.
+	BlockedDomains []string `pulumi:"blockedDomains"`
+}
+
+// FusionAuthTenantRegistrationConfigurationInput is an input type that accepts FusionAuthTenantRegistrationConfigurationArgs and FusionAuthTenantRegistrationConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRegistrationConfigurationInput` via:
+//
+//	FusionAuthTenantRegistrationConfigurationArgs{...}
+type FusionAuthTenantRegistrationConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRegistrationConfigurationOutput() FusionAuthTenantRegistrationConfigurationOutput
+	ToFusionAuthTenantRegistrationConfigurationOutputWithContext(context.Context) FusionAuthTenantRegistrationConfigurationOutput
+}
+
+type FusionAuthTenantRegistrationConfigurationArgs struct {
+	// A list of unique domains that are not allowed to register when self service is enabled.
+	BlockedDomains pulumi.StringArrayInput `pulumi:"blockedDomains"`
+}
+
+func (FusionAuthTenantRegistrationConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRegistrationConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantRegistrationConfigurationArgs) ToFusionAuthTenantRegistrationConfigurationOutput() FusionAuthTenantRegistrationConfigurationOutput {
+	return i.ToFusionAuthTenantRegistrationConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRegistrationConfigurationArgs) ToFusionAuthTenantRegistrationConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRegistrationConfigurationOutput)
+}
+
+func (i FusionAuthTenantRegistrationConfigurationArgs) ToFusionAuthTenantRegistrationConfigurationPtrOutput() FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return i.ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantRegistrationConfigurationArgs) ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRegistrationConfigurationOutput).ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantRegistrationConfigurationPtrInput is an input type that accepts FusionAuthTenantRegistrationConfigurationArgs, FusionAuthTenantRegistrationConfigurationPtr and FusionAuthTenantRegistrationConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantRegistrationConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantRegistrationConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantRegistrationConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantRegistrationConfigurationPtrOutput() FusionAuthTenantRegistrationConfigurationPtrOutput
+	ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantRegistrationConfigurationPtrOutput
+}
+
+type fusionAuthTenantRegistrationConfigurationPtrType FusionAuthTenantRegistrationConfigurationArgs
+
+func FusionAuthTenantRegistrationConfigurationPtr(v *FusionAuthTenantRegistrationConfigurationArgs) FusionAuthTenantRegistrationConfigurationPtrInput {
+	return (*fusionAuthTenantRegistrationConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantRegistrationConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRegistrationConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantRegistrationConfigurationPtrType) ToFusionAuthTenantRegistrationConfigurationPtrOutput() FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return i.ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantRegistrationConfigurationPtrType) ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantRegistrationConfigurationPtrOutput)
+}
+
+type FusionAuthTenantRegistrationConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRegistrationConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantRegistrationConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRegistrationConfigurationOutput) ToFusionAuthTenantRegistrationConfigurationOutput() FusionAuthTenantRegistrationConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRegistrationConfigurationOutput) ToFusionAuthTenantRegistrationConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantRegistrationConfigurationOutput) ToFusionAuthTenantRegistrationConfigurationPtrOutput() FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return o.ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantRegistrationConfigurationOutput) ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantRegistrationConfiguration) *FusionAuthTenantRegistrationConfiguration {
+		return &v
+	}).(FusionAuthTenantRegistrationConfigurationPtrOutput)
+}
+
+// A list of unique domains that are not allowed to register when self service is enabled.
+func (o FusionAuthTenantRegistrationConfigurationOutput) BlockedDomains() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v FusionAuthTenantRegistrationConfiguration) []string { return v.BlockedDomains }).(pulumi.StringArrayOutput)
+}
+
+type FusionAuthTenantRegistrationConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantRegistrationConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantRegistrationConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantRegistrationConfigurationPtrOutput) ToFusionAuthTenantRegistrationConfigurationPtrOutput() FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRegistrationConfigurationPtrOutput) ToFusionAuthTenantRegistrationConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantRegistrationConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantRegistrationConfigurationPtrOutput) Elem() FusionAuthTenantRegistrationConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRegistrationConfiguration) FusionAuthTenantRegistrationConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantRegistrationConfiguration
+		return ret
+	}).(FusionAuthTenantRegistrationConfigurationOutput)
+}
+
+// A list of unique domains that are not allowed to register when self service is enabled.
+func (o FusionAuthTenantRegistrationConfigurationPtrOutput) BlockedDomains() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *FusionAuthTenantRegistrationConfiguration) []string {
+		if v == nil {
+			return nil
+		}
+		return v.BlockedDomains
+	}).(pulumi.StringArrayOutput)
 }
 
 type FusionAuthTenantUserDeletePolicy struct {
@@ -17306,6 +18812,22 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantPasswordValidationRulesBreachDetectionPtrInput)(nil)).Elem(), FusionAuthTenantPasswordValidationRulesBreachDetectionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsInput)(nil)).Elem(), FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsPtrInput)(nil)).Elem(), FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationFailedLoginInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationFailedLoginArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationFailedLoginPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationFailedLoginArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationForgotPasswordInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationForgotPasswordArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationForgotPasswordPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationForgotPasswordArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendEmailVerificationInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendPasswordlessInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendTwoFactorInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRegistrationConfigurationInput)(nil)).Elem(), FusionAuthTenantRegistrationConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRegistrationConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantRegistrationConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUserDeletePolicyInput)(nil)).Elem(), FusionAuthTenantUserDeletePolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUserDeletePolicyPtrInput)(nil)).Elem(), FusionAuthTenantUserDeletePolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUsernameConfigurationInput)(nil)).Elem(), FusionAuthTenantUsernameConfigurationArgs{})
@@ -17498,6 +19020,22 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthTenantPasswordValidationRulesBreachDetectionPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationFailedLoginOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationFailedLoginPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationForgotPasswordOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationForgotPasswordPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendEmailVerificationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendEmailVerificationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendPasswordlessOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendPasswordlessPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendTwoFactorOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRegistrationConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantRegistrationConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUserDeletePolicyOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUserDeletePolicyPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUsernameConfigurationOutput{})

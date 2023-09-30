@@ -15,6 +15,10 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantCaptchaConfiguration
     {
         /// <summary>
+        /// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+        /// </summary>
+        public readonly string? CaptchaMethod;
+        /// <summary>
         /// When true, FusionAuth will handle username collisions by generating a random suffix.
         /// </summary>
         public readonly bool? Enabled;
@@ -33,6 +37,8 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthTenantCaptchaConfiguration(
+            string? captchaMethod,
+
             bool? enabled,
 
             string? secretKey,
@@ -41,6 +47,7 @@ namespace theogravity.Fusionauth.Outputs
 
             double? threshold)
         {
+            CaptchaMethod = captchaMethod;
             Enabled = enabled;
             SecretKey = secretKey;
             SiteKey = siteKey;

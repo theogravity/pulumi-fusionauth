@@ -14,6 +14,12 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantFailedAuthenticationConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+        /// </summary>
+        [Input("actionCancelPolicyOnPasswordReset")]
+        public Input<bool>? ActionCancelPolicyOnPasswordReset { get; set; }
+
+        /// <summary>
         /// The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
         /// </summary>
         [Input("actionDuration")]
@@ -24,6 +30,12 @@ namespace theogravity.Fusionauth.Inputs
         /// </summary>
         [Input("actionDurationUnit")]
         public Input<string>? ActionDurationUnit { get; set; }
+
+        /// <summary>
+        /// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+        /// </summary>
+        [Input("emailUser")]
+        public Input<bool>? EmailUser { get; set; }
 
         /// <summary>
         /// The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.

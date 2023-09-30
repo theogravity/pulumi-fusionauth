@@ -184,9 +184,17 @@ export interface FusionAuthApplicationMultiFactorConfiguration {
      */
     emailTemplateId?: pulumi.Input<string>;
     /**
+     * When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+     */
+    loginPolicy?: pulumi.Input<string>;
+    /**
      * The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
      */
     smsTemplateId?: pulumi.Input<string>;
+    /**
+     * When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+     */
+    trustPolicy?: pulumi.Input<string>;
 }
 
 export interface FusionAuthApplicationOauthConfiguration {
@@ -1070,6 +1078,10 @@ export interface FusionAuthTenantAccessControlConfiguration {
 
 export interface FusionAuthTenantCaptchaConfiguration {
     /**
+     * The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+     */
+    captchaMethod?: pulumi.Input<string>;
+    /**
      * When true, FusionAuth will handle username collisions by generating a random suffix.
      */
     enabled?: pulumi.Input<boolean>;
@@ -1409,6 +1421,10 @@ export interface FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTime
 
 export interface FusionAuthTenantFailedAuthenticationConfiguration {
     /**
+     * Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+     */
+    actionCancelPolicyOnPasswordReset?: pulumi.Input<boolean>;
+    /**
      * The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
      */
     actionDuration?: pulumi.Input<number>;
@@ -1416,6 +1432,10 @@ export interface FusionAuthTenantFailedAuthenticationConfiguration {
      * The unit of time associated with a duration.
      */
     actionDurationUnit?: pulumi.Input<string>;
+    /**
+     * Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+     */
+    emailUser?: pulumi.Input<boolean>;
     /**
      * The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
      */
@@ -1548,7 +1568,7 @@ export interface FusionAuthTenantMultiFactorConfiguration {
     authenticator?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationAuthenticator>;
     email?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationEmail>;
     /**
-     * When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+     * When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
      */
     loginPolicy?: pulumi.Input<string>;
     sms?: pulumi.Input<inputs.FusionAuthTenantMultiFactorConfigurationSms>;
@@ -1666,6 +1686,112 @@ export interface FusionAuthTenantPasswordValidationRulesRememberPreviousPassword
      * When true, FusionAuth will handle username collisions by generating a random suffix.
      */
     enabled?: pulumi.Input<boolean>;
+}
+
+export interface FusionAuthTenantRateLimitConfiguration {
+    failedLogin?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationFailedLogin>;
+    forgotPassword?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationForgotPassword>;
+    sendEmailVerification?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationSendEmailVerification>;
+    sendPasswordless?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationSendPasswordless>;
+    sendRegistrationVerification?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationSendRegistrationVerification>;
+    sendTwoFactor?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfigurationSendTwoFactor>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationFailedLogin {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationForgotPassword {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationSendEmailVerification {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationSendPasswordless {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRateLimitConfigurationSendTwoFactor {
+    /**
+     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     */
+    limit?: pulumi.Input<number>;
+    /**
+     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     */
+    timePeriodInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantRegistrationConfiguration {
+    /**
+     * A list of unique domains that are not allowed to register when self service is enabled.
+     */
+    blockedDomains?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface FusionAuthTenantUserDeletePolicy {

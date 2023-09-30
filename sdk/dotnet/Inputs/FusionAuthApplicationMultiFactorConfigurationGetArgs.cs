@@ -20,10 +20,22 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? EmailTemplateId { get; set; }
 
         /// <summary>
+        /// When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+        /// </summary>
+        [Input("loginPolicy")]
+        public Input<string>? LoginPolicy { get; set; }
+
+        /// <summary>
         /// The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
         /// </summary>
         [Input("smsTemplateId")]
         public Input<string>? SmsTemplateId { get; set; }
+
+        /// <summary>
+        /// When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+        /// </summary>
+        [Input("trustPolicy")]
+        public Input<string>? TrustPolicy { get; set; }
 
         public FusionAuthApplicationMultiFactorConfigurationGetArgs()
         {

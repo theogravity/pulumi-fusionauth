@@ -59,98 +59,248 @@ import (
 //				},
 //				EventConfigurations: fusionauth.FusionAuthTenantEventConfigurationArray{
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.delete"),
-//						Enabled:         pulumi.Bool(true),
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("jwt.public-key.update"),
 //						TransactionType: pulumi.String("None"),
 //					},
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.create"),
-//						Enabled:         pulumi.Bool(true),
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("jwt.refresh-token.revoke"),
 //						TransactionType: pulumi.String("None"),
 //					},
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.update"),
-//						Enabled:         pulumi.Bool(true),
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("jwt.refresh"),
 //						TransactionType: pulumi.String("None"),
 //					},
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.deactivate"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.create"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.create.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.delete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.delete.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.add"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.add.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.remove"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.remove.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.member.update.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("group.update.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.action"),
+//						TransactionType: pulumi.String("None"),
 //					},
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
 //						Event:           pulumi.String("user.bulk.create"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.reactivate"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("jwt.refresh-token.revoke"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("jwt.refresh"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("jwt.public-key.update"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.login.success"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.login.failed"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.registration.create"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.registration.update"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.registration.delete"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.registration.verified"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.email.verified"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.identity-provider.link"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.identity-provider.unlink"),
-//						Enabled:         pulumi.Bool(true),
-//						TransactionType: pulumi.String("Any"),
-//					},
-//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
-//						Event:           pulumi.String("user.password.breach"),
 //						Enabled:         pulumi.Bool(false),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.create"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.create.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.deactivate"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.delete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.delete.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.email.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.email.verified"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.identity-provider.link"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.identity-provider.unlink"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.loginId.duplicate.create"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.loginId.duplicate.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.login.failed"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.login.new-device"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.login.success"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.login.suspicious"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.password.breach"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.password.reset.send"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.password.reset.start"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.password.reset.success"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.password.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.reactivate"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.create"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.create.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.delete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.delete.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.update.complete"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.registration.verified"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.two-factor.method.add"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.two-factor.method.remove"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.update"),
+//						TransactionType: pulumi.String("None"),
+//					},
+//					&fusionauth.FusionAuthTenantEventConfigurationArgs{
+//						Enabled:         pulumi.Bool(false),
+//						Event:           pulumi.String("user.update.complete"),
 //						TransactionType: pulumi.String("None"),
 //					},
 //				},
@@ -267,6 +417,50 @@ import (
 //					RequireNumber:     pulumi.Bool(false),
 //					ValidateOnLogin:   pulumi.Bool(false),
 //				},
+//				RateLimitConfiguration: &fusionauth.FusionAuthTenantRateLimitConfigurationArgs{
+//					FailedLogin: &fusionauth.FusionAuthTenantRateLimitConfigurationFailedLoginArgs{
+//						Enabled:             pulumi.Bool(true),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//					ForgotPassword: &fusionauth.FusionAuthTenantRateLimitConfigurationForgotPasswordArgs{
+//						Enabled:             pulumi.Bool(false),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//					SendEmailVerification: &fusionauth.FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs{
+//						Enabled:             pulumi.Bool(false),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//					SendPasswordless: &fusionauth.FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs{
+//						Enabled:             pulumi.Bool(false),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//					SendRegistrationVerification: &fusionauth.FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs{
+//						Enabled:             pulumi.Bool(false),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//					SendTwoFactor: &fusionauth.FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{
+//						Enabled:             pulumi.Bool(false),
+//						Limit:               pulumi.Int(5),
+//						TimePeriodInSeconds: pulumi.Int(60),
+//					},
+//				},
+//				RegistrationConfiguration: &fusionauth.FusionAuthTenantRegistrationConfigurationArgs{
+//					BlockedDomains: pulumi.StringArray{
+//						pulumi.String("example.com"),
+//					},
+//				},
+//				CaptchaConfiguration: &fusionauth.FusionAuthTenantCaptchaConfigurationArgs{
+//					Enabled:       pulumi.Bool(true),
+//					CaptchaMethod: pulumi.String("GoogleRecaptchaV3"),
+//					SiteKey:       pulumi.String("captcha_site_key"),
+//					SecretKey:     pulumi.String("captcha_secret_key"),
+//					Threshold:     pulumi.Float64(0.5),
+//				},
 //				ThemeId: pulumi.Any(fusionauth_theme.Example_theme.Id),
 //				UserDeletePolicy: &fusionauth.FusionAuthTenantUserDeletePolicyArgs{
 //					UnverifiedEnabled:              pulumi.Bool(false),
@@ -312,6 +506,8 @@ type FusionAuthTenant struct {
 	OauthConfigurations              FusionAuthTenantOauthConfigurationArrayOutput              `pulumi:"oauthConfigurations"`
 	PasswordEncryptionConfigurations FusionAuthTenantPasswordEncryptionConfigurationArrayOutput `pulumi:"passwordEncryptionConfigurations"`
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesOutput              `pulumi:"passwordValidationRules"`
+	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationOutput               `pulumi:"rateLimitConfiguration"`
+	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationOutput            `pulumi:"registrationConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 	SourceTenantId pulumi.StringPtrOutput `pulumi:"sourceTenantId"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -395,6 +591,8 @@ type fusionAuthTenantState struct {
 	OauthConfigurations              []FusionAuthTenantOauthConfiguration              `pulumi:"oauthConfigurations"`
 	PasswordEncryptionConfigurations []FusionAuthTenantPasswordEncryptionConfiguration `pulumi:"passwordEncryptionConfigurations"`
 	PasswordValidationRules          *FusionAuthTenantPasswordValidationRules          `pulumi:"passwordValidationRules"`
+	RateLimitConfiguration           *FusionAuthTenantRateLimitConfiguration           `pulumi:"rateLimitConfiguration"`
+	RegistrationConfiguration        *FusionAuthTenantRegistrationConfiguration        `pulumi:"registrationConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 	SourceTenantId *string `pulumi:"sourceTenantId"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -434,6 +632,8 @@ type FusionAuthTenantState struct {
 	OauthConfigurations              FusionAuthTenantOauthConfigurationArrayInput
 	PasswordEncryptionConfigurations FusionAuthTenantPasswordEncryptionConfigurationArrayInput
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesPtrInput
+	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationPtrInput
+	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationPtrInput
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 	SourceTenantId pulumi.StringPtrInput
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -477,6 +677,8 @@ type fusionAuthTenantArgs struct {
 	OauthConfigurations              []FusionAuthTenantOauthConfiguration              `pulumi:"oauthConfigurations"`
 	PasswordEncryptionConfigurations []FusionAuthTenantPasswordEncryptionConfiguration `pulumi:"passwordEncryptionConfigurations"`
 	PasswordValidationRules          *FusionAuthTenantPasswordValidationRules          `pulumi:"passwordValidationRules"`
+	RateLimitConfiguration           *FusionAuthTenantRateLimitConfiguration           `pulumi:"rateLimitConfiguration"`
+	RegistrationConfiguration        *FusionAuthTenantRegistrationConfiguration        `pulumi:"registrationConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 	SourceTenantId *string `pulumi:"sourceTenantId"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -517,6 +719,8 @@ type FusionAuthTenantArgs struct {
 	OauthConfigurations              FusionAuthTenantOauthConfigurationArrayInput
 	PasswordEncryptionConfigurations FusionAuthTenantPasswordEncryptionConfigurationArrayInput
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesPtrInput
+	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationPtrInput
+	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationPtrInput
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 	SourceTenantId pulumi.StringPtrInput
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -718,6 +922,18 @@ func (o FusionAuthTenantOutput) PasswordValidationRules() FusionAuthTenantPasswo
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantPasswordValidationRulesOutput {
 		return v.PasswordValidationRules
 	}).(FusionAuthTenantPasswordValidationRulesOutput)
+}
+
+func (o FusionAuthTenantOutput) RateLimitConfiguration() FusionAuthTenantRateLimitConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantRateLimitConfigurationOutput {
+		return v.RateLimitConfiguration
+	}).(FusionAuthTenantRateLimitConfigurationOutput)
+}
+
+func (o FusionAuthTenantOutput) RegistrationConfiguration() FusionAuthTenantRegistrationConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantRegistrationConfigurationOutput {
+		return v.RegistrationConfiguration
+	}).(FusionAuthTenantRegistrationConfigurationOutput)
 }
 
 // The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.

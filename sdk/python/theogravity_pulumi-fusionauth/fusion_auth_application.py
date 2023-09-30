@@ -690,6 +690,12 @@ class FusionAuthApplication(pulumi.CustomResource):
                 generate_refresh_tokens=False,
                 require_authentication=True,
             ),
+            multi_factor_configuration=fusionauth.FusionAuthApplicationMultiFactorConfigurationArgs(
+                email_template_id="859f394b-22a6-4fa6-ba55-de700df9e950",
+                sms_template_id="17760f96-dca7-448b-9a8f-c49016aa7210",
+                login_policy="Required",
+                trust_policy="Any",
+            ),
             oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
                 authorized_origin_urls=["http://www.example.com/oauth-callback"],
                 authorized_url_validation_policy="ExactMatch",
@@ -790,6 +796,12 @@ class FusionAuthApplication(pulumi.CustomResource):
                 allow_token_refresh=False,
                 generate_refresh_tokens=False,
                 require_authentication=True,
+            ),
+            multi_factor_configuration=fusionauth.FusionAuthApplicationMultiFactorConfigurationArgs(
+                email_template_id="859f394b-22a6-4fa6-ba55-de700df9e950",
+                sms_template_id="17760f96-dca7-448b-9a8f-c49016aa7210",
+                login_policy="Required",
+                trust_policy="Any",
             ),
             oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
                 authorized_origin_urls=["http://www.example.com/oauth-callback"],
