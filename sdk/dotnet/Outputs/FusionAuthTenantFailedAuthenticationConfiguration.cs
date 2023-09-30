@@ -15,6 +15,10 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantFailedAuthenticationConfiguration
     {
         /// <summary>
+        /// Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+        /// </summary>
+        public readonly bool? ActionCancelPolicyOnPasswordReset;
+        /// <summary>
         /// The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
         /// </summary>
         public readonly int? ActionDuration;
@@ -22,6 +26,10 @@ namespace theogravity.Fusionauth.Outputs
         /// The unit of time associated with a duration.
         /// </summary>
         public readonly string? ActionDurationUnit;
+        /// <summary>
+        /// Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+        /// </summary>
+        public readonly bool? EmailUser;
         /// <summary>
         /// The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
         /// </summary>
@@ -37,9 +45,13 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthTenantFailedAuthenticationConfiguration(
+            bool? actionCancelPolicyOnPasswordReset,
+
             int? actionDuration,
 
             string? actionDurationUnit,
+
+            bool? emailUser,
 
             int? resetCountInSeconds,
 
@@ -47,8 +59,10 @@ namespace theogravity.Fusionauth.Outputs
 
             string? userActionId)
         {
+            ActionCancelPolicyOnPasswordReset = actionCancelPolicyOnPasswordReset;
             ActionDuration = actionDuration;
             ActionDurationUnit = actionDurationUnit;
+            EmailUser = emailUser;
             ResetCountInSeconds = resetCountInSeconds;
             TooManyAttempts = tooManyAttempts;
             UserActionId = userActionId;

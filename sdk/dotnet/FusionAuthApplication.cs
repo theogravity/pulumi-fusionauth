@@ -52,6 +52,13 @@ namespace theogravity.Fusionauth
     ///             GenerateRefreshTokens = false,
     ///             RequireAuthentication = true,
     ///         },
+    ///         MultiFactorConfiguration = new Fusionauth.Inputs.FusionAuthApplicationMultiFactorConfigurationArgs
+    ///         {
+    ///             EmailTemplateId = "859f394b-22a6-4fa6-ba55-de700df9e950",
+    ///             SmsTemplateId = "17760f96-dca7-448b-9a8f-c49016aa7210",
+    ///             LoginPolicy = "Required",
+    ///             TrustPolicy = "Any",
+    ///         },
     ///         OauthConfiguration = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationArgs
     ///         {
     ///             AuthorizedOriginUrls = new[]

@@ -98,6 +98,14 @@ __all__ = [
     'FusionAuthTenantPasswordValidationRulesArgs',
     'FusionAuthTenantPasswordValidationRulesBreachDetectionArgs',
     'FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs',
+    'FusionAuthTenantRateLimitConfigurationArgs',
+    'FusionAuthTenantRateLimitConfigurationFailedLoginArgs',
+    'FusionAuthTenantRateLimitConfigurationForgotPasswordArgs',
+    'FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs',
+    'FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs',
+    'FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs',
+    'FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs',
+    'FusionAuthTenantRegistrationConfigurationArgs',
     'FusionAuthTenantUserDeletePolicyArgs',
     'FusionAuthTenantUsernameConfigurationArgs',
     'FusionAuthTenantUsernameConfigurationUniqueArgs',
@@ -774,15 +782,23 @@ class FusionAuthApplicationLoginConfigurationArgs:
 class FusionAuthApplicationMultiFactorConfigurationArgs:
     def __init__(__self__, *,
                  email_template_id: Optional[pulumi.Input[str]] = None,
-                 sms_template_id: Optional[pulumi.Input[str]] = None):
+                 login_policy: Optional[pulumi.Input[str]] = None,
+                 sms_template_id: Optional[pulumi.Input[str]] = None,
+                 trust_policy: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] email_template_id: The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
+        :param pulumi.Input[str] login_policy: When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
         :param pulumi.Input[str] sms_template_id: The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
+        :param pulumi.Input[str] trust_policy: When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
         """
         if email_template_id is not None:
             pulumi.set(__self__, "email_template_id", email_template_id)
+        if login_policy is not None:
+            pulumi.set(__self__, "login_policy", login_policy)
         if sms_template_id is not None:
             pulumi.set(__self__, "sms_template_id", sms_template_id)
+        if trust_policy is not None:
+            pulumi.set(__self__, "trust_policy", trust_policy)
 
     @property
     @pulumi.getter(name="emailTemplateId")
@@ -797,6 +813,18 @@ class FusionAuthApplicationMultiFactorConfigurationArgs:
         pulumi.set(self, "email_template_id", value)
 
     @property
+    @pulumi.getter(name="loginPolicy")
+    def login_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        When enabled and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When disabled, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When required, the user will be required to complete a two-factor challenge during login. Possible values are `Enabled`, `Disabled` or `Required`.
+        """
+        return pulumi.get(self, "login_policy")
+
+    @login_policy.setter
+    def login_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "login_policy", value)
+
+    @property
     @pulumi.getter(name="smsTemplateId")
     def sms_template_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -807,6 +835,18 @@ class FusionAuthApplicationMultiFactorConfigurationArgs:
     @sms_template_id.setter
     def sms_template_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "sms_template_id", value)
+
+    @property
+    @pulumi.getter(name="trustPolicy")
+    def trust_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        When `multi_factor_configuration.login_policy` is set to `Enabled`, this trust policy is utilized when determining if a user must complete a two-factor challenge during login. Possible values are `Any`, `This` or `None`.
+        """
+        return pulumi.get(self, "trust_policy")
+
+    @trust_policy.setter
+    def trust_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "trust_policy", value)
 
 
 @pulumi.input_type
@@ -4252,16 +4292,20 @@ class FusionAuthTenantAccessControlConfigurationArgs:
 @pulumi.input_type
 class FusionAuthTenantCaptchaConfigurationArgs:
     def __init__(__self__, *,
+                 captcha_method: Optional[pulumi.Input[str]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  secret_key: Optional[pulumi.Input[str]] = None,
                  site_key: Optional[pulumi.Input[str]] = None,
                  threshold: Optional[pulumi.Input[float]] = None):
         """
+        :param pulumi.Input[str] captcha_method: The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
         :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
         :param pulumi.Input[str] secret_key: The secret key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
         :param pulumi.Input[str] site_key: The site key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
         :param pulumi.Input[float] threshold: The numeric threshold which separates a passing score from a failing one. This value only applies if using either the Google v3 or HCaptcha Enterprise method, otherwise this value is ignored.
         """
+        if captcha_method is not None:
+            pulumi.set(__self__, "captcha_method", captcha_method)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if secret_key is not None:
@@ -4270,6 +4314,18 @@ class FusionAuthTenantCaptchaConfigurationArgs:
             pulumi.set(__self__, "site_key", site_key)
         if threshold is not None:
             pulumi.set(__self__, "threshold", threshold)
+
+    @property
+    @pulumi.getter(name="captchaMethod")
+    def captcha_method(self) -> Optional[pulumi.Input[str]]:
+        """
+        The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+        """
+        return pulumi.get(self, "captcha_method")
+
+    @captcha_method.setter
+    def captcha_method(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "captcha_method", value)
 
     @property
     @pulumi.getter
@@ -5576,28 +5632,48 @@ class FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGener
 @pulumi.input_type
 class FusionAuthTenantFailedAuthenticationConfigurationArgs:
     def __init__(__self__, *,
+                 action_cancel_policy_on_password_reset: Optional[pulumi.Input[bool]] = None,
                  action_duration: Optional[pulumi.Input[int]] = None,
                  action_duration_unit: Optional[pulumi.Input[str]] = None,
+                 email_user: Optional[pulumi.Input[bool]] = None,
                  reset_count_in_seconds: Optional[pulumi.Input[int]] = None,
                  too_many_attempts: Optional[pulumi.Input[int]] = None,
                  user_action_id: Optional[pulumi.Input[str]] = None):
         """
+        :param pulumi.Input[bool] action_cancel_policy_on_password_reset: Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
         :param pulumi.Input[int] action_duration: The duration of the User Action. This value along with the actionDurationUnit will be used to set the duration of the User Action. Value must be greater than 0.
         :param pulumi.Input[str] action_duration_unit: The unit of time associated with a duration.
+        :param pulumi.Input[bool] email_user: Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
         :param pulumi.Input[int] reset_count_in_seconds: The length of time in seconds before the failed authentication count will be reset. Value must be greater than 0.
         :param pulumi.Input[int] too_many_attempts: The number of failed attempts considered to be too many. Once this threshold is reached the specified User Action will be applied to the user for the duration specified. Value must be greater than 0.
         :param pulumi.Input[str] user_action_id: The Id of the User Action that is applied when the threshold is reached for too many failed authentication attempts.
         """
+        if action_cancel_policy_on_password_reset is not None:
+            pulumi.set(__self__, "action_cancel_policy_on_password_reset", action_cancel_policy_on_password_reset)
         if action_duration is not None:
             pulumi.set(__self__, "action_duration", action_duration)
         if action_duration_unit is not None:
             pulumi.set(__self__, "action_duration_unit", action_duration_unit)
+        if email_user is not None:
+            pulumi.set(__self__, "email_user", email_user)
         if reset_count_in_seconds is not None:
             pulumi.set(__self__, "reset_count_in_seconds", reset_count_in_seconds)
         if too_many_attempts is not None:
             pulumi.set(__self__, "too_many_attempts", too_many_attempts)
         if user_action_id is not None:
             pulumi.set(__self__, "user_action_id", user_action_id)
+
+    @property
+    @pulumi.getter(name="actionCancelPolicyOnPasswordReset")
+    def action_cancel_policy_on_password_reset(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Indicates whether you want the user to be able to self-service unlock their account prior to the action duration by completing a password reset workflow.
+        """
+        return pulumi.get(self, "action_cancel_policy_on_password_reset")
+
+    @action_cancel_policy_on_password_reset.setter
+    def action_cancel_policy_on_password_reset(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "action_cancel_policy_on_password_reset", value)
 
     @property
     @pulumi.getter(name="actionDuration")
@@ -5622,6 +5698,18 @@ class FusionAuthTenantFailedAuthenticationConfigurationArgs:
     @action_duration_unit.setter
     def action_duration_unit(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "action_duration_unit", value)
+
+    @property
+    @pulumi.getter(name="emailUser")
+    def email_user(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Indicates you would like to email the user when the user’s account is locked due to this action being taken. This requires the User Action specified by the tenant.failedAuthenticationConfiguration.userActionId to also be configured for email. If the User Action is not configured to be able to email the user, this configuration will be ignored.
+        """
+        return pulumi.get(self, "email_user")
+
+    @email_user.setter
+    def email_user(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "email_user", value)
 
     @property
     @pulumi.getter(name="resetCountInSeconds")
@@ -6092,7 +6180,7 @@ class FusionAuthTenantMultiFactorConfigurationArgs:
                  login_policy: Optional[pulumi.Input[str]] = None,
                  sms: Optional[pulumi.Input['FusionAuthTenantMultiFactorConfigurationSmsArgs']] = None):
         """
-        :param pulumi.Input[str] login_policy: When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        :param pulumi.Input[str] login_policy: When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
         """
         if authenticator is not None:
             pulumi.set(__self__, "authenticator", authenticator)
@@ -6125,7 +6213,7 @@ class FusionAuthTenantMultiFactorConfigurationArgs:
     @pulumi.getter(name="loginPolicy")
     def login_policy(self) -> Optional[pulumi.Input[str]]:
         """
-        When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
         """
         return pulumi.get(self, "login_policy")
 
@@ -6573,6 +6661,436 @@ class FusionAuthTenantPasswordValidationRulesRememberPreviousPasswordsArgs:
     @enabled.setter
     def enabled(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "enabled", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationArgs:
+    def __init__(__self__, *,
+                 failed_login: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationFailedLoginArgs']] = None,
+                 forgot_password: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationForgotPasswordArgs']] = None,
+                 send_email_verification: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs']] = None,
+                 send_passwordless: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs']] = None,
+                 send_registration_verification: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs']] = None,
+                 send_two_factor: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs']] = None):
+        if failed_login is not None:
+            pulumi.set(__self__, "failed_login", failed_login)
+        if forgot_password is not None:
+            pulumi.set(__self__, "forgot_password", forgot_password)
+        if send_email_verification is not None:
+            pulumi.set(__self__, "send_email_verification", send_email_verification)
+        if send_passwordless is not None:
+            pulumi.set(__self__, "send_passwordless", send_passwordless)
+        if send_registration_verification is not None:
+            pulumi.set(__self__, "send_registration_verification", send_registration_verification)
+        if send_two_factor is not None:
+            pulumi.set(__self__, "send_two_factor", send_two_factor)
+
+    @property
+    @pulumi.getter(name="failedLogin")
+    def failed_login(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationFailedLoginArgs']]:
+        return pulumi.get(self, "failed_login")
+
+    @failed_login.setter
+    def failed_login(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationFailedLoginArgs']]):
+        pulumi.set(self, "failed_login", value)
+
+    @property
+    @pulumi.getter(name="forgotPassword")
+    def forgot_password(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationForgotPasswordArgs']]:
+        return pulumi.get(self, "forgot_password")
+
+    @forgot_password.setter
+    def forgot_password(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationForgotPasswordArgs']]):
+        pulumi.set(self, "forgot_password", value)
+
+    @property
+    @pulumi.getter(name="sendEmailVerification")
+    def send_email_verification(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs']]:
+        return pulumi.get(self, "send_email_verification")
+
+    @send_email_verification.setter
+    def send_email_verification(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs']]):
+        pulumi.set(self, "send_email_verification", value)
+
+    @property
+    @pulumi.getter(name="sendPasswordless")
+    def send_passwordless(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs']]:
+        return pulumi.get(self, "send_passwordless")
+
+    @send_passwordless.setter
+    def send_passwordless(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs']]):
+        pulumi.set(self, "send_passwordless", value)
+
+    @property
+    @pulumi.getter(name="sendRegistrationVerification")
+    def send_registration_verification(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs']]:
+        return pulumi.get(self, "send_registration_verification")
+
+    @send_registration_verification.setter
+    def send_registration_verification(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs']]):
+        pulumi.set(self, "send_registration_verification", value)
+
+    @property
+    @pulumi.getter(name="sendTwoFactor")
+    def send_two_factor(self) -> Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs']]:
+        return pulumi.get(self, "send_two_factor")
+
+    @send_two_factor.setter
+    def send_two_factor(self, value: Optional[pulumi.Input['FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs']]):
+        pulumi.set(self, "send_two_factor", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationFailedLoginArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationForgotPasswordArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationSendEmailVerificationArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationSendPasswordlessArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationSendRegistrationVerificationArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 limit: Optional[pulumi.Input[int]] = None,
+                 time_period_in_seconds: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param pulumi.Input[int] limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        :param pulumi.Input[int] time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if limit is not None:
+            pulumi.set(__self__, "limit", limit)
+        if time_period_in_seconds is not None:
+            pulumi.set(__self__, "time_period_in_seconds", time_period_in_seconds)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When true, FusionAuth will handle username collisions by generating a random suffix.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        """
+        return pulumi.get(self, "limit")
+
+    @limit.setter
+    def limit(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "limit", value)
+
+    @property
+    @pulumi.getter(name="timePeriodInSeconds")
+    def time_period_in_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        """
+        return pulumi.get(self, "time_period_in_seconds")
+
+    @time_period_in_seconds.setter
+    def time_period_in_seconds(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "time_period_in_seconds", value)
+
+
+@pulumi.input_type
+class FusionAuthTenantRegistrationConfigurationArgs:
+    def __init__(__self__, *,
+                 blocked_domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] blocked_domains: A list of unique domains that are not allowed to register when self service is enabled.
+        """
+        if blocked_domains is not None:
+            pulumi.set(__self__, "blocked_domains", blocked_domains)
+
+    @property
+    @pulumi.getter(name="blockedDomains")
+    def blocked_domains(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        A list of unique domains that are not allowed to register when self service is enabled.
+        """
+        return pulumi.get(self, "blocked_domains")
+
+    @blocked_domains.setter
+    def blocked_domains(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "blocked_domains", value)
 
 
 @pulumi.input_type

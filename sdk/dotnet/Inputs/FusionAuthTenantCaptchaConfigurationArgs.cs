@@ -14,6 +14,12 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantCaptchaConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
+        /// </summary>
+        [Input("captchaMethod")]
+        public Input<string>? CaptchaMethod { get; set; }
+
+        /// <summary>
         /// When true, FusionAuth will handle username collisions by generating a random suffix.
         /// </summary>
         [Input("enabled")]

@@ -43,98 +43,248 @@ import * as utilities from "./utilities";
  *     },
  *     eventConfigurations: [
  *         {
- *             event: "user.delete",
- *             enabled: true,
+ *             enabled: false,
+ *             event: "jwt.public-key.update",
  *             transactionType: "None",
  *         },
  *         {
- *             event: "user.create",
- *             enabled: true,
+ *             enabled: false,
+ *             event: "jwt.refresh-token.revoke",
  *             transactionType: "None",
  *         },
  *         {
- *             event: "user.update",
- *             enabled: true,
+ *             enabled: false,
+ *             event: "jwt.refresh",
  *             transactionType: "None",
  *         },
  *         {
- *             event: "user.deactivate",
- *             enabled: true,
- *             transactionType: "Any",
+ *             enabled: false,
+ *             event: "group.create",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.create.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.delete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.delete.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.add",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.add.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.remove",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.remove.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.member.update.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "group.update.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.action",
+ *             transactionType: "None",
  *         },
  *         {
  *             event: "user.bulk.create",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.reactivate",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "jwt.refresh-token.revoke",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "jwt.refresh",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "jwt.public-key.update",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.login.success",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.login.failed",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.registration.create",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.registration.update",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.registration.delete",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.registration.verified",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.email.verified",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.identity-provider.link",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.identity-provider.unlink",
- *             enabled: true,
- *             transactionType: "Any",
- *         },
- *         {
- *             event: "user.password.breach",
  *             enabled: false,
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.create",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.create.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.deactivate",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.delete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.delete.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.email.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.email.verified",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.identity-provider.link",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.identity-provider.unlink",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.loginId.duplicate.create",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.loginId.duplicate.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.login.failed",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.login.new-device",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.login.success",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.login.suspicious",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.password.breach",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.password.reset.send",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.password.reset.start",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.password.reset.success",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.password.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.reactivate",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.create",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.create.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.delete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.delete.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.update.complete",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.registration.verified",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.two-factor.method.add",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.two-factor.method.remove",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.update",
+ *             transactionType: "None",
+ *         },
+ *         {
+ *             enabled: false,
+ *             event: "user.update.complete",
  *             transactionType: "None",
  *         },
  *     ],
@@ -245,6 +395,48 @@ import * as utilities from "./utilities";
  *         requireNumber: false,
  *         validateOnLogin: false,
  *     },
+ *     rateLimitConfiguration: {
+ *         failedLogin: {
+ *             enabled: true,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *         forgotPassword: {
+ *             enabled: false,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *         sendEmailVerification: {
+ *             enabled: false,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *         sendPasswordless: {
+ *             enabled: false,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *         sendRegistrationVerification: {
+ *             enabled: false,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *         sendTwoFactor: {
+ *             enabled: false,
+ *             limit: 5,
+ *             timePeriodInSeconds: 60,
+ *         },
+ *     },
+ *     registrationConfiguration: {
+ *         blockedDomains: ["example.com"],
+ *     },
+ *     captchaConfiguration: {
+ *         enabled: true,
+ *         captchaMethod: "GoogleRecaptchaV3",
+ *         siteKey: "captcha_site_key",
+ *         secretKey: "captcha_secret_key",
+ *         threshold: 0.5,
+ *     },
  *     themeId: fusionauth_theme.example_theme.id,
  *     userDeletePolicy: {
  *         unverifiedEnabled: false,
@@ -321,6 +513,8 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     public readonly oauthConfigurations!: pulumi.Output<outputs.FusionAuthTenantOauthConfiguration[] | undefined>;
     public readonly passwordEncryptionConfigurations!: pulumi.Output<outputs.FusionAuthTenantPasswordEncryptionConfiguration[]>;
     public readonly passwordValidationRules!: pulumi.Output<outputs.FusionAuthTenantPasswordValidationRules>;
+    public readonly rateLimitConfiguration!: pulumi.Output<outputs.FusionAuthTenantRateLimitConfiguration>;
+    public readonly registrationConfiguration!: pulumi.Output<outputs.FusionAuthTenantRegistrationConfiguration>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */
@@ -371,6 +565,8 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["oauthConfigurations"] = state ? state.oauthConfigurations : undefined;
             resourceInputs["passwordEncryptionConfigurations"] = state ? state.passwordEncryptionConfigurations : undefined;
             resourceInputs["passwordValidationRules"] = state ? state.passwordValidationRules : undefined;
+            resourceInputs["rateLimitConfiguration"] = state ? state.rateLimitConfiguration : undefined;
+            resourceInputs["registrationConfiguration"] = state ? state.registrationConfiguration : undefined;
             resourceInputs["sourceTenantId"] = state ? state.sourceTenantId : undefined;
             resourceInputs["tenantId"] = state ? state.tenantId : undefined;
             resourceInputs["themeId"] = state ? state.themeId : undefined;
@@ -415,6 +611,8 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["oauthConfigurations"] = args ? args.oauthConfigurations : undefined;
             resourceInputs["passwordEncryptionConfigurations"] = args ? args.passwordEncryptionConfigurations : undefined;
             resourceInputs["passwordValidationRules"] = args ? args.passwordValidationRules : undefined;
+            resourceInputs["rateLimitConfiguration"] = args ? args.rateLimitConfiguration : undefined;
+            resourceInputs["registrationConfiguration"] = args ? args.registrationConfiguration : undefined;
             resourceInputs["sourceTenantId"] = args ? args.sourceTenantId : undefined;
             resourceInputs["tenantId"] = args ? args.tenantId : undefined;
             resourceInputs["themeId"] = args ? args.themeId : undefined;
@@ -470,6 +668,8 @@ export interface FusionAuthTenantState {
     oauthConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantOauthConfiguration>[]>;
     passwordEncryptionConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantPasswordEncryptionConfiguration>[]>;
     passwordValidationRules?: pulumi.Input<inputs.FusionAuthTenantPasswordValidationRules>;
+    rateLimitConfiguration?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfiguration>;
+    registrationConfiguration?: pulumi.Input<inputs.FusionAuthTenantRegistrationConfiguration>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */
@@ -530,6 +730,8 @@ export interface FusionAuthTenantArgs {
     oauthConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantOauthConfiguration>[]>;
     passwordEncryptionConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantPasswordEncryptionConfiguration>[]>;
     passwordValidationRules?: pulumi.Input<inputs.FusionAuthTenantPasswordValidationRules>;
+    rateLimitConfiguration?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfiguration>;
+    registrationConfiguration?: pulumi.Input<inputs.FusionAuthTenantRegistrationConfiguration>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */

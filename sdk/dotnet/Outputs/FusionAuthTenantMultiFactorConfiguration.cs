@@ -17,7 +17,7 @@ namespace theogravity.Fusionauth.Outputs
         public readonly Outputs.FusionAuthTenantMultiFactorConfigurationAuthenticator? Authenticator;
         public readonly Outputs.FusionAuthTenantMultiFactorConfigurationEmail? Email;
         /// <summary>
-        /// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login.
+        /// When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
         /// </summary>
         public readonly string? LoginPolicy;
         public readonly Outputs.FusionAuthTenantMultiFactorConfigurationSms? Sms;
