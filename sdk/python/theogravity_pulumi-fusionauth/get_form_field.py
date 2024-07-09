@@ -235,19 +235,19 @@ def get_form_field(confirm: Optional[bool] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getFormField:getFormField', __args__, opts=opts, typ=GetFormFieldResult).value
 
     return AwaitableGetFormFieldResult(
-        confirm=__ret__.confirm,
-        consent_id=__ret__.consent_id,
-        control=__ret__.control,
-        data=__ret__.data,
-        description=__ret__.description,
-        form_field_id=__ret__.form_field_id,
-        id=__ret__.id,
-        key=__ret__.key,
-        name=__ret__.name,
-        options=__ret__.options,
-        required=__ret__.required,
-        type=__ret__.type,
-        validator=__ret__.validator)
+        confirm=pulumi.get(__ret__, 'confirm'),
+        consent_id=pulumi.get(__ret__, 'consent_id'),
+        control=pulumi.get(__ret__, 'control'),
+        data=pulumi.get(__ret__, 'data'),
+        description=pulumi.get(__ret__, 'description'),
+        form_field_id=pulumi.get(__ret__, 'form_field_id'),
+        id=pulumi.get(__ret__, 'id'),
+        key=pulumi.get(__ret__, 'key'),
+        name=pulumi.get(__ret__, 'name'),
+        options=pulumi.get(__ret__, 'options'),
+        required=pulumi.get(__ret__, 'required'),
+        type=pulumi.get(__ret__, 'type'),
+        validator=pulumi.get(__ret__, 'validator'))
 
 
 @_utilities.lift_output_func(get_form_field)

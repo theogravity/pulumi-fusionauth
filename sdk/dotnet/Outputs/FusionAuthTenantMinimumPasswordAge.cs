@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantMinimumPasswordAge
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Indicates that the minimum password age is enabled and being enforced.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

@@ -31,6 +31,18 @@ namespace theogravity.Fusionauth.Inputs
         [Input("samlv2PopulateId")]
         public Input<string>? Samlv2PopulateId { get; set; }
 
+        /// <summary>
+        /// The unique Id of the lambda that will be used to perform additional validation on registration form steps.
+        /// </summary>
+        [Input("selfServiceRegistrationValidationId")]
+        public Input<string>? SelfServiceRegistrationValidationId { get; set; }
+
+        /// <summary>
+        /// The Id of the Lambda that will be invoked when a UserInfo response is generated for this application.
+        /// </summary>
+        [Input("userinfoPopulateId")]
+        public Input<string>? UserinfoPopulateId { get; set; }
+
         public FusionAuthApplicationLambdaConfigurationGetArgs()
         {
         }

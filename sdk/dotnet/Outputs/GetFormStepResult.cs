@@ -14,6 +14,9 @@ namespace theogravity.Fusionauth.Outputs
     [OutputType]
     public sealed class GetFormStepResult
     {
+        /// <summary>
+        /// An ordered list of Form Field Ids assigned to this step.
+        /// </summary>
         public readonly ImmutableArray<string> Fields;
 
         [OutputConstructor]

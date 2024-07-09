@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 type FusionAuthEntityTypePermission struct {
@@ -39,7 +40,7 @@ func NewFusionAuthEntityTypePermission(ctx *pulumi.Context,
 	if args.EntityTypeId == nil {
 		return nil, errors.New("invalid value for required argument 'EntityTypeId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthEntityTypePermission
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthEntityTypePermission:FusionAuthEntityTypePermission", name, args, &resource, opts...)
 	if err != nil {

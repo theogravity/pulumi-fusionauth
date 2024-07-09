@@ -30,13 +30,23 @@ namespace theogravity.Fusionauth.Outputs
         /// Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
         /// </summary>
         public readonly string? ClientAuthenticationPolicy;
+        /// <summary>
+        /// The OAuth 2.0 client id. If you leave this blank during a POST, a client id will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
+        /// </summary>
         public readonly string? ClientId;
         /// <summary>
         /// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
         /// </summary>
         public readonly string? ClientSecret;
         /// <summary>
-        /// Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
+        /// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
+        /// - `AlwaysPrompt` - Always prompt the user for consent.
+        /// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+        /// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+        /// </summary>
+        public readonly string? ConsentMode;
+        /// <summary>
+        /// Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
         /// </summary>
         public readonly bool? Debug;
         /// <summary>
@@ -56,13 +66,23 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? LogoutBehavior;
         /// <summary>
-        /// The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
+        /// The logout URL for the Application. FusionAuth will redirect to this URL after the user logs out of OAuth.
         /// </summary>
         public readonly string? LogoutUrl;
         /// <summary>
         /// Determines the PKCE requirements when using the authorization code grant.
         /// </summary>
         public readonly string? ProofKeyForCodeExchangePolicy;
+        /// <summary>
+        /// Configures which of the default scopes are enabled and required.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy> ProvidedScopePolicies;
+        /// <summary>
+        /// The application’s relationship to the OAuth server. The possible values are: 
+        /// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+        /// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+        /// </summary>
+        public readonly string? Relationship;
         /// <summary>
         /// Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The client_id and client_secret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
         /// </summary>
@@ -71,6 +91,19 @@ namespace theogravity.Fusionauth.Outputs
         /// When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
         /// </summary>
         public readonly bool? RequireRegistration;
+        /// <summary>
+        /// Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
+        /// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+        /// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+        /// </summary>
+        public readonly string ScopeHandlingPolicy;
+        /// <summary>
+        /// Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
+        /// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+        /// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+        /// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+        /// </summary>
+        public readonly string UnknownScopePolicy;
 
         [OutputConstructor]
         private FusionAuthApplicationOauthConfiguration(
@@ -86,6 +119,8 @@ namespace theogravity.Fusionauth.Outputs
 
             string? clientSecret,
 
+            string? consentMode,
+
             bool? debug,
 
             string? deviceVerificationUrl,
@@ -100,9 +135,17 @@ namespace theogravity.Fusionauth.Outputs
 
             string? proofKeyForCodeExchangePolicy,
 
+            ImmutableArray<Outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy> providedScopePolicies,
+
+            string? relationship,
+
             bool? requireClientAuthentication,
 
-            bool? requireRegistration)
+            bool? requireRegistration,
+
+            string scopeHandlingPolicy,
+
+            string unknownScopePolicy)
         {
             AuthorizedOriginUrls = authorizedOriginUrls;
             AuthorizedRedirectUrls = authorizedRedirectUrls;
@@ -110,6 +153,7 @@ namespace theogravity.Fusionauth.Outputs
             ClientAuthenticationPolicy = clientAuthenticationPolicy;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            ConsentMode = consentMode;
             Debug = debug;
             DeviceVerificationUrl = deviceVerificationUrl;
             EnabledGrants = enabledGrants;
@@ -117,8 +161,12 @@ namespace theogravity.Fusionauth.Outputs
             LogoutBehavior = logoutBehavior;
             LogoutUrl = logoutUrl;
             ProofKeyForCodeExchangePolicy = proofKeyForCodeExchangePolicy;
+            ProvidedScopePolicies = providedScopePolicies;
+            Relationship = relationship;
             RequireClientAuthentication = requireClientAuthentication;
             RequireRegistration = requireRegistration;
+            ScopeHandlingPolicy = scopeHandlingPolicy;
+            UnknownScopePolicy = unknownScopePolicy;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? CreateRegistration { get; set; }
 
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthIdpFacebookApplicationConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        /// This is an optional Application specific override for the top level `app_id`.
         /// </summary>
         [Input("appId")]
         public Input<string>? AppId { get; set; }
@@ -26,7 +26,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ApplicationId { get; set; }
 
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level `button_text`.
         /// </summary>
         [Input("buttonText")]
         public Input<string>? ButtonText { get; set; }
@@ -35,7 +35,7 @@ namespace theogravity.Fusionauth.Inputs
         private Input<string>? _clientSecret;
 
         /// <summary>
-        /// The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        /// This is an optional Application specific override for the top level `client_secret`.
         /// </summary>
         public Input<string>? ClientSecret
         {
@@ -54,21 +54,19 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? CreateRegistration { get; set; }
 
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The top-level fields that you are requesting from Facebook.
-        /// Field values are documented at [Facebook Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api/)
+        /// This is an optional Application specific override for the top level `fields`.
         /// </summary>
         [Input("fields")]
         public Input<string>? Fields { get; set; }
 
         /// <summary>
-        /// The top-level permissions that your application is asking of the user’s Facebook account.
-        /// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
+        /// This is an optional Application specific override for the top level `permissions`.
         /// </summary>
         [Input("permissions")]
         public Input<string>? Permissions { get; set; }

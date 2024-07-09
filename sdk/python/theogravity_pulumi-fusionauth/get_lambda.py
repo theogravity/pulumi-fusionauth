@@ -108,6 +108,26 @@ def get_lambda(id: Optional[str] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
+           - `JWTPopulate`
+           - `OpenIDReconcile`
+           - `SAMLv2Reconcile`
+           - `SAMLv2Populate`
+           - `AppleReconcile`
+           - `ExternalJWTReconcile`
+           - `FacebookReconcile`
+           - `GoogleReconcile`
+           - `HYPRReconcile`
+           - `TwitterReconcile`
+           - `LDAPConnectorReconcile`
+           - `LinkedInReconcile`
+           - `EpicGamesReconcile`
+           - `NintendoReconcile`
+           - `SonyPSNReconcile`
+           - `SteamReconcile`
+           - `TwitchReconcile`
+           - `XboxReconcile`
+           - `SelfServiceRegistrationValidation`
+           - `ClientCredentialsJWTPopulate`
     """
     __args__ = dict()
     __args__['id'] = id
@@ -117,11 +137,11 @@ def get_lambda(id: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getLambda:getLambda', __args__, opts=opts, typ=GetLambdaResult).value
 
     return AwaitableGetLambdaResult(
-        body=__ret__.body,
-        debug=__ret__.debug,
-        id=__ret__.id,
-        name=__ret__.name,
-        type=__ret__.type)
+        body=pulumi.get(__ret__, 'body'),
+        debug=pulumi.get(__ret__, 'debug'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_lambda)
@@ -150,5 +170,25 @@ def get_lambda_output(id: Optional[pulumi.Input[Optional[str]]] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
+           - `JWTPopulate`
+           - `OpenIDReconcile`
+           - `SAMLv2Reconcile`
+           - `SAMLv2Populate`
+           - `AppleReconcile`
+           - `ExternalJWTReconcile`
+           - `FacebookReconcile`
+           - `GoogleReconcile`
+           - `HYPRReconcile`
+           - `TwitterReconcile`
+           - `LDAPConnectorReconcile`
+           - `LinkedInReconcile`
+           - `EpicGamesReconcile`
+           - `NintendoReconcile`
+           - `SonyPSNReconcile`
+           - `SteamReconcile`
+           - `TwitchReconcile`
+           - `XboxReconcile`
+           - `SelfServiceRegistrationValidation`
+           - `ClientCredentialsJWTPopulate`
     """
     ...

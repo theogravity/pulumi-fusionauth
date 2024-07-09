@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Apple Identity Provider Resource
@@ -27,7 +28,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -62,6 +63,8 @@ type FusionAuthIdpApple struct {
 
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpAppleApplicationConfigurationArrayOutput `pulumi:"applicationConfigurations"`
+	// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+	BundleId pulumi.StringOutput `pulumi:"bundleId"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringOutput `pulumi:"buttonText"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -91,6 +94,9 @@ func NewFusionAuthIdpApple(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.BundleId == nil {
+		return nil, errors.New("invalid value for required argument 'BundleId'")
+	}
 	if args.ButtonText == nil {
 		return nil, errors.New("invalid value for required argument 'ButtonText'")
 	}
@@ -103,7 +109,7 @@ func NewFusionAuthIdpApple(ctx *pulumi.Context,
 	if args.TeamId == nil {
 		return nil, errors.New("invalid value for required argument 'TeamId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpApple
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpApple:FusionAuthIdpApple", name, args, &resource, opts...)
 	if err != nil {
@@ -128,6 +134,8 @@ func GetFusionAuthIdpApple(ctx *pulumi.Context,
 type fusionAuthIdpAppleState struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpAppleApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+	BundleId *string `pulumi:"bundleId"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText *string `pulumi:"buttonText"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -153,6 +161,8 @@ type fusionAuthIdpAppleState struct {
 type FusionAuthIdpAppleState struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpAppleApplicationConfigurationArrayInput
+	// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+	BundleId pulumi.StringPtrInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringPtrInput
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -182,6 +192,8 @@ func (FusionAuthIdpAppleState) ElementType() reflect.Type {
 type fusionAuthIdpAppleArgs struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpAppleApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+	BundleId string `pulumi:"bundleId"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText string `pulumi:"buttonText"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -208,6 +220,8 @@ type fusionAuthIdpAppleArgs struct {
 type FusionAuthIdpAppleArgs struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpAppleApplicationConfigurationArrayInput
+	// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+	BundleId pulumi.StringInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringInput
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -322,6 +336,11 @@ func (o FusionAuthIdpAppleOutput) ApplicationConfigurations() FusionAuthIdpApple
 	return o.ApplyT(func(v *FusionAuthIdpApple) FusionAuthIdpAppleApplicationConfigurationArrayOutput {
 		return v.ApplicationConfigurations
 	}).(FusionAuthIdpAppleApplicationConfigurationArrayOutput)
+}
+
+// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+func (o FusionAuthIdpAppleOutput) BundleId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthIdpApple) pulumi.StringOutput { return v.BundleId }).(pulumi.StringOutput)
 }
 
 // The top-level button text to use on the FusionAuth login page for this Identity Provider.

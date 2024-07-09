@@ -19,11 +19,11 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button image URL.
         /// </summary>
         public readonly string? ButtonImageUrl;
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         public readonly string? ButtonText;
         /// <summary>
@@ -31,19 +31,19 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? CreateRegistration;
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The top-level client id for your Application.
+        /// This is an optional Application specific override for the top level client id.
         /// </summary>
         public readonly string? Oauth2ClientId;
         /// <summary>
-        /// The top-level client secret to use with the OpenID Connect identity provider.
+        /// This is an optional Application specific override for the top level client secret.
         /// </summary>
         public readonly string? Oauth2ClientSecret;
         /// <summary>
-        /// The top-level scope that you are requesting from the OpenID Connect identity provider.
+        /// This is an optional Application specific override for the top level scope.
         /// </summary>
         public readonly string? Oauth2Scope;
 

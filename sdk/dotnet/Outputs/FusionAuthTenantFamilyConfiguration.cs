@@ -31,7 +31,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly int? DeleteOrphanedAccountsDays;
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether family configuration is enabled.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Steam Identity Provider Resource
@@ -29,7 +30,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -99,7 +100,7 @@ func NewFusionAuthIdpSteam(ctx *pulumi.Context,
 	if args.WebApiKey == nil {
 		return nil, errors.New("invalid value for required argument 'WebApiKey'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpSteam
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpSteam:FusionAuthIdpSteam", name, args, &resource, opts...)
 	if err != nil {

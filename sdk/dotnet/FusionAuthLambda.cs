@@ -21,6 +21,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -82,6 +83,26 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
+        /// - `JWTPopulate`
+        /// - `OpenIDReconcile`
+        /// - `SAMLv2Reconcile`
+        /// - `SAMLv2Populate`
+        /// - `AppleReconcile`
+        /// - `ExternalJWTReconcile`
+        /// - `FacebookReconcile`
+        /// - `GoogleReconcile`
+        /// - `HYPRReconcile`
+        /// - `TwitterReconcile`
+        /// - `LDAPConnectorReconcile`
+        /// - `LinkedInReconcile`
+        /// - `EpicGamesReconcile`
+        /// - `NintendoReconcile`
+        /// - `SonyPSNReconcile`
+        /// - `SteamReconcile`
+        /// - `TwitchReconcile`
+        /// - `XboxReconcile`
+        /// - `SelfServiceRegistrationValidation`
+        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -171,6 +192,26 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
+        /// - `JWTPopulate`
+        /// - `OpenIDReconcile`
+        /// - `SAMLv2Reconcile`
+        /// - `SAMLv2Populate`
+        /// - `AppleReconcile`
+        /// - `ExternalJWTReconcile`
+        /// - `FacebookReconcile`
+        /// - `GoogleReconcile`
+        /// - `HYPRReconcile`
+        /// - `TwitterReconcile`
+        /// - `LDAPConnectorReconcile`
+        /// - `LinkedInReconcile`
+        /// - `EpicGamesReconcile`
+        /// - `NintendoReconcile`
+        /// - `SonyPSNReconcile`
+        /// - `SteamReconcile`
+        /// - `TwitchReconcile`
+        /// - `XboxReconcile`
+        /// - `SelfServiceRegistrationValidation`
+        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
@@ -221,6 +262,26 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
+        /// - `JWTPopulate`
+        /// - `OpenIDReconcile`
+        /// - `SAMLv2Reconcile`
+        /// - `SAMLv2Populate`
+        /// - `AppleReconcile`
+        /// - `ExternalJWTReconcile`
+        /// - `FacebookReconcile`
+        /// - `GoogleReconcile`
+        /// - `HYPRReconcile`
+        /// - `TwitterReconcile`
+        /// - `LDAPConnectorReconcile`
+        /// - `LinkedInReconcile`
+        /// - `EpicGamesReconcile`
+        /// - `NintendoReconcile`
+        /// - `SonyPSNReconcile`
+        /// - `SteamReconcile`
+        /// - `TwitchReconcile`
+        /// - `XboxReconcile`
+        /// - `SelfServiceRegistrationValidation`
+        /// - `ClientCredentialsJWTPopulate`
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

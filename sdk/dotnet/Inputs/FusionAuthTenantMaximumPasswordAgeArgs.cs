@@ -20,7 +20,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<int>? Days { get; set; }
 
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Indicates that the maximum password age is enabled and being enforced.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

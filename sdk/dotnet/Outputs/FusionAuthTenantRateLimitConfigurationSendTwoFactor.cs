@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantRateLimitConfigurationSendTwoFactor
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether rate limiting is enabled for send two factor.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

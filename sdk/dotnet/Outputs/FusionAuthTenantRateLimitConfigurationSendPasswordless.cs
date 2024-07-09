@@ -15,15 +15,15 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantRateLimitConfigurationSendPasswordless
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether rate limiting is enabled for send passwordless.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        /// The number of times a user can request a passwordless login email within the configured `time_period_in_seconds` duration.
         /// </summary>
         public readonly int? Limit;
         /// <summary>
-        /// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        /// The duration for the number of times a user can request a passwordless login email before being rate limited.
         /// </summary>
         public readonly int? TimePeriodInSeconds;
 

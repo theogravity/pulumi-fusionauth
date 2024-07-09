@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Application Resource
@@ -22,7 +23,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -41,7 +42,7 @@ import (
 //
 // ```
 func GetIdp(ctx *pulumi.Context, args *GetIdpArgs, opts ...pulumi.InvokeOption) (*GetIdpResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetIdpResult
 	err := ctx.Invoke("fusionauth:index/getIdp:getIdp", args, &rv, opts...)
 	if err != nil {

@@ -14,13 +14,13 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantMultiFactorConfigurationEmailArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// When enabled, users may utilize an email address to complete a multi-factor authentication request.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
+        /// The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
         /// </summary>
         [Input("templateId")]
         public Input<string>? TemplateId { get; set; }

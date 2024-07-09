@@ -14,13 +14,13 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// TThe length of the secure generator used for generating the the two factor code Id.
+        /// The length of the secure generator used for generating the change password Id.
         /// </summary>
         [Input("length", required: true)]
         public Input<int> Length { get; set; } = null!;
 
         /// <summary>
-        /// The type of the secure generator used for generating the two factor one time code Id.
+        /// The type of the secure generator used for generating the change password Id.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

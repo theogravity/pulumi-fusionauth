@@ -35,9 +35,9 @@ class FusionAuthUserActionArgs:
         :param pulumi.Input[str] cancel_email_template_id: The Id of the Email Template that is used when User Actions are canceled.
         :param pulumi.Input[str] end_email_template_id: The Id of the Email Template that is used when User Actions expired automatically (end).
         :param pulumi.Input[bool] include_email_in_event_json: Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
-        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         :param pulumi.Input[str] modify_email_template_id: The Id of the Email Template that is used when User Actions are modified.
-        :param pulumi.Input[str] name: The name of this User Action Option.
+        :param pulumi.Input[str] name: The name of this User Action.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthUserActionOptionArgs']]] options: The list of User Action Options.
         :param pulumi.Input[bool] prevent_login: Whether or not this User Action will prevent user login. When this value is set to true the action must also be marked as a time based action. See `temporal`.
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
@@ -116,7 +116,7 @@ class FusionAuthUserActionArgs:
     @pulumi.getter(name="localizedNames")
     def localized_names(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
         """
-        A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         """
         return pulumi.get(self, "localized_names")
 
@@ -140,7 +140,7 @@ class FusionAuthUserActionArgs:
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
         """
-        The name of this User Action Option.
+        The name of this User Action.
         """
         return pulumi.get(self, "name")
 
@@ -267,9 +267,9 @@ class _FusionAuthUserActionState:
         :param pulumi.Input[str] cancel_email_template_id: The Id of the Email Template that is used when User Actions are canceled.
         :param pulumi.Input[str] end_email_template_id: The Id of the Email Template that is used when User Actions expired automatically (end).
         :param pulumi.Input[bool] include_email_in_event_json: Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
-        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         :param pulumi.Input[str] modify_email_template_id: The Id of the Email Template that is used when User Actions are modified.
-        :param pulumi.Input[str] name: The name of this User Action Option.
+        :param pulumi.Input[str] name: The name of this User Action.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthUserActionOptionArgs']]] options: The list of User Action Options.
         :param pulumi.Input[bool] prevent_login: Whether or not this User Action will prevent user login. When this value is set to true the action must also be marked as a time based action. See `temporal`.
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
@@ -348,7 +348,7 @@ class _FusionAuthUserActionState:
     @pulumi.getter(name="localizedNames")
     def localized_names(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
         """
-        A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         """
         return pulumi.get(self, "localized_names")
 
@@ -372,7 +372,7 @@ class _FusionAuthUserActionState:
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
         """
-        The name of this User Action Option.
+        The name of this User Action.
         """
         return pulumi.get(self, "name")
 
@@ -518,9 +518,9 @@ class FusionAuthUserAction(pulumi.CustomResource):
         :param pulumi.Input[str] cancel_email_template_id: The Id of the Email Template that is used when User Actions are canceled.
         :param pulumi.Input[str] end_email_template_id: The Id of the Email Template that is used when User Actions expired automatically (end).
         :param pulumi.Input[bool] include_email_in_event_json: Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
-        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         :param pulumi.Input[str] modify_email_template_id: The Id of the Email Template that is used when User Actions are modified.
-        :param pulumi.Input[str] name: The name of this User Action Option.
+        :param pulumi.Input[str] name: The name of this User Action.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthUserActionOptionArgs']]]] options: The list of User Action Options.
         :param pulumi.Input[bool] prevent_login: Whether or not this User Action will prevent user login. When this value is set to true the action must also be marked as a time based action. See `temporal`.
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
@@ -638,9 +638,9 @@ class FusionAuthUserAction(pulumi.CustomResource):
         :param pulumi.Input[str] cancel_email_template_id: The Id of the Email Template that is used when User Actions are canceled.
         :param pulumi.Input[str] end_email_template_id: The Id of the Email Template that is used when User Actions expired automatically (end).
         :param pulumi.Input[bool] include_email_in_event_json: Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
-        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        :param pulumi.Input[Mapping[str, Any]] localized_names: A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         :param pulumi.Input[str] modify_email_template_id: The Id of the Email Template that is used when User Actions are modified.
-        :param pulumi.Input[str] name: The name of this User Action Option.
+        :param pulumi.Input[str] name: The name of this User Action.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthUserActionOptionArgs']]]] options: The list of User Action Options.
         :param pulumi.Input[bool] prevent_login: Whether or not this User Action will prevent user login. When this value is set to true the action must also be marked as a time based action. See `temporal`.
         :param pulumi.Input[bool] send_end_event: Whether or not FusionAuth will send events to any registered Webhooks when this User Action expires.
@@ -698,7 +698,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
     @pulumi.getter(name="localizedNames")
     def localized_names(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
         """
-        A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         """
         return pulumi.get(self, "localized_names")
 
@@ -714,7 +714,7 @@ class FusionAuthUserAction(pulumi.CustomResource):
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
         """
-        The name of this User Action Option.
+        The name of this User Action.
         """
         return pulumi.get(self, "name")
 

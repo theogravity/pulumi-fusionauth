@@ -20,13 +20,13 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ApplicationId { get; set; }
 
         /// <summary>
-        /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button image URL.
         /// </summary>
         [Input("buttonImageUrl")]
         public Input<string>? ButtonImageUrl { get; set; }
 
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         [Input("buttonText")]
         public Input<string>? ButtonText { get; set; }
@@ -38,13 +38,13 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? CreateRegistration { get; set; }
 
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The top-level client id for your Application.
+        /// This is an optional Application specific override for the top level client id.
         /// </summary>
         [Input("oauth2ClientId")]
         public Input<string>? Oauth2ClientId { get; set; }
@@ -53,7 +53,7 @@ namespace theogravity.Fusionauth.Inputs
         private Input<string>? _oauth2ClientSecret;
 
         /// <summary>
-        /// The top-level client secret to use with the OpenID Connect identity provider.
+        /// This is an optional Application specific override for the top level client secret.
         /// </summary>
         public Input<string>? Oauth2ClientSecret
         {
@@ -66,7 +66,7 @@ namespace theogravity.Fusionauth.Inputs
         }
 
         /// <summary>
-        /// The top-level scope that you are requesting from the OpenID Connect identity provider.
+        /// This is an optional Application specific override for the top level scope.
         /// </summary>
         [Input("oauth2Scope")]
         public Input<string>? Oauth2Scope { get; set; }

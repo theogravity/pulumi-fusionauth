@@ -31,11 +31,11 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? Debug;
         /// <summary>
-        /// The unique Id of the Key used to verify the signature if the public key cannot be determined by the KeyInfo element when using POST bindings, or the key used to verify the signature when using HTTP Redirect bindings.
+        /// Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
         /// </summary>
         public readonly string? DefaultVerificationKeyId;
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// Whether or not the SAML IdP for this Application is enabled or not.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
@@ -43,7 +43,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string Issuer;
         /// <summary>
-        /// The unique Id of the Key used to sign the SAML Single Logout response.
+        /// The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
         /// </summary>
         public readonly string? KeyId;
         public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationLogout? Logout;

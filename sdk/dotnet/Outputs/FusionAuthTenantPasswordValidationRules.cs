@@ -16,7 +16,7 @@ namespace theogravity.Fusionauth.Outputs
     {
         public readonly Outputs.FusionAuthTenantPasswordValidationRulesBreachDetection? BreachDetection;
         /// <summary>
-        /// The maximum length of a password when a new user is created or a user requests a password change.
+        /// The maximum length of a password when a new user is created or a user requests a password change. This value must be greater than 0 and less than or equal to 256. When `passwordEncryptionConfiguration.encryptionScheme` is equal to `bcrypt`, the maximum will be limited to 50.
         /// </summary>
         public readonly int? MaxLength;
         /// <summary>

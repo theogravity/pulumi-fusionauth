@@ -7,12 +7,12 @@ import * as outputs from "../types/output";
 
 export interface FusionAuthApiKeyPermissionsEndpoint {
     /**
-     * HTTP DELETE Verb.
+     * HTTP DELETE Verb
      */
     delete?: boolean;
     endpoint: string;
     /**
-     * HTTP GET Verb.
+     * HTTP GET Verb
      */
     get?: boolean;
     /**
@@ -50,7 +50,7 @@ export interface FusionAuthApplicationCleanSpeakConfigurationUsernameModeration 
      */
     applicationId?: string;
     /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
+     * True if CleanSpeak username moderation is enabled.
      */
     enabled?: boolean;
 }
@@ -131,7 +131,7 @@ export interface FusionAuthApplicationJwtConfiguration {
      */
     accessTokenId?: string;
     /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
+     * Indicates if this application is using the JWT configuration defined here or the global JWT configuration defined by the System Configuration. If this is false the signing algorithm configured in the System Configuration will be used. If true the signing algorithm defined in this application will be used.
      */
     enabled?: boolean;
     /**
@@ -139,9 +139,21 @@ export interface FusionAuthApplicationJwtConfiguration {
      */
     idTokenKeyId?: string;
     /**
+     * The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+     */
+    refreshTokenExpirationPolicy?: string;
+    /**
+     * The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
+     */
+    refreshTokenSlidingWindowMaximumTimeToLiveInMinutes?: number;
+    /**
      * The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
      */
     refreshTokenTtlMinutes?: number;
+    /**
+     * The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
+     */
+    refreshTokenUsagePolicy?: string;
     /**
      * The length of time in seconds the JWT will live before it is expired and no longer valid.
      */
@@ -161,6 +173,14 @@ export interface FusionAuthApplicationLambdaConfiguration {
      * The Id of the Lambda that will be invoked when a a SAML response is generated during a SAML authentication request.
      */
     samlv2PopulateId?: string;
+    /**
+     * The unique Id of the lambda that will be used to perform additional validation on registration form steps.
+     */
+    selfServiceRegistrationValidationId?: string;
+    /**
+     * The Id of the Lambda that will be invoked when a UserInfo response is generated for this application.
+     */
+    userinfoPopulateId?: string;
 }
 
 export interface FusionAuthApplicationLoginConfiguration {
@@ -169,7 +189,7 @@ export interface FusionAuthApplicationLoginConfiguration {
      */
     allowTokenRefresh?: boolean;
     /**
-     * Determines if the OAuth 2.0 Token endpoint will generate a refresh token when the offlineAccess scope is requested.
+     * Indicates if a Refresh Token should be issued from the Login API
      */
     generateRefreshTokens?: boolean;
     /**
@@ -214,13 +234,23 @@ export interface FusionAuthApplicationOauthConfiguration {
      * Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
      */
     clientAuthenticationPolicy?: string;
+    /**
+     * The OAuth 2.0 client id. If you leave this blank during a POST, a client id will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
+     */
     clientId: string;
     /**
      * The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
      */
     clientSecret: string;
     /**
-     * Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
+     * Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
+     * - `AlwaysPrompt` - Always prompt the user for consent.
+     * - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+     * - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+     */
+    consentMode?: string;
+    /**
+     * Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
      */
     debug?: boolean;
     /**
@@ -240,13 +270,23 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     logoutBehavior?: string;
     /**
-     * The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
+     * The logout URL for the Application. FusionAuth will redirect to this URL after the user logs out of OAuth.
      */
     logoutUrl?: string;
     /**
      * Determines the PKCE requirements when using the authorization code grant.
      */
     proofKeyForCodeExchangePolicy?: string;
+    /**
+     * Configures which of the default scopes are enabled and required.
+     */
+    providedScopePolicies: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy[];
+    /**
+     * The application’s relationship to the OAuth server. The possible values are: 
+     * - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+     * - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+     */
+    relationship?: string;
     /**
      * Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The clientId and clientSecret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
      *
@@ -257,13 +297,56 @@ export interface FusionAuthApplicationOauthConfiguration {
      * When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
      */
     requireRegistration?: boolean;
+    /**
+     * Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
+     * - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+     * - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+     */
+    scopeHandlingPolicy: string;
+    /**
+     * Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
+     * - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+     * - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+     * - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+     */
+    unknownScopePolicy: string;
+}
+
+export interface FusionAuthApplicationOauthConfigurationProvidedScopePolicy {
+    address?: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress;
+    email?: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail;
+    phone?: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone;
+    profile?: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile;
+}
+
+export interface FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress {
+    enabled?: boolean;
+    required?: boolean;
+}
+
+export interface FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail {
+    enabled?: boolean;
+    required?: boolean;
+}
+
+export interface FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone {
+    enabled?: boolean;
+    required?: boolean;
+}
+
+export interface FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile {
+    enabled?: boolean;
+    required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfiguration {
     birthDate?: outputs.FusionAuthApplicationRegistrationConfigurationBirthDate;
+    /**
+     * Determines if the password should be confirmed during self service registration, this means that the user will be required to type the password twice.
+     */
     confirmPassword?: boolean;
     /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
+     * Determines if self service registration is enabled for this application. When this value is false, you may still use the Registration API, this only affects if the self service option is available during the OAuth 2.0 login.
      */
     enabled?: boolean;
     firstName?: outputs.FusionAuthApplicationRegistrationConfigurationFirstName;
@@ -279,6 +362,7 @@ export interface FusionAuthApplicationRegistrationConfiguration {
     loginIdType?: string;
     middleName?: outputs.FusionAuthApplicationRegistrationConfigurationMiddleName;
     mobilePhone?: outputs.FusionAuthApplicationRegistrationConfigurationMobilePhone;
+    preferredLanguages?: outputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguages;
     /**
      * The type of registration flow.
      */
@@ -286,49 +370,36 @@ export interface FusionAuthApplicationRegistrationConfiguration {
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationBirthDate {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
     enabled?: boolean;
     required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationFirstName {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
     enabled?: boolean;
     required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationFullName {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
     enabled?: boolean;
     required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationLastName {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
     enabled?: boolean;
     required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationMiddleName {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
     enabled?: boolean;
     required?: boolean;
 }
 
 export interface FusionAuthApplicationRegistrationConfigurationMobilePhone {
-    /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
-     */
+    enabled?: boolean;
+    required?: boolean;
+}
+
+export interface FusionAuthApplicationRegistrationConfigurationPreferredLanguages {
     enabled?: boolean;
     required?: boolean;
 }
@@ -364,11 +435,11 @@ export interface FusionAuthApplicationSamlv2Configuration {
      */
     debug?: boolean;
     /**
-     * The unique Id of the Key used to verify the signature if the public key cannot be determined by the KeyInfo element when using POST bindings, or the key used to verify the signature when using HTTP Redirect bindings.
+     * Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
      */
     defaultVerificationKeyId?: string;
     /**
-     * Whether or not SAML Single Logout for this SAML IdP is enabled.
+     * Whether or not the SAML IdP for this Application is enabled or not.
      */
     enabled?: boolean;
     /**
@@ -376,7 +447,7 @@ export interface FusionAuthApplicationSamlv2Configuration {
      */
     issuer: string;
     /**
-     * The unique Id of the Key used to sign the SAML Single Logout response.
+     * The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
      */
     keyId?: string;
     logout?: outputs.FusionAuthApplicationSamlv2ConfigurationLogout;
@@ -408,7 +479,7 @@ export interface FusionAuthApplicationSamlv2ConfigurationLogout {
      */
     defaultVerificationKeyId?: string;
     /**
-     * The unique Id of the Key used to sign the SAML Single Logout response.
+     * The unique Id of the Key used to sign the SAML Logout response.
      */
     keyId?: string;
     /**
@@ -417,7 +488,7 @@ export interface FusionAuthApplicationSamlv2ConfigurationLogout {
     requireSignedRequests?: boolean;
     singleLogout?: outputs.FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout;
     /**
-     * The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+     * The XML signature canonicalization method used when digesting and signing the SAML Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
      */
     xmlSignatureCanonicalizationMethod?: string;
 }
@@ -436,7 +507,7 @@ export interface FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout {
      */
     url?: string;
     /**
-     * The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+     * The XML signature canonicalization method used when digesting and signing the SAML Single Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
      */
     xmlSignatureCanonicalizationMethod?: string;
 }
@@ -484,7 +555,11 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for for the top level bundleId.
+     */
+    bundleId?: string;
+    /**
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
@@ -492,23 +567,23 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+     * This is an optional Application specific override for the top level keyId.
      */
     keyId?: string;
     /**
-     * The top-level space separated scope that you are requesting from Apple.
+     * This is an optional Application specific override for for the top level scope.
      */
     scope?: string;
     /**
-     * The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+     * This is an optional Application specific override for for the top level servicesId.
      */
     servicesId?: string;
     /**
-     * The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
+     * This is an optional Application specific override for for the top level teamId.
      */
     teamId?: string;
 }
@@ -538,7 +613,7 @@ export interface FusionAuthIdpExternalJwtApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
 }
@@ -560,7 +635,7 @@ export interface FusionAuthIdpExternalJwtTenantConfiguration {
 
 export interface FusionAuthIdpFacebookApplicationConfiguration {
     /**
-     * The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+     * This is an optional Application specific override for the top level `appId`.
      */
     appId?: string;
     /**
@@ -568,11 +643,11 @@ export interface FusionAuthIdpFacebookApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level `buttonText`.
      */
     buttonText?: string;
     /**
-     * The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+     * This is an optional Application specific override for the top level `clientSecret`.
      */
     clientSecret?: string;
     /**
@@ -580,17 +655,15 @@ export interface FusionAuthIdpFacebookApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the `applicationId` property.
      */
     enabled?: boolean;
     /**
-     * The top-level fields that you are requesting from Facebook.
-     * Field values are documented at [Facebook Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api/)
+     * This is an optional Application specific override for the top level `fields`.
      */
     fields?: string;
     /**
-     * The top-level permissions that your application is asking of the user’s Facebook account.
-     * Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
+     * This is an optional Application specific override for the top level `permissions`.
      */
     permissions?: string;
 }
@@ -616,15 +689,15 @@ export interface FusionAuthIdpGoogleApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
-     * The top-level Google client id for your Application. This value is retrieved from the Google developer website when you setup your Google developer account.
+     * This is an optional Application specific override for the top level client id.
      */
     clientId?: string;
     /**
-     * The top-level client secret to use with the Google Identity Provider when retrieving the long-lived token. This value is retrieved from the Google developer website when you setup your Google developer account.
+     * This is an optional Application specific override for the top level client secret.
      */
     clientSecret?: string;
     /**
@@ -632,11 +705,11 @@ export interface FusionAuthIdpGoogleApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from Google.
+     * This is an optional Application specific override for for the top level scope.
      */
     scope?: string;
 }
@@ -662,7 +735,7 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level `buttonText`.
      */
     buttonText?: string;
     /**
@@ -670,7 +743,7 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     clientId?: string;
     /**
-     * The top-level client secret to use with the LinkedIn Identity Provider when retrieving the long-lived token. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+     * This is an optional Application specific override for the top level `clientSecret`.
      */
     clientSecret?: string;
     /**
@@ -678,7 +751,7 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the `applicationId` property.
      */
     enabled?: boolean;
     /**
@@ -708,11 +781,11 @@ export interface FusionAuthIdpOpenIdConnectApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button image URL.
      */
     buttonImageUrl?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
@@ -720,19 +793,19 @@ export interface FusionAuthIdpOpenIdConnectApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level client id for your Application.
+     * This is an optional Application specific override for the top level client id.
      */
     oauth2ClientId?: string;
     /**
-     * The top-level client secret to use with the OpenID Connect identity provider.
+     * This is an optional Application specific override for the top level client secret.
      */
     oauth2ClientSecret?: string;
     /**
-     * The top-level scope that you are requesting from the OpenID Connect identity provider.
+     * This is an optional Application specific override for the top level scope.
      */
     oauth2Scope?: string;
 }
@@ -758,15 +831,15 @@ export interface FusionAuthIdpPsnApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
-     * The top-level Sony PlayStation Network client id for your Application. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
+     * This is an optional Application specific override for the top level client_id.
      */
     clientId?: string;
     /**
-     * The top-level client secret to use with the Sony PlayStation Network Identity Provider when retrieving the long-lived token. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
+     * This is an optional Application specific override for the top level client_secret.
      */
     clientSecret?: string;
     /**
@@ -774,11 +847,11 @@ export interface FusionAuthIdpPsnApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from Sony PlayStation Network.
+     * This is an optional Application specific override for the top level scope.
      */
     scope?: string;
 }
@@ -800,12 +873,24 @@ export interface FusionAuthIdpPsnTenantConfiguration {
 
 export interface FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration {
     applicationId?: string;
+    /**
+     * Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
+     */
     createRegistration?: boolean;
+    /**
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
+     */
     enabled?: boolean;
 }
 
 export interface FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration {
+    /**
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
+     */
     limitUserLinkCountEnabled?: boolean;
+    /**
+     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     */
     limitUserLinkCountMaximumLinks?: number;
     tenantId?: string;
 }
@@ -816,11 +901,11 @@ export interface FusionAuthIdpSamlv2ApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button image URL.
      */
     buttonImageUrl?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
@@ -828,7 +913,7 @@ export interface FusionAuthIdpSamlv2ApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
 }
@@ -854,11 +939,11 @@ export interface FusionAuthIdpSteamApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
-     * The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+     * This is an optional Application specific override for the top level client_id.
      */
     clientId?: string;
     /**
@@ -866,15 +951,15 @@ export interface FusionAuthIdpSteamApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from Steam.
+     * This is an optional Application specific override for the top level scope.
      */
     scope?: string;
     /**
-     * The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+     * This is an optional Application specific override for the top level webAPIKey.
      */
     webApiKey?: string;
 }
@@ -900,15 +985,15 @@ export interface FusionAuthIdpTwitchApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
-     * TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * This is an optional Application specific override for the top level client_id.
      */
     clientId?: string;
     /**
-     * The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * This is an optional Application specific override for the top level client_secret.
      */
     clientSecret?: string;
     /**
@@ -916,11 +1001,11 @@ export interface FusionAuthIdpTwitchApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from Xbox.
+     * This is an optional Application specific override for the top level scope.
      */
     scope?: string;
 }
@@ -946,15 +1031,15 @@ export interface FusionAuthIdpXBoxApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * The top-level button text to use on the FusionAuth login page for this Identity Provider.
+     * This is an optional Application specific override for the top level button text.
      */
     buttonText?: string;
     /**
-     * TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * This is an optional Application specific override for the top level client_id.
      */
     clientId?: string;
     /**
-     * The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * This is an optional Application specific override for the top level client_secret.
      */
     clientSecret?: string;
     /**
@@ -962,11 +1047,11 @@ export interface FusionAuthIdpXBoxApplicationConfiguration {
      */
     createRegistration?: boolean;
     /**
-     * Determines if this provider is enabled. If it is false then it will be disabled globally.
+     * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from Xbox.
+     * This is an optional Application specific override for the top level scope.
      */
     scope?: string;
 }
@@ -992,11 +1077,11 @@ export interface FusionAuthSystemConfigurationAuditLogConfiguration {
 
 export interface FusionAuthSystemConfigurationAuditLogConfigurationDelete {
     /**
-     * Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+     * Whether or not FusionAuth should delete the Audit Log based upon this configuration. When true the auditLogConfiguration.delete.numberOfDaysToRetain will be used to identify audit logs that are eligible for deletion. When this value is set to false audit logs will be preserved forever.
      */
     enabled?: boolean;
     /**
-     * The number of days to retain login records.
+     * The number of days to retain the Audit Log.
      */
     numberOfDaysToRetain?: number;
 }
@@ -1019,7 +1104,7 @@ export interface FusionAuthSystemConfigurationCorsConfiguration {
      */
     allowedOrigins?: string[];
     /**
-     * Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+     * Whether the FusionAuth CORS filter will process requests made to FusionAuth.
      */
     enabled?: boolean;
     /**
@@ -1082,7 +1167,7 @@ export interface FusionAuthTenantCaptchaConfiguration {
      */
     captchaMethod?: string;
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether captcha configuration is enabled.
      */
     enabled?: boolean;
     /**
@@ -1239,7 +1324,7 @@ export interface FusionAuthTenantEmailConfigurationUnverified {
 
 export interface FusionAuthTenantEventConfiguration {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether or not FusionAuth should send these types of events to any configured Webhooks.
      */
     enabled?: boolean;
     /**
@@ -1315,6 +1400,10 @@ export interface FusionAuthTenantExternalIdentifierConfiguration {
     twoFactorIdTimeToLiveInSeconds: number;
     twoFactorOneTimeCodeIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator;
     /**
+     * The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+     */
+    twoFactorOneTimeCodeIdTimeToLiveInSeconds?: number;
+    /**
      * The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
      */
     twoFactorTrustIdTimeToLiveInSeconds: number;
@@ -1322,88 +1411,88 @@ export interface FusionAuthTenantExternalIdentifierConfiguration {
 
 export interface FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the email verification one time code.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the email verification one time code.
      */
     type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the registration verification one time code.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the registration verification one time code.
      */
     type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the change password Id.
      */
     length: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the change password Id.
      */
     type: string;
 }
@@ -1468,7 +1557,7 @@ export interface FusionAuthTenantFamilyConfiguration {
      */
     deleteOrphanedAccountsDays?: number;
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether family configuration is enabled.
      */
     enabled?: boolean;
     /**
@@ -1522,6 +1611,10 @@ export interface FusionAuthTenantJwtConfiguration {
      */
     refreshTokenRevocationPolicyOnPasswordChange?: boolean;
     /**
+     * The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
+     */
+    refreshTokenSlidingWindowMaximumTimeToLiveInMinutes?: number;
+    /**
      * The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
      */
     refreshTokenTimeToLiveInMinutes: number;
@@ -1548,14 +1641,14 @@ export interface FusionAuthTenantMaximumPasswordAge {
      */
     days?: number;
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Indicates that the maximum password age is enabled and being enforced.
      */
     enabled?: boolean;
 }
 
 export interface FusionAuthTenantMinimumPasswordAge {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Indicates that the minimum password age is enabled and being enforced.
      */
     enabled?: boolean;
     /**
@@ -1576,25 +1669,25 @@ export interface FusionAuthTenantMultiFactorConfiguration {
 
 export interface FusionAuthTenantMultiFactorConfigurationAuthenticator {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * When enabled, users may utilize an authenticator application to complete a multi-factor authentication request. This method uses TOTP (Time-Based One-Time Password) as defined in RFC 6238 and often uses an native mobile app such as Google Authenticator.
      */
     enabled?: boolean;
 }
 
 export interface FusionAuthTenantMultiFactorConfigurationEmail {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * When enabled, users may utilize an email address to complete a multi-factor authentication request.
      */
     enabled?: boolean;
     /**
-     * The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
+     * The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
      */
     templateId?: string;
 }
 
 export interface FusionAuthTenantMultiFactorConfigurationSms {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * When enabled, users may utilize a mobile phone number to complete a multi-factor authentication request.
      */
     enabled?: boolean;
     /**
@@ -1632,7 +1725,7 @@ export interface FusionAuthTenantPasswordEncryptionConfiguration {
 export interface FusionAuthTenantPasswordValidationRules {
     breachDetection: outputs.FusionAuthTenantPasswordValidationRulesBreachDetection;
     /**
-     * The maximum length of a password when a new user is created or a user requests a password change.
+     * The maximum length of a password when a new user is created or a user requests a password change. This value must be greater than 0 and less than or equal to 256. When `passwordEncryptionConfiguration.encryptionScheme` is equal to `bcrypt`, the maximum will be limited to 50.
      */
     maxLength?: number;
     /**
@@ -1660,7 +1753,7 @@ export interface FusionAuthTenantPasswordValidationRules {
 
 export interface FusionAuthTenantPasswordValidationRulesBreachDetection {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether to enable Reactor breach detection. Requires an activated license.
      */
     enabled?: boolean;
     /**
@@ -1683,7 +1776,7 @@ export interface FusionAuthTenantPasswordValidationRulesRememberPreviousPassword
      */
     count?: number;
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether to prevent a user from using any of their previous passwords.
      */
     enabled?: boolean;
 }
@@ -1699,82 +1792,82 @@ export interface FusionAuthTenantRateLimitConfiguration {
 
 export interface FusionAuthTenantRateLimitConfigurationFailedLogin {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for failed login.
      */
     enabled?: boolean;
     /**
-     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     * The number of times a user can fail to login within the configured `timePeriodInSeconds` duration. If a Failed authentication action has been configured then it will take precedence.
      */
     limit?: number;
     /**
-     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     * The duration for the number of times a user can fail login before being rate limited.
      */
     timePeriodInSeconds?: number;
 }
 
 export interface FusionAuthTenantRateLimitConfigurationForgotPassword {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for forgot password.
      */
     enabled?: boolean;
     /**
-     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     * The number of times a user can request a forgot password email within the configured `timePeriodInSeconds` duration.
      */
     limit?: number;
     /**
-     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     * The duration for the number of times a user can request a forgot password email before being rate limited.
      */
     timePeriodInSeconds?: number;
 }
 
 export interface FusionAuthTenantRateLimitConfigurationSendEmailVerification {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for send email verification.
      */
     enabled?: boolean;
     /**
-     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     * The number of times a user can request a verification email within the configured `timePeriodInSeconds` duration.
      */
     limit?: number;
     /**
-     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     * The duration for the number of times a user can request a verification email before being rate limited.
      */
     timePeriodInSeconds?: number;
 }
 
 export interface FusionAuthTenantRateLimitConfigurationSendPasswordless {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for send passwordless.
      */
     enabled?: boolean;
     /**
-     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     * The number of times a user can request a passwordless login email within the configured `timePeriodInSeconds` duration.
      */
     limit?: number;
     /**
-     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     * The duration for the number of times a user can request a passwordless login email before being rate limited.
      */
     timePeriodInSeconds?: number;
 }
 
 export interface FusionAuthTenantRateLimitConfigurationSendRegistrationVerification {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for send registration verification.
      */
     enabled?: boolean;
     /**
-     * The number of times a user can request a two-factor code by email or SMS within the configured `timePeriodInSeconds` duration.
+     * The number of times a user can request a registration verification email within the configured `timePeriodInSeconds` duration.
      */
     limit?: number;
     /**
-     * The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+     * The duration for the number of times a user can request a registration verification email before being rate limited.
      */
     timePeriodInSeconds?: number;
 }
 
 export interface FusionAuthTenantRateLimitConfigurationSendTwoFactor {
     /**
-     * When true, FusionAuth will handle username collisions by generating a random suffix.
+     * Whether rate limiting is enabled for send two factor.
      */
     enabled?: boolean;
     /**
@@ -1799,6 +1892,9 @@ export interface FusionAuthTenantUserDeletePolicy {
      * Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
      */
     unverifiedEnabled?: boolean;
+    /**
+     * The number of days from creation users will be retained before being deleted for not completing email verification. This field is required when tenant.userDeletePolicy.unverified.enabled is set to true. Value must be greater than 0.
+     */
     unverifiedNumberOfDaysToRetain?: number;
 }
 
@@ -1868,6 +1964,9 @@ export interface FusionAuthUserTwoFactorMethod {
      * A base64 encoded secret
      */
     secret?: string;
+    /**
+     * The unique Id of the method.
+     */
     twoFactorMethodId: string;
 }
 
@@ -2046,6 +2145,9 @@ export interface GetFormFieldValidator {
 }
 
 export interface GetFormStep {
+    /**
+     * An ordered list of Form Field Ids assigned to this step.
+     */
     fields: string[];
 }
 

@@ -48,7 +48,7 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
-        :param pulumi.Input[str] email: The value of the email address for this method.
+        :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
         :param pulumi.Input[str] first_name: The first name of the User.
@@ -56,7 +56,7 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
         :param pulumi.Input[str] last_name: The User’s last name.
         :param pulumi.Input[str] middle_name: The User’s middle name.
-        :param pulumi.Input[str] mobile_phone: The value of the mobile phone for this method.
+        :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
         :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
@@ -175,7 +175,7 @@ class FusionAuthUserArgs:
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
         """
-        The value of the email address for this method.
+        The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         """
         return pulumi.get(self, "email")
 
@@ -271,7 +271,7 @@ class FusionAuthUserArgs:
     @pulumi.getter(name="mobilePhone")
     def mobile_phone(self) -> Optional[pulumi.Input[str]]:
         """
-        The value of the mobile phone for this method.
+        The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         """
         return pulumi.get(self, "mobile_phone")
 
@@ -468,7 +468,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
-        :param pulumi.Input[str] email: The value of the email address for this method.
+        :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
         :param pulumi.Input[str] first_name: The first name of the User.
@@ -476,7 +476,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
         :param pulumi.Input[str] last_name: The User’s last name.
         :param pulumi.Input[str] middle_name: The User’s middle name.
-        :param pulumi.Input[str] mobile_phone: The value of the mobile phone for this method.
+        :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
         :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
@@ -595,7 +595,7 @@ class _FusionAuthUserState:
     @pulumi.getter
     def email(self) -> Optional[pulumi.Input[str]]:
         """
-        The value of the email address for this method.
+        The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         """
         return pulumi.get(self, "email")
 
@@ -691,7 +691,7 @@ class _FusionAuthUserState:
     @pulumi.getter(name="mobilePhone")
     def mobile_phone(self) -> Optional[pulumi.Input[str]]:
         """
-        The value of the mobile phone for this method.
+        The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         """
         return pulumi.get(self, "mobile_phone")
 
@@ -932,7 +932,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
-        :param pulumi.Input[str] email: The value of the email address for this method.
+        :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
         :param pulumi.Input[str] first_name: The first name of the User.
@@ -940,7 +940,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
         :param pulumi.Input[str] last_name: The User’s last name.
         :param pulumi.Input[str] middle_name: The User’s middle name.
-        :param pulumi.Input[str] mobile_phone: The value of the mobile phone for this method.
+        :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
         :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
@@ -1126,7 +1126,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
         :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
-        :param pulumi.Input[str] email: The value of the email address for this method.
+        :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
         :param pulumi.Input[str] first_name: The first name of the User.
@@ -1134,7 +1134,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
         :param pulumi.Input[str] last_name: The User’s last name.
         :param pulumi.Input[str] middle_name: The User’s middle name.
-        :param pulumi.Input[str] mobile_phone: The value of the mobile phone for this method.
+        :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
         :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
@@ -1216,7 +1216,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter
     def email(self) -> pulumi.Output[Optional[str]]:
         """
-        The value of the email address for this method.
+        The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         """
         return pulumi.get(self, "email")
 
@@ -1280,7 +1280,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter(name="mobilePhone")
     def mobile_phone(self) -> pulumi.Output[Optional[str]]:
         """
-        The value of the mobile phone for this method.
+        The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         """
         return pulumi.get(self, "mobile_phone")
 

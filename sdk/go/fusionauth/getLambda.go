@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Lambda Resource
@@ -24,7 +25,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -43,7 +44,7 @@ import (
 //
 // ```
 func GetLambda(ctx *pulumi.Context, args *GetLambdaArgs, opts ...pulumi.InvokeOption) (*GetLambdaResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetLambdaResult
 	err := ctx.Invoke("fusionauth:index/getLambda:getLambda", args, &rv, opts...)
 	if err != nil {
@@ -59,6 +60,26 @@ type GetLambdaArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name *string `pulumi:"name"`
 	// The Lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type string `pulumi:"type"`
 }
 
@@ -93,6 +114,26 @@ type GetLambdaOutputArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The Lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type pulumi.StringInput `pulumi:"type"`
 }
 

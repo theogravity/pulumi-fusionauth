@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantMultiFactorConfigurationAuthenticatorGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// When enabled, users may utilize an authenticator application to complete a multi-factor authentication request. This method uses TOTP (Time-Based One-Time Password) as defined in RFC 6238 and often uses an native mobile app such as Google Authenticator.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

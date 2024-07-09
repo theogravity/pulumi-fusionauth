@@ -25,6 +25,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -56,6 +57,11 @@ namespace theogravity.Fusionauth
     ///             Username = "username",
     ///             VerifyEmail = true,
     ///             VerifyEmailWhenChanged = true,
+    ///             AdditionalHeaders = 
+    ///             {
+    ///                 { "HeaderName1", "HeaderValue1" },
+    ///                 { "HeaderName2", "HeaderValue2" },
+    ///             },
     ///         },
     ///         EventConfigurations = new[]
     ///         {
@@ -412,6 +418,7 @@ namespace theogravity.Fusionauth
     ///                 Length = 6,
     ///                 Type = "randomDigits",
     ///             },
+    ///             TwoFactorOneTimeCodeIdTimeToLiveInSeconds = 60,
     ///             TwoFactorTrustIdTimeToLiveInSeconds = 2592000,
     ///         },
     ///         FailedAuthenticationConfiguration = new Fusionauth.Inputs.FusionAuthTenantFailedAuthenticationConfigurationArgs

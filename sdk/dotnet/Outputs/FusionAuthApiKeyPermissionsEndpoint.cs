@@ -15,12 +15,12 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthApiKeyPermissionsEndpoint
     {
         /// <summary>
-        /// HTTP DELETE Verb.
+        /// HTTP DELETE Verb
         /// </summary>
         public readonly bool? Delete;
         public readonly string Endpoint;
         /// <summary>
-        /// HTTP GET Verb.
+        /// HTTP GET Verb
         /// </summary>
         public readonly bool? Get;
         /// <summary>

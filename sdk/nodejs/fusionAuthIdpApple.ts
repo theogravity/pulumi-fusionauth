@@ -70,6 +70,10 @@ export class FusionAuthIdpApple extends pulumi.CustomResource {
      */
     public readonly applicationConfigurations!: pulumi.Output<outputs.FusionAuthIdpAppleApplicationConfiguration[] | undefined>;
     /**
+     * The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+     */
+    public readonly bundleId!: pulumi.Output<string>;
+    /**
      * The top-level button text to use on the FusionAuth login page for this Identity Provider.
      */
     public readonly buttonText!: pulumi.Output<string>;
@@ -124,6 +128,7 @@ export class FusionAuthIdpApple extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as FusionAuthIdpAppleState | undefined;
             resourceInputs["applicationConfigurations"] = state ? state.applicationConfigurations : undefined;
+            resourceInputs["bundleId"] = state ? state.bundleId : undefined;
             resourceInputs["buttonText"] = state ? state.buttonText : undefined;
             resourceInputs["debug"] = state ? state.debug : undefined;
             resourceInputs["enabled"] = state ? state.enabled : undefined;
@@ -136,6 +141,9 @@ export class FusionAuthIdpApple extends pulumi.CustomResource {
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
         } else {
             const args = argsOrState as FusionAuthIdpAppleArgs | undefined;
+            if ((!args || args.bundleId === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'bundleId'");
+            }
             if ((!args || args.buttonText === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'buttonText'");
             }
@@ -149,6 +157,7 @@ export class FusionAuthIdpApple extends pulumi.CustomResource {
                 throw new Error("Missing required property 'teamId'");
             }
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
+            resourceInputs["bundleId"] = args ? args.bundleId : undefined;
             resourceInputs["buttonText"] = args ? args.buttonText : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
@@ -173,6 +182,10 @@ export interface FusionAuthIdpAppleState {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpAppleApplicationConfiguration>[]>;
+    /**
+     * The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+     */
+    bundleId?: pulumi.Input<string>;
     /**
      * The top-level button text to use on the FusionAuth login page for this Identity Provider.
      */
@@ -223,6 +236,10 @@ export interface FusionAuthIdpAppleArgs {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpAppleApplicationConfiguration>[]>;
+    /**
+     * The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+     */
+    bundleId: pulumi.Input<string>;
     /**
      * The top-level button text to use on the FusionAuth login page for this Identity Provider.
      */

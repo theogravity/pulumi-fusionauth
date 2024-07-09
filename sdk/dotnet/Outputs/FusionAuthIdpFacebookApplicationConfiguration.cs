@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthIdpFacebookApplicationConfiguration
     {
         /// <summary>
-        /// The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        /// This is an optional Application specific override for the top level `app_id`.
         /// </summary>
         public readonly string? AppId;
         /// <summary>
@@ -23,11 +23,11 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level `button_text`.
         /// </summary>
         public readonly string? ButtonText;
         /// <summary>
-        /// The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        /// This is an optional Application specific override for the top level `client_secret`.
         /// </summary>
         public readonly string? ClientSecret;
         /// <summary>
@@ -35,17 +35,15 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? CreateRegistration;
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The top-level fields that you are requesting from Facebook.
-        /// Field values are documented at [Facebook Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api/)
+        /// This is an optional Application specific override for the top level `fields`.
         /// </summary>
         public readonly string? Fields;
         /// <summary>
-        /// The top-level permissions that your application is asking of the user’s Facebook account.
-        /// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
+        /// This is an optional Application specific override for the top level `permissions`.
         /// </summary>
         public readonly string? Permissions;
 

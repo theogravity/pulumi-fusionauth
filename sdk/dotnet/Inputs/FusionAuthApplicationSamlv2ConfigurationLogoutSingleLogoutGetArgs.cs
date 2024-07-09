@@ -32,7 +32,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? Url { get; set; }
 
         /// <summary>
-        /// The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        /// The XML signature canonicalization method used when digesting and signing the SAML Single Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         /// </summary>
         [Input("xmlSignatureCanonicalizationMethod")]
         public Input<string>? XmlSignatureCanonicalizationMethod { get; set; }

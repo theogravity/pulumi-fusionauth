@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// True if CleanSpeak username moderation is enabled.
         /// </summary>
         public readonly bool? Enabled;
 

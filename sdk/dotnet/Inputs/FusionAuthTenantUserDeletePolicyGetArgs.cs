@@ -19,6 +19,9 @@ namespace theogravity.Fusionauth.Inputs
         [Input("unverifiedEnabled")]
         public Input<bool>? UnverifiedEnabled { get; set; }
 
+        /// <summary>
+        /// The number of days from creation users will be retained before being deleted for not completing email verification. This field is required when tenant.userDeletePolicy.unverified.enabled is set to true. Value must be greater than 0.
+        /// </summary>
         [Input("unverifiedNumberOfDaysToRetain")]
         public Input<int>? UnverifiedNumberOfDaysToRetain { get; set; }
 

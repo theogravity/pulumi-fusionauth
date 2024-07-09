@@ -57,6 +57,24 @@ import * as utilities from "./utilities";
  *         logoutBehavior: "AllApplications",
  *         logoutUrl: "http://www.example.com/logout",
  *         requireClientAuthentication: false,
+ *         providedScopePolicies: [{
+ *             address: {
+ *                 enabled: false,
+ *                 required: false,
+ *             },
+ *             email: {
+ *                 enabled: false,
+ *                 required: false,
+ *             },
+ *             phone: {
+ *                 enabled: false,
+ *                 required: false,
+ *             },
+ *             profile: {
+ *                 enabled: false,
+ *                 required: false,
+ *             },
+ *         }],
  *     },
  *     registrationConfiguration: {
  *         birthDate: {
@@ -83,6 +101,10 @@ import * as utilities from "./utilities";
  *             required: false,
  *         },
  *         mobilePhone: {
+ *             enabled: false,
+ *             required: false,
+ *         },
+ *         preferredLanguages: {
  *             enabled: false,
  *             required: false,
  *         },
@@ -126,7 +148,7 @@ export class FusionAuthApplication extends pulumi.CustomResource {
 
     public readonly accessControlConfiguration!: pulumi.Output<outputs.FusionAuthApplicationAccessControlConfiguration>;
     /**
-     * The Id of the CleanSpeak application that usernames are sent to for moderation.
+     * The Id to use for the new Application. If not specified a secure random UUID will be generated.
      */
     public readonly applicationId!: pulumi.Output<string | undefined>;
     /**
@@ -248,7 +270,7 @@ export class FusionAuthApplication extends pulumi.CustomResource {
 export interface FusionAuthApplicationState {
     accessControlConfiguration?: pulumi.Input<inputs.FusionAuthApplicationAccessControlConfiguration>;
     /**
-     * The Id of the CleanSpeak application that usernames are sent to for moderation.
+     * The Id to use for the new Application. If not specified a secure random UUID will be generated.
      */
     applicationId?: pulumi.Input<string>;
     /**
@@ -303,7 +325,7 @@ export interface FusionAuthApplicationState {
 export interface FusionAuthApplicationArgs {
     accessControlConfiguration?: pulumi.Input<inputs.FusionAuthApplicationAccessControlConfiguration>;
     /**
-     * The Id of the CleanSpeak application that usernames are sent to for moderation.
+     * The Id to use for the new Application. If not specified a secure random UUID will be generated.
      */
     applicationId?: pulumi.Input<string>;
     /**

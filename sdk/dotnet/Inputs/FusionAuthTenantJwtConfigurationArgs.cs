@@ -44,6 +44,12 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? RefreshTokenRevocationPolicyOnPasswordChange { get; set; }
 
         /// <summary>
+        /// The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
+        /// </summary>
+        [Input("refreshTokenSlidingWindowMaximumTimeToLiveInMinutes")]
+        public Input<int>? RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes { get; set; }
+
+        /// <summary>
         /// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
         [Input("refreshTokenTimeToLiveInMinutes", required: true)]

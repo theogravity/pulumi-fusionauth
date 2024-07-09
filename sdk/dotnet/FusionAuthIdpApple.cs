@@ -23,6 +23,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -59,6 +60,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("applicationConfigurations")]
         public Output<ImmutableArray<Outputs.FusionAuthIdpAppleApplicationConfiguration>> ApplicationConfigurations { get; private set; } = null!;
+
+        /// <summary>
+        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// </summary>
+        [Output("bundleId")]
+        public Output<string> BundleId { get; private set; } = null!;
 
         /// <summary>
         /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -180,6 +187,12 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// </summary>
+        [Input("bundleId", required: true)]
+        public Input<string> BundleId { get; set; } = null!;
+
+        /// <summary>
         /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
         /// </summary>
         [Input("buttonText", required: true)]
@@ -264,6 +277,12 @@ namespace theogravity.Fusionauth
             get => _applicationConfigurations ?? (_applicationConfigurations = new InputList<Inputs.FusionAuthIdpAppleApplicationConfigurationGetArgs>());
             set => _applicationConfigurations = value;
         }
+
+        /// <summary>
+        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// </summary>
+        [Input("bundleId")]
+        public Input<string>? BundleId { get; set; }
 
         /// <summary>
         /// The top-level button text to use on the FusionAuth login page for this Identity Provider.

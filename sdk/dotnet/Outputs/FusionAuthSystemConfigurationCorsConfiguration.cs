@@ -31,7 +31,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly ImmutableArray<string> AllowedOrigins;
         /// <summary>
-        /// Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+        /// Whether the FusionAuth CORS filter will process requests made to FusionAuth.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

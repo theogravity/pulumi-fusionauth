@@ -76,6 +76,10 @@ namespace theogravity.Fusionauth.Outputs
         public readonly int TwoFactorIdTimeToLiveInSeconds;
         public readonly Outputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator TwoFactorOneTimeCodeIdGenerator;
         /// <summary>
+        /// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+        /// </summary>
+        public readonly int? TwoFactorOneTimeCodeIdTimeToLiveInSeconds;
+        /// <summary>
         /// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
         /// </summary>
         public readonly int TwoFactorTrustIdTimeToLiveInSeconds;
@@ -126,6 +130,8 @@ namespace theogravity.Fusionauth.Outputs
 
             Outputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator twoFactorOneTimeCodeIdGenerator,
 
+            int? twoFactorOneTimeCodeIdTimeToLiveInSeconds,
+
             int twoFactorTrustIdTimeToLiveInSeconds)
         {
             AuthorizationGrantIdTimeToLiveInSeconds = authorizationGrantIdTimeToLiveInSeconds;
@@ -150,6 +156,7 @@ namespace theogravity.Fusionauth.Outputs
             TrustTokenTimeToLiveInSeconds = trustTokenTimeToLiveInSeconds;
             TwoFactorIdTimeToLiveInSeconds = twoFactorIdTimeToLiveInSeconds;
             TwoFactorOneTimeCodeIdGenerator = twoFactorOneTimeCodeIdGenerator;
+            TwoFactorOneTimeCodeIdTimeToLiveInSeconds = twoFactorOneTimeCodeIdTimeToLiveInSeconds;
             TwoFactorTrustIdTimeToLiveInSeconds = twoFactorTrustIdTimeToLiveInSeconds;
         }
     }

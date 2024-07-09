@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level `button_text`.
         /// </summary>
         public readonly string? ButtonText;
         /// <summary>
@@ -27,7 +27,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ClientId;
         /// <summary>
-        /// The top-level client secret to use with the LinkedIn Identity Provider when retrieving the long-lived token. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+        /// This is an optional Application specific override for the top level `client_secret`.
         /// </summary>
         public readonly string? ClientSecret;
         /// <summary>
@@ -35,7 +35,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? CreateRegistration;
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

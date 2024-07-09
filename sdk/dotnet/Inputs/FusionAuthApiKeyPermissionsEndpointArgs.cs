@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthApiKeyPermissionsEndpointArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// HTTP DELETE Verb.
+        /// HTTP DELETE Verb
         /// </summary>
         [Input("delete")]
         public Input<bool>? Delete { get; set; }
@@ -23,7 +23,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string> Endpoint { get; set; } = null!;
 
         /// <summary>
-        /// HTTP GET Verb.
+        /// HTTP GET Verb
         /// </summary>
         [Input("get")]
         public Input<bool>? Get { get; set; }

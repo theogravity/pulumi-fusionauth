@@ -25,6 +25,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -167,10 +168,23 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpSamlv2TenantConfiguration>> TenantConfigurations { get; private set; } = null!;
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the emailClaim will be used when linking user.
+        /// </summary>
+        [Output("uniqueIdClaim")]
+        public Output<string?> UniqueIdClaim { get; private set; } = null!;
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Output("useNameForEmail")]
         public Output<bool?> UseNameForEmail { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Output("usernameClaim")]
+        public Output<string?> UsernameClaim { get; private set; } = null!;
 
         /// <summary>
         /// The XML signature canonicalization method used when digesting and signing the SAML request.
@@ -352,10 +366,23 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the emailClaim will be used when linking user.
+        /// </summary>
+        [Input("uniqueIdClaim")]
+        public Input<string>? UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Input("useNameForEmail")]
         public Input<bool>? UseNameForEmail { get; set; }
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Input("usernameClaim")]
+        public Input<string>? UsernameClaim { get; set; }
 
         /// <summary>
         /// The XML signature canonicalization method used when digesting and signing the SAML request.
@@ -498,10 +525,23 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the emailClaim will be used when linking user.
+        /// </summary>
+        [Input("uniqueIdClaim")]
+        public Input<string>? UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Input("useNameForEmail")]
         public Input<bool>? UseNameForEmail { get; set; }
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Input("usernameClaim")]
+        public Input<string>? UsernameClaim { get; set; }
 
         /// <summary>
         /// The XML signature canonicalization method used when digesting and signing the SAML request.

@@ -93,9 +93,9 @@ def get_application_role(application_id: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getApplicationRole:getApplicationRole', __args__, opts=opts, typ=GetApplicationRoleResult).value
 
     return AwaitableGetApplicationRoleResult(
-        application_id=__ret__.application_id,
-        id=__ret__.id,
-        name=__ret__.name)
+        application_id=pulumi.get(__ret__, 'application_id'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'))
 
 
 @_utilities.lift_output_func(get_application_role)

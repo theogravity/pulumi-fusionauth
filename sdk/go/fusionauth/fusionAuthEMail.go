@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Email Resource
@@ -28,7 +29,7 @@ import (
 //	"os"
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -100,7 +101,7 @@ func NewFusionAuthEMail(ctx *pulumi.Context,
 	if args.DefaultTextTemplate == nil {
 		return nil, errors.New("invalid value for required argument 'DefaultTextTemplate'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthEMail
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthEMail:FusionAuthEMail", name, args, &resource, opts...)
 	if err != nil {

@@ -22,6 +22,7 @@ class FusionAuthThemeArgs:
                  account_webauthn_add: Optional[pulumi.Input[str]] = None,
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
+                 confirmation_required: Optional[pulumi.Input[str]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -37,6 +38,7 @@ class FusionAuthThemeArgs:
                  oauth2_child_registration_not_allowed: Optional[pulumi.Input[str]] = None,
                  oauth2_child_registration_not_allowed_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_complete_registration: Optional[pulumi.Input[str]] = None,
+                 oauth2_consent: Optional[pulumi.Input[str]] = None,
                  oauth2_device: Optional[pulumi.Input[str]] = None,
                  oauth2_device_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_error: Optional[pulumi.Input[str]] = None,
@@ -75,9 +77,15 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] account_webauthn_add: A FreeMarker template that is rendered when the user requests the /account/webauthn/add path. This page contains a form that allows a user to register a new WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+               
+               > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+               asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+               In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+               submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_sent: A FreeMarker template that is rendered when the user requests the /email/sent path. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_verification_required: A FreeMarker template that is rendered when the user requests the /email/verification-required path. This page is rendered when a user is required to verify their email address prior to being allowed to proceed with login. This occurs when Unverified behavior is set to Gated in email verification settings on the Tenant.
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -90,6 +98,7 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] oauth2_child_registration_not_allowed: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed path. This page contains a form where a child must provide their parent’s email address to ask their parent to create an account for them in a Consent workflow.
         :param pulumi.Input[str] oauth2_child_registration_not_allowed_complete: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed-complete path. This page is rendered is rendered after a child provides their parent’s email address for parental consent in a Consent workflow.
         :param pulumi.Input[str] oauth2_complete_registration: A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
+        :param pulumi.Input[str] oauth2_consent: A FreeMarker template that is rendered when a third party application requests scopes from the user.
         :param pulumi.Input[str] oauth2_device: A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
         :param pulumi.Input[str] oauth2_device_complete: A FreeMarker template that is rendered when the user requests the /oauth2/device-complete path. This page contains a complete message indicating the device authentication has completed.
         :param pulumi.Input[str] oauth2_error: This page is used if the user starts or is in the middle of the OAuth workflow and any type of error occurs. This could be caused by the user messing with the URL or internally some type of information wasn’t passed between the OAuth endpoints correctly. For example, if you are federating login to an external IdP and that IdP does not properly echo the state parameter, FusionAuth’s OAuth workflow will break and this page will be displayed.
@@ -110,7 +119,11 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] password_forgot: A FreeMarker template that is rendered when the user requests the /password/forgot path. This page is used when a user starts the forgot password workflow. This page renders the form where the user types in their email address.
         :param pulumi.Input[str] password_sent: A FreeMarker template that is rendered when the user requests the /password/sent path. This page is used when a user has submitted the forgot password form with their email. FusionAuth does not indicate back to the user if their email address was valid in order to prevent malicious activity that could reveal valid email addresses. Therefore, this page should indicate to the user that if their email was valid, they will receive an email shortly with a link to reset their password.
         :param pulumi.Input[str] registration_complete: A FreeMarker template that is rendered when the user requests the /registration/complete path. This page is used after a user has verified their email address for a specific application (i.e. a user registration) by clicking the URL in the email. After FusionAuth has updated their registration object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+               user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+               expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+               the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+               redirected to this page.
         :param pulumi.Input[str] registration_sent: A FreeMarker template that is rendered when the user requests the /registration/sent path. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -135,6 +148,8 @@ class FusionAuthThemeArgs:
             pulumi.set(__self__, "account_webauthn_delete", account_webauthn_delete)
         if account_webauthn_index is not None:
             pulumi.set(__self__, "account_webauthn_index", account_webauthn_index)
+        if confirmation_required is not None:
+            pulumi.set(__self__, "confirmation_required", confirmation_required)
         if default_messages is not None:
             pulumi.set(__self__, "default_messages", default_messages)
         if email_complete is not None:
@@ -168,6 +183,8 @@ class FusionAuthThemeArgs:
             pulumi.set(__self__, "oauth2_child_registration_not_allowed_complete", oauth2_child_registration_not_allowed_complete)
         if oauth2_complete_registration is not None:
             pulumi.set(__self__, "oauth2_complete_registration", oauth2_complete_registration)
+        if oauth2_consent is not None:
+            pulumi.set(__self__, "oauth2_consent", oauth2_consent)
         if oauth2_device is not None:
             pulumi.set(__self__, "oauth2_device", oauth2_device)
         if oauth2_device_complete is not None:
@@ -325,10 +342,24 @@ class FusionAuthThemeArgs:
         pulumi.set(self, "account_webauthn_index", value)
 
     @property
+    @pulumi.getter(name="confirmationRequired")
+    def confirmation_required(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        """
+        return pulumi.get(self, "confirmation_required")
+
+    @confirmation_required.setter
+    def confirmation_required(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "confirmation_required", value)
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> Optional[pulumi.Input[str]]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+
+        > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
         return pulumi.get(self, "default_messages")
 
@@ -350,9 +381,13 @@ class FusionAuthThemeArgs:
 
     @property
     @pulumi.getter(name="emailSend")
+    @_utilities.deprecated("""Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.""")
     def email_send(self) -> Optional[pulumi.Input[str]]:
         """
-        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         """
         return pulumi.get(self, "email_send")
 
@@ -503,6 +538,18 @@ class FusionAuthThemeArgs:
     @oauth2_complete_registration.setter
     def oauth2_complete_registration(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_complete_registration", value)
+
+    @property
+    @pulumi.getter(name="oauth2Consent")
+    def oauth2_consent(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        """
+        return pulumi.get(self, "oauth2_consent")
+
+    @oauth2_consent.setter
+    def oauth2_consent(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_consent", value)
 
     @property
     @pulumi.getter(name="oauth2Device")
@@ -746,9 +793,14 @@ class FusionAuthThemeArgs:
 
     @property
     @pulumi.getter(name="registrationSend")
+    @_utilities.deprecated("""Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.""")
     def registration_send(self) -> Optional[pulumi.Input[str]]:
         """
-        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        redirected to this page.
         """
         return pulumi.get(self, "registration_send")
 
@@ -852,6 +904,7 @@ class _FusionAuthThemeState:
                  account_webauthn_add: Optional[pulumi.Input[str]] = None,
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
+                 confirmation_required: Optional[pulumi.Input[str]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -867,6 +920,7 @@ class _FusionAuthThemeState:
                  oauth2_child_registration_not_allowed: Optional[pulumi.Input[str]] = None,
                  oauth2_child_registration_not_allowed_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_complete_registration: Optional[pulumi.Input[str]] = None,
+                 oauth2_consent: Optional[pulumi.Input[str]] = None,
                  oauth2_device: Optional[pulumi.Input[str]] = None,
                  oauth2_device_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_error: Optional[pulumi.Input[str]] = None,
@@ -905,9 +959,15 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] account_webauthn_add: A FreeMarker template that is rendered when the user requests the /account/webauthn/add path. This page contains a form that allows a user to register a new WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+               
+               > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+               asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+               In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+               submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_sent: A FreeMarker template that is rendered when the user requests the /email/sent path. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_verification_required: A FreeMarker template that is rendered when the user requests the /email/verification-required path. This page is rendered when a user is required to verify their email address prior to being allowed to proceed with login. This occurs when Unverified behavior is set to Gated in email verification settings on the Tenant.
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -920,6 +980,7 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] oauth2_child_registration_not_allowed: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed path. This page contains a form where a child must provide their parent’s email address to ask their parent to create an account for them in a Consent workflow.
         :param pulumi.Input[str] oauth2_child_registration_not_allowed_complete: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed-complete path. This page is rendered is rendered after a child provides their parent’s email address for parental consent in a Consent workflow.
         :param pulumi.Input[str] oauth2_complete_registration: A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
+        :param pulumi.Input[str] oauth2_consent: A FreeMarker template that is rendered when a third party application requests scopes from the user.
         :param pulumi.Input[str] oauth2_device: A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
         :param pulumi.Input[str] oauth2_device_complete: A FreeMarker template that is rendered when the user requests the /oauth2/device-complete path. This page contains a complete message indicating the device authentication has completed.
         :param pulumi.Input[str] oauth2_error: This page is used if the user starts or is in the middle of the OAuth workflow and any type of error occurs. This could be caused by the user messing with the URL or internally some type of information wasn’t passed between the OAuth endpoints correctly. For example, if you are federating login to an external IdP and that IdP does not properly echo the state parameter, FusionAuth’s OAuth workflow will break and this page will be displayed.
@@ -940,7 +1001,11 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] password_forgot: A FreeMarker template that is rendered when the user requests the /password/forgot path. This page is used when a user starts the forgot password workflow. This page renders the form where the user types in their email address.
         :param pulumi.Input[str] password_sent: A FreeMarker template that is rendered when the user requests the /password/sent path. This page is used when a user has submitted the forgot password form with their email. FusionAuth does not indicate back to the user if their email address was valid in order to prevent malicious activity that could reveal valid email addresses. Therefore, this page should indicate to the user that if their email was valid, they will receive an email shortly with a link to reset their password.
         :param pulumi.Input[str] registration_complete: A FreeMarker template that is rendered when the user requests the /registration/complete path. This page is used after a user has verified their email address for a specific application (i.e. a user registration) by clicking the URL in the email. After FusionAuth has updated their registration object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+               user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+               expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+               the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+               redirected to this page.
         :param pulumi.Input[str] registration_sent: A FreeMarker template that is rendered when the user requests the /registration/sent path. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -965,6 +1030,8 @@ class _FusionAuthThemeState:
             pulumi.set(__self__, "account_webauthn_delete", account_webauthn_delete)
         if account_webauthn_index is not None:
             pulumi.set(__self__, "account_webauthn_index", account_webauthn_index)
+        if confirmation_required is not None:
+            pulumi.set(__self__, "confirmation_required", confirmation_required)
         if default_messages is not None:
             pulumi.set(__self__, "default_messages", default_messages)
         if email_complete is not None:
@@ -998,6 +1065,8 @@ class _FusionAuthThemeState:
             pulumi.set(__self__, "oauth2_child_registration_not_allowed_complete", oauth2_child_registration_not_allowed_complete)
         if oauth2_complete_registration is not None:
             pulumi.set(__self__, "oauth2_complete_registration", oauth2_complete_registration)
+        if oauth2_consent is not None:
+            pulumi.set(__self__, "oauth2_consent", oauth2_consent)
         if oauth2_device is not None:
             pulumi.set(__self__, "oauth2_device", oauth2_device)
         if oauth2_device_complete is not None:
@@ -1155,10 +1224,24 @@ class _FusionAuthThemeState:
         pulumi.set(self, "account_webauthn_index", value)
 
     @property
+    @pulumi.getter(name="confirmationRequired")
+    def confirmation_required(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        """
+        return pulumi.get(self, "confirmation_required")
+
+    @confirmation_required.setter
+    def confirmation_required(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "confirmation_required", value)
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> Optional[pulumi.Input[str]]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+
+        > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
         return pulumi.get(self, "default_messages")
 
@@ -1180,9 +1263,13 @@ class _FusionAuthThemeState:
 
     @property
     @pulumi.getter(name="emailSend")
+    @_utilities.deprecated("""Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.""")
     def email_send(self) -> Optional[pulumi.Input[str]]:
         """
-        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         """
         return pulumi.get(self, "email_send")
 
@@ -1333,6 +1420,18 @@ class _FusionAuthThemeState:
     @oauth2_complete_registration.setter
     def oauth2_complete_registration(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_complete_registration", value)
+
+    @property
+    @pulumi.getter(name="oauth2Consent")
+    def oauth2_consent(self) -> Optional[pulumi.Input[str]]:
+        """
+        A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        """
+        return pulumi.get(self, "oauth2_consent")
+
+    @oauth2_consent.setter
+    def oauth2_consent(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_consent", value)
 
     @property
     @pulumi.getter(name="oauth2Device")
@@ -1576,9 +1675,14 @@ class _FusionAuthThemeState:
 
     @property
     @pulumi.getter(name="registrationSend")
+    @_utilities.deprecated("""Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.""")
     def registration_send(self) -> Optional[pulumi.Input[str]]:
         """
-        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        redirected to this page.
         """
         return pulumi.get(self, "registration_send")
 
@@ -1684,6 +1788,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  account_webauthn_add: Optional[pulumi.Input[str]] = None,
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
+                 confirmation_required: Optional[pulumi.Input[str]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -1699,6 +1804,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  oauth2_child_registration_not_allowed: Optional[pulumi.Input[str]] = None,
                  oauth2_child_registration_not_allowed_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_complete_registration: Optional[pulumi.Input[str]] = None,
+                 oauth2_consent: Optional[pulumi.Input[str]] = None,
                  oauth2_device: Optional[pulumi.Input[str]] = None,
                  oauth2_device_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_error: Optional[pulumi.Input[str]] = None,
@@ -1731,9 +1837,9 @@ class FusionAuthTheme(pulumi.CustomResource):
         """
         ## # Theme Resource
 
-        This Resource is used to create a role for an Application.
+        UI login themes can be configured to enable custom branding for your FusionAuth login workflow. Themes are configured per Tenant or optionally by Application.
 
-        [Themes API]https://fusionauth.io/docs/v1/tech/apis/themes)
+        [Themes API](https://fusionauth.io/docs/v1/tech/apis/themes)
 
         ## Example Usage
 
@@ -1750,6 +1856,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             account_webauthn_add="[#ftl/]",
             account_webauthn_delete="[#ftl/]",
             account_webauthn_index="[#ftl/]",
+            confirmation_required="[#ftl/]",
             default_messages="[#ftl/]",
             email_complete="[#ftl/]",
             email_send="[#ftl/]",
@@ -1763,6 +1870,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_child_registration_not_allowed="[#ftl/]",
             oauth2_child_registration_not_allowed_complete="[#ftl/]",
             oauth2_complete_registration="[#ftl/]",
+            oauth2_consent="[#ftl/]",
             oauth2_device="[#ftl/]",
             oauth2_device_complete="[#ftl/]",
             oauth2_error="[#ftl/]",
@@ -1802,9 +1910,15 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] account_webauthn_add: A FreeMarker template that is rendered when the user requests the /account/webauthn/add path. This page contains a form that allows a user to register a new WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+               
+               > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+               asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+               In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+               submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_sent: A FreeMarker template that is rendered when the user requests the /email/sent path. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_verification_required: A FreeMarker template that is rendered when the user requests the /email/verification-required path. This page is rendered when a user is required to verify their email address prior to being allowed to proceed with login. This occurs when Unverified behavior is set to Gated in email verification settings on the Tenant.
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -1817,6 +1931,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_child_registration_not_allowed: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed path. This page contains a form where a child must provide their parent’s email address to ask their parent to create an account for them in a Consent workflow.
         :param pulumi.Input[str] oauth2_child_registration_not_allowed_complete: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed-complete path. This page is rendered is rendered after a child provides their parent’s email address for parental consent in a Consent workflow.
         :param pulumi.Input[str] oauth2_complete_registration: A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
+        :param pulumi.Input[str] oauth2_consent: A FreeMarker template that is rendered when a third party application requests scopes from the user.
         :param pulumi.Input[str] oauth2_device: A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
         :param pulumi.Input[str] oauth2_device_complete: A FreeMarker template that is rendered when the user requests the /oauth2/device-complete path. This page contains a complete message indicating the device authentication has completed.
         :param pulumi.Input[str] oauth2_error: This page is used if the user starts or is in the middle of the OAuth workflow and any type of error occurs. This could be caused by the user messing with the URL or internally some type of information wasn’t passed between the OAuth endpoints correctly. For example, if you are federating login to an external IdP and that IdP does not properly echo the state parameter, FusionAuth’s OAuth workflow will break and this page will be displayed.
@@ -1837,7 +1952,11 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] password_forgot: A FreeMarker template that is rendered when the user requests the /password/forgot path. This page is used when a user starts the forgot password workflow. This page renders the form where the user types in their email address.
         :param pulumi.Input[str] password_sent: A FreeMarker template that is rendered when the user requests the /password/sent path. This page is used when a user has submitted the forgot password form with their email. FusionAuth does not indicate back to the user if their email address was valid in order to prevent malicious activity that could reveal valid email addresses. Therefore, this page should indicate to the user that if their email was valid, they will receive an email shortly with a link to reset their password.
         :param pulumi.Input[str] registration_complete: A FreeMarker template that is rendered when the user requests the /registration/complete path. This page is used after a user has verified their email address for a specific application (i.e. a user registration) by clicking the URL in the email. After FusionAuth has updated their registration object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+               user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+               expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+               the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+               redirected to this page.
         :param pulumi.Input[str] registration_sent: A FreeMarker template that is rendered when the user requests the /registration/sent path. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -1855,9 +1974,9 @@ class FusionAuthTheme(pulumi.CustomResource):
         """
         ## # Theme Resource
 
-        This Resource is used to create a role for an Application.
+        UI login themes can be configured to enable custom branding for your FusionAuth login workflow. Themes are configured per Tenant or optionally by Application.
 
-        [Themes API]https://fusionauth.io/docs/v1/tech/apis/themes)
+        [Themes API](https://fusionauth.io/docs/v1/tech/apis/themes)
 
         ## Example Usage
 
@@ -1874,6 +1993,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             account_webauthn_add="[#ftl/]",
             account_webauthn_delete="[#ftl/]",
             account_webauthn_index="[#ftl/]",
+            confirmation_required="[#ftl/]",
             default_messages="[#ftl/]",
             email_complete="[#ftl/]",
             email_send="[#ftl/]",
@@ -1887,6 +2007,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_child_registration_not_allowed="[#ftl/]",
             oauth2_child_registration_not_allowed_complete="[#ftl/]",
             oauth2_complete_registration="[#ftl/]",
+            oauth2_consent="[#ftl/]",
             oauth2_device="[#ftl/]",
             oauth2_device_complete="[#ftl/]",
             oauth2_error="[#ftl/]",
@@ -1939,6 +2060,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  account_webauthn_add: Optional[pulumi.Input[str]] = None,
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
+                 confirmation_required: Optional[pulumi.Input[str]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -1954,6 +2076,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  oauth2_child_registration_not_allowed: Optional[pulumi.Input[str]] = None,
                  oauth2_child_registration_not_allowed_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_complete_registration: Optional[pulumi.Input[str]] = None,
+                 oauth2_consent: Optional[pulumi.Input[str]] = None,
                  oauth2_device: Optional[pulumi.Input[str]] = None,
                  oauth2_device_complete: Optional[pulumi.Input[str]] = None,
                  oauth2_error: Optional[pulumi.Input[str]] = None,
@@ -1999,11 +2122,9 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["account_webauthn_add"] = account_webauthn_add
             __props__.__dict__["account_webauthn_delete"] = account_webauthn_delete
             __props__.__dict__["account_webauthn_index"] = account_webauthn_index
+            __props__.__dict__["confirmation_required"] = confirmation_required
             __props__.__dict__["default_messages"] = default_messages
             __props__.__dict__["email_complete"] = email_complete
-            if email_send is not None and not opts.urn:
-                warnings.warn("""Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.""", DeprecationWarning)
-                pulumi.log.warn("""email_send is deprecated: Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.""")
             __props__.__dict__["email_send"] = email_send
             __props__.__dict__["email_sent"] = email_sent
             __props__.__dict__["email_verification_required"] = email_verification_required
@@ -2017,6 +2138,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["oauth2_child_registration_not_allowed"] = oauth2_child_registration_not_allowed
             __props__.__dict__["oauth2_child_registration_not_allowed_complete"] = oauth2_child_registration_not_allowed_complete
             __props__.__dict__["oauth2_complete_registration"] = oauth2_complete_registration
+            __props__.__dict__["oauth2_consent"] = oauth2_consent
             __props__.__dict__["oauth2_device"] = oauth2_device
             __props__.__dict__["oauth2_device_complete"] = oauth2_device_complete
             __props__.__dict__["oauth2_error"] = oauth2_error
@@ -2037,9 +2159,6 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["password_forgot"] = password_forgot
             __props__.__dict__["password_sent"] = password_sent
             __props__.__dict__["registration_complete"] = registration_complete
-            if registration_send is not None and not opts.urn:
-                warnings.warn("""Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.""", DeprecationWarning)
-                pulumi.log.warn("""registration_send is deprecated: Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.""")
             __props__.__dict__["registration_send"] = registration_send
             __props__.__dict__["registration_sent"] = registration_sent
             __props__.__dict__["registration_verification_required"] = registration_verification_required
@@ -2066,6 +2185,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             account_webauthn_add: Optional[pulumi.Input[str]] = None,
             account_webauthn_delete: Optional[pulumi.Input[str]] = None,
             account_webauthn_index: Optional[pulumi.Input[str]] = None,
+            confirmation_required: Optional[pulumi.Input[str]] = None,
             default_messages: Optional[pulumi.Input[str]] = None,
             email_complete: Optional[pulumi.Input[str]] = None,
             email_send: Optional[pulumi.Input[str]] = None,
@@ -2081,6 +2201,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             oauth2_child_registration_not_allowed: Optional[pulumi.Input[str]] = None,
             oauth2_child_registration_not_allowed_complete: Optional[pulumi.Input[str]] = None,
             oauth2_complete_registration: Optional[pulumi.Input[str]] = None,
+            oauth2_consent: Optional[pulumi.Input[str]] = None,
             oauth2_device: Optional[pulumi.Input[str]] = None,
             oauth2_device_complete: Optional[pulumi.Input[str]] = None,
             oauth2_error: Optional[pulumi.Input[str]] = None,
@@ -2124,9 +2245,15 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] account_webauthn_add: A FreeMarker template that is rendered when the user requests the /account/webauthn/add path. This page contains a form that allows a user to register a new WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+               
+               > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] email_send: A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+               asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+               In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+               submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_sent: A FreeMarker template that is rendered when the user requests the /email/sent path. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] email_verification_required: A FreeMarker template that is rendered when the user requests the /email/verification-required path. This page is rendered when a user is required to verify their email address prior to being allowed to proceed with login. This occurs when Unverified behavior is set to Gated in email verification settings on the Tenant.
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -2139,6 +2266,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_child_registration_not_allowed: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed path. This page contains a form where a child must provide their parent’s email address to ask their parent to create an account for them in a Consent workflow.
         :param pulumi.Input[str] oauth2_child_registration_not_allowed_complete: A FreeMarker template that is rendered when the user requests the /oauth2/child-registration-not-allowed-complete path. This page is rendered is rendered after a child provides their parent’s email address for parental consent in a Consent workflow.
         :param pulumi.Input[str] oauth2_complete_registration: A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
+        :param pulumi.Input[str] oauth2_consent: A FreeMarker template that is rendered when a third party application requests scopes from the user.
         :param pulumi.Input[str] oauth2_device: A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
         :param pulumi.Input[str] oauth2_device_complete: A FreeMarker template that is rendered when the user requests the /oauth2/device-complete path. This page contains a complete message indicating the device authentication has completed.
         :param pulumi.Input[str] oauth2_error: This page is used if the user starts or is in the middle of the OAuth workflow and any type of error occurs. This could be caused by the user messing with the URL or internally some type of information wasn’t passed between the OAuth endpoints correctly. For example, if you are federating login to an external IdP and that IdP does not properly echo the state parameter, FusionAuth’s OAuth workflow will break and this page will be displayed.
@@ -2159,7 +2287,11 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] password_forgot: A FreeMarker template that is rendered when the user requests the /password/forgot path. This page is used when a user starts the forgot password workflow. This page renders the form where the user types in their email address.
         :param pulumi.Input[str] password_sent: A FreeMarker template that is rendered when the user requests the /password/sent path. This page is used when a user has submitted the forgot password form with their email. FusionAuth does not indicate back to the user if their email address was valid in order to prevent malicious activity that could reveal valid email addresses. Therefore, this page should indicate to the user that if their email was valid, they will receive an email shortly with a link to reset their password.
         :param pulumi.Input[str] registration_complete: A FreeMarker template that is rendered when the user requests the /registration/complete path. This page is used after a user has verified their email address for a specific application (i.e. a user registration) by clicking the URL in the email. After FusionAuth has updated their registration object to indicate that their email was verified, the browser is redirected to this page.
-        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        :param pulumi.Input[str] registration_send: A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+               user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+               expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+               the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+               redirected to this page.
         :param pulumi.Input[str] registration_sent: A FreeMarker template that is rendered when the user requests the /registration/sent path. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
@@ -2180,6 +2312,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         __props__.__dict__["account_webauthn_add"] = account_webauthn_add
         __props__.__dict__["account_webauthn_delete"] = account_webauthn_delete
         __props__.__dict__["account_webauthn_index"] = account_webauthn_index
+        __props__.__dict__["confirmation_required"] = confirmation_required
         __props__.__dict__["default_messages"] = default_messages
         __props__.__dict__["email_complete"] = email_complete
         __props__.__dict__["email_send"] = email_send
@@ -2195,6 +2328,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         __props__.__dict__["oauth2_child_registration_not_allowed"] = oauth2_child_registration_not_allowed
         __props__.__dict__["oauth2_child_registration_not_allowed_complete"] = oauth2_child_registration_not_allowed_complete
         __props__.__dict__["oauth2_complete_registration"] = oauth2_complete_registration
+        __props__.__dict__["oauth2_consent"] = oauth2_consent
         __props__.__dict__["oauth2_device"] = oauth2_device
         __props__.__dict__["oauth2_device_complete"] = oauth2_device_complete
         __props__.__dict__["oauth2_error"] = oauth2_error
@@ -2290,10 +2424,20 @@ class FusionAuthTheme(pulumi.CustomResource):
         return pulumi.get(self, "account_webauthn_index")
 
     @property
+    @pulumi.getter(name="confirmationRequired")
+    def confirmation_required(self) -> pulumi.Output[str]:
+        """
+        A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        """
+        return pulumi.get(self, "confirmation_required")
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> pulumi.Output[str]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+
+        > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
         return pulumi.get(self, "default_messages")
 
@@ -2307,9 +2451,13 @@ class FusionAuthTheme(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="emailSend")
+    @_utilities.deprecated("""Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.""")
     def email_send(self) -> pulumi.Output[str]:
         """
-        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         """
         return pulumi.get(self, "email_send")
 
@@ -2408,6 +2556,14 @@ class FusionAuthTheme(pulumi.CustomResource):
         A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
         """
         return pulumi.get(self, "oauth2_complete_registration")
+
+    @property
+    @pulumi.getter(name="oauth2Consent")
+    def oauth2_consent(self) -> pulumi.Output[str]:
+        """
+        A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        """
+        return pulumi.get(self, "oauth2_consent")
 
     @property
     @pulumi.getter(name="oauth2Device")
@@ -2571,9 +2727,14 @@ class FusionAuthTheme(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="registrationSend")
+    @_utilities.deprecated("""Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.""")
     def registration_send(self) -> pulumi.Output[str]:
         """
-        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        redirected to this page.
         """
         return pulumi.get(self, "registration_send")
 

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Form Field Resource
@@ -25,7 +26,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -33,7 +34,7 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthFormField(ctx, "field", &fusionauth.FusionAuthFormFieldArgs{
 //				Confirm: pulumi.Bool(true),
-//				Data: pulumi.AnyMap{
+//				Data: pulumi.Map{
 //					"leftAddOn": pulumi.Any("send"),
 //				},
 //				Description: pulumi.String("Information about this custom field"),
@@ -86,7 +87,7 @@ func NewFusionAuthFormField(ctx *pulumi.Context,
 	if args.Key == nil {
 		return nil, errors.New("invalid value for required argument 'Key'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthFormField
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthFormField:FusionAuthFormField", name, args, &resource, opts...)
 	if err != nil {

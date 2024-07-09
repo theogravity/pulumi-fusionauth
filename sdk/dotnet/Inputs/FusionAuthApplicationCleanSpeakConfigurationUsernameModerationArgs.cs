@@ -20,7 +20,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ApplicationId { get; set; }
 
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// True if CleanSpeak username moderation is enabled.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

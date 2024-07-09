@@ -16,6 +16,7 @@ __all__ = ['FusionAuthIdpAppleArgs', 'FusionAuthIdpApple']
 @pulumi.input_type
 class FusionAuthIdpAppleArgs:
     def __init__(__self__, *,
+                 bundle_id: pulumi.Input[str],
                  button_text: pulumi.Input[str],
                  key_id: pulumi.Input[str],
                  services_id: pulumi.Input[str],
@@ -29,6 +30,7 @@ class FusionAuthIdpAppleArgs:
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleTenantConfigurationArgs']]]] = None):
         """
         The set of arguments for constructing a FusionAuthIdpApple resource.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] key_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
         :param pulumi.Input[str] services_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
@@ -41,6 +43,7 @@ class FusionAuthIdpAppleArgs:
         :param pulumi.Input[str] scope: The top-level space separated scope that you are requesting from Apple.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
+        pulumi.set(__self__, "bundle_id", bundle_id)
         pulumi.set(__self__, "button_text", button_text)
         pulumi.set(__self__, "key_id", key_id)
         pulumi.set(__self__, "services_id", services_id)
@@ -59,6 +62,18 @@ class FusionAuthIdpAppleArgs:
             pulumi.set(__self__, "scope", scope)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+
+    @property
+    @pulumi.getter(name="bundleId")
+    def bundle_id(self) -> pulumi.Input[str]:
+        """
+        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        """
+        return pulumi.get(self, "bundle_id")
+
+    @bundle_id.setter
+    def bundle_id(self, value: pulumi.Input[str]):
+        pulumi.set(self, "bundle_id", value)
 
     @property
     @pulumi.getter(name="buttonText")
@@ -197,6 +212,7 @@ class FusionAuthIdpAppleArgs:
 class _FusionAuthIdpAppleState:
     def __init__(__self__, *,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleApplicationConfigurationArgs']]]] = None,
+                 bundle_id: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -210,6 +226,7 @@ class _FusionAuthIdpAppleState:
         """
         Input properties used for looking up and filtering FusionAuthIdpApple resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -223,6 +240,8 @@ class _FusionAuthIdpAppleState:
         """
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
+        if bundle_id is not None:
+            pulumi.set(__self__, "bundle_id", bundle_id)
         if button_text is not None:
             pulumi.set(__self__, "button_text", button_text)
         if debug is not None:
@@ -255,6 +274,18 @@ class _FusionAuthIdpAppleState:
     @application_configurations.setter
     def application_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleApplicationConfigurationArgs']]]]):
         pulumi.set(self, "application_configurations", value)
+
+    @property
+    @pulumi.getter(name="bundleId")
+    def bundle_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        """
+        return pulumi.get(self, "bundle_id")
+
+    @bundle_id.setter
+    def bundle_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "bundle_id", value)
 
     @property
     @pulumi.getter(name="buttonText")
@@ -383,6 +414,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+                 bundle_id: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -427,6 +459,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -490,6 +523,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+                 bundle_id: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -510,6 +544,9 @@ class FusionAuthIdpApple(pulumi.CustomResource):
             __props__ = FusionAuthIdpAppleArgs.__new__(FusionAuthIdpAppleArgs)
 
             __props__.__dict__["application_configurations"] = application_configurations
+            if bundle_id is None and not opts.urn:
+                raise TypeError("Missing required property 'bundle_id'")
+            __props__.__dict__["bundle_id"] = bundle_id
             if button_text is None and not opts.urn:
                 raise TypeError("Missing required property 'button_text'")
             __props__.__dict__["button_text"] = button_text
@@ -539,6 +576,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+            bundle_id: Optional[pulumi.Input[str]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
             enabled: Optional[pulumi.Input[bool]] = None,
@@ -557,6 +595,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -573,6 +612,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         __props__ = _FusionAuthIdpAppleState.__new__(_FusionAuthIdpAppleState)
 
         __props__.__dict__["application_configurations"] = application_configurations
+        __props__.__dict__["bundle_id"] = bundle_id
         __props__.__dict__["button_text"] = button_text
         __props__.__dict__["debug"] = debug
         __props__.__dict__["enabled"] = enabled
@@ -592,6 +632,14 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         The configuration for each Application that the identity provider is enabled for.
         """
         return pulumi.get(self, "application_configurations")
+
+    @property
+    @pulumi.getter(name="bundleId")
+    def bundle_id(self) -> pulumi.Output[str]:
+        """
+        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        """
+        return pulumi.get(self, "bundle_id")
 
     @property
     @pulumi.getter(name="buttonText")

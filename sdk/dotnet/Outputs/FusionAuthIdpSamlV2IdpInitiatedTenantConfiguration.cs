@@ -14,7 +14,13 @@ namespace theogravity.Fusionauth.Outputs
     [OutputType]
     public sealed class FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration
     {
+        /// <summary>
+        /// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
+        /// </summary>
         public readonly bool? LimitUserLinkCountEnabled;
+        /// <summary>
+        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// </summary>
         public readonly int? LimitUserLinkCountMaximumLinks;
         public readonly string? TenantId;
 

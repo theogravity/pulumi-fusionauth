@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantMultiFactorConfigurationSmsGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// When enabled, users may utilize a mobile phone number to complete a multi-factor authentication request.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

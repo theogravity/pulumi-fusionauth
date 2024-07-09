@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Entity Grant Resource
@@ -50,7 +51,7 @@ func NewFusionAuthEntityGrant(ctx *pulumi.Context,
 	if args.EntityId == nil {
 		return nil, errors.New("invalid value for required argument 'EntityId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthEntityGrant
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthEntityGrant:FusionAuthEntityGrant", name, args, &resource, opts...)
 	if err != nil {

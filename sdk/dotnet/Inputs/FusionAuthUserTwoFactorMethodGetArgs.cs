@@ -65,6 +65,9 @@ namespace theogravity.Fusionauth.Inputs
             }
         }
 
+        /// <summary>
+        /// The unique Id of the method.
+        /// </summary>
         [Input("twoFactorMethodId")]
         public Input<string>? TwoFactorMethodId { get; set; }
 

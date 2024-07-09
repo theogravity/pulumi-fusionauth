@@ -40,7 +40,7 @@ class FusionAuthApplicationArgs:
                  verify_registration: Optional[pulumi.Input[bool]] = None):
         """
         The set of arguments for constructing a FusionAuthApplication resource.
-        :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
+        :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
         :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
@@ -116,7 +116,7 @@ class FusionAuthApplicationArgs:
     @pulumi.getter(name="applicationId")
     def application_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The Id of the CleanSpeak application that usernames are sent to for moderation.
+        The Id to use for the new Application. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "application_id")
 
@@ -347,7 +347,7 @@ class _FusionAuthApplicationState:
                  verify_registration: Optional[pulumi.Input[bool]] = None):
         """
         Input properties used for looking up and filtering FusionAuthApplication resources.
-        :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
+        :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
         :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
@@ -415,7 +415,7 @@ class _FusionAuthApplicationState:
     @pulumi.getter(name="applicationId")
     def application_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The Id of the CleanSpeak application that usernames are sent to for moderation.
+        The Id to use for the new Application. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "application_id")
 
@@ -707,6 +707,24 @@ class FusionAuthApplication(pulumi.CustomResource):
                 logout_behavior="AllApplications",
                 logout_url="http://www.example.com/logout",
                 require_client_authentication=False,
+                provided_scope_policies=[fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs(
+                    address=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    email=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    phone=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    profile=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                )],
             ),
             registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(
                 birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(
@@ -736,6 +754,10 @@ class FusionAuthApplication(pulumi.CustomResource):
                     enabled=False,
                     required=False,
                 ),
+                preferred_languages=fusionauth.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs(
+                    enabled=False,
+                    required=False,
+                ),
                 type="",
             ),
             passwordless_configuration_enabled=False,
@@ -747,7 +769,7 @@ class FusionAuthApplication(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
+        :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
         :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
@@ -814,6 +836,24 @@ class FusionAuthApplication(pulumi.CustomResource):
                 logout_behavior="AllApplications",
                 logout_url="http://www.example.com/logout",
                 require_client_authentication=False,
+                provided_scope_policies=[fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs(
+                    address=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    email=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    phone=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                    profile=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs(
+                        enabled=False,
+                        required=False,
+                    ),
+                )],
             ),
             registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(
                 birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(
@@ -840,6 +880,10 @@ class FusionAuthApplication(pulumi.CustomResource):
                     required=False,
                 ),
                 mobile_phone=fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs(
+                    enabled=False,
+                    required=False,
+                ),
+                preferred_languages=fusionauth.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs(
                     enabled=False,
                     required=False,
                 ),
@@ -961,7 +1005,7 @@ class FusionAuthApplication(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
+        :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
         :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
@@ -1008,7 +1052,7 @@ class FusionAuthApplication(pulumi.CustomResource):
     @pulumi.getter(name="applicationId")
     def application_id(self) -> pulumi.Output[Optional[str]]:
         """
-        The Id of the CleanSpeak application that usernames are sent to for moderation.
+        The Id to use for the new Application. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "application_id")
 

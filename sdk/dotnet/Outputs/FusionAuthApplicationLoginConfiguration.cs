@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? AllowTokenRefresh;
         /// <summary>
-        /// Determines if the OAuth 2.0 Token endpoint will generate a refresh token when the offline_access scope is requested.
+        /// Indicates if a Refresh Token should be issued from the Login API
         /// </summary>
         public readonly bool? GenerateRefreshTokens;
         /// <summary>

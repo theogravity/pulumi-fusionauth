@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? CaptchaMethod;
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether captcha configuration is enabled.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

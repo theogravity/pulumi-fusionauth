@@ -20,7 +20,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<int>? Count { get; set; }
 
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether to prevent a user from using any of their previous passwords.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

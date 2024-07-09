@@ -14,13 +14,13 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// TThe length of the secure generator used for generating the the two factor code Id.
+        /// The length of the secure generator used for generating the email verification one time code.
         /// </summary>
         [Input("length", required: true)]
         public Input<int> Length { get; set; } = null!;
 
         /// <summary>
-        /// The type of the secure generator used for generating the two factor one time code Id.
+        /// The type of the secure generator used for generating the email verification one time code.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

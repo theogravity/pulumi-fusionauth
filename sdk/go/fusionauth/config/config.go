@@ -6,19 +6,30 @@ package config
 import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
+
+var _ = internal.GetEnvOrDefault
 
 func GetApiKey(ctx *pulumi.Context) string {
 	v, err := config.Try(ctx, "fusionauth:apiKey")
 	if err == nil {
 		return v
 	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string)
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "FUSION_AUTH_API_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
 }
 func GetHost(ctx *pulumi.Context) string {
 	v, err := config.Try(ctx, "fusionauth:host")
 	if err == nil {
 		return v
 	}
-	return getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string)
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "FUSION_AUTH_HOST_URL"); d != nil {
+		value = d.(string)
+	}
+	return value
 }

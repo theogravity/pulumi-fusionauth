@@ -16,11 +16,14 @@ namespace theogravity.Fusionauth.Inputs
         [Input("birthDate")]
         public Input<Inputs.FusionAuthApplicationRegistrationConfigurationBirthDateGetArgs>? BirthDate { get; set; }
 
+        /// <summary>
+        /// Determines if the password should be confirmed during self service registration, this means that the user will be required to type the password twice.
+        /// </summary>
         [Input("confirmPassword")]
         public Input<bool>? ConfirmPassword { get; set; }
 
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// Determines if self service registration is enabled for this application. When this value is false, you may still use the Registration API, this only affects if the self service option is available during the OAuth 2.0 login.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
@@ -51,6 +54,9 @@ namespace theogravity.Fusionauth.Inputs
 
         [Input("mobilePhone")]
         public Input<Inputs.FusionAuthApplicationRegistrationConfigurationMobilePhoneGetArgs>? MobilePhone { get; set; }
+
+        [Input("preferredLanguages")]
+        public Input<Inputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesGetArgs>? PreferredLanguages { get; set; }
 
         /// <summary>
         /// The type of registration flow.

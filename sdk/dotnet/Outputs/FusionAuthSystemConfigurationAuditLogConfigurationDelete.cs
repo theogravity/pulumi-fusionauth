@@ -15,11 +15,11 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthSystemConfigurationAuditLogConfigurationDelete
     {
         /// <summary>
-        /// Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+        /// Whether or not FusionAuth should delete the Audit Log based upon this configuration. When true the auditLogConfiguration.delete.numberOfDaysToRetain will be used to identify audit logs that are eligible for deletion. When this value is set to false audit logs will be preserved forever.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The number of days to retain login records.
+        /// The number of days to retain the Audit Log.
         /// </summary>
         public readonly int? NumberOfDaysToRetain;
 

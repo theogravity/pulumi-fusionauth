@@ -7,9 +7,9 @@ import * as utilities from "./utilities";
 /**
  * ## # Theme Resource
  *
- * This Resource is used to create a role for an Application.
+ * UI login themes can be configured to enable custom branding for your FusionAuth login workflow. Themes are configured per Tenant or optionally by Application.
  *
- * [Themes API]https://fusionauth.io/docs/v1/tech/apis/themes)
+ * [Themes API](https://fusionauth.io/docs/v1/tech/apis/themes)
  *
  * ## Example Usage
  *
@@ -26,6 +26,7 @@ import * as utilities from "./utilities";
  *     accountWebauthnAdd: "[#ftl/]",
  *     accountWebauthnDelete: "[#ftl/]",
  *     accountWebauthnIndex: "[#ftl/]",
+ *     confirmationRequired: "[#ftl/]",
  *     defaultMessages: "[#ftl/]",
  *     emailComplete: "[#ftl/]",
  *     emailSend: "[#ftl/]",
@@ -39,6 +40,7 @@ import * as utilities from "./utilities";
  *     oauth2ChildRegistrationNotAllowed: "[#ftl/]",
  *     oauth2ChildRegistrationNotAllowedComplete: "[#ftl/]",
  *     oauth2CompleteRegistration: "[#ftl/]",
+ *     oauth2Consent: "[#ftl/]",
  *     oauth2Device: "[#ftl/]",
  *     oauth2DeviceComplete: "[#ftl/]",
  *     oauth2Error: "[#ftl/]",
@@ -130,7 +132,13 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly accountWebauthnIndex!: pulumi.Output<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+     * A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+     */
+    public readonly confirmationRequired!: pulumi.Output<string>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     *
+     * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
     public readonly defaultMessages!: pulumi.Output<string>;
     /**
@@ -138,9 +146,12 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly emailComplete!: pulumi.Output<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+     * asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+     * In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+     * submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
      *
-     * @deprecated Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.
+     * @deprecated Use emailSent instead. API endpoint has been migrated from /email/send to /email/sent.
      */
     public readonly emailSend!: pulumi.Output<string>;
     /**
@@ -191,6 +202,10 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      * A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
      */
     public readonly oauth2CompleteRegistration!: pulumi.Output<string>;
+    /**
+     * A FreeMarker template that is rendered when a third party application requests scopes from the user.
+     */
+    public readonly oauth2Consent!: pulumi.Output<string>;
     /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
      */
@@ -272,9 +287,13 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly registrationComplete!: pulumi.Output<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+     * user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+     * expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+     * the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+     * redirected to this page.
      *
-     * @deprecated Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.
+     * @deprecated Use registrationSent instead. API endpoint has been migrated from /registration/send to /registration/sent.
      */
     public readonly registrationSend!: pulumi.Output<string>;
     /**
@@ -327,6 +346,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["accountWebauthnAdd"] = state ? state.accountWebauthnAdd : undefined;
             resourceInputs["accountWebauthnDelete"] = state ? state.accountWebauthnDelete : undefined;
             resourceInputs["accountWebauthnIndex"] = state ? state.accountWebauthnIndex : undefined;
+            resourceInputs["confirmationRequired"] = state ? state.confirmationRequired : undefined;
             resourceInputs["defaultMessages"] = state ? state.defaultMessages : undefined;
             resourceInputs["emailComplete"] = state ? state.emailComplete : undefined;
             resourceInputs["emailSend"] = state ? state.emailSend : undefined;
@@ -342,6 +362,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["oauth2ChildRegistrationNotAllowed"] = state ? state.oauth2ChildRegistrationNotAllowed : undefined;
             resourceInputs["oauth2ChildRegistrationNotAllowedComplete"] = state ? state.oauth2ChildRegistrationNotAllowedComplete : undefined;
             resourceInputs["oauth2CompleteRegistration"] = state ? state.oauth2CompleteRegistration : undefined;
+            resourceInputs["oauth2Consent"] = state ? state.oauth2Consent : undefined;
             resourceInputs["oauth2Device"] = state ? state.oauth2Device : undefined;
             resourceInputs["oauth2DeviceComplete"] = state ? state.oauth2DeviceComplete : undefined;
             resourceInputs["oauth2Error"] = state ? state.oauth2Error : undefined;
@@ -380,6 +401,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["accountWebauthnAdd"] = args ? args.accountWebauthnAdd : undefined;
             resourceInputs["accountWebauthnDelete"] = args ? args.accountWebauthnDelete : undefined;
             resourceInputs["accountWebauthnIndex"] = args ? args.accountWebauthnIndex : undefined;
+            resourceInputs["confirmationRequired"] = args ? args.confirmationRequired : undefined;
             resourceInputs["defaultMessages"] = args ? args.defaultMessages : undefined;
             resourceInputs["emailComplete"] = args ? args.emailComplete : undefined;
             resourceInputs["emailSend"] = args ? args.emailSend : undefined;
@@ -395,6 +417,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["oauth2ChildRegistrationNotAllowed"] = args ? args.oauth2ChildRegistrationNotAllowed : undefined;
             resourceInputs["oauth2ChildRegistrationNotAllowedComplete"] = args ? args.oauth2ChildRegistrationNotAllowedComplete : undefined;
             resourceInputs["oauth2CompleteRegistration"] = args ? args.oauth2CompleteRegistration : undefined;
+            resourceInputs["oauth2Consent"] = args ? args.oauth2Consent : undefined;
             resourceInputs["oauth2Device"] = args ? args.oauth2Device : undefined;
             resourceInputs["oauth2DeviceComplete"] = args ? args.oauth2DeviceComplete : undefined;
             resourceInputs["oauth2Error"] = args ? args.oauth2Error : undefined;
@@ -466,7 +489,13 @@ export interface FusionAuthThemeState {
      */
     accountWebauthnIndex?: pulumi.Input<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+     * A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+     */
+    confirmationRequired?: pulumi.Input<string>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     *
+     * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
     defaultMessages?: pulumi.Input<string>;
     /**
@@ -474,9 +503,12 @@ export interface FusionAuthThemeState {
      */
     emailComplete?: pulumi.Input<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+     * asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+     * In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+     * submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
      *
-     * @deprecated Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.
+     * @deprecated Use emailSent instead. API endpoint has been migrated from /email/send to /email/sent.
      */
     emailSend?: pulumi.Input<string>;
     /**
@@ -527,6 +559,10 @@ export interface FusionAuthThemeState {
      * A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
      */
     oauth2CompleteRegistration?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that is rendered when a third party application requests scopes from the user.
+     */
+    oauth2Consent?: pulumi.Input<string>;
     /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
      */
@@ -608,9 +644,13 @@ export interface FusionAuthThemeState {
      */
     registrationComplete?: pulumi.Input<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+     * user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+     * expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+     * the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+     * redirected to this page.
      *
-     * @deprecated Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.
+     * @deprecated Use registrationSent instead. API endpoint has been migrated from /registration/send to /registration/sent.
      */
     registrationSend?: pulumi.Input<string>;
     /**
@@ -680,7 +720,13 @@ export interface FusionAuthThemeArgs {
      */
     accountWebauthnIndex?: pulumi.Input<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+     * A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+     */
+    confirmationRequired?: pulumi.Input<string>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     *
+     * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
     defaultMessages?: pulumi.Input<string>;
     /**
@@ -688,9 +734,12 @@ export interface FusionAuthThemeArgs {
      */
     emailComplete?: pulumi.Input<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+     * asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+     * In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+     * submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
      *
-     * @deprecated Use email_sent instead. API endpoint has been migrated from /email/send to /email/sent.
+     * @deprecated Use emailSent instead. API endpoint has been migrated from /email/send to /email/sent.
      */
     emailSend?: pulumi.Input<string>;
     /**
@@ -741,6 +790,10 @@ export interface FusionAuthThemeArgs {
      * A FreeMarker template that is rendered when the user requests the /oauth2/complete-registration path. This page contains a form that is used for users that have accounts but might be missing required fields.
      */
     oauth2CompleteRegistration?: pulumi.Input<string>;
+    /**
+     * A FreeMarker template that is rendered when a third party application requests scopes from the user.
+     */
+    oauth2Consent?: pulumi.Input<string>;
     /**
      * A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
      */
@@ -822,9 +875,13 @@ export interface FusionAuthThemeArgs {
      */
     registrationComplete?: pulumi.Input<string>;
     /**
-     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+     * A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+     * user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+     * expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+     * the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+     * redirected to this page.
      *
-     * @deprecated Use registration_sent instead. API endpoint has been migrated from /registration/send to /registration/sent.
+     * @deprecated Use registrationSent instead. API endpoint has been migrated from /registration/send to /registration/sent.
      */
     registrationSend?: pulumi.Input<string>;
     /**
