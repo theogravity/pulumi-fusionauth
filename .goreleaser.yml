@@ -31,11 +31,11 @@ archives:
     name_template: "{{ .Binary }}-{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
 
 blobs:
-  - bucket: pulumi-fusionauth
-    folder: releases/plugins/
+  - provider: s3
+    bucket: pulumi-fusionauth
+    directory: releases/plugins/
     ids:
       - archive
-    provider: s3
     region: us-east-1
 
 changelog:
