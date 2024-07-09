@@ -184,7 +184,7 @@ jobs:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
       uses: pulumi/actions@v5
-    - run: cd sdk/go/fusionauth && golangci-lint run -c ../../../.golangci.yml
+    - run: cd sdk/go/fusionauth && go mod tidy && golangci-lint run -c ../../../.golangci.yml
     strategy:
       fail-fast: true
       matrix:
