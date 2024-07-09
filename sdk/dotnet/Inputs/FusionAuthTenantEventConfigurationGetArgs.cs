@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantEventConfigurationGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether or not FusionAuth should send these types of events to any configured Webhooks.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

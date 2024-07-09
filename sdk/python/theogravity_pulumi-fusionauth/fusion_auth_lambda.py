@@ -25,6 +25,26 @@ class FusionAuthLambdaArgs:
         The set of arguments for constructing a FusionAuthLambda resource.
         :param pulumi.Input[str] body: The lambda function body, a JavaScript function.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
+               - `JWTPopulate`
+               - `OpenIDReconcile`
+               - `SAMLv2Reconcile`
+               - `SAMLv2Populate`
+               - `AppleReconcile`
+               - `ExternalJWTReconcile`
+               - `FacebookReconcile`
+               - `GoogleReconcile`
+               - `HYPRReconcile`
+               - `TwitterReconcile`
+               - `LDAPConnectorReconcile`
+               - `LinkedInReconcile`
+               - `EpicGamesReconcile`
+               - `NintendoReconcile`
+               - `SonyPSNReconcile`
+               - `SteamReconcile`
+               - `TwitchReconcile`
+               - `XboxReconcile`
+               - `SelfServiceRegistrationValidation`
+               - `ClientCredentialsJWTPopulate`
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
@@ -64,6 +84,26 @@ class FusionAuthLambdaArgs:
     def type(self) -> pulumi.Input[str]:
         """
         The lambda type. The possible values are:
+        - `JWTPopulate`
+        - `OpenIDReconcile`
+        - `SAMLv2Reconcile`
+        - `SAMLv2Populate`
+        - `AppleReconcile`
+        - `ExternalJWTReconcile`
+        - `FacebookReconcile`
+        - `GoogleReconcile`
+        - `HYPRReconcile`
+        - `TwitterReconcile`
+        - `LDAPConnectorReconcile`
+        - `LinkedInReconcile`
+        - `EpicGamesReconcile`
+        - `NintendoReconcile`
+        - `SonyPSNReconcile`
+        - `SteamReconcile`
+        - `TwitchReconcile`
+        - `XboxReconcile`
+        - `SelfServiceRegistrationValidation`
+        - `ClientCredentialsJWTPopulate`
         """
         return pulumi.get(self, "type")
 
@@ -85,6 +125,7 @@ class FusionAuthLambdaArgs:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Not currently used and may be removed in a future version.""")
     def enabled(self) -> Optional[pulumi.Input[bool]]:
         """
         Whether or not this Lambda is enabled.
@@ -151,6 +192,26 @@ class _FusionAuthLambdaState:
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
+               - `JWTPopulate`
+               - `OpenIDReconcile`
+               - `SAMLv2Reconcile`
+               - `SAMLv2Populate`
+               - `AppleReconcile`
+               - `ExternalJWTReconcile`
+               - `FacebookReconcile`
+               - `GoogleReconcile`
+               - `HYPRReconcile`
+               - `TwitterReconcile`
+               - `LDAPConnectorReconcile`
+               - `LinkedInReconcile`
+               - `EpicGamesReconcile`
+               - `NintendoReconcile`
+               - `SonyPSNReconcile`
+               - `SteamReconcile`
+               - `TwitchReconcile`
+               - `XboxReconcile`
+               - `SelfServiceRegistrationValidation`
+               - `ClientCredentialsJWTPopulate`
         """
         if body is not None:
             pulumi.set(__self__, "body", body)
@@ -196,6 +257,7 @@ class _FusionAuthLambdaState:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Not currently used and may be removed in a future version.""")
     def enabled(self) -> Optional[pulumi.Input[bool]]:
         """
         Whether or not this Lambda is enabled.
@@ -247,6 +309,26 @@ class _FusionAuthLambdaState:
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         The lambda type. The possible values are:
+        - `JWTPopulate`
+        - `OpenIDReconcile`
+        - `SAMLv2Reconcile`
+        - `SAMLv2Populate`
+        - `AppleReconcile`
+        - `ExternalJWTReconcile`
+        - `FacebookReconcile`
+        - `GoogleReconcile`
+        - `HYPRReconcile`
+        - `TwitterReconcile`
+        - `LDAPConnectorReconcile`
+        - `LinkedInReconcile`
+        - `EpicGamesReconcile`
+        - `NintendoReconcile`
+        - `SonyPSNReconcile`
+        - `SteamReconcile`
+        - `TwitchReconcile`
+        - `XboxReconcile`
+        - `SelfServiceRegistrationValidation`
+        - `ClientCredentialsJWTPopulate`
         """
         return pulumi.get(self, "type")
 
@@ -301,6 +383,26 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
+               - `JWTPopulate`
+               - `OpenIDReconcile`
+               - `SAMLv2Reconcile`
+               - `SAMLv2Populate`
+               - `AppleReconcile`
+               - `ExternalJWTReconcile`
+               - `FacebookReconcile`
+               - `GoogleReconcile`
+               - `HYPRReconcile`
+               - `TwitterReconcile`
+               - `LDAPConnectorReconcile`
+               - `LinkedInReconcile`
+               - `EpicGamesReconcile`
+               - `NintendoReconcile`
+               - `SonyPSNReconcile`
+               - `SteamReconcile`
+               - `TwitchReconcile`
+               - `XboxReconcile`
+               - `SelfServiceRegistrationValidation`
+               - `ClientCredentialsJWTPopulate`
         """
         ...
     @overload
@@ -367,9 +469,6 @@ class FusionAuthLambda(pulumi.CustomResource):
                 raise TypeError("Missing required property 'body'")
             __props__.__dict__["body"] = body
             __props__.__dict__["debug"] = debug
-            if enabled is not None and not opts.urn:
-                warnings.warn("""Not currently used and may be removed in a future version.""", DeprecationWarning)
-                pulumi.log.warn("""enabled is deprecated: Not currently used and may be removed in a future version.""")
             __props__.__dict__["enabled"] = enabled
             __props__.__dict__["engine_type"] = engine_type
             __props__.__dict__["lambda_id"] = lambda_id
@@ -408,6 +507,26 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
+               - `JWTPopulate`
+               - `OpenIDReconcile`
+               - `SAMLv2Reconcile`
+               - `SAMLv2Populate`
+               - `AppleReconcile`
+               - `ExternalJWTReconcile`
+               - `FacebookReconcile`
+               - `GoogleReconcile`
+               - `HYPRReconcile`
+               - `TwitterReconcile`
+               - `LDAPConnectorReconcile`
+               - `LinkedInReconcile`
+               - `EpicGamesReconcile`
+               - `NintendoReconcile`
+               - `SonyPSNReconcile`
+               - `SteamReconcile`
+               - `TwitchReconcile`
+               - `XboxReconcile`
+               - `SelfServiceRegistrationValidation`
+               - `ClientCredentialsJWTPopulate`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -440,6 +559,7 @@ class FusionAuthLambda(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Not currently used and may be removed in a future version.""")
     def enabled(self) -> pulumi.Output[Optional[bool]]:
         """
         Whether or not this Lambda is enabled.
@@ -475,6 +595,26 @@ class FusionAuthLambda(pulumi.CustomResource):
     def type(self) -> pulumi.Output[str]:
         """
         The lambda type. The possible values are:
+        - `JWTPopulate`
+        - `OpenIDReconcile`
+        - `SAMLv2Reconcile`
+        - `SAMLv2Populate`
+        - `AppleReconcile`
+        - `ExternalJWTReconcile`
+        - `FacebookReconcile`
+        - `GoogleReconcile`
+        - `HYPRReconcile`
+        - `TwitterReconcile`
+        - `LDAPConnectorReconcile`
+        - `LinkedInReconcile`
+        - `EpicGamesReconcile`
+        - `NintendoReconcile`
+        - `SonyPSNReconcile`
+        - `SteamReconcile`
+        - `TwitchReconcile`
+        - `XboxReconcile`
+        - `SelfServiceRegistrationValidation`
+        - `ClientCredentialsJWTPopulate`
         """
         return pulumi.get(self, "type")
 

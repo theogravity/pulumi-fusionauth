@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # SAML v2 Identity Provider Resource
@@ -29,7 +30,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -100,8 +101,13 @@ type FusionAuthIdpSamlv2 struct {
 	SignRequest pulumi.BoolPtrOutput `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayOutput `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the emailClaim will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrOutput `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrOutput `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+	UsernameClaim pulumi.StringPtrOutput `pulumi:"usernameClaim"`
 	// The XML signature canonicalization method used when digesting and signing the SAML request.
 	XmlSignatureCanonicalizationMethod pulumi.StringPtrOutput `pulumi:"xmlSignatureCanonicalizationMethod"`
 }
@@ -119,7 +125,7 @@ func NewFusionAuthIdpSamlv2(ctx *pulumi.Context,
 	if args.KeyId == nil {
 		return nil, errors.New("invalid value for required argument 'KeyId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpSamlv2
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpSamlv2:FusionAuthIdpSamlv2", name, args, &resource, opts...)
 	if err != nil {
@@ -178,8 +184,13 @@ type fusionAuthIdpSamlv2State struct {
 	SignRequest *bool `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlv2TenantConfiguration `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the emailClaim will be used when linking user.
+	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+	UsernameClaim *string `pulumi:"usernameClaim"`
 	// The XML signature canonicalization method used when digesting and signing the SAML request.
 	XmlSignatureCanonicalizationMethod *string `pulumi:"xmlSignatureCanonicalizationMethod"`
 }
@@ -221,8 +232,13 @@ type FusionAuthIdpSamlv2State struct {
 	SignRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayInput
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the emailClaim will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
+	// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+	UsernameClaim pulumi.StringPtrInput
 	// The XML signature canonicalization method used when digesting and signing the SAML request.
 	XmlSignatureCanonicalizationMethod pulumi.StringPtrInput
 }
@@ -268,8 +284,13 @@ type fusionAuthIdpSamlv2Args struct {
 	SignRequest *bool `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlv2TenantConfiguration `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the emailClaim will be used when linking user.
+	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+	UsernameClaim *string `pulumi:"usernameClaim"`
 	// The XML signature canonicalization method used when digesting and signing the SAML request.
 	XmlSignatureCanonicalizationMethod *string `pulumi:"xmlSignatureCanonicalizationMethod"`
 }
@@ -312,8 +333,13 @@ type FusionAuthIdpSamlv2Args struct {
 	SignRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayInput
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the emailClaim will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
+	// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+	UsernameClaim pulumi.StringPtrInput
 	// The XML signature canonicalization method used when digesting and signing the SAML request.
 	XmlSignatureCanonicalizationMethod pulumi.StringPtrInput
 }
@@ -499,9 +525,20 @@ func (o FusionAuthIdpSamlv2Output) TenantConfigurations() FusionAuthIdpSamlv2Ten
 	}).(FusionAuthIdpSamlv2TenantConfigurationArrayOutput)
 }
 
+// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+// the emailClaim will be used when linking user.
+func (o FusionAuthIdpSamlv2Output) UniqueIdClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.UniqueIdClaim }).(pulumi.StringPtrOutput)
+}
+
 // Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 func (o FusionAuthIdpSamlv2Output) UseNameForEmail() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.BoolPtrOutput { return v.UseNameForEmail }).(pulumi.BoolPtrOutput)
+}
+
+// The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+func (o FusionAuthIdpSamlv2Output) UsernameClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.UsernameClaim }).(pulumi.StringPtrOutput)
 }
 
 // The XML signature canonicalization method used when digesting and signing the SAML request.

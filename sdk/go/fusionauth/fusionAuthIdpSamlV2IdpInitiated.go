@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 type FusionAuthIdpSamlV2IdpInitiated struct {
@@ -20,7 +21,7 @@ type FusionAuthIdpSamlV2IdpInitiated struct {
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrOutput `pulumi:"debug"`
 	// The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-	// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+	// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 	EmailClaim pulumi.StringPtrOutput `pulumi:"emailClaim"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	Enabled pulumi.BoolPtrOutput `pulumi:"enabled"`
@@ -42,7 +43,7 @@ type FusionAuthIdpSamlV2IdpInitiated struct {
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayOutput `pulumi:"tenantConfigurations"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-	// processing. If this is false, then the `email_claim` property must be set.
+	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrOutput `pulumi:"useNameForEmail"`
 }
 
@@ -59,7 +60,7 @@ func NewFusionAuthIdpSamlV2IdpInitiated(ctx *pulumi.Context,
 	if args.KeyId == nil {
 		return nil, errors.New("invalid value for required argument 'KeyId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpSamlV2IdpInitiated
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpSamlV2IdpInitiated:FusionAuthIdpSamlV2IdpInitiated", name, args, &resource, opts...)
 	if err != nil {
@@ -88,7 +89,7 @@ type fusionAuthIdpSamlV2IdpInitiatedState struct {
 	// an Event Log will be created.
 	Debug *bool `pulumi:"debug"`
 	// The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-	// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+	// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 	EmailClaim *string `pulumi:"emailClaim"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	Enabled *bool `pulumi:"enabled"`
@@ -110,7 +111,7 @@ type fusionAuthIdpSamlV2IdpInitiatedState struct {
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration `pulumi:"tenantConfigurations"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-	// processing. If this is false, then the `email_claim` property must be set.
+	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
 }
 
@@ -121,7 +122,7 @@ type FusionAuthIdpSamlV2IdpInitiatedState struct {
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrInput
 	// The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-	// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+	// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 	EmailClaim pulumi.StringPtrInput
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	Enabled pulumi.BoolPtrInput
@@ -143,7 +144,7 @@ type FusionAuthIdpSamlV2IdpInitiatedState struct {
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-	// processing. If this is false, then the `email_claim` property must be set.
+	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
 }
 
@@ -158,7 +159,7 @@ type fusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// an Event Log will be created.
 	Debug *bool `pulumi:"debug"`
 	// The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-	// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+	// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 	EmailClaim *string `pulumi:"emailClaim"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	Enabled *bool `pulumi:"enabled"`
@@ -180,7 +181,7 @@ type fusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration `pulumi:"tenantConfigurations"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-	// processing. If this is false, then the `email_claim` property must be set.
+	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
 }
 
@@ -192,7 +193,7 @@ type FusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrInput
 	// The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-	// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+	// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 	EmailClaim pulumi.StringPtrInput
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	Enabled pulumi.BoolPtrInput
@@ -214,7 +215,7 @@ type FusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-	// processing. If this is false, then the `email_claim` property must be set.
+	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
 }
 
@@ -319,7 +320,7 @@ func (o FusionAuthIdpSamlV2IdpInitiatedOutput) Debug() pulumi.BoolPtrOutput {
 }
 
 // The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-// identity the user. If this is not set, the `use_name_for_email` flag must be true.
+// identity the user. If this is not set, the `useNameForEmail` flag must be true.
 func (o FusionAuthIdpSamlV2IdpInitiatedOutput) EmailClaim() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) pulumi.StringPtrOutput { return v.EmailClaim }).(pulumi.StringPtrOutput)
 }
@@ -370,7 +371,7 @@ func (o FusionAuthIdpSamlV2IdpInitiatedOutput) TenantConfigurations() FusionAuth
 }
 
 // Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-// processing. If this is false, then the `email_claim` property must be set.
+// processing. If this is false, then the `emailClaim` property must be set.
 func (o FusionAuthIdpSamlV2IdpInitiatedOutput) UseNameForEmail() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) pulumi.BoolPtrOutput { return v.UseNameForEmail }).(pulumi.BoolPtrOutput)
 }

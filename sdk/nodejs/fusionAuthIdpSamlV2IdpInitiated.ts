@@ -45,7 +45,7 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
     public readonly debug!: pulumi.Output<boolean | undefined>;
     /**
      * The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-     * identity the user. If this is not set, the `use_name_for_email` flag must be true.
+     * identity the user. If this is not set, the `useNameForEmail` flag must be true.
      */
     public readonly emailClaim!: pulumi.Output<string | undefined>;
     /**
@@ -85,7 +85,7 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
     public readonly tenantConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration[] | undefined>;
     /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-     * processing. If this is false, then the `email_claim` property must be set.
+     * processing. If this is false, then the `emailClaim` property must be set.
      */
     public readonly useNameForEmail!: pulumi.Output<boolean | undefined>;
 
@@ -155,7 +155,7 @@ export interface FusionAuthIdpSamlV2IdpInitiatedState {
     debug?: pulumi.Input<boolean>;
     /**
      * The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-     * identity the user. If this is not set, the `use_name_for_email` flag must be true.
+     * identity the user. If this is not set, the `useNameForEmail` flag must be true.
      */
     emailClaim?: pulumi.Input<string>;
     /**
@@ -195,7 +195,7 @@ export interface FusionAuthIdpSamlV2IdpInitiatedState {
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration>[]>;
     /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-     * processing. If this is false, then the `email_claim` property must be set.
+     * processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
 }
@@ -215,7 +215,7 @@ export interface FusionAuthIdpSamlV2IdpInitiatedArgs {
     debug?: pulumi.Input<boolean>;
     /**
      * The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
-     * identity the user. If this is not set, the `use_name_for_email` flag must be true.
+     * identity the user. If this is not set, the `useNameForEmail` flag must be true.
      */
     emailClaim?: pulumi.Input<string>;
     /**
@@ -255,7 +255,7 @@ export interface FusionAuthIdpSamlV2IdpInitiatedArgs {
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration>[]>;
     /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
-     * processing. If this is false, then the `email_claim` property must be set.
+     * processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
 }

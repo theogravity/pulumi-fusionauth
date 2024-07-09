@@ -29,6 +29,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -112,6 +113,12 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         /// The valid values are:
+        /// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        /// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        /// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        /// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        /// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        /// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         /// </summary>
         [Output("linkingStrategy")]
         public Output<string> LinkingStrategy { get; private set; } = null!;
@@ -119,6 +126,8 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The login method to use for this Identity Provider.
         /// The valid values are:
+        /// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        /// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         /// </summary>
         [Output("loginMethod")]
         public Output<string?> LoginMethod { get; private set; } = null!;
@@ -255,6 +264,12 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         /// The valid values are:
+        /// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        /// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        /// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        /// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        /// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        /// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         /// </summary>
         [Input("linkingStrategy")]
         public Input<string>? LinkingStrategy { get; set; }
@@ -262,6 +277,8 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The login method to use for this Identity Provider.
         /// The valid values are:
+        /// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        /// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         /// </summary>
         [Input("loginMethod")]
         public Input<string>? LoginMethod { get; set; }
@@ -361,6 +378,12 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         /// The valid values are:
+        /// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        /// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        /// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        /// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        /// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        /// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         /// </summary>
         [Input("linkingStrategy")]
         public Input<string>? LinkingStrategy { get; set; }
@@ -368,6 +391,8 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The login method to use for this Identity Provider.
         /// The valid values are:
+        /// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        /// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         /// </summary>
         [Input("loginMethod")]
         public Input<string>? LoginMethod { get; set; }

@@ -22,6 +22,11 @@ __all__ = [
     'FusionAuthApplicationLoginConfiguration',
     'FusionAuthApplicationMultiFactorConfiguration',
     'FusionAuthApplicationOauthConfiguration',
+    'FusionAuthApplicationOauthConfigurationProvidedScopePolicy',
+    'FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress',
+    'FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail',
+    'FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone',
+    'FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile',
     'FusionAuthApplicationRegistrationConfiguration',
     'FusionAuthApplicationRegistrationConfigurationBirthDate',
     'FusionAuthApplicationRegistrationConfigurationFirstName',
@@ -29,6 +34,7 @@ __all__ = [
     'FusionAuthApplicationRegistrationConfigurationLastName',
     'FusionAuthApplicationRegistrationConfigurationMiddleName',
     'FusionAuthApplicationRegistrationConfigurationMobilePhone',
+    'FusionAuthApplicationRegistrationConfigurationPreferredLanguages',
     'FusionAuthApplicationRegistrationDeletePolicy',
     'FusionAuthApplicationSamlv2Configuration',
     'FusionAuthApplicationSamlv2ConfigurationLogout',
@@ -127,8 +133,8 @@ class FusionAuthApiKeyPermissionsEndpoint(dict):
                  post: Optional[bool] = None,
                  put: Optional[bool] = None):
         """
-        :param bool delete: HTTP DELETE Verb.
-        :param bool get: HTTP GET Verb.
+        :param bool delete: HTTP DELETE Verb
+        :param bool get: HTTP GET Verb
         :param bool patch: HTTP PATCH Verb
         :param bool post: HTTP POST Verb
         :param bool put: HTTP PUT Verb
@@ -154,7 +160,7 @@ class FusionAuthApiKeyPermissionsEndpoint(dict):
     @pulumi.getter
     def delete(self) -> Optional[bool]:
         """
-        HTTP DELETE Verb.
+        HTTP DELETE Verb
         """
         return pulumi.get(self, "delete")
 
@@ -162,7 +168,7 @@ class FusionAuthApiKeyPermissionsEndpoint(dict):
     @pulumi.getter
     def get(self) -> Optional[bool]:
         """
-        HTTP GET Verb.
+        HTTP GET Verb
         """
         return pulumi.get(self, "get")
 
@@ -297,7 +303,7 @@ class FusionAuthApplicationCleanSpeakConfigurationUsernameModeration(dict):
                  enabled: Optional[bool] = None):
         """
         :param str application_id: The Id of the CleanSpeak application that usernames are sent to for moderation.
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
+        :param bool enabled: True if CleanSpeak username moderation is enabled.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -316,7 +322,7 @@ class FusionAuthApplicationCleanSpeakConfigurationUsernameModeration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
+        True if CleanSpeak username moderation is enabled.
         """
         return pulumi.get(self, "enabled")
 
@@ -598,8 +604,14 @@ class FusionAuthApplicationJwtConfiguration(dict):
             suggest = "access_token_id"
         elif key == "idTokenKeyId":
             suggest = "id_token_key_id"
+        elif key == "refreshTokenExpirationPolicy":
+            suggest = "refresh_token_expiration_policy"
+        elif key == "refreshTokenSlidingWindowMaximumTimeToLiveInMinutes":
+            suggest = "refresh_token_sliding_window_maximum_time_to_live_in_minutes"
         elif key == "refreshTokenTtlMinutes":
             suggest = "refresh_token_ttl_minutes"
+        elif key == "refreshTokenUsagePolicy":
+            suggest = "refresh_token_usage_policy"
         elif key == "ttlSeconds":
             suggest = "ttl_seconds"
 
@@ -618,13 +630,19 @@ class FusionAuthApplicationJwtConfiguration(dict):
                  access_token_id: Optional[str] = None,
                  enabled: Optional[bool] = None,
                  id_token_key_id: Optional[str] = None,
+                 refresh_token_expiration_policy: Optional[str] = None,
+                 refresh_token_sliding_window_maximum_time_to_live_in_minutes: Optional[int] = None,
                  refresh_token_ttl_minutes: Optional[int] = None,
+                 refresh_token_usage_policy: Optional[str] = None,
                  ttl_seconds: Optional[int] = None):
         """
         :param str access_token_id: The Id of the signing key used to sign the access token.
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
+        :param bool enabled: Indicates if this application is using the JWT configuration defined here or the global JWT configuration defined by the System Configuration. If this is false the signing algorithm configured in the System Configuration will be used. If true the signing algorithm defined in this application will be used.
         :param str id_token_key_id: The Id of the signing key used to sign the Id token.
+        :param str refresh_token_expiration_policy: The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_time_to_live_in_minutes` is reached.
+        :param int refresh_token_sliding_window_maximum_time_to_live_in_minutes: The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
         :param int refresh_token_ttl_minutes: The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
+        :param str refresh_token_usage_policy: The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
         :param int ttl_seconds: The length of time in seconds the JWT will live before it is expired and no longer valid.
         """
         if access_token_id is not None:
@@ -633,8 +651,14 @@ class FusionAuthApplicationJwtConfiguration(dict):
             pulumi.set(__self__, "enabled", enabled)
         if id_token_key_id is not None:
             pulumi.set(__self__, "id_token_key_id", id_token_key_id)
+        if refresh_token_expiration_policy is not None:
+            pulumi.set(__self__, "refresh_token_expiration_policy", refresh_token_expiration_policy)
+        if refresh_token_sliding_window_maximum_time_to_live_in_minutes is not None:
+            pulumi.set(__self__, "refresh_token_sliding_window_maximum_time_to_live_in_minutes", refresh_token_sliding_window_maximum_time_to_live_in_minutes)
         if refresh_token_ttl_minutes is not None:
             pulumi.set(__self__, "refresh_token_ttl_minutes", refresh_token_ttl_minutes)
+        if refresh_token_usage_policy is not None:
+            pulumi.set(__self__, "refresh_token_usage_policy", refresh_token_usage_policy)
         if ttl_seconds is not None:
             pulumi.set(__self__, "ttl_seconds", ttl_seconds)
 
@@ -650,7 +674,7 @@ class FusionAuthApplicationJwtConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
+        Indicates if this application is using the JWT configuration defined here or the global JWT configuration defined by the System Configuration. If this is false the signing algorithm configured in the System Configuration will be used. If true the signing algorithm defined in this application will be used.
         """
         return pulumi.get(self, "enabled")
 
@@ -663,12 +687,36 @@ class FusionAuthApplicationJwtConfiguration(dict):
         return pulumi.get(self, "id_token_key_id")
 
     @property
+    @pulumi.getter(name="refreshTokenExpirationPolicy")
+    def refresh_token_expiration_policy(self) -> Optional[str]:
+        """
+        The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_time_to_live_in_minutes` is reached.
+        """
+        return pulumi.get(self, "refresh_token_expiration_policy")
+
+    @property
+    @pulumi.getter(name="refreshTokenSlidingWindowMaximumTimeToLiveInMinutes")
+    def refresh_token_sliding_window_maximum_time_to_live_in_minutes(self) -> Optional[int]:
+        """
+        The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
+        """
+        return pulumi.get(self, "refresh_token_sliding_window_maximum_time_to_live_in_minutes")
+
+    @property
     @pulumi.getter(name="refreshTokenTtlMinutes")
     def refresh_token_ttl_minutes(self) -> Optional[int]:
         """
         The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
         """
         return pulumi.get(self, "refresh_token_ttl_minutes")
+
+    @property
+    @pulumi.getter(name="refreshTokenUsagePolicy")
+    def refresh_token_usage_policy(self) -> Optional[str]:
+        """
+        The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
+        """
+        return pulumi.get(self, "refresh_token_usage_policy")
 
     @property
     @pulumi.getter(name="ttlSeconds")
@@ -690,6 +738,10 @@ class FusionAuthApplicationLambdaConfiguration(dict):
             suggest = "id_token_populate_id"
         elif key == "samlv2PopulateId":
             suggest = "samlv2_populate_id"
+        elif key == "selfServiceRegistrationValidationId":
+            suggest = "self_service_registration_validation_id"
+        elif key == "userinfoPopulateId":
+            suggest = "userinfo_populate_id"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in FusionAuthApplicationLambdaConfiguration. Access the value via the '{suggest}' property getter instead.")
@@ -705,11 +757,15 @@ class FusionAuthApplicationLambdaConfiguration(dict):
     def __init__(__self__, *,
                  access_token_populate_id: Optional[str] = None,
                  id_token_populate_id: Optional[str] = None,
-                 samlv2_populate_id: Optional[str] = None):
+                 samlv2_populate_id: Optional[str] = None,
+                 self_service_registration_validation_id: Optional[str] = None,
+                 userinfo_populate_id: Optional[str] = None):
         """
         :param str access_token_populate_id: The Id of the Lambda that will be invoked when an access token is generated for this application. This will be utilized during OAuth2 and OpenID Connect authentication requests as well as when an access token is generated for the Login API.
         :param str id_token_populate_id: The Id of the Lambda that will be invoked when an Id token is generated for this application during an OpenID Connect authentication request.
         :param str samlv2_populate_id: The Id of the Lambda that will be invoked when a a SAML response is generated during a SAML authentication request.
+        :param str self_service_registration_validation_id: The unique Id of the lambda that will be used to perform additional validation on registration form steps.
+        :param str userinfo_populate_id: The Id of the Lambda that will be invoked when a UserInfo response is generated for this application.
         """
         if access_token_populate_id is not None:
             pulumi.set(__self__, "access_token_populate_id", access_token_populate_id)
@@ -717,6 +773,10 @@ class FusionAuthApplicationLambdaConfiguration(dict):
             pulumi.set(__self__, "id_token_populate_id", id_token_populate_id)
         if samlv2_populate_id is not None:
             pulumi.set(__self__, "samlv2_populate_id", samlv2_populate_id)
+        if self_service_registration_validation_id is not None:
+            pulumi.set(__self__, "self_service_registration_validation_id", self_service_registration_validation_id)
+        if userinfo_populate_id is not None:
+            pulumi.set(__self__, "userinfo_populate_id", userinfo_populate_id)
 
     @property
     @pulumi.getter(name="accessTokenPopulateId")
@@ -741,6 +801,22 @@ class FusionAuthApplicationLambdaConfiguration(dict):
         The Id of the Lambda that will be invoked when a a SAML response is generated during a SAML authentication request.
         """
         return pulumi.get(self, "samlv2_populate_id")
+
+    @property
+    @pulumi.getter(name="selfServiceRegistrationValidationId")
+    def self_service_registration_validation_id(self) -> Optional[str]:
+        """
+        The unique Id of the lambda that will be used to perform additional validation on registration form steps.
+        """
+        return pulumi.get(self, "self_service_registration_validation_id")
+
+    @property
+    @pulumi.getter(name="userinfoPopulateId")
+    def userinfo_populate_id(self) -> Optional[str]:
+        """
+        The Id of the Lambda that will be invoked when a UserInfo response is generated for this application.
+        """
+        return pulumi.get(self, "userinfo_populate_id")
 
 
 @pulumi.output_type
@@ -772,7 +848,7 @@ class FusionAuthApplicationLoginConfiguration(dict):
                  require_authentication: Optional[bool] = None):
         """
         :param bool allow_token_refresh: Indicates if a JWT may be refreshed using a Refresh Token for this application. This configuration is separate from issuing new Refresh Tokens which is controlled by the generateRefreshTokens parameter. This configuration indicates specifically if an existing Refresh Token may be used to request a new JWT using the Refresh API.
-        :param bool generate_refresh_tokens: Determines if the OAuth 2.0 Token endpoint will generate a refresh token when the offline_access scope is requested.
+        :param bool generate_refresh_tokens: Indicates if a Refresh Token should be issued from the Login API
         :param bool require_authentication: Indicates if the Login API should require an API key. If you set this value to false and your FusionAuth API is on a public network, anyone may attempt to use the Login API.
         """
         if allow_token_refresh is not None:
@@ -794,7 +870,7 @@ class FusionAuthApplicationLoginConfiguration(dict):
     @pulumi.getter(name="generateRefreshTokens")
     def generate_refresh_tokens(self) -> Optional[bool]:
         """
-        Determines if the OAuth 2.0 Token endpoint will generate a refresh token when the offline_access scope is requested.
+        Indicates if a Refresh Token should be issued from the Login API
         """
         return pulumi.get(self, "generate_refresh_tokens")
 
@@ -890,7 +966,11 @@ class FusionAuthApplicationOauthConfiguration(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "authorizedOriginUrls":
+        if key == "scopeHandlingPolicy":
+            suggest = "scope_handling_policy"
+        elif key == "unknownScopePolicy":
+            suggest = "unknown_scope_policy"
+        elif key == "authorizedOriginUrls":
             suggest = "authorized_origin_urls"
         elif key == "authorizedRedirectUrls":
             suggest = "authorized_redirect_urls"
@@ -902,6 +982,8 @@ class FusionAuthApplicationOauthConfiguration(dict):
             suggest = "client_id"
         elif key == "clientSecret":
             suggest = "client_secret"
+        elif key == "consentMode":
+            suggest = "consent_mode"
         elif key == "deviceVerificationUrl":
             suggest = "device_verification_url"
         elif key == "enabledGrants":
@@ -914,6 +996,8 @@ class FusionAuthApplicationOauthConfiguration(dict):
             suggest = "logout_url"
         elif key == "proofKeyForCodeExchangePolicy":
             suggest = "proof_key_for_code_exchange_policy"
+        elif key == "providedScopePolicies":
+            suggest = "provided_scope_policies"
         elif key == "requireClientAuthentication":
             suggest = "require_client_authentication"
         elif key == "requireRegistration":
@@ -931,12 +1015,15 @@ class FusionAuthApplicationOauthConfiguration(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 scope_handling_policy: str,
+                 unknown_scope_policy: str,
                  authorized_origin_urls: Optional[Sequence[str]] = None,
                  authorized_redirect_urls: Optional[Sequence[str]] = None,
                  authorized_url_validation_policy: Optional[str] = None,
                  client_authentication_policy: Optional[str] = None,
                  client_id: Optional[str] = None,
                  client_secret: Optional[str] = None,
+                 consent_mode: Optional[str] = None,
                  debug: Optional[bool] = None,
                  device_verification_url: Optional[str] = None,
                  enabled_grants: Optional[Sequence[str]] = None,
@@ -944,24 +1031,44 @@ class FusionAuthApplicationOauthConfiguration(dict):
                  logout_behavior: Optional[str] = None,
                  logout_url: Optional[str] = None,
                  proof_key_for_code_exchange_policy: Optional[str] = None,
+                 provided_scope_policies: Optional[Sequence['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy']] = None,
+                 relationship: Optional[str] = None,
                  require_client_authentication: Optional[bool] = None,
                  require_registration: Optional[bool] = None):
         """
+        :param str scope_handling_policy: Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
+               - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+               - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+        :param str unknown_scope_policy: Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
+               - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+               - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+               - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
         :param Sequence[str] authorized_origin_urls: An array of URLs that are the authorized origins for FusionAuth OAuth.
         :param Sequence[str] authorized_redirect_urls: An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
         :param str authorized_url_validation_policy: Determines whether wildcard expressions will be allowed in the authorized_redirect_urls and authorized_origin_urls.
         :param str client_authentication_policy: Determines the client authentication requirements for the OAuth 2.0 Token endpoint.
+        :param str client_id: The OAuth 2.0 client id. If you leave this blank during a POST, a client id will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
         :param str client_secret: The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
-        :param bool debug: Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
+        :param str consent_mode: Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
+               - `AlwaysPrompt` - Always prompt the user for consent.
+               - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+               - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+        :param bool debug: Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
         :param str device_verification_url: The device verification URL to be used with the Device Code grant type, this field is required when device_code is enabled.
         :param Sequence[str] enabled_grants: The enabled grants for this application. In order to utilize a particular grant with the OAuth 2.0 endpoints you must have enabled the grant.
         :param bool generate_refresh_tokens: Determines if the OAuth 2.0 Token endpoint will generate a refresh token when the offline_access scope is requested.
         :param str logout_behavior: Behavior when /oauth2/logout is called.
-        :param str logout_url: The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
+        :param str logout_url: The logout URL for the Application. FusionAuth will redirect to this URL after the user logs out of OAuth.
         :param str proof_key_for_code_exchange_policy: Determines the PKCE requirements when using the authorization code grant.
+        :param Sequence['FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs'] provided_scope_policies: Configures which of the default scopes are enabled and required.
+        :param str relationship: The application’s relationship to the OAuth server. The possible values are: 
+               - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+               - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
         :param bool require_client_authentication: Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The client_id and client_secret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
         :param bool require_registration: When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
         """
+        pulumi.set(__self__, "scope_handling_policy", scope_handling_policy)
+        pulumi.set(__self__, "unknown_scope_policy", unknown_scope_policy)
         if authorized_origin_urls is not None:
             pulumi.set(__self__, "authorized_origin_urls", authorized_origin_urls)
         if authorized_redirect_urls is not None:
@@ -974,6 +1081,8 @@ class FusionAuthApplicationOauthConfiguration(dict):
             pulumi.set(__self__, "client_id", client_id)
         if client_secret is not None:
             pulumi.set(__self__, "client_secret", client_secret)
+        if consent_mode is not None:
+            pulumi.set(__self__, "consent_mode", consent_mode)
         if debug is not None:
             pulumi.set(__self__, "debug", debug)
         if device_verification_url is not None:
@@ -988,10 +1097,35 @@ class FusionAuthApplicationOauthConfiguration(dict):
             pulumi.set(__self__, "logout_url", logout_url)
         if proof_key_for_code_exchange_policy is not None:
             pulumi.set(__self__, "proof_key_for_code_exchange_policy", proof_key_for_code_exchange_policy)
+        if provided_scope_policies is not None:
+            pulumi.set(__self__, "provided_scope_policies", provided_scope_policies)
+        if relationship is not None:
+            pulumi.set(__self__, "relationship", relationship)
         if require_client_authentication is not None:
             pulumi.set(__self__, "require_client_authentication", require_client_authentication)
         if require_registration is not None:
             pulumi.set(__self__, "require_registration", require_registration)
+
+    @property
+    @pulumi.getter(name="scopeHandlingPolicy")
+    def scope_handling_policy(self) -> str:
+        """
+        Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
+        - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+        - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+        """
+        return pulumi.get(self, "scope_handling_policy")
+
+    @property
+    @pulumi.getter(name="unknownScopePolicy")
+    def unknown_scope_policy(self) -> str:
+        """
+        Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
+        - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+        - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+        - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+        """
+        return pulumi.get(self, "unknown_scope_policy")
 
     @property
     @pulumi.getter(name="authorizedOriginUrls")
@@ -1028,6 +1162,9 @@ class FusionAuthApplicationOauthConfiguration(dict):
     @property
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
+        """
+        The OAuth 2.0 client id. If you leave this blank during a POST, a client id will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
+        """
         return pulumi.get(self, "client_id")
 
     @property
@@ -1039,10 +1176,21 @@ class FusionAuthApplicationOauthConfiguration(dict):
         return pulumi.get(self, "client_secret")
 
     @property
+    @pulumi.getter(name="consentMode")
+    def consent_mode(self) -> Optional[str]:
+        """
+        Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
+        - `AlwaysPrompt` - Always prompt the user for consent.
+        - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+        - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+        """
+        return pulumi.get(self, "consent_mode")
+
+    @property
     @pulumi.getter
     def debug(self) -> Optional[bool]:
         """
-        Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
+        Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
         """
         return pulumi.get(self, "debug")
 
@@ -1082,7 +1230,7 @@ class FusionAuthApplicationOauthConfiguration(dict):
     @pulumi.getter(name="logoutUrl")
     def logout_url(self) -> Optional[str]:
         """
-        The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
+        The logout URL for the Application. FusionAuth will redirect to this URL after the user logs out of OAuth.
         """
         return pulumi.get(self, "logout_url")
 
@@ -1095,7 +1243,26 @@ class FusionAuthApplicationOauthConfiguration(dict):
         return pulumi.get(self, "proof_key_for_code_exchange_policy")
 
     @property
+    @pulumi.getter(name="providedScopePolicies")
+    def provided_scope_policies(self) -> Optional[Sequence['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy']]:
+        """
+        Configures which of the default scopes are enabled and required.
+        """
+        return pulumi.get(self, "provided_scope_policies")
+
+    @property
+    @pulumi.getter
+    def relationship(self) -> Optional[str]:
+        """
+        The application’s relationship to the OAuth server. The possible values are: 
+        - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+        - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+        """
+        return pulumi.get(self, "relationship")
+
+    @property
     @pulumi.getter(name="requireClientAuthentication")
+    @_utilities.deprecated("""In version 1.28.0 and beyond, client authentication can be managed via oauth_configuration.client_authentication_policy.""")
     def require_client_authentication(self) -> Optional[bool]:
         """
         Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The client_id and client_secret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
@@ -1109,6 +1276,127 @@ class FusionAuthApplicationOauthConfiguration(dict):
         When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
         """
         return pulumi.get(self, "require_registration")
+
+
+@pulumi.output_type
+class FusionAuthApplicationOauthConfigurationProvidedScopePolicy(dict):
+    def __init__(__self__, *,
+                 address: Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress'] = None,
+                 email: Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail'] = None,
+                 phone: Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone'] = None,
+                 profile: Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile'] = None):
+        if address is not None:
+            pulumi.set(__self__, "address", address)
+        if email is not None:
+            pulumi.set(__self__, "email", email)
+        if phone is not None:
+            pulumi.set(__self__, "phone", phone)
+        if profile is not None:
+            pulumi.set(__self__, "profile", profile)
+
+    @property
+    @pulumi.getter
+    def address(self) -> Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress']:
+        return pulumi.get(self, "address")
+
+    @property
+    @pulumi.getter
+    def email(self) -> Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail']:
+        return pulumi.get(self, "email")
+
+    @property
+    @pulumi.getter
+    def phone(self) -> Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone']:
+        return pulumi.get(self, "phone")
+
+    @property
+    @pulumi.getter
+    def profile(self) -> Optional['outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile']:
+        return pulumi.get(self, "profile")
+
+
+@pulumi.output_type
+class FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddress(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 required: Optional[bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if required is not None:
+            pulumi.set(__self__, "required", required)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def required(self) -> Optional[bool]:
+        return pulumi.get(self, "required")
+
+
+@pulumi.output_type
+class FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmail(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 required: Optional[bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if required is not None:
+            pulumi.set(__self__, "required", required)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def required(self) -> Optional[bool]:
+        return pulumi.get(self, "required")
+
+
+@pulumi.output_type
+class FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhone(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 required: Optional[bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if required is not None:
+            pulumi.set(__self__, "required", required)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def required(self) -> Optional[bool]:
+        return pulumi.get(self, "required")
+
+
+@pulumi.output_type
+class FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfile(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 required: Optional[bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if required is not None:
+            pulumi.set(__self__, "required", required)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def required(self) -> Optional[bool]:
+        return pulumi.get(self, "required")
 
 
 @pulumi.output_type
@@ -1134,6 +1422,8 @@ class FusionAuthApplicationRegistrationConfiguration(dict):
             suggest = "middle_name"
         elif key == "mobilePhone":
             suggest = "mobile_phone"
+        elif key == "preferredLanguages":
+            suggest = "preferred_languages"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in FusionAuthApplicationRegistrationConfiguration. Access the value via the '{suggest}' property getter instead.")
@@ -1157,9 +1447,11 @@ class FusionAuthApplicationRegistrationConfiguration(dict):
                  login_id_type: Optional[str] = None,
                  middle_name: Optional['outputs.FusionAuthApplicationRegistrationConfigurationMiddleName'] = None,
                  mobile_phone: Optional['outputs.FusionAuthApplicationRegistrationConfigurationMobilePhone'] = None,
+                 preferred_languages: Optional['outputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguages'] = None,
                  type: Optional[str] = None):
         """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
+        :param bool confirm_password: Determines if the password should be confirmed during self service registration, this means that the user will be required to type the password twice.
+        :param bool enabled: Determines if self service registration is enabled for this application. When this value is false, you may still use the Registration API, this only affects if the self service option is available during the OAuth 2.0 login.
         :param str form_id: The Id of an associated Form when using advanced registration configuration type. This field is required when application.registrationConfiguration.type is set to advanced.
         :param str login_id_type: The unique login Id that will be collected during registration, this value can be email or username. Leaving the default value of email is preferred because an email address is globally unique.
         :param str type: The type of registration flow.
@@ -1184,6 +1476,8 @@ class FusionAuthApplicationRegistrationConfiguration(dict):
             pulumi.set(__self__, "middle_name", middle_name)
         if mobile_phone is not None:
             pulumi.set(__self__, "mobile_phone", mobile_phone)
+        if preferred_languages is not None:
+            pulumi.set(__self__, "preferred_languages", preferred_languages)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -1195,13 +1489,16 @@ class FusionAuthApplicationRegistrationConfiguration(dict):
     @property
     @pulumi.getter(name="confirmPassword")
     def confirm_password(self) -> Optional[bool]:
+        """
+        Determines if the password should be confirmed during self service registration, this means that the user will be required to type the password twice.
+        """
         return pulumi.get(self, "confirm_password")
 
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
+        Determines if self service registration is enabled for this application. When this value is false, you may still use the Registration API, this only affects if the self service option is available during the OAuth 2.0 login.
         """
         return pulumi.get(self, "enabled")
 
@@ -1247,6 +1544,11 @@ class FusionAuthApplicationRegistrationConfiguration(dict):
         return pulumi.get(self, "mobile_phone")
 
     @property
+    @pulumi.getter(name="preferredLanguages")
+    def preferred_languages(self) -> Optional['outputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguages']:
+        return pulumi.get(self, "preferred_languages")
+
+    @property
     @pulumi.getter
     def type(self) -> Optional[str]:
         """
@@ -1260,9 +1562,6 @@ class FusionAuthApplicationRegistrationConfigurationBirthDate(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1271,9 +1570,6 @@ class FusionAuthApplicationRegistrationConfigurationBirthDate(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         return pulumi.get(self, "enabled")
 
     @property
@@ -1287,9 +1583,6 @@ class FusionAuthApplicationRegistrationConfigurationFirstName(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1298,9 +1591,6 @@ class FusionAuthApplicationRegistrationConfigurationFirstName(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         return pulumi.get(self, "enabled")
 
     @property
@@ -1314,9 +1604,6 @@ class FusionAuthApplicationRegistrationConfigurationFullName(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1325,9 +1612,6 @@ class FusionAuthApplicationRegistrationConfigurationFullName(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         return pulumi.get(self, "enabled")
 
     @property
@@ -1341,9 +1625,6 @@ class FusionAuthApplicationRegistrationConfigurationLastName(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1352,9 +1633,6 @@ class FusionAuthApplicationRegistrationConfigurationLastName(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         return pulumi.get(self, "enabled")
 
     @property
@@ -1368,9 +1646,6 @@ class FusionAuthApplicationRegistrationConfigurationMiddleName(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1379,9 +1654,6 @@ class FusionAuthApplicationRegistrationConfigurationMiddleName(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         return pulumi.get(self, "enabled")
 
     @property
@@ -1395,9 +1667,6 @@ class FusionAuthApplicationRegistrationConfigurationMobilePhone(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None,
                  required: Optional[bool] = None):
-        """
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if required is not None:
@@ -1406,9 +1675,27 @@ class FusionAuthApplicationRegistrationConfigurationMobilePhone(dict):
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
-        """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
-        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def required(self) -> Optional[bool]:
+        return pulumi.get(self, "required")
+
+
+@pulumi.output_type
+class FusionAuthApplicationRegistrationConfigurationPreferredLanguages(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 required: Optional[bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if required is not None:
+            pulumi.set(__self__, "required", required)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
         return pulumi.get(self, "enabled")
 
     @property
@@ -1520,9 +1807,9 @@ class FusionAuthApplicationSamlv2Configuration(dict):
         :param str audience: The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
         :param str callback_url: The URL of the callback (sometimes called the Assertion Consumer Service or ACS). This is where FusionAuth sends the browser after the user logs in via SAML.
         :param bool debug: Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
-        :param str default_verification_key_id: The unique Id of the Key used to verify the signature if the public key cannot be determined by the KeyInfo element when using POST bindings, or the key used to verify the signature when using HTTP Redirect bindings.
-        :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
-        :param str key_id: The unique Id of the Key used to sign the SAML Single Logout response.
+        :param str default_verification_key_id: Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
+        :param bool enabled: Whether or not the SAML IdP for this Application is enabled or not.
+        :param str key_id: The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
         :param str logout_url: The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
         :param bool required_signed_requests: If set to true, will force verification through the key store.
         :param str xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
@@ -1579,6 +1866,7 @@ class FusionAuthApplicationSamlv2Configuration(dict):
 
     @property
     @pulumi.getter(name="callbackUrl")
+    @_utilities.deprecated("""In version 1.20.0 and beyond, Callback URLs can be managed via authorized_redirect_urls.""")
     def callback_url(self) -> Optional[str]:
         """
         The URL of the callback (sometimes called the Assertion Consumer Service or ACS). This is where FusionAuth sends the browser after the user logs in via SAML.
@@ -1597,7 +1885,7 @@ class FusionAuthApplicationSamlv2Configuration(dict):
     @pulumi.getter(name="defaultVerificationKeyId")
     def default_verification_key_id(self) -> Optional[str]:
         """
-        The unique Id of the Key used to verify the signature if the public key cannot be determined by the KeyInfo element when using POST bindings, or the key used to verify the signature when using HTTP Redirect bindings.
+        Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
         """
         return pulumi.get(self, "default_verification_key_id")
 
@@ -1605,7 +1893,7 @@ class FusionAuthApplicationSamlv2Configuration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not SAML Single Logout for this SAML IdP is enabled.
+        Whether or not the SAML IdP for this Application is enabled or not.
         """
         return pulumi.get(self, "enabled")
 
@@ -1613,7 +1901,7 @@ class FusionAuthApplicationSamlv2Configuration(dict):
     @pulumi.getter(name="keyId")
     def key_id(self) -> Optional[str]:
         """
-        The unique Id of the Key used to sign the SAML Single Logout response.
+        The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
         """
         return pulumi.get(self, "key_id")
 
@@ -1692,9 +1980,9 @@ class FusionAuthApplicationSamlv2ConfigurationLogout(dict):
         """
         :param str behavior: This configuration is functionally equivalent to the Logout Behavior found in the OAuth2 configuration.
         :param str default_verification_key_id: The unique Id of the Key used to verify the signature if the public key cannot be determined by the KeyInfo element when using POST bindings, or the key used to verify the signature when using HTTP Redirect bindings.
-        :param str key_id: The unique Id of the Key used to sign the SAML Single Logout response.
+        :param str key_id: The unique Id of the Key used to sign the SAML Logout response.
         :param bool require_signed_requests: Set this parameter equal to true to require the SAML v2 Service Provider to sign the Logout request. When this value is true all Logout requests missing a signature will be rejected.
-        :param str xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        :param str xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         """
         if behavior is not None:
             pulumi.set(__self__, "behavior", behavior)
@@ -1729,7 +2017,7 @@ class FusionAuthApplicationSamlv2ConfigurationLogout(dict):
     @pulumi.getter(name="keyId")
     def key_id(self) -> Optional[str]:
         """
-        The unique Id of the Key used to sign the SAML Single Logout response.
+        The unique Id of the Key used to sign the SAML Logout response.
         """
         return pulumi.get(self, "key_id")
 
@@ -1750,7 +2038,7 @@ class FusionAuthApplicationSamlv2ConfigurationLogout(dict):
     @pulumi.getter(name="xmlSignatureCanonicalizationMethod")
     def xml_signature_canonicalization_method(self) -> Optional[str]:
         """
-        The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        The XML signature canonicalization method used when digesting and signing the SAML Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         """
         return pulumi.get(self, "xml_signature_canonicalization_method")
 
@@ -1785,7 +2073,7 @@ class FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout(dict):
         :param bool enabled: Whether or not SAML Single Logout for this SAML IdP is enabled.
         :param str key_id: The unique Id of the Key used to sign the SAML Single Logout response.
         :param str url: The URL at which you want to receive the LogoutRequest from FusionAuth.
-        :param str xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        :param str xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML Single Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -1824,7 +2112,7 @@ class FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout(dict):
     @pulumi.getter(name="xmlSignatureCanonicalizationMethod")
     def xml_signature_canonicalization_method(self) -> Optional[str]:
         """
-        The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        The XML signature canonicalization method used when digesting and signing the SAML Single Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         """
         return pulumi.get(self, "xml_signature_canonicalization_method")
 
@@ -1955,6 +2243,8 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
         suggest = None
         if key == "applicationId":
             suggest = "application_id"
+        elif key == "bundleId":
+            suggest = "bundle_id"
         elif key == "buttonText":
             suggest = "button_text"
         elif key == "createRegistration":
@@ -1979,6 +2269,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
 
     def __init__(__self__, *,
                  application_id: Optional[str] = None,
+                 bundle_id: Optional[str] = None,
                  button_text: Optional[str] = None,
                  create_registration: Optional[bool] = None,
                  enabled: Optional[bool] = None,
@@ -1988,16 +2279,19 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
                  team_id: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        :param str bundle_id: This is an optional Application specific override for for the top level bundleId.
+        :param str button_text: This is an optional Application specific override for the top level button text.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str key_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
-        :param str scope: The top-level space separated scope that you are requesting from Apple.
-        :param str services_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
-        :param str team_id: The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str key_id: This is an optional Application specific override for the top level keyId.
+        :param str scope: This is an optional Application specific override for for the top level scope.
+        :param str services_id: This is an optional Application specific override for for the top level servicesId.
+        :param str team_id: This is an optional Application specific override for for the top level teamId.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
+        if bundle_id is not None:
+            pulumi.set(__self__, "bundle_id", bundle_id)
         if button_text is not None:
             pulumi.set(__self__, "button_text", button_text)
         if create_registration is not None:
@@ -2022,10 +2316,18 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
         return pulumi.get(self, "application_id")
 
     @property
+    @pulumi.getter(name="bundleId")
+    def bundle_id(self) -> Optional[str]:
+        """
+        This is an optional Application specific override for for the top level bundleId.
+        """
+        return pulumi.get(self, "bundle_id")
+
+    @property
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -2041,7 +2343,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -2049,7 +2351,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
     @pulumi.getter(name="keyId")
     def key_id(self) -> Optional[str]:
         """
-        The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        This is an optional Application specific override for the top level keyId.
         """
         return pulumi.get(self, "key_id")
 
@@ -2057,7 +2359,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level space separated scope that you are requesting from Apple.
+        This is an optional Application specific override for for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -2065,7 +2367,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
     @pulumi.getter(name="servicesId")
     def services_id(self) -> Optional[str]:
         """
-        The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        This is an optional Application specific override for for the top level servicesId.
         """
         return pulumi.get(self, "services_id")
 
@@ -2073,7 +2375,7 @@ class FusionAuthIdpAppleApplicationConfiguration(dict):
     @pulumi.getter(name="teamId")
     def team_id(self) -> Optional[str]:
         """
-        The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
+        This is an optional Application specific override for for the top level teamId.
         """
         return pulumi.get(self, "team_id")
 
@@ -2170,7 +2472,7 @@ class FusionAuthIdpExternalJwtApplicationConfiguration(dict):
         """
         :param str application_id: ID of the Application to apply this configuration to.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -2199,7 +2501,7 @@ class FusionAuthIdpExternalJwtApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -2305,16 +2607,14 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
                  fields: Optional[str] = None,
                  permissions: Optional[str] = None):
         """
-        :param str app_id: The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        :param str app_id: This is an optional Application specific override for the top level `app_id`.
         :param str application_id: ID of the FusionAuth Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_secret: The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        :param str button_text: This is an optional Application specific override for the top level `button_text`.
+        :param str client_secret: This is an optional Application specific override for the top level `client_secret`.
         :param bool create_registration: Determines if a `UserRegistration` is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str fields: The top-level fields that you are requesting from Facebook.
-               Field values are documented at [Facebook Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api/)
-        :param str permissions: The top-level permissions that your application is asking of the user’s Facebook account.
-               Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the `application_id` property.
+        :param str fields: This is an optional Application specific override for the top level `fields`.
+        :param str permissions: This is an optional Application specific override for the top level `permissions`.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -2337,7 +2637,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter(name="appId")
     def app_id(self) -> Optional[str]:
         """
-        The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        This is an optional Application specific override for the top level `app_id`.
         """
         return pulumi.get(self, "app_id")
 
@@ -2353,7 +2653,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level `button_text`.
         """
         return pulumi.get(self, "button_text")
 
@@ -2361,7 +2661,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
+        This is an optional Application specific override for the top level `client_secret`.
         """
         return pulumi.get(self, "client_secret")
 
@@ -2377,7 +2677,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         """
         return pulumi.get(self, "enabled")
 
@@ -2385,8 +2685,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter
     def fields(self) -> Optional[str]:
         """
-        The top-level fields that you are requesting from Facebook.
-        Field values are documented at [Facebook Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api/)
+        This is an optional Application specific override for the top level `fields`.
         """
         return pulumi.get(self, "fields")
 
@@ -2394,8 +2693,7 @@ class FusionAuthIdpFacebookApplicationConfiguration(dict):
     @pulumi.getter
     def permissions(self) -> Optional[str]:
         """
-        The top-level permissions that your application is asking of the user’s Facebook account.
-        Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
+        This is an optional Application specific override for the top level `permissions`.
         """
         return pulumi.get(self, "permissions")
 
@@ -2501,12 +2799,12 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
                  scope: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_id: The top-level Google client id for your Application. This value is retrieved from the Google developer website when you setup your Google developer account.
-        :param str client_secret: The top-level client secret to use with the Google Identity Provider when retrieving the long-lived token. This value is retrieved from the Google developer website when you setup your Google developer account.
+        :param str button_text: This is an optional Application specific override for the top level button text.
+        :param str client_id: This is an optional Application specific override for the top level client id.
+        :param str client_secret: This is an optional Application specific override for the top level client secret.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str scope: The top-level scope that you are requesting from Google.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str scope: This is an optional Application specific override for for the top level scope.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -2535,7 +2833,7 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -2543,7 +2841,7 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
         """
-        The top-level Google client id for your Application. This value is retrieved from the Google developer website when you setup your Google developer account.
+        This is an optional Application specific override for the top level client id.
         """
         return pulumi.get(self, "client_id")
 
@@ -2551,7 +2849,7 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the Google Identity Provider when retrieving the long-lived token. This value is retrieved from the Google developer website when you setup your Google developer account.
+        This is an optional Application specific override for the top level client secret.
         """
         return pulumi.get(self, "client_secret")
 
@@ -2567,7 +2865,7 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -2575,7 +2873,7 @@ class FusionAuthIdpGoogleApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from Google.
+        This is an optional Application specific override for for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -2681,11 +2979,11 @@ class FusionAuthIdpLinkedInApplicationConfiguration(dict):
                  scope: Optional[str] = None):
         """
         :param str application_id: ID of the FusionAuth Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        :param str button_text: This is an optional Application specific override for the top level `button_text`.
         :param str client_id: The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
-        :param str client_secret: The top-level client secret to use with the LinkedIn Identity Provider when retrieving the long-lived token. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+        :param str client_secret: This is an optional Application specific override for the top level `client_secret`.
         :param bool create_registration: Determines if a `UserRegistration` is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         :param str scope: The top-level scope that you are requesting from LinkedIn.
         """
         if application_id is not None:
@@ -2715,7 +3013,7 @@ class FusionAuthIdpLinkedInApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level `button_text`.
         """
         return pulumi.get(self, "button_text")
 
@@ -2731,7 +3029,7 @@ class FusionAuthIdpLinkedInApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the LinkedIn Identity Provider when retrieving the long-lived token. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+        This is an optional Application specific override for the top level `client_secret`.
         """
         return pulumi.get(self, "client_secret")
 
@@ -2747,7 +3045,7 @@ class FusionAuthIdpLinkedInApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the `application_id` property.
         """
         return pulumi.get(self, "enabled")
 
@@ -2866,13 +3164,13 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
                  oauth2_scope: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        :param str button_image_url: This is an optional Application specific override for the top level button image URL.
+        :param str button_text: This is an optional Application specific override for the top level button text.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str oauth2_client_id: The top-level client id for your Application.
-        :param str oauth2_client_secret: The top-level client secret to use with the OpenID Connect identity provider.
-        :param str oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str oauth2_client_id: This is an optional Application specific override for the top level client id.
+        :param str oauth2_client_secret: This is an optional Application specific override for the top level client secret.
+        :param str oauth2_scope: This is an optional Application specific override for the top level scope.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -2903,7 +3201,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter(name="buttonImageUrl")
     def button_image_url(self) -> Optional[str]:
         """
-        The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button image URL.
         """
         return pulumi.get(self, "button_image_url")
 
@@ -2911,7 +3209,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -2927,7 +3225,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -2935,7 +3233,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter(name="oauth2ClientId")
     def oauth2_client_id(self) -> Optional[str]:
         """
-        The top-level client id for your Application.
+        This is an optional Application specific override for the top level client id.
         """
         return pulumi.get(self, "oauth2_client_id")
 
@@ -2943,7 +3241,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter(name="oauth2ClientSecret")
     def oauth2_client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the OpenID Connect identity provider.
+        This is an optional Application specific override for the top level client secret.
         """
         return pulumi.get(self, "oauth2_client_secret")
 
@@ -2951,7 +3249,7 @@ class FusionAuthIdpOpenIdConnectApplicationConfiguration(dict):
     @pulumi.getter(name="oauth2Scope")
     def oauth2_scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from the OpenID Connect identity provider.
+        This is an optional Application specific override for the top level scope.
         """
         return pulumi.get(self, "oauth2_scope")
 
@@ -3057,12 +3355,12 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
                  scope: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_id: The top-level Sony PlayStation Network client id for your Application. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
-        :param str client_secret: The top-level client secret to use with the Sony PlayStation Network Identity Provider when retrieving the long-lived token. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
+        :param str button_text: This is an optional Application specific override for the top level button text.
+        :param str client_id: This is an optional Application specific override for the top level client_id.
+        :param str client_secret: This is an optional Application specific override for the top level client_secret.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str scope: The top-level scope that you are requesting from Sony PlayStation Network.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str scope: This is an optional Application specific override for the top level scope.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -3091,7 +3389,7 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -3099,7 +3397,7 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
         """
-        The top-level Sony PlayStation Network client id for your Application. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
+        This is an optional Application specific override for the top level client_id.
         """
         return pulumi.get(self, "client_id")
 
@@ -3107,7 +3405,7 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the Sony PlayStation Network Identity Provider when retrieving the long-lived token. This value is retrieved from the Sony PlayStation Network developer website when you setup your Sony PlayStation Network developer account.
+        This is an optional Application specific override for the top level client_secret.
         """
         return pulumi.get(self, "client_secret")
 
@@ -3123,7 +3421,7 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -3131,7 +3429,7 @@ class FusionAuthIdpPsnApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from Sony PlayStation Network.
+        This is an optional Application specific override for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -3225,6 +3523,10 @@ class FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration(dict):
                  application_id: Optional[str] = None,
                  create_registration: Optional[bool] = None,
                  enabled: Optional[bool] = None):
+        """
+        :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
         if create_registration is not None:
@@ -3240,11 +3542,17 @@ class FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration(dict):
     @property
     @pulumi.getter(name="createRegistration")
     def create_registration(self) -> Optional[bool]:
+        """
+        Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
+        """
         return pulumi.get(self, "create_registration")
 
     @property
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
+        """
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        """
         return pulumi.get(self, "enabled")
 
 
@@ -3275,6 +3583,10 @@ class FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration(dict):
                  limit_user_link_count_enabled: Optional[bool] = None,
                  limit_user_link_count_maximum_links: Optional[int] = None,
                  tenant_id: Optional[str] = None):
+        """
+        :param bool limit_user_link_count_enabled: When enabled, the number of identity provider links a user may create is enforced by maximumLinks
+        :param int limit_user_link_count_maximum_links: Determines if this provider is enabled. If it is false then it will be disabled globally.
+        """
         if limit_user_link_count_enabled is not None:
             pulumi.set(__self__, "limit_user_link_count_enabled", limit_user_link_count_enabled)
         if limit_user_link_count_maximum_links is not None:
@@ -3285,11 +3597,17 @@ class FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration(dict):
     @property
     @pulumi.getter(name="limitUserLinkCountEnabled")
     def limit_user_link_count_enabled(self) -> Optional[bool]:
+        """
+        When enabled, the number of identity provider links a user may create is enforced by maximumLinks
+        """
         return pulumi.get(self, "limit_user_link_count_enabled")
 
     @property
     @pulumi.getter(name="limitUserLinkCountMaximumLinks")
     def limit_user_link_count_maximum_links(self) -> Optional[int]:
+        """
+        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        """
         return pulumi.get(self, "limit_user_link_count_maximum_links")
 
     @property
@@ -3331,10 +3649,10 @@ class FusionAuthIdpSamlv2ApplicationConfiguration(dict):
                  enabled: Optional[bool] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        :param str button_image_url: This is an optional Application specific override for the top level button image URL.
+        :param str button_text: This is an optional Application specific override for the top level button text.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -3359,7 +3677,7 @@ class FusionAuthIdpSamlv2ApplicationConfiguration(dict):
     @pulumi.getter(name="buttonImageUrl")
     def button_image_url(self) -> Optional[str]:
         """
-        The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button image URL.
         """
         return pulumi.get(self, "button_image_url")
 
@@ -3367,7 +3685,7 @@ class FusionAuthIdpSamlv2ApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -3383,7 +3701,7 @@ class FusionAuthIdpSamlv2ApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -3489,12 +3807,12 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
                  web_api_key: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_id: The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        :param str button_text: This is an optional Application specific override for the top level button text.
+        :param str client_id: This is an optional Application specific override for the top level client_id.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str scope: The top-level scope that you are requesting from Steam.
-        :param str web_api_key: The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str scope: This is an optional Application specific override for the top level scope.
+        :param str web_api_key: This is an optional Application specific override for the top level webAPIKey.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -3523,7 +3841,7 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -3531,7 +3849,7 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
         """
-        The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        This is an optional Application specific override for the top level client_id.
         """
         return pulumi.get(self, "client_id")
 
@@ -3547,7 +3865,7 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -3555,7 +3873,7 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from Steam.
+        This is an optional Application specific override for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -3563,7 +3881,7 @@ class FusionAuthIdpSteamApplicationConfiguration(dict):
     @pulumi.getter(name="webApiKey")
     def web_api_key(self) -> Optional[str]:
         """
-        The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        This is an optional Application specific override for the top level webAPIKey.
         """
         return pulumi.get(self, "web_api_key")
 
@@ -3669,12 +3987,12 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
                  scope: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
-        :param str client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param str button_text: This is an optional Application specific override for the top level button text.
+        :param str client_id: This is an optional Application specific override for the top level client_id.
+        :param str client_secret: This is an optional Application specific override for the top level client_secret.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str scope: The top-level scope that you are requesting from Xbox.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str scope: This is an optional Application specific override for the top level scope.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -3703,7 +4021,7 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -3711,7 +4029,7 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
         """
-        TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        This is an optional Application specific override for the top level client_id.
         """
         return pulumi.get(self, "client_id")
 
@@ -3719,7 +4037,7 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        This is an optional Application specific override for the top level client_secret.
         """
         return pulumi.get(self, "client_secret")
 
@@ -3735,7 +4053,7 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -3743,7 +4061,7 @@ class FusionAuthIdpTwitchApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from Xbox.
+        This is an optional Application specific override for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -3849,12 +4167,12 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
                  scope: Optional[str] = None):
         """
         :param str application_id: ID of the Application to apply this configuration to.
-        :param str button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param str client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
-        :param str client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param str button_text: This is an optional Application specific override for the top level button text.
+        :param str client_id: This is an optional Application specific override for the top level client_id.
+        :param str client_secret: This is an optional Application specific override for the top level client_secret.
         :param bool create_registration: Determines if a UserRegistration is created for the User automatically or not. If a user doesn’t exist in FusionAuth and logs in through an identity provider, this boolean controls whether or not FusionAuth creates a registration for the User in the Application they are logging into.
-        :param bool enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
-        :param str scope: The top-level scope that you are requesting from Xbox.
+        :param bool enabled: Determines if this identity provider is enabled for the Application specified by the applicationId key.
+        :param str scope: This is an optional Application specific override for the top level scope.
         """
         if application_id is not None:
             pulumi.set(__self__, "application_id", application_id)
@@ -3883,7 +4201,7 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
     @pulumi.getter(name="buttonText")
     def button_text(self) -> Optional[str]:
         """
-        The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        This is an optional Application specific override for the top level button text.
         """
         return pulumi.get(self, "button_text")
 
@@ -3891,7 +4209,7 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[str]:
         """
-        TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        This is an optional Application specific override for the top level client_id.
         """
         return pulumi.get(self, "client_id")
 
@@ -3899,7 +4217,7 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
     @pulumi.getter(name="clientSecret")
     def client_secret(self) -> Optional[str]:
         """
-        The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        This is an optional Application specific override for the top level client_secret.
         """
         return pulumi.get(self, "client_secret")
 
@@ -3915,7 +4233,7 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Determines if this provider is enabled. If it is false then it will be disabled globally.
+        Determines if this identity provider is enabled for the Application specified by the applicationId key.
         """
         return pulumi.get(self, "enabled")
 
@@ -3923,7 +4241,7 @@ class FusionAuthIdpXBoxApplicationConfiguration(dict):
     @pulumi.getter
     def scope(self) -> Optional[str]:
         """
-        The top-level scope that you are requesting from Xbox.
+        This is an optional Application specific override for the top level scope.
         """
         return pulumi.get(self, "scope")
 
@@ -4028,8 +4346,8 @@ class FusionAuthSystemConfigurationAuditLogConfigurationDelete(dict):
                  enabled: Optional[bool] = None,
                  number_of_days_to_retain: Optional[int] = None):
         """
-        :param bool enabled: Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
-        :param int number_of_days_to_retain: The number of days to retain login records.
+        :param bool enabled: Whether or not FusionAuth should delete the Audit Log based upon this configuration. When true the auditLogConfiguration.delete.numberOfDaysToRetain will be used to identify audit logs that are eligible for deletion. When this value is set to false audit logs will be preserved forever.
+        :param int number_of_days_to_retain: The number of days to retain the Audit Log.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -4040,7 +4358,7 @@ class FusionAuthSystemConfigurationAuditLogConfigurationDelete(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+        Whether or not FusionAuth should delete the Audit Log based upon this configuration. When true the auditLogConfiguration.delete.numberOfDaysToRetain will be used to identify audit logs that are eligible for deletion. When this value is set to false audit logs will be preserved forever.
         """
         return pulumi.get(self, "enabled")
 
@@ -4048,7 +4366,7 @@ class FusionAuthSystemConfigurationAuditLogConfigurationDelete(dict):
     @pulumi.getter(name="numberOfDaysToRetain")
     def number_of_days_to_retain(self) -> Optional[int]:
         """
-        The number of days to retain login records.
+        The number of days to retain the Audit Log.
         """
         return pulumi.get(self, "number_of_days_to_retain")
 
@@ -4095,7 +4413,7 @@ class FusionAuthSystemConfigurationCorsConfiguration(dict):
         :param Sequence[str] allowed_headers: The Access-Control-Allow-Headers response header values as described by MDN Access-Control-Allow-Headers.
         :param Sequence[str] allowed_methods: The Access-Control-Allow-Methods response header values as described by MDN Access-Control-Allow-Methods.
         :param Sequence[str] allowed_origins: The Access-Control-Allow-Origin response header values as described by MDN Access-Control-Allow-Origin. If the wildcard * is specified, no additional domains may be specified.
-        :param bool enabled: Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+        :param bool enabled: Whether the FusionAuth CORS filter will process requests made to FusionAuth.
         :param Sequence[str] exposed_headers: The Access-Control-Expose-Headers response header values as described by MDN Access-Control-Expose-Headers.
         :param int preflight_max_age_in_seconds: The Access-Control-Max-Age response header values as described by MDN Access-Control-Max-Age.
         """
@@ -4150,7 +4468,7 @@ class FusionAuthSystemConfigurationCorsConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        Whether or not FusionAuth should delete the login records based upon this configuration. When true the loginRecordConfiguration.delete.numberOfDaysToRetain will be used to identify login records that are eligible for deletion. When this value is set to false login records will be preserved forever.
+        Whether the FusionAuth CORS filter will process requests made to FusionAuth.
         """
         return pulumi.get(self, "enabled")
 
@@ -4399,7 +4717,7 @@ class FusionAuthTenantCaptchaConfiguration(dict):
                  threshold: Optional[float] = None):
         """
         :param str captcha_method: The type of captcha method to use. This field is required when tenant.captchaConfiguration.enabled is set to true.
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether captcha configuration is enabled.
         :param str secret_key: The secret key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
         :param str site_key: The site key for this captcha method. This field is required when tenant.captchaConfiguration.enabled is set to true.
         :param float threshold: The numeric threshold which separates a passing score from a failing one. This value only applies if using either the Google v3 or HCaptcha Enterprise method, otherwise this value is ignored.
@@ -4427,7 +4745,7 @@ class FusionAuthTenantCaptchaConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether captcha configuration is enabled.
         """
         return pulumi.get(self, "enabled")
 
@@ -4982,7 +5300,7 @@ class FusionAuthTenantEventConfiguration(dict):
                  event: Optional[str] = None,
                  transaction_type: Optional[str] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether or not FusionAuth should send these types of events to any configured Webhooks.
         :param str event: The event type
         :param str transaction_type: The transaction type that FusionAuth uses when sending these types of events to any configured Webhooks.
         """
@@ -4997,7 +5315,7 @@ class FusionAuthTenantEventConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether or not FusionAuth should send these types of events to any configured Webhooks.
         """
         return pulumi.get(self, "enabled")
 
@@ -5069,6 +5387,8 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
             suggest = "saml_v2_authn_request_id_ttl_seconds"
         elif key == "trustTokenTimeToLiveInSeconds":
             suggest = "trust_token_time_to_live_in_seconds"
+        elif key == "twoFactorOneTimeCodeIdTimeToLiveInSeconds":
+            suggest = "two_factor_one_time_code_id_time_to_live_in_seconds"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in FusionAuthTenantExternalIdentifierConfiguration. Access the value via the '{suggest}' property getter instead.")
@@ -5104,7 +5424,8 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
                  two_factor_trust_id_time_to_live_in_seconds: int,
                  pending_account_link_time_to_live_in_seconds: Optional[int] = None,
                  saml_v2_authn_request_id_ttl_seconds: Optional[int] = None,
-                 trust_token_time_to_live_in_seconds: Optional[int] = None):
+                 trust_token_time_to_live_in_seconds: Optional[int] = None,
+                 two_factor_one_time_code_id_time_to_live_in_seconds: Optional[int] = None):
         """
         :param int authorization_grant_id_time_to_live_in_seconds: The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
         :param int change_password_id_time_to_live_in_seconds: The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
@@ -5120,6 +5441,7 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
         :param int pending_account_link_time_to_live_in_seconds: The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
         :param int saml_v2_authn_request_id_ttl_seconds: The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
         :param int trust_token_time_to_live_in_seconds: The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+        :param int two_factor_one_time_code_id_time_to_live_in_seconds: The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
         """
         pulumi.set(__self__, "authorization_grant_id_time_to_live_in_seconds", authorization_grant_id_time_to_live_in_seconds)
         pulumi.set(__self__, "change_password_id_generator", change_password_id_generator)
@@ -5147,6 +5469,8 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
             pulumi.set(__self__, "saml_v2_authn_request_id_ttl_seconds", saml_v2_authn_request_id_ttl_seconds)
         if trust_token_time_to_live_in_seconds is not None:
             pulumi.set(__self__, "trust_token_time_to_live_in_seconds", trust_token_time_to_live_in_seconds)
+        if two_factor_one_time_code_id_time_to_live_in_seconds is not None:
+            pulumi.set(__self__, "two_factor_one_time_code_id_time_to_live_in_seconds", two_factor_one_time_code_id_time_to_live_in_seconds)
 
     @property
     @pulumi.getter(name="authorizationGrantIdTimeToLiveInSeconds")
@@ -5305,6 +5629,14 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
         """
         return pulumi.get(self, "trust_token_time_to_live_in_seconds")
 
+    @property
+    @pulumi.getter(name="twoFactorOneTimeCodeIdTimeToLiveInSeconds")
+    def two_factor_one_time_code_id_time_to_live_in_seconds(self) -> Optional[int]:
+        """
+        The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+        """
+        return pulumi.get(self, "two_factor_one_time_code_id_time_to_live_in_seconds")
+
 
 @pulumi.output_type
 class FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator(dict):
@@ -5312,8 +5644,8 @@ class FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator(d
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5322,7 +5654,7 @@ class FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator(d
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5330,7 +5662,7 @@ class FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator(d
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5341,8 +5673,8 @@ class FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator(d
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5351,7 +5683,7 @@ class FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator(d
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5359,7 +5691,7 @@ class FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator(d
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5370,8 +5702,8 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerato
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5380,7 +5712,7 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerato
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5388,7 +5720,7 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerato
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5399,8 +5731,8 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCod
                  length: int,
                  type: Optional[str] = None):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the email verification one time code.
+        :param str type: The type of the secure generator used for generating the email verification one time code.
         """
         pulumi.set(__self__, "length", length)
         if type is not None:
@@ -5410,7 +5742,7 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCod
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the email verification one time code.
         """
         return pulumi.get(self, "length")
 
@@ -5418,7 +5750,7 @@ class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCod
     @pulumi.getter
     def type(self) -> Optional[str]:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the email verification one time code.
         """
         return pulumi.get(self, "type")
 
@@ -5429,8 +5761,8 @@ class FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator(
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5439,7 +5771,7 @@ class FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator(
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5447,7 +5779,7 @@ class FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator(
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5458,8 +5790,8 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdG
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5468,7 +5800,7 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdG
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5476,7 +5808,7 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdG
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5487,8 +5819,8 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOne
                  length: int,
                  type: Optional[str] = None):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the registration verification one time code.
+        :param str type: The type of the secure generator used for generating the registration verification one time code.
         """
         pulumi.set(__self__, "length", length)
         if type is not None:
@@ -5498,7 +5830,7 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOne
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the registration verification one time code.
         """
         return pulumi.get(self, "length")
 
@@ -5506,7 +5838,7 @@ class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOne
     @pulumi.getter
     def type(self) -> Optional[str]:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the registration verification one time code.
         """
         return pulumi.get(self, "type")
 
@@ -5517,8 +5849,8 @@ class FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator(di
                  length: int,
                  type: str):
         """
-        :param int length: TThe length of the secure generator used for generating the the two factor code Id.
-        :param str type: The type of the secure generator used for generating the two factor one time code Id.
+        :param int length: The length of the secure generator used for generating the change password Id.
+        :param str type: The type of the secure generator used for generating the change password Id.
         """
         pulumi.set(__self__, "length", length)
         pulumi.set(__self__, "type", type)
@@ -5527,7 +5859,7 @@ class FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator(di
     @pulumi.getter
     def length(self) -> int:
         """
-        TThe length of the secure generator used for generating the the two factor code Id.
+        The length of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "length")
 
@@ -5535,7 +5867,7 @@ class FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator(di
     @pulumi.getter
     def type(self) -> str:
         """
-        The type of the secure generator used for generating the two factor one time code Id.
+        The type of the secure generator used for generating the change password Id.
         """
         return pulumi.get(self, "type")
 
@@ -5741,7 +6073,7 @@ class FusionAuthTenantFamilyConfiguration(dict):
         :param str confirm_child_email_template_id: The unique Id of the email template to use when confirming a child.
         :param bool delete_orphaned_accounts: Indicates that child users without parental verification will be permanently deleted after tenant.familyConfiguration.deleteOrphanedAccountsDays days.
         :param int delete_orphaned_accounts_days: The number of days from creation child users will be retained before being deleted for not completing parental verification. Value must be greater than 0.
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether family configuration is enabled.
         :param str family_request_email_template_id: The unique Id of the email template to use when a family request is made.
         :param int maximum_child_age: The maximum age of a child. Value must be greater than 0.
         :param int minimum_owner_age: The minimum age to be an owner. Value must be greater than 0.
@@ -5805,7 +6137,7 @@ class FusionAuthTenantFamilyConfiguration(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether family configuration is enabled.
         """
         return pulumi.get(self, "enabled")
 
@@ -5905,6 +6237,8 @@ class FusionAuthTenantJwtConfiguration(dict):
             suggest = "refresh_token_revocation_policy_on_login_prevented"
         elif key == "refreshTokenRevocationPolicyOnPasswordChange":
             suggest = "refresh_token_revocation_policy_on_password_change"
+        elif key == "refreshTokenSlidingWindowMaximumTimeToLiveInMinutes":
+            suggest = "refresh_token_sliding_window_maximum_time_to_live_in_minutes"
         elif key == "refreshTokenUsagePolicy":
             suggest = "refresh_token_usage_policy"
 
@@ -5927,6 +6261,7 @@ class FusionAuthTenantJwtConfiguration(dict):
                  refresh_token_expiration_policy: Optional[str] = None,
                  refresh_token_revocation_policy_on_login_prevented: Optional[bool] = None,
                  refresh_token_revocation_policy_on_password_change: Optional[bool] = None,
+                 refresh_token_sliding_window_maximum_time_to_live_in_minutes: Optional[int] = None,
                  refresh_token_usage_policy: Optional[str] = None):
         """
         :param int refresh_token_time_to_live_in_minutes: The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
@@ -5936,6 +6271,7 @@ class FusionAuthTenantJwtConfiguration(dict):
         :param str refresh_token_expiration_policy: The refresh token expiration policy.
         :param bool refresh_token_revocation_policy_on_login_prevented: When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
         :param bool refresh_token_revocation_policy_on_password_change: When enabled, the refresh token will be revoked when a user changes their password."
+        :param int refresh_token_sliding_window_maximum_time_to_live_in_minutes: The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
         :param str refresh_token_usage_policy: The refresh token usage policy.
         """
         pulumi.set(__self__, "refresh_token_time_to_live_in_minutes", refresh_token_time_to_live_in_minutes)
@@ -5950,6 +6286,8 @@ class FusionAuthTenantJwtConfiguration(dict):
             pulumi.set(__self__, "refresh_token_revocation_policy_on_login_prevented", refresh_token_revocation_policy_on_login_prevented)
         if refresh_token_revocation_policy_on_password_change is not None:
             pulumi.set(__self__, "refresh_token_revocation_policy_on_password_change", refresh_token_revocation_policy_on_password_change)
+        if refresh_token_sliding_window_maximum_time_to_live_in_minutes is not None:
+            pulumi.set(__self__, "refresh_token_sliding_window_maximum_time_to_live_in_minutes", refresh_token_sliding_window_maximum_time_to_live_in_minutes)
         if refresh_token_usage_policy is not None:
             pulumi.set(__self__, "refresh_token_usage_policy", refresh_token_usage_policy)
 
@@ -6010,6 +6348,14 @@ class FusionAuthTenantJwtConfiguration(dict):
         return pulumi.get(self, "refresh_token_revocation_policy_on_password_change")
 
     @property
+    @pulumi.getter(name="refreshTokenSlidingWindowMaximumTimeToLiveInMinutes")
+    def refresh_token_sliding_window_maximum_time_to_live_in_minutes(self) -> Optional[int]:
+        """
+        The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
+        """
+        return pulumi.get(self, "refresh_token_sliding_window_maximum_time_to_live_in_minutes")
+
+    @property
     @pulumi.getter(name="refreshTokenUsagePolicy")
     def refresh_token_usage_policy(self) -> Optional[str]:
         """
@@ -6061,7 +6407,7 @@ class FusionAuthTenantMaximumPasswordAge(dict):
                  enabled: Optional[bool] = None):
         """
         :param int days: The password maximum age in days. The number of days after which FusionAuth will require a user to change their password. Required when systemConfiguration.maximumPasswordAge.enabled is set to true.
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Indicates that the maximum password age is enabled and being enforced.
         """
         if days is not None:
             pulumi.set(__self__, "days", days)
@@ -6080,7 +6426,7 @@ class FusionAuthTenantMaximumPasswordAge(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Indicates that the maximum password age is enabled and being enforced.
         """
         return pulumi.get(self, "enabled")
 
@@ -6091,7 +6437,7 @@ class FusionAuthTenantMinimumPasswordAge(dict):
                  enabled: Optional[bool] = None,
                  seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Indicates that the minimum password age is enabled and being enforced.
         :param int seconds: The password minimum age in seconds. When enabled FusionAuth will not allow a password to be changed until it reaches this minimum age. Required when systemConfiguration.minimumPasswordAge.enabled is set to true.
         """
         if enabled is not None:
@@ -6103,7 +6449,7 @@ class FusionAuthTenantMinimumPasswordAge(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Indicates that the minimum password age is enabled and being enforced.
         """
         return pulumi.get(self, "enabled")
 
@@ -6181,7 +6527,7 @@ class FusionAuthTenantMultiFactorConfigurationAuthenticator(dict):
     def __init__(__self__, *,
                  enabled: Optional[bool] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: When enabled, users may utilize an authenticator application to complete a multi-factor authentication request. This method uses TOTP (Time-Based One-Time Password) as defined in RFC 6238 and often uses an native mobile app such as Google Authenticator.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6190,7 +6536,7 @@ class FusionAuthTenantMultiFactorConfigurationAuthenticator(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        When enabled, users may utilize an authenticator application to complete a multi-factor authentication request. This method uses TOTP (Time-Based One-Time Password) as defined in RFC 6238 and often uses an native mobile app such as Google Authenticator.
         """
         return pulumi.get(self, "enabled")
 
@@ -6218,8 +6564,8 @@ class FusionAuthTenantMultiFactorConfigurationEmail(dict):
                  enabled: Optional[bool] = None,
                  template_id: Optional[str] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param str template_id: The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
+        :param bool enabled: When enabled, users may utilize an email address to complete a multi-factor authentication request.
+        :param str template_id: The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6230,7 +6576,7 @@ class FusionAuthTenantMultiFactorConfigurationEmail(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        When enabled, users may utilize an email address to complete a multi-factor authentication request.
         """
         return pulumi.get(self, "enabled")
 
@@ -6238,7 +6584,7 @@ class FusionAuthTenantMultiFactorConfigurationEmail(dict):
     @pulumi.getter(name="templateId")
     def template_id(self) -> Optional[str]:
         """
-        The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
+        The Id of the email template that is used when notifying a user to complete a multi-factor authentication request.
         """
         return pulumi.get(self, "template_id")
 
@@ -6269,7 +6615,7 @@ class FusionAuthTenantMultiFactorConfigurationSms(dict):
                  messenger_id: Optional[str] = None,
                  template_id: Optional[str] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: When enabled, users may utilize a mobile phone number to complete a multi-factor authentication request.
         :param str messenger_id: The messenger that is used to deliver a SMS multi-factor authentication request.
         :param str template_id: The Id of the SMS template that is used when notifying a user to complete a multi-factor authentication request.
         """
@@ -6284,7 +6630,7 @@ class FusionAuthTenantMultiFactorConfigurationSms(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        When enabled, users may utilize a mobile phone number to complete a multi-factor authentication request.
         """
         return pulumi.get(self, "enabled")
 
@@ -6448,7 +6794,7 @@ class FusionAuthTenantPasswordValidationRules(dict):
                  required_mixed_case: Optional[bool] = None,
                  validate_on_login: Optional[bool] = None):
         """
-        :param int max_length: The maximum length of a password when a new user is created or a user requests a password change.
+        :param int max_length: The maximum length of a password when a new user is created or a user requests a password change. This value must be greater than 0 and less than or equal to 256. When `passwordEncryptionConfiguration.encryptionScheme` is equal to `bcrypt`, the maximum will be limited to 50.
         :param int min_length: The minimum length of a password when a new user is created or a user requests a password change.
         :param bool require_non_alpha: Whether to force the user to use at least one non-alphanumeric character.
         :param bool require_number: Whether to force the user to use at least one number.
@@ -6481,7 +6827,7 @@ class FusionAuthTenantPasswordValidationRules(dict):
     @pulumi.getter(name="maxLength")
     def max_length(self) -> Optional[int]:
         """
-        The maximum length of a password when a new user is created or a user requests a password change.
+        The maximum length of a password when a new user is created or a user requests a password change. This value must be greater than 0 and less than or equal to 256. When `passwordEncryptionConfiguration.encryptionScheme` is equal to `bcrypt`, the maximum will be limited to 50.
         """
         return pulumi.get(self, "max_length")
 
@@ -6560,7 +6906,7 @@ class FusionAuthTenantPasswordValidationRulesBreachDetection(dict):
                  notify_user_email_template_id: Optional[str] = None,
                  on_login: Optional[str] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether to enable Reactor breach detection. Requires an activated license.
         :param str match_mode: The level of severity where Reactor will consider a breach.
         :param str notify_user_email_template_id: The Id of the email template to use when notifying user of breached password. Required if tenant.passwordValidationRules.breachDetection.onLogin is set to NotifyUser.
         :param str on_login: The behavior when detecting breaches at time of user login
@@ -6578,7 +6924,7 @@ class FusionAuthTenantPasswordValidationRulesBreachDetection(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether to enable Reactor breach detection. Requires an activated license.
         """
         return pulumi.get(self, "enabled")
 
@@ -6614,7 +6960,7 @@ class FusionAuthTenantPasswordValidationRulesRememberPreviousPasswords(dict):
                  enabled: Optional[bool] = None):
         """
         :param int count: The number of previous passwords to remember. Value must be greater than 0.
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether to prevent a user from using any of their previous passwords.
         """
         if count is not None:
             pulumi.set(__self__, "count", count)
@@ -6633,7 +6979,7 @@ class FusionAuthTenantPasswordValidationRulesRememberPreviousPasswords(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether to prevent a user from using any of their previous passwords.
         """
         return pulumi.get(self, "enabled")
 
@@ -6742,9 +7088,9 @@ class FusionAuthTenantRateLimitConfigurationFailedLogin(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
-        :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        :param bool enabled: Whether rate limiting is enabled for failed login.
+        :param int limit: The number of times a user can fail to login within the configured `time_period_in_seconds` duration. If a Failed authentication action has been configured then it will take precedence.
+        :param int time_period_in_seconds: The duration for the number of times a user can fail login before being rate limited.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6757,7 +7103,7 @@ class FusionAuthTenantRateLimitConfigurationFailedLogin(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for failed login.
         """
         return pulumi.get(self, "enabled")
 
@@ -6765,7 +7111,7 @@ class FusionAuthTenantRateLimitConfigurationFailedLogin(dict):
     @pulumi.getter
     def limit(self) -> Optional[int]:
         """
-        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        The number of times a user can fail to login within the configured `time_period_in_seconds` duration. If a Failed authentication action has been configured then it will take precedence.
         """
         return pulumi.get(self, "limit")
 
@@ -6773,7 +7119,7 @@ class FusionAuthTenantRateLimitConfigurationFailedLogin(dict):
     @pulumi.getter(name="timePeriodInSeconds")
     def time_period_in_seconds(self) -> Optional[int]:
         """
-        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        The duration for the number of times a user can fail login before being rate limited.
         """
         return pulumi.get(self, "time_period_in_seconds")
 
@@ -6802,9 +7148,9 @@ class FusionAuthTenantRateLimitConfigurationForgotPassword(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
-        :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        :param bool enabled: Whether rate limiting is enabled for forgot password.
+        :param int limit: The number of times a user can request a forgot password email within the configured `time_period_in_seconds` duration.
+        :param int time_period_in_seconds: The duration for the number of times a user can request a forgot password email before being rate limited.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6817,7 +7163,7 @@ class FusionAuthTenantRateLimitConfigurationForgotPassword(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for forgot password.
         """
         return pulumi.get(self, "enabled")
 
@@ -6825,7 +7171,7 @@ class FusionAuthTenantRateLimitConfigurationForgotPassword(dict):
     @pulumi.getter
     def limit(self) -> Optional[int]:
         """
-        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        The number of times a user can request a forgot password email within the configured `time_period_in_seconds` duration.
         """
         return pulumi.get(self, "limit")
 
@@ -6833,7 +7179,7 @@ class FusionAuthTenantRateLimitConfigurationForgotPassword(dict):
     @pulumi.getter(name="timePeriodInSeconds")
     def time_period_in_seconds(self) -> Optional[int]:
         """
-        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        The duration for the number of times a user can request a forgot password email before being rate limited.
         """
         return pulumi.get(self, "time_period_in_seconds")
 
@@ -6862,9 +7208,9 @@ class FusionAuthTenantRateLimitConfigurationSendEmailVerification(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
-        :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        :param bool enabled: Whether rate limiting is enabled for send email verification.
+        :param int limit: The number of times a user can request a verification email within the configured `time_period_in_seconds` duration.
+        :param int time_period_in_seconds: The duration for the number of times a user can request a verification email before being rate limited.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6877,7 +7223,7 @@ class FusionAuthTenantRateLimitConfigurationSendEmailVerification(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for send email verification.
         """
         return pulumi.get(self, "enabled")
 
@@ -6885,7 +7231,7 @@ class FusionAuthTenantRateLimitConfigurationSendEmailVerification(dict):
     @pulumi.getter
     def limit(self) -> Optional[int]:
         """
-        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        The number of times a user can request a verification email within the configured `time_period_in_seconds` duration.
         """
         return pulumi.get(self, "limit")
 
@@ -6893,7 +7239,7 @@ class FusionAuthTenantRateLimitConfigurationSendEmailVerification(dict):
     @pulumi.getter(name="timePeriodInSeconds")
     def time_period_in_seconds(self) -> Optional[int]:
         """
-        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        The duration for the number of times a user can request a verification email before being rate limited.
         """
         return pulumi.get(self, "time_period_in_seconds")
 
@@ -6922,9 +7268,9 @@ class FusionAuthTenantRateLimitConfigurationSendPasswordless(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
-        :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        :param bool enabled: Whether rate limiting is enabled for send passwordless.
+        :param int limit: The number of times a user can request a passwordless login email within the configured `time_period_in_seconds` duration.
+        :param int time_period_in_seconds: The duration for the number of times a user can request a passwordless login email before being rate limited.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6937,7 +7283,7 @@ class FusionAuthTenantRateLimitConfigurationSendPasswordless(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for send passwordless.
         """
         return pulumi.get(self, "enabled")
 
@@ -6945,7 +7291,7 @@ class FusionAuthTenantRateLimitConfigurationSendPasswordless(dict):
     @pulumi.getter
     def limit(self) -> Optional[int]:
         """
-        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        The number of times a user can request a passwordless login email within the configured `time_period_in_seconds` duration.
         """
         return pulumi.get(self, "limit")
 
@@ -6953,7 +7299,7 @@ class FusionAuthTenantRateLimitConfigurationSendPasswordless(dict):
     @pulumi.getter(name="timePeriodInSeconds")
     def time_period_in_seconds(self) -> Optional[int]:
         """
-        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        The duration for the number of times a user can request a passwordless login email before being rate limited.
         """
         return pulumi.get(self, "time_period_in_seconds")
 
@@ -6982,9 +7328,9 @@ class FusionAuthTenantRateLimitConfigurationSendRegistrationVerification(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
-        :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
-        :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        :param bool enabled: Whether rate limiting is enabled for send registration verification.
+        :param int limit: The number of times a user can request a registration verification email within the configured `time_period_in_seconds` duration.
+        :param int time_period_in_seconds: The duration for the number of times a user can request a registration verification email before being rate limited.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
@@ -6997,7 +7343,7 @@ class FusionAuthTenantRateLimitConfigurationSendRegistrationVerification(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for send registration verification.
         """
         return pulumi.get(self, "enabled")
 
@@ -7005,7 +7351,7 @@ class FusionAuthTenantRateLimitConfigurationSendRegistrationVerification(dict):
     @pulumi.getter
     def limit(self) -> Optional[int]:
         """
-        The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        The number of times a user can request a registration verification email within the configured `time_period_in_seconds` duration.
         """
         return pulumi.get(self, "limit")
 
@@ -7013,7 +7359,7 @@ class FusionAuthTenantRateLimitConfigurationSendRegistrationVerification(dict):
     @pulumi.getter(name="timePeriodInSeconds")
     def time_period_in_seconds(self) -> Optional[int]:
         """
-        The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        The duration for the number of times a user can request a registration verification email before being rate limited.
         """
         return pulumi.get(self, "time_period_in_seconds")
 
@@ -7042,7 +7388,7 @@ class FusionAuthTenantRateLimitConfigurationSendTwoFactor(dict):
                  limit: Optional[int] = None,
                  time_period_in_seconds: Optional[int] = None):
         """
-        :param bool enabled: When true, FusionAuth will handle username collisions by generating a random suffix.
+        :param bool enabled: Whether rate limiting is enabled for send two factor.
         :param int limit: The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
         :param int time_period_in_seconds: The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
         """
@@ -7057,7 +7403,7 @@ class FusionAuthTenantRateLimitConfigurationSendTwoFactor(dict):
     @pulumi.getter
     def enabled(self) -> Optional[bool]:
         """
-        When true, FusionAuth will handle username collisions by generating a random suffix.
+        Whether rate limiting is enabled for send two factor.
         """
         return pulumi.get(self, "enabled")
 
@@ -7140,6 +7486,7 @@ class FusionAuthTenantUserDeletePolicy(dict):
                  unverified_number_of_days_to_retain: Optional[int] = None):
         """
         :param bool unverified_enabled: Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
+        :param int unverified_number_of_days_to_retain: The number of days from creation users will be retained before being deleted for not completing email verification. This field is required when tenant.userDeletePolicy.unverified.enabled is set to true. Value must be greater than 0.
         """
         if unverified_enabled is not None:
             pulumi.set(__self__, "unverified_enabled", unverified_enabled)
@@ -7157,6 +7504,9 @@ class FusionAuthTenantUserDeletePolicy(dict):
     @property
     @pulumi.getter(name="unverifiedNumberOfDaysToRetain")
     def unverified_number_of_days_to_retain(self) -> Optional[int]:
+        """
+        The number of days from creation users will be retained before being deleted for not completing email verification. This field is required when tenant.userDeletePolicy.unverified.enabled is set to true. Value must be greater than 0.
+        """
         return pulumi.get(self, "unverified_number_of_days_to_retain")
 
 
@@ -7342,6 +7692,7 @@ class FusionAuthUserTwoFactorMethod(dict):
         :param str method: The type of this method. There will also be an object with the same value containing additional information about this method.
         :param str mobile_phone: The value of the mobile phone for this method.
         :param str secret: A base64 encoded secret
+        :param str two_factor_method_id: The unique Id of the method.
         """
         if authenticator_algorithm is not None:
             pulumi.set(__self__, "authenticator_algorithm", authenticator_algorithm)
@@ -7419,6 +7770,9 @@ class FusionAuthUserTwoFactorMethod(dict):
     @property
     @pulumi.getter(name="twoFactorMethodId")
     def two_factor_method_id(self) -> Optional[str]:
+        """
+        The unique Id of the method.
+        """
         return pulumi.get(self, "two_factor_method_id")
 
 
@@ -8039,11 +8393,17 @@ class GetFormFieldValidatorResult(dict):
 class GetFormStepResult(dict):
     def __init__(__self__, *,
                  fields: Sequence[str]):
+        """
+        :param Sequence[str] fields: An ordered list of Form Field Ids assigned to this step.
+        """
         pulumi.set(__self__, "fields", fields)
 
     @property
     @pulumi.getter
     def fields(self) -> Sequence[str]:
+        """
+        An ordered list of Form Field Ids assigned to this step.
+        """
         return pulumi.get(self, "fields")
 
 

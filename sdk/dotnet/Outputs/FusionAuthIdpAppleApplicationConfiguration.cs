@@ -19,7 +19,11 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for for the top level bundleId.
+        /// </summary>
+        public readonly string? BundleId;
+        /// <summary>
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         public readonly string? ButtonText;
         /// <summary>
@@ -27,29 +31,31 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? CreateRegistration;
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// This is an optional Application specific override for the top level keyId.
         /// </summary>
         public readonly string? KeyId;
         /// <summary>
-        /// The top-level space separated scope that you are requesting from Apple.
+        /// This is an optional Application specific override for for the top level scope.
         /// </summary>
         public readonly string? Scope;
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// This is an optional Application specific override for for the top level servicesId.
         /// </summary>
         public readonly string? ServicesId;
         /// <summary>
-        /// The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
+        /// This is an optional Application specific override for for the top level teamId.
         /// </summary>
         public readonly string? TeamId;
 
         [OutputConstructor]
         private FusionAuthIdpAppleApplicationConfiguration(
             string? applicationId,
+
+            string? bundleId,
 
             string? buttonText,
 
@@ -66,6 +72,7 @@ namespace theogravity.Fusionauth.Outputs
             string? teamId)
         {
             ApplicationId = applicationId;
+            BundleId = bundleId;
             ButtonText = buttonText;
             CreateRegistration = createRegistration;
             Enabled = enabled;

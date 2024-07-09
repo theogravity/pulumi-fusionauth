@@ -34,7 +34,9 @@ class FusionAuthIdpSamlv2Args:
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  xml_signature_canonicalization_method: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthIdpSamlv2 resource.
@@ -56,7 +58,10 @@ class FusionAuthIdpSamlv2Args:
         :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the emailClaim will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
         """
         pulumi.set(__self__, "button_text", button_text)
@@ -93,8 +98,12 @@ class FusionAuthIdpSamlv2Args:
             pulumi.set(__self__, "sign_request", sign_request)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_id_claim is not None:
+            pulumi.set(__self__, "unique_id_claim", unique_id_claim)
         if use_name_for_email is not None:
             pulumi.set(__self__, "use_name_for_email", use_name_for_email)
+        if username_claim is not None:
+            pulumi.set(__self__, "username_claim", username_claim)
         if xml_signature_canonicalization_method is not None:
             pulumi.set(__self__, "xml_signature_canonicalization_method", xml_signature_canonicalization_method)
 
@@ -315,6 +324,19 @@ class FusionAuthIdpSamlv2Args:
         pulumi.set(self, "tenant_configurations", value)
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the emailClaim will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @unique_id_claim.setter
+    def unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -325,6 +347,18 @@ class FusionAuthIdpSamlv2Args:
     @use_name_for_email.setter
     def use_name_for_email(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "use_name_for_email", value)
+
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "username_claim")
+
+    @username_claim.setter
+    def username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "username_claim", value)
 
     @property
     @pulumi.getter(name="xmlSignatureCanonicalizationMethod")
@@ -360,7 +394,9 @@ class _FusionAuthIdpSamlv2State:
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  xml_signature_canonicalization_method: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthIdpSamlv2 resources.
@@ -382,7 +418,10 @@ class _FusionAuthIdpSamlv2State:
         :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the emailClaim will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
         """
         if application_configurations is not None:
@@ -421,8 +460,12 @@ class _FusionAuthIdpSamlv2State:
             pulumi.set(__self__, "sign_request", sign_request)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_id_claim is not None:
+            pulumi.set(__self__, "unique_id_claim", unique_id_claim)
         if use_name_for_email is not None:
             pulumi.set(__self__, "use_name_for_email", use_name_for_email)
+        if username_claim is not None:
+            pulumi.set(__self__, "username_claim", username_claim)
         if xml_signature_canonicalization_method is not None:
             pulumi.set(__self__, "xml_signature_canonicalization_method", xml_signature_canonicalization_method)
 
@@ -643,6 +686,19 @@ class _FusionAuthIdpSamlv2State:
         pulumi.set(self, "tenant_configurations", value)
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the emailClaim will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @unique_id_claim.setter
+    def unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -653,6 +709,18 @@ class _FusionAuthIdpSamlv2State:
     @use_name_for_email.setter
     def use_name_for_email(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "use_name_for_email", value)
+
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "username_claim")
+
+    @username_claim.setter
+    def username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "username_claim", value)
 
     @property
     @pulumi.getter(name="xmlSignatureCanonicalizationMethod")
@@ -690,7 +758,9 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  xml_signature_canonicalization_method: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -747,7 +817,10 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the emailClaim will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
         """
         ...
@@ -823,7 +896,9 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  xml_signature_canonicalization_method: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -856,7 +931,9 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
             __props__.__dict__["request_signing_key"] = request_signing_key
             __props__.__dict__["sign_request"] = sign_request
             __props__.__dict__["tenant_configurations"] = tenant_configurations
+            __props__.__dict__["unique_id_claim"] = unique_id_claim
             __props__.__dict__["use_name_for_email"] = use_name_for_email
+            __props__.__dict__["username_claim"] = username_claim
             __props__.__dict__["xml_signature_canonicalization_method"] = xml_signature_canonicalization_method
         super(FusionAuthIdpSamlv2, __self__).__init__(
             'fusionauth:index/fusionAuthIdpSamlv2:FusionAuthIdpSamlv2',
@@ -886,7 +963,9 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
             request_signing_key: Optional[pulumi.Input[str]] = None,
             sign_request: Optional[pulumi.Input[bool]] = None,
             tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+            unique_id_claim: Optional[pulumi.Input[str]] = None,
             use_name_for_email: Optional[pulumi.Input[bool]] = None,
+            username_claim: Optional[pulumi.Input[str]] = None,
             xml_signature_canonicalization_method: Optional[pulumi.Input[str]] = None) -> 'FusionAuthIdpSamlv2':
         """
         Get an existing FusionAuthIdpSamlv2 resource's state with the given name, id, and optional extra
@@ -913,7 +992,10 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the emailClaim will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -938,7 +1020,9 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         __props__.__dict__["request_signing_key"] = request_signing_key
         __props__.__dict__["sign_request"] = sign_request
         __props__.__dict__["tenant_configurations"] = tenant_configurations
+        __props__.__dict__["unique_id_claim"] = unique_id_claim
         __props__.__dict__["use_name_for_email"] = use_name_for_email
+        __props__.__dict__["username_claim"] = username_claim
         __props__.__dict__["xml_signature_canonicalization_method"] = xml_signature_canonicalization_method
         return FusionAuthIdpSamlv2(resource_name, opts=opts, __props__=__props__)
 
@@ -1087,12 +1171,29 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         return pulumi.get(self, "tenant_configurations")
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the emailClaim will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> pulumi.Output[Optional[bool]]:
         """
         Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         """
         return pulumi.get(self, "use_name_for_email")
+
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "username_claim")
 
     @property
     @pulumi.getter(name="xmlSignatureCanonicalizationMethod")

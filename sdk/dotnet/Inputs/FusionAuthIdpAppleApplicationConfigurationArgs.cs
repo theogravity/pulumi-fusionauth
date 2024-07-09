@@ -20,7 +20,13 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ApplicationId { get; set; }
 
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for for the top level bundleId.
+        /// </summary>
+        [Input("bundleId")]
+        public Input<string>? BundleId { get; set; }
+
+        /// <summary>
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         [Input("buttonText")]
         public Input<string>? ButtonText { get; set; }
@@ -32,31 +38,31 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? CreateRegistration { get; set; }
 
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// This is an optional Application specific override for the top level keyId.
         /// </summary>
         [Input("keyId")]
         public Input<string>? KeyId { get; set; }
 
         /// <summary>
-        /// The top-level space separated scope that you are requesting from Apple.
+        /// This is an optional Application specific override for for the top level scope.
         /// </summary>
         [Input("scope")]
         public Input<string>? Scope { get; set; }
 
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// This is an optional Application specific override for for the top level servicesId.
         /// </summary>
         [Input("servicesId")]
         public Input<string>? ServicesId { get; set; }
 
         /// <summary>
-        /// The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
+        /// This is an optional Application specific override for for the top level teamId.
         /// </summary>
         [Input("teamId")]
         public Input<string>? TeamId { get; set; }

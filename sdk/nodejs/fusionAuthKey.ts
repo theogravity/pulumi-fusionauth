@@ -53,6 +53,15 @@ export class FusionAuthKey extends pulumi.CustomResource {
 
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     public readonly algorithm!: pulumi.Output<string>;
     /**
@@ -112,6 +121,15 @@ export class FusionAuthKey extends pulumi.CustomResource {
 export interface FusionAuthKeyState {
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     algorithm?: pulumi.Input<string>;
     /**
@@ -138,6 +156,15 @@ export interface FusionAuthKeyState {
 export interface FusionAuthKeyArgs {
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     algorithm: pulumi.Input<string>;
     /**

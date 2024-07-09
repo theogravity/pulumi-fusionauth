@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # User Resource
@@ -24,7 +25,7 @@ import (
 //	"encoding/json"
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -82,7 +83,7 @@ type FusionAuthUser struct {
 	Data pulumi.StringPtrOutput `pulumi:"data"`
 	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	DisableDomainBlock pulumi.BoolPtrOutput `pulumi:"disableDomainBlock"`
-	// The value of the email address for this method.
+	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrOutput `pulumi:"email"`
 	// The method for encrypting the User’s password.
 	EncryptionScheme pulumi.StringPtrOutput `pulumi:"encryptionScheme"`
@@ -98,7 +99,7 @@ type FusionAuthUser struct {
 	LastName pulumi.StringPtrOutput `pulumi:"lastName"`
 	// The User’s middle name.
 	MiddleName pulumi.StringPtrOutput `pulumi:"middleName"`
-	// The value of the mobile phone for this method.
+	// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 	MobilePhone pulumi.StringPtrOutput `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrOutput `pulumi:"parentEmail"`
@@ -145,7 +146,7 @@ func NewFusionAuthUser(ctx *pulumi.Context,
 		"twoFactorRecoveryCodes",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthUser
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthUser:FusionAuthUser", name, args, &resource, opts...)
 	if err != nil {
@@ -176,7 +177,7 @@ type fusionAuthUserState struct {
 	Data *string `pulumi:"data"`
 	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	DisableDomainBlock *bool `pulumi:"disableDomainBlock"`
-	// The value of the email address for this method.
+	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email *string `pulumi:"email"`
 	// The method for encrypting the User’s password.
 	EncryptionScheme *string `pulumi:"encryptionScheme"`
@@ -192,7 +193,7 @@ type fusionAuthUserState struct {
 	LastName *string `pulumi:"lastName"`
 	// The User’s middle name.
 	MiddleName *string `pulumi:"middleName"`
-	// The value of the mobile phone for this method.
+	// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 	MobilePhone *string `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail *string `pulumi:"parentEmail"`
@@ -230,7 +231,7 @@ type FusionAuthUserState struct {
 	Data pulumi.StringPtrInput
 	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	DisableDomainBlock pulumi.BoolPtrInput
-	// The value of the email address for this method.
+	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrInput
 	// The method for encrypting the User’s password.
 	EncryptionScheme pulumi.StringPtrInput
@@ -246,7 +247,7 @@ type FusionAuthUserState struct {
 	LastName pulumi.StringPtrInput
 	// The User’s middle name.
 	MiddleName pulumi.StringPtrInput
-	// The value of the mobile phone for this method.
+	// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 	MobilePhone pulumi.StringPtrInput
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrInput
@@ -288,7 +289,7 @@ type fusionAuthUserArgs struct {
 	Data *string `pulumi:"data"`
 	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	DisableDomainBlock *bool `pulumi:"disableDomainBlock"`
-	// The value of the email address for this method.
+	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email *string `pulumi:"email"`
 	// The method for encrypting the User’s password.
 	EncryptionScheme *string `pulumi:"encryptionScheme"`
@@ -304,7 +305,7 @@ type fusionAuthUserArgs struct {
 	LastName *string `pulumi:"lastName"`
 	// The User’s middle name.
 	MiddleName *string `pulumi:"middleName"`
-	// The value of the mobile phone for this method.
+	// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 	MobilePhone *string `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail *string `pulumi:"parentEmail"`
@@ -343,7 +344,7 @@ type FusionAuthUserArgs struct {
 	Data pulumi.StringPtrInput
 	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
 	DisableDomainBlock pulumi.BoolPtrInput
-	// The value of the email address for this method.
+	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrInput
 	// The method for encrypting the User’s password.
 	EncryptionScheme pulumi.StringPtrInput
@@ -359,7 +360,7 @@ type FusionAuthUserArgs struct {
 	LastName pulumi.StringPtrInput
 	// The User’s middle name.
 	MiddleName pulumi.StringPtrInput
-	// The value of the mobile phone for this method.
+	// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 	MobilePhone pulumi.StringPtrInput
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrInput
@@ -495,7 +496,7 @@ func (o FusionAuthUserOutput) DisableDomainBlock() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.BoolPtrOutput { return v.DisableDomainBlock }).(pulumi.BoolPtrOutput)
 }
 
-// The value of the email address for this method.
+// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 func (o FusionAuthUserOutput) Email() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.Email }).(pulumi.StringPtrOutput)
 }
@@ -535,7 +536,7 @@ func (o FusionAuthUserOutput) MiddleName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.MiddleName }).(pulumi.StringPtrOutput)
 }
 
-// The value of the mobile phone for this method.
+// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
 func (o FusionAuthUserOutput) MobilePhone() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.MobilePhone }).(pulumi.StringPtrOutput)
 }

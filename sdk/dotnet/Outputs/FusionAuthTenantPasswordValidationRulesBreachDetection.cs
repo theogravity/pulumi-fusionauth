@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantPasswordValidationRulesBreachDetection
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether to enable Reactor breach detection. Requires an activated license.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Key Resource
@@ -25,7 +26,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -47,6 +48,15 @@ type FusionAuthKey struct {
 	pulumi.CustomResourceState
 
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// - `RS256` - RSA using SHA-256 hash algorithm
+	// - `RS384` - RSA using SHA-384 hash algorithm
+	// - `RS512` - RSA using SHA-512 hash algorithm
+	// - `HS256` - HMAC using SHA-256 hash algorithm
+	// - `HS384` - HMAC using SHA-384 hash algorithm
+	// - `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringOutput `pulumi:"algorithm"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringOutput `pulumi:"keyId"`
@@ -68,7 +78,7 @@ func NewFusionAuthKey(ctx *pulumi.Context,
 	if args.Algorithm == nil {
 		return nil, errors.New("invalid value for required argument 'Algorithm'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthKey
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthKey:FusionAuthKey", name, args, &resource, opts...)
 	if err != nil {
@@ -92,6 +102,15 @@ func GetFusionAuthKey(ctx *pulumi.Context,
 // Input properties used for looking up and filtering FusionAuthKey resources.
 type fusionAuthKeyState struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// - `RS256` - RSA using SHA-256 hash algorithm
+	// - `RS384` - RSA using SHA-384 hash algorithm
+	// - `RS512` - RSA using SHA-512 hash algorithm
+	// - `HS256` - HMAC using SHA-256 hash algorithm
+	// - `HS384` - HMAC using SHA-384 hash algorithm
+	// - `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm *string `pulumi:"algorithm"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
@@ -105,6 +124,15 @@ type fusionAuthKeyState struct {
 
 type FusionAuthKeyState struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// - `RS256` - RSA using SHA-256 hash algorithm
+	// - `RS384` - RSA using SHA-384 hash algorithm
+	// - `RS512` - RSA using SHA-512 hash algorithm
+	// - `HS256` - HMAC using SHA-256 hash algorithm
+	// - `HS384` - HMAC using SHA-384 hash algorithm
+	// - `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringPtrInput
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
@@ -122,6 +150,15 @@ func (FusionAuthKeyState) ElementType() reflect.Type {
 
 type fusionAuthKeyArgs struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// - `RS256` - RSA using SHA-256 hash algorithm
+	// - `RS384` - RSA using SHA-384 hash algorithm
+	// - `RS512` - RSA using SHA-512 hash algorithm
+	// - `HS256` - HMAC using SHA-256 hash algorithm
+	// - `HS384` - HMAC using SHA-384 hash algorithm
+	// - `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm string `pulumi:"algorithm"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
@@ -134,6 +171,15 @@ type fusionAuthKeyArgs struct {
 // The set of arguments for constructing a FusionAuthKey resource.
 type FusionAuthKeyArgs struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// - `RS256` - RSA using SHA-256 hash algorithm
+	// - `RS384` - RSA using SHA-384 hash algorithm
+	// - `RS512` - RSA using SHA-512 hash algorithm
+	// - `HS256` - HMAC using SHA-256 hash algorithm
+	// - `HS384` - HMAC using SHA-384 hash algorithm
+	// - `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringInput
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
@@ -231,6 +277,15 @@ func (o FusionAuthKeyOutput) ToFusionAuthKeyOutputWithContext(ctx context.Contex
 }
 
 // The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+// - `RS256` - RSA using SHA-256 hash algorithm
+// - `RS384` - RSA using SHA-384 hash algorithm
+// - `RS512` - RSA using SHA-512 hash algorithm
+// - `HS256` - HMAC using SHA-256 hash algorithm
+// - `HS384` - HMAC using SHA-384 hash algorithm
+// - `HS512` - HMAC using SHA-512 hash algorithm
 func (o FusionAuthKeyOutput) Algorithm() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthKey) pulumi.StringOutput { return v.Algorithm }).(pulumi.StringOutput)
 }

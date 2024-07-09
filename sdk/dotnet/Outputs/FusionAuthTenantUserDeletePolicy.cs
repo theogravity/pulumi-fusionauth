@@ -18,6 +18,9 @@ namespace theogravity.Fusionauth.Outputs
         /// Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
         /// </summary>
         public readonly bool? UnverifiedEnabled;
+        /// <summary>
+        /// The number of days from creation users will be retained before being deleted for not completing email verification. This field is required when tenant.userDeletePolicy.unverified.enabled is set to true. Value must be greater than 0.
+        /// </summary>
         public readonly int? UnverifiedNumberOfDaysToRetain;
 
         [OutputConstructor]

@@ -35,6 +35,10 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? RefreshTokenRevocationPolicyOnPasswordChange;
         /// <summary>
+        /// The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
+        /// </summary>
+        public readonly int? RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
+        /// <summary>
         /// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
         public readonly int RefreshTokenTimeToLiveInMinutes;
@@ -59,6 +63,8 @@ namespace theogravity.Fusionauth.Outputs
 
             bool? refreshTokenRevocationPolicyOnPasswordChange,
 
+            int? refreshTokenSlidingWindowMaximumTimeToLiveInMinutes,
+
             int refreshTokenTimeToLiveInMinutes,
 
             string? refreshTokenUsagePolicy,
@@ -70,6 +76,7 @@ namespace theogravity.Fusionauth.Outputs
             RefreshTokenExpirationPolicy = refreshTokenExpirationPolicy;
             RefreshTokenRevocationPolicyOnLoginPrevented = refreshTokenRevocationPolicyOnLoginPrevented;
             RefreshTokenRevocationPolicyOnPasswordChange = refreshTokenRevocationPolicyOnPasswordChange;
+            RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes = refreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
             RefreshTokenTimeToLiveInMinutes = refreshTokenTimeToLiveInMinutes;
             RefreshTokenUsagePolicy = refreshTokenUsagePolicy;
             TimeToLiveInSeconds = timeToLiveInSeconds;

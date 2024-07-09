@@ -19,6 +19,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using System.Text.Json;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
@@ -89,7 +90,7 @@ namespace theogravity.Fusionauth
         public Output<bool?> DisableDomainBlock { get; private set; } = null!;
 
         /// <summary>
-        /// The value of the email address for this method.
+        /// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         /// </summary>
         [Output("email")]
         public Output<string?> Email { get; private set; } = null!;
@@ -137,7 +138,7 @@ namespace theogravity.Fusionauth
         public Output<string?> MiddleName { get; private set; } = null!;
 
         /// <summary>
-        /// The value of the mobile phone for this method.
+        /// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         /// </summary>
         [Output("mobilePhone")]
         public Output<string?> MobilePhone { get; private set; } = null!;
@@ -294,7 +295,7 @@ namespace theogravity.Fusionauth
         public Input<bool>? DisableDomainBlock { get; set; }
 
         /// <summary>
-        /// The value of the email address for this method.
+        /// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
@@ -342,7 +343,7 @@ namespace theogravity.Fusionauth
         public Input<string>? MiddleName { get; set; }
 
         /// <summary>
-        /// The value of the mobile phone for this method.
+        /// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         /// </summary>
         [Input("mobilePhone")]
         public Input<string>? MobilePhone { get; set; }
@@ -486,7 +487,7 @@ namespace theogravity.Fusionauth
         public Input<bool>? DisableDomainBlock { get; set; }
 
         /// <summary>
-        /// The value of the email address for this method.
+        /// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         /// </summary>
         [Input("email")]
         public Input<string>? Email { get; set; }
@@ -534,7 +535,7 @@ namespace theogravity.Fusionauth
         public Input<string>? MiddleName { get; set; }
 
         /// <summary>
-        /// The value of the mobile phone for this method.
+        /// The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         /// </summary>
         [Input("mobilePhone")]
         public Input<string>? MobilePhone { get; set; }

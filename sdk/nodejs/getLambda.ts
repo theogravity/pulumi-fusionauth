@@ -47,6 +47,26 @@ export interface GetLambdaArgs {
     name?: string;
     /**
      * The Lambda type. The possible values are:
+     * - `JWTPopulate`
+     * - `OpenIDReconcile`
+     * - `SAMLv2Reconcile`
+     * - `SAMLv2Populate`
+     * - `AppleReconcile`
+     * - `ExternalJWTReconcile`
+     * - `FacebookReconcile`
+     * - `GoogleReconcile`
+     * - `HYPRReconcile`
+     * - `TwitterReconcile`
+     * - `LDAPConnectorReconcile`
+     * - `LinkedInReconcile`
+     * - `EpicGamesReconcile`
+     * - `NintendoReconcile`
+     * - `SonyPSNReconcile`
+     * - `SteamReconcile`
+     * - `TwitchReconcile`
+     * - `XboxReconcile`
+     * - `SelfServiceRegistrationValidation`
+     * - `ClientCredentialsJWTPopulate`
      */
     type: string;
 }
@@ -104,6 +124,26 @@ export interface GetLambdaOutputArgs {
     name?: pulumi.Input<string>;
     /**
      * The Lambda type. The possible values are:
+     * - `JWTPopulate`
+     * - `OpenIDReconcile`
+     * - `SAMLv2Reconcile`
+     * - `SAMLv2Populate`
+     * - `AppleReconcile`
+     * - `ExternalJWTReconcile`
+     * - `FacebookReconcile`
+     * - `GoogleReconcile`
+     * - `HYPRReconcile`
+     * - `TwitterReconcile`
+     * - `LDAPConnectorReconcile`
+     * - `LinkedInReconcile`
+     * - `EpicGamesReconcile`
+     * - `NintendoReconcile`
+     * - `SonyPSNReconcile`
+     * - `SteamReconcile`
+     * - `TwitchReconcile`
+     * - `XboxReconcile`
+     * - `SelfServiceRegistrationValidation`
+     * - `ClientCredentialsJWTPopulate`
      */
     type: pulumi.Input<string>;
 }

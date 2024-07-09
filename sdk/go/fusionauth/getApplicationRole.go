@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Application Role Resource
@@ -24,7 +25,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -43,7 +44,7 @@ import (
 //
 // ```
 func GetApplicationRole(ctx *pulumi.Context, args *GetApplicationRoleArgs, opts ...pulumi.InvokeOption) (*GetApplicationRoleResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetApplicationRoleResult
 	err := ctx.Invoke("fusionauth:index/getApplicationRole:getApplicationRole", args, &rv, opts...)
 	if err != nil {

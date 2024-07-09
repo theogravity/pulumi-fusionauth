@@ -85,6 +85,26 @@ export class FusionAuthLambda extends pulumi.CustomResource {
     public readonly name!: pulumi.Output<string>;
     /**
      * The lambda type. The possible values are:
+     * - `JWTPopulate`
+     * - `OpenIDReconcile`
+     * - `SAMLv2Reconcile`
+     * - `SAMLv2Populate`
+     * - `AppleReconcile`
+     * - `ExternalJWTReconcile`
+     * - `FacebookReconcile`
+     * - `GoogleReconcile`
+     * - `HYPRReconcile`
+     * - `TwitterReconcile`
+     * - `LDAPConnectorReconcile`
+     * - `LinkedInReconcile`
+     * - `EpicGamesReconcile`
+     * - `NintendoReconcile`
+     * - `SonyPSNReconcile`
+     * - `SteamReconcile`
+     * - `TwitchReconcile`
+     * - `XboxReconcile`
+     * - `SelfServiceRegistrationValidation`
+     * - `ClientCredentialsJWTPopulate`
      */
     public readonly type!: pulumi.Output<string>;
 
@@ -161,6 +181,26 @@ export interface FusionAuthLambdaState {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
+     * - `JWTPopulate`
+     * - `OpenIDReconcile`
+     * - `SAMLv2Reconcile`
+     * - `SAMLv2Populate`
+     * - `AppleReconcile`
+     * - `ExternalJWTReconcile`
+     * - `FacebookReconcile`
+     * - `GoogleReconcile`
+     * - `HYPRReconcile`
+     * - `TwitterReconcile`
+     * - `LDAPConnectorReconcile`
+     * - `LinkedInReconcile`
+     * - `EpicGamesReconcile`
+     * - `NintendoReconcile`
+     * - `SonyPSNReconcile`
+     * - `SteamReconcile`
+     * - `TwitchReconcile`
+     * - `XboxReconcile`
+     * - `SelfServiceRegistrationValidation`
+     * - `ClientCredentialsJWTPopulate`
      */
     type?: pulumi.Input<string>;
 }
@@ -197,6 +237,26 @@ export interface FusionAuthLambdaArgs {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
+     * - `JWTPopulate`
+     * - `OpenIDReconcile`
+     * - `SAMLv2Reconcile`
+     * - `SAMLv2Populate`
+     * - `AppleReconcile`
+     * - `ExternalJWTReconcile`
+     * - `FacebookReconcile`
+     * - `GoogleReconcile`
+     * - `HYPRReconcile`
+     * - `TwitterReconcile`
+     * - `LDAPConnectorReconcile`
+     * - `LinkedInReconcile`
+     * - `EpicGamesReconcile`
+     * - `NintendoReconcile`
+     * - `SonyPSNReconcile`
+     * - `SteamReconcile`
+     * - `TwitchReconcile`
+     * - `XboxReconcile`
+     * - `SelfServiceRegistrationValidation`
+     * - `ClientCredentialsJWTPopulate`
      */
     type: pulumi.Input<string>;
 }

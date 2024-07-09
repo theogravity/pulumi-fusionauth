@@ -861,6 +861,10 @@ class FusionAuthTenant(pulumi.CustomResource):
                 username="username",
                 verify_email=True,
                 verify_email_when_changed=True,
+                additional_headers={
+                    "HeaderName1": "HeaderValue1",
+                    "HeaderName2": "HeaderValue2",
+                },
             ),
             event_configurations=[
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
@@ -1157,6 +1161,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                     length=6,
                     type="randomDigits",
                 ),
+                two_factor_one_time_code_id_time_to_live_in_seconds=60,
                 two_factor_trust_id_time_to_live_in_seconds=2592000,
             ),
             failed_authentication_configuration=fusionauth.FusionAuthTenantFailedAuthenticationConfigurationArgs(
@@ -1317,6 +1322,10 @@ class FusionAuthTenant(pulumi.CustomResource):
                 username="username",
                 verify_email=True,
                 verify_email_when_changed=True,
+                additional_headers={
+                    "HeaderName1": "HeaderValue1",
+                    "HeaderName2": "HeaderValue2",
+                },
             ),
             event_configurations=[
                 fusionauth.FusionAuthTenantEventConfigurationArgs(
@@ -1613,6 +1622,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                     length=6,
                     type="randomDigits",
                 ),
+                two_factor_one_time_code_id_time_to_live_in_seconds=60,
                 two_factor_trust_id_time_to_live_in_seconds=2592000,
             ),
             failed_authentication_configuration=fusionauth.FusionAuthTenantFailedAuthenticationConfigurationArgs(

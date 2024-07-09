@@ -42,6 +42,9 @@ namespace theogravity.Fusionauth.Outputs
         /// A base64 encoded secret
         /// </summary>
         public readonly string? Secret;
+        /// <summary>
+        /// The unique Id of the method.
+        /// </summary>
         public readonly string? TwoFactorMethodId;
 
         [OutputConstructor]

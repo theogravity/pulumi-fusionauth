@@ -40,6 +40,10 @@ import * as utilities from "./utilities";
  *         username: "username",
  *         verifyEmail: true,
  *         verifyEmailWhenChanged: true,
+ *         additionalHeaders: {
+ *             HeaderName1: "HeaderValue1",
+ *             HeaderName2: "HeaderValue2",
+ *         },
  *     },
  *     eventConfigurations: [
  *         {
@@ -336,6 +340,7 @@ import * as utilities from "./utilities";
  *             length: 6,
  *             type: "randomDigits",
  *         },
+ *         twoFactorOneTimeCodeIdTimeToLiveInSeconds: 60,
  *         twoFactorTrustIdTimeToLiveInSeconds: 2592000,
  *     },
  *     failedAuthenticationConfiguration: {

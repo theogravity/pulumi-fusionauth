@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantMinimumPasswordAgeGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Indicates that the minimum password age is enabled and being enforced.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

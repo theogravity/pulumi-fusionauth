@@ -119,6 +119,12 @@ namespace theogravity.Fusionauth.Inputs
         public Input<Inputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorArgs> TwoFactorOneTimeCodeIdGenerator { get; set; } = null!;
 
         /// <summary>
+        /// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+        /// </summary>
+        [Input("twoFactorOneTimeCodeIdTimeToLiveInSeconds")]
+        public Input<int>? TwoFactorOneTimeCodeIdTimeToLiveInSeconds { get; set; }
+
+        /// <summary>
         /// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
         /// </summary>
         [Input("twoFactorTrustIdTimeToLiveInSeconds", required: true)]

@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly int? Count;
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether to prevent a user from using any of their previous passwords.
         /// </summary>
         public readonly bool? Enabled;
 

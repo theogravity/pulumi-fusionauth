@@ -14,9 +14,6 @@ namespace theogravity.Fusionauth.Outputs
     [OutputType]
     public sealed class FusionAuthApplicationRegistrationConfigurationMiddleName
     {
-        /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
-        /// </summary>
         public readonly bool? Enabled;
         public readonly bool? Required;
 

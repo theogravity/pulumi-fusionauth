@@ -142,12 +142,12 @@ def get_form(data: Optional[Mapping[str, Any]] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getForm:getForm', __args__, opts=opts, typ=GetFormResult).value
 
     return AwaitableGetFormResult(
-        data=__ret__.data,
-        form_id=__ret__.form_id,
-        id=__ret__.id,
-        name=__ret__.name,
-        steps=__ret__.steps,
-        type=__ret__.type)
+        data=pulumi.get(__ret__, 'data'),
+        form_id=pulumi.get(__ret__, 'form_id'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        steps=pulumi.get(__ret__, 'steps'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_form)

@@ -20,7 +20,7 @@ import * as utilities from "./utilities";
  *
  * const name = new fusionauth.FusionAuthImportedKey("name", {
  *     kid: "8675309",
- *     privateKey: fs.readFileSync("./AuthKey_8675309.p8"),
+ *     privateKey: fs.readFileSync("./AuthKey_8675309.p8", "utf8"),
  * });
  * ```
  */
@@ -54,6 +54,15 @@ export class FusionAuthImportedKey extends pulumi.CustomResource {
 
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     public readonly algorithm!: pulumi.Output<string>;
     /**
@@ -86,6 +95,9 @@ export class FusionAuthImportedKey extends pulumi.CustomResource {
     public readonly secret!: pulumi.Output<string | undefined>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
+     * - `EC`
+     * - `RSA`
+     * - `HMAC`
      */
     public readonly type!: pulumi.Output<string>;
 
@@ -136,6 +148,15 @@ export class FusionAuthImportedKey extends pulumi.CustomResource {
 export interface FusionAuthImportedKeyState {
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     algorithm?: pulumi.Input<string>;
     /**
@@ -168,6 +189,9 @@ export interface FusionAuthImportedKeyState {
     secret?: pulumi.Input<string>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
+     * - `EC`
+     * - `RSA`
+     * - `HMAC`
      */
     type?: pulumi.Input<string>;
 }
@@ -178,6 +202,15 @@ export interface FusionAuthImportedKeyState {
 export interface FusionAuthImportedKeyArgs {
     /**
      * The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+     * - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+     * - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+     * - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+     * - `RS256` - RSA using SHA-256 hash algorithm
+     * - `RS384` - RSA using SHA-384 hash algorithm
+     * - `RS512` - RSA using SHA-512 hash algorithm
+     * - `HS256` - HMAC using SHA-256 hash algorithm
+     * - `HS384` - HMAC using SHA-384 hash algorithm
+     * - `HS512` - HMAC using SHA-512 hash algorithm
      */
     algorithm?: pulumi.Input<string>;
     /**
@@ -210,6 +243,9 @@ export interface FusionAuthImportedKeyArgs {
     secret?: pulumi.Input<string>;
     /**
      * The Key type. This field is required if importing an HMAC key type, or if importing a public key / private key pair. The possible values are:
+     * - `EC`
+     * - `RSA`
+     * - `HMAC`
      */
     type?: pulumi.Input<string>;
 }

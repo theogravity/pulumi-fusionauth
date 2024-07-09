@@ -15,15 +15,15 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantRateLimitConfigurationFailedLogin
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether rate limiting is enabled for failed login.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        /// The number of times a user can fail to login within the configured `time_period_in_seconds` duration. If a Failed authentication action has been configured then it will take precedence.
         /// </summary>
         public readonly int? Limit;
         /// <summary>
-        /// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        /// The duration for the number of times a user can fail login before being rate limited.
         /// </summary>
         public readonly int? TimePeriodInSeconds;
 

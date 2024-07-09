@@ -191,17 +191,17 @@ def get_e_mail(from_email: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getEMail:getEMail', __args__, opts=opts, typ=GetEMailResult).value
 
     return AwaitableGetEMailResult(
-        default_from_name=__ret__.default_from_name,
-        default_html_template=__ret__.default_html_template,
-        default_subject=__ret__.default_subject,
-        default_text_template=__ret__.default_text_template,
-        from_email=__ret__.from_email,
-        id=__ret__.id,
-        localized_from_names=__ret__.localized_from_names,
-        localized_html_templates=__ret__.localized_html_templates,
-        localized_subjects=__ret__.localized_subjects,
-        localized_text_templates=__ret__.localized_text_templates,
-        name=__ret__.name)
+        default_from_name=pulumi.get(__ret__, 'default_from_name'),
+        default_html_template=pulumi.get(__ret__, 'default_html_template'),
+        default_subject=pulumi.get(__ret__, 'default_subject'),
+        default_text_template=pulumi.get(__ret__, 'default_text_template'),
+        from_email=pulumi.get(__ret__, 'from_email'),
+        id=pulumi.get(__ret__, 'id'),
+        localized_from_names=pulumi.get(__ret__, 'localized_from_names'),
+        localized_html_templates=pulumi.get(__ret__, 'localized_html_templates'),
+        localized_subjects=pulumi.get(__ret__, 'localized_subjects'),
+        localized_text_templates=pulumi.get(__ret__, 'localized_text_templates'),
+        name=pulumi.get(__ret__, 'name'))
 
 
 @_utilities.lift_output_func(get_e_mail)

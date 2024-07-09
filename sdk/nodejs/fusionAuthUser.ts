@@ -92,7 +92,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
      */
     public readonly disableDomainBlock!: pulumi.Output<boolean | undefined>;
     /**
-     * The value of the email address for this method.
+     * The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
      */
     public readonly email!: pulumi.Output<string | undefined>;
     /**
@@ -124,7 +124,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
      */
     public readonly middleName!: pulumi.Output<string | undefined>;
     /**
-     * The value of the mobile phone for this method.
+     * The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
      */
     public readonly mobilePhone!: pulumi.Output<string | undefined>;
     /**
@@ -273,7 +273,7 @@ export interface FusionAuthUserState {
      */
     disableDomainBlock?: pulumi.Input<boolean>;
     /**
-     * The value of the email address for this method.
+     * The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
      */
     email?: pulumi.Input<string>;
     /**
@@ -305,7 +305,7 @@ export interface FusionAuthUserState {
      */
     middleName?: pulumi.Input<string>;
     /**
-     * The value of the mobile phone for this method.
+     * The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
      */
     mobilePhone?: pulumi.Input<string>;
     /**
@@ -380,7 +380,7 @@ export interface FusionAuthUserArgs {
      */
     disableDomainBlock?: pulumi.Input<boolean>;
     /**
-     * The value of the email address for this method.
+     * The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
      */
     email?: pulumi.Input<string>;
     /**
@@ -412,7 +412,7 @@ export interface FusionAuthUserArgs {
      */
     middleName?: pulumi.Input<string>;
     /**
-     * The value of the mobile phone for this method.
+     * The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
      */
     mobilePhone?: pulumi.Input<string>;
     /**

@@ -142,9 +142,18 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      */
     public readonly tenantConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlv2TenantConfiguration[] | undefined>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the emailClaim will be used when linking user.
+     */
+    public readonly uniqueIdClaim!: pulumi.Output<string | undefined>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
      */
     public readonly useNameForEmail!: pulumi.Output<boolean | undefined>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    public readonly usernameClaim!: pulumi.Output<string | undefined>;
     /**
      * The XML signature canonicalization method used when digesting and signing the SAML request.
      */
@@ -181,7 +190,9 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
             resourceInputs["requestSigningKey"] = state ? state.requestSigningKey : undefined;
             resourceInputs["signRequest"] = state ? state.signRequest : undefined;
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
+            resourceInputs["uniqueIdClaim"] = state ? state.uniqueIdClaim : undefined;
             resourceInputs["useNameForEmail"] = state ? state.useNameForEmail : undefined;
+            resourceInputs["usernameClaim"] = state ? state.usernameClaim : undefined;
             resourceInputs["xmlSignatureCanonicalizationMethod"] = state ? state.xmlSignatureCanonicalizationMethod : undefined;
         } else {
             const args = argsOrState as FusionAuthIdpSamlv2Args | undefined;
@@ -209,7 +220,9 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
             resourceInputs["requestSigningKey"] = args ? args.requestSigningKey : undefined;
             resourceInputs["signRequest"] = args ? args.signRequest : undefined;
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
+            resourceInputs["uniqueIdClaim"] = args ? args.uniqueIdClaim : undefined;
             resourceInputs["useNameForEmail"] = args ? args.useNameForEmail : undefined;
+            resourceInputs["usernameClaim"] = args ? args.usernameClaim : undefined;
             resourceInputs["xmlSignatureCanonicalizationMethod"] = args ? args.xmlSignatureCanonicalizationMethod : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -294,9 +307,18 @@ export interface FusionAuthIdpSamlv2State {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2TenantConfiguration>[]>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the emailClaim will be used when linking user.
+     */
+    uniqueIdClaim?: pulumi.Input<string>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    usernameClaim?: pulumi.Input<string>;
     /**
      * The XML signature canonicalization method used when digesting and signing the SAML request.
      */
@@ -380,9 +402,18 @@ export interface FusionAuthIdpSamlv2Args {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2TenantConfiguration>[]>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the emailClaim will be used when linking user.
+     */
+    uniqueIdClaim?: pulumi.Input<string>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    usernameClaim?: pulumi.Input<string>;
     /**
      * The XML signature canonicalization method used when digesting and signing the SAML request.
      */

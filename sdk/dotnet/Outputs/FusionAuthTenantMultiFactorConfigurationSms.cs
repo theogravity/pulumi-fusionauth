@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantMultiFactorConfigurationSms
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// When enabled, users may utilize a mobile phone number to complete a multi-factor authentication request.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

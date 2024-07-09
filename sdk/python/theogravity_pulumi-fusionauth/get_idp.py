@@ -91,9 +91,9 @@ def get_idp(name: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('fusionauth:index/getIdp:getIdp', __args__, opts=opts, typ=GetIdpResult).value
 
     return AwaitableGetIdpResult(
-        id=__ret__.id,
-        name=__ret__.name,
-        type=__ret__.type)
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_idp)

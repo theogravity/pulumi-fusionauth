@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Entity Type Resource
@@ -26,7 +27,7 @@ import (
 //	"encoding/json"
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -77,7 +78,7 @@ func NewFusionAuthEntityType(ctx *pulumi.Context,
 		args = &FusionAuthEntityTypeArgs{}
 	}
 
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthEntityType
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthEntityType:FusionAuthEntityType", name, args, &resource, opts...)
 	if err != nil {

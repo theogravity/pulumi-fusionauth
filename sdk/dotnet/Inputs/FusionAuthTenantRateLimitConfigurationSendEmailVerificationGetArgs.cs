@@ -14,19 +14,19 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantRateLimitConfigurationSendEmailVerificationGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether rate limiting is enabled for send email verification.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The number of times a user can request a two-factor code by email or SMS within the configured `time_period_in_seconds` duration.
+        /// The number of times a user can request a verification email within the configured `time_period_in_seconds` duration.
         /// </summary>
         [Input("limit")]
         public Input<int>? Limit { get; set; }
 
         /// <summary>
-        /// The duration for the number of times a user can request a two-factor code by email or SMS before being rate limited.
+        /// The duration for the number of times a user can request a verification email before being rate limited.
         /// </summary>
         [Input("timePeriodInSeconds")]
         public Input<int>? TimePeriodInSeconds { get; set; }

@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly int? Days;
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Indicates that the maximum password age is enabled and being enforced.
         /// </summary>
         public readonly bool? Enabled;
 

@@ -38,7 +38,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<int>? DeleteOrphanedAccountsDays { get; set; }
 
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether family configuration is enabled.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

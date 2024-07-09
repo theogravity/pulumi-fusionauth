@@ -19,11 +19,11 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         public readonly string? ButtonText;
         /// <summary>
-        /// The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        /// This is an optional Application specific override for the top level client_id.
         /// </summary>
         public readonly string? ClientId;
         /// <summary>
@@ -31,15 +31,15 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? CreateRegistration;
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The top-level scope that you are requesting from Steam.
+        /// This is an optional Application specific override for the top level scope.
         /// </summary>
         public readonly string? Scope;
         /// <summary>
-        /// The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        /// This is an optional Application specific override for the top level webAPIKey.
         /// </summary>
         public readonly string? WebApiKey;
 

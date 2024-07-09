@@ -20,7 +20,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? CaptchaMethod { get; set; }
 
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether captcha configuration is enabled.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

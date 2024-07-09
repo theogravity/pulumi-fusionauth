@@ -19,6 +19,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -55,7 +56,7 @@ namespace theogravity.Fusionauth
         public Output<bool?> IncludeEmailInEventJson { get; private set; } = null!;
 
         /// <summary>
-        /// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
         [Output("localizedNames")]
         public Output<ImmutableDictionary<string, object>?> LocalizedNames { get; private set; } = null!;
@@ -67,7 +68,7 @@ namespace theogravity.Fusionauth
         public Output<string?> ModifyEmailTemplateId { get; private set; } = null!;
 
         /// <summary>
-        /// The name of this User Action Option.
+        /// The name of this User Action.
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
@@ -189,7 +190,7 @@ namespace theogravity.Fusionauth
         private InputMap<object>? _localizedNames;
 
         /// <summary>
-        /// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
         public InputMap<object> LocalizedNames
         {
@@ -204,7 +205,7 @@ namespace theogravity.Fusionauth
         public Input<string>? ModifyEmailTemplateId { get; set; }
 
         /// <summary>
-        /// The name of this User Action Option.
+        /// The name of this User Action.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
@@ -293,7 +294,7 @@ namespace theogravity.Fusionauth
         private InputMap<object>? _localizedNames;
 
         /// <summary>
-        /// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+        /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
         public InputMap<object> LocalizedNames
         {
@@ -308,7 +309,7 @@ namespace theogravity.Fusionauth
         public Input<string>? ModifyEmailTemplateId { get; set; }
 
         /// <summary>
-        /// The name of this User Action Option.
+        /// The name of this User Action.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }

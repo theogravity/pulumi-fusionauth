@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? AccessTokenId;
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// Indicates if this application is using the JWT configuration defined here or the global JWT configuration defined by the System Configuration. If this is false the signing algorithm configured in the System Configuration will be used. If true the signing algorithm defined in this application will be used.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
@@ -27,9 +27,21 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? IdTokenKeyId;
         /// <summary>
+        /// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_time_to_live_in_minutes` is reached.
+        /// </summary>
+        public readonly string? RefreshTokenExpirationPolicy;
+        /// <summary>
+        /// The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
+        /// </summary>
+        public readonly int? RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
+        /// <summary>
         /// The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
         /// </summary>
         public readonly int? RefreshTokenTtlMinutes;
+        /// <summary>
+        /// The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
+        /// </summary>
+        public readonly string? RefreshTokenUsagePolicy;
         /// <summary>
         /// The length of time in seconds the JWT will live before it is expired and no longer valid.
         /// </summary>
@@ -43,14 +55,23 @@ namespace theogravity.Fusionauth.Outputs
 
             string? idTokenKeyId,
 
+            string? refreshTokenExpirationPolicy,
+
+            int? refreshTokenSlidingWindowMaximumTimeToLiveInMinutes,
+
             int? refreshTokenTtlMinutes,
+
+            string? refreshTokenUsagePolicy,
 
             int? ttlSeconds)
         {
             AccessTokenId = accessTokenId;
             Enabled = enabled;
             IdTokenKeyId = idTokenKeyId;
+            RefreshTokenExpirationPolicy = refreshTokenExpirationPolicy;
+            RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes = refreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
             RefreshTokenTtlMinutes = refreshTokenTtlMinutes;
+            RefreshTokenUsagePolicy = refreshTokenUsagePolicy;
             TtlSeconds = ttlSeconds;
         }
     }

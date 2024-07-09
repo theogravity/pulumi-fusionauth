@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Form Field Resource
@@ -24,7 +25,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -42,7 +43,7 @@ import (
 //
 // ```
 func GetFormField(ctx *pulumi.Context, args *GetFormFieldArgs, opts ...pulumi.InvokeOption) (*GetFormFieldResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetFormFieldResult
 	err := ctx.Invoke("fusionauth:index/getFormField:getFormField", args, &rv, opts...)
 	if err != nil {

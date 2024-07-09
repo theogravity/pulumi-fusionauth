@@ -15,11 +15,11 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator
     {
         /// <summary>
-        /// TThe length of the secure generator used for generating the the two factor code Id.
+        /// The length of the secure generator used for generating the change password Id.
         /// </summary>
         public readonly int Length;
         /// <summary>
-        /// The type of the secure generator used for generating the two factor one time code Id.
+        /// The type of the secure generator used for generating the change password Id.
         /// </summary>
         public readonly string Type;
 

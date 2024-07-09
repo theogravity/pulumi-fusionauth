@@ -20,13 +20,13 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ApplicationId { get; set; }
 
         /// <summary>
-        /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button image URL.
         /// </summary>
         [Input("buttonImageUrl")]
         public Input<string>? ButtonImageUrl { get; set; }
 
         /// <summary>
-        /// The top-level button text to use on the FusionAuth login page for this Identity Provider.
+        /// This is an optional Application specific override for the top level button text.
         /// </summary>
         [Input("buttonText")]
         public Input<string>? ButtonText { get; set; }
@@ -38,7 +38,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? CreateRegistration { get; set; }
 
         /// <summary>
-        /// Determines if this provider is enabled. If it is false then it will be disabled globally.
+        /// Determines if this identity provider is enabled for the Application specified by the applicationId key.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # External JWT Identity Provider Resource
@@ -27,14 +28,14 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthIdpExternalJwt(ctx, "jwt", &fusionauth.FusionAuthIdpExternalJwtArgs{
-//				ClaimMap: pulumi.AnyMap{
+//				ClaimMap: pulumi.Map{
 //					"dept":       pulumi.Any("RegistrationData"),
 //					"first_name": pulumi.Any("firstName"),
 //					"last_name":  pulumi.Any("lastName"),
@@ -101,7 +102,7 @@ func NewFusionAuthIdpExternalJwt(ctx *pulumi.Context,
 	if args.UniqueIdentityClaim == nil {
 		return nil, errors.New("invalid value for required argument 'UniqueIdentityClaim'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthIdpExternalJwt
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthIdpExternalJwt:FusionAuthIdpExternalJwt", name, args, &resource, opts...)
 	if err != nil {

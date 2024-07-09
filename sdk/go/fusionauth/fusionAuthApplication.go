@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Application Resource
@@ -23,7 +24,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -71,6 +72,26 @@ import (
 //					LogoutBehavior:              pulumi.String("AllApplications"),
 //					LogoutUrl:                   pulumi.String("http://www.example.com/logout"),
 //					RequireClientAuthentication: pulumi.Bool(false),
+//					ProvidedScopePolicies: fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArray{
+//						&fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs{
+//							Address: &fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs{
+//								Enabled:  pulumi.Bool(false),
+//								Required: pulumi.Bool(false),
+//							},
+//							Email: &fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs{
+//								Enabled:  pulumi.Bool(false),
+//								Required: pulumi.Bool(false),
+//							},
+//							Phone: &fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs{
+//								Enabled:  pulumi.Bool(false),
+//								Required: pulumi.Bool(false),
+//							},
+//							Profile: &fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs{
+//								Enabled:  pulumi.Bool(false),
+//								Required: pulumi.Bool(false),
+//							},
+//						},
+//					},
 //				},
 //				RegistrationConfiguration: &fusionauth.FusionAuthApplicationRegistrationConfigurationArgs{
 //					BirthDate: &fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs{
@@ -100,6 +121,10 @@ import (
 //						Enabled:  pulumi.Bool(false),
 //						Required: pulumi.Bool(false),
 //					},
+//					PreferredLanguages: &fusionauth.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs{
+//						Enabled:  pulumi.Bool(false),
+//						Required: pulumi.Bool(false),
+//					},
 //					Type: pulumi.String(""),
 //				},
 //				PasswordlessConfigurationEnabled: pulumi.Bool(false),
@@ -120,7 +145,7 @@ type FusionAuthApplication struct {
 	pulumi.CustomResourceState
 
 	AccessControlConfiguration FusionAuthApplicationAccessControlConfigurationOutput `pulumi:"accessControlConfiguration"`
-	// The Id of the CleanSpeak application that usernames are sent to for moderation.
+	// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 	ApplicationId pulumi.StringPtrOutput `pulumi:"applicationId"`
 	// Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrOutput                               `pulumi:"authenticationTokenConfigurationEnabled"`
@@ -162,7 +187,7 @@ func NewFusionAuthApplication(ctx *pulumi.Context,
 	if args.TenantId == nil {
 		return nil, errors.New("invalid value for required argument 'TenantId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthApplication
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthApplication:FusionAuthApplication", name, args, &resource, opts...)
 	if err != nil {
@@ -186,7 +211,7 @@ func GetFusionAuthApplication(ctx *pulumi.Context,
 // Input properties used for looking up and filtering FusionAuthApplication resources.
 type fusionAuthApplicationState struct {
 	AccessControlConfiguration *FusionAuthApplicationAccessControlConfiguration `pulumi:"accessControlConfiguration"`
-	// The Id of the CleanSpeak application that usernames are sent to for moderation.
+	// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 	ApplicationId *string `pulumi:"applicationId"`
 	// Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
 	AuthenticationTokenConfigurationEnabled *bool                                         `pulumi:"authenticationTokenConfigurationEnabled"`
@@ -220,7 +245,7 @@ type fusionAuthApplicationState struct {
 
 type FusionAuthApplicationState struct {
 	AccessControlConfiguration FusionAuthApplicationAccessControlConfigurationPtrInput
-	// The Id of the CleanSpeak application that usernames are sent to for moderation.
+	// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 	ApplicationId pulumi.StringPtrInput
 	// Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrInput
@@ -258,7 +283,7 @@ func (FusionAuthApplicationState) ElementType() reflect.Type {
 
 type fusionAuthApplicationArgs struct {
 	AccessControlConfiguration *FusionAuthApplicationAccessControlConfiguration `pulumi:"accessControlConfiguration"`
-	// The Id of the CleanSpeak application that usernames are sent to for moderation.
+	// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 	ApplicationId *string `pulumi:"applicationId"`
 	// Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
 	AuthenticationTokenConfigurationEnabled *bool                                         `pulumi:"authenticationTokenConfigurationEnabled"`
@@ -293,7 +318,7 @@ type fusionAuthApplicationArgs struct {
 // The set of arguments for constructing a FusionAuthApplication resource.
 type FusionAuthApplicationArgs struct {
 	AccessControlConfiguration FusionAuthApplicationAccessControlConfigurationPtrInput
-	// The Id of the CleanSpeak application that usernames are sent to for moderation.
+	// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 	ApplicationId pulumi.StringPtrInput
 	// Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrInput
@@ -418,7 +443,7 @@ func (o FusionAuthApplicationOutput) AccessControlConfiguration() FusionAuthAppl
 	}).(FusionAuthApplicationAccessControlConfigurationOutput)
 }
 
-// The Id of the CleanSpeak application that usernames are sent to for moderation.
+// The Id to use for the new Application. If not specified a secure random UUID will be generated.
 func (o FusionAuthApplicationOutput) ApplicationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplication) pulumi.StringPtrOutput { return v.ApplicationId }).(pulumi.StringPtrOutput)
 }

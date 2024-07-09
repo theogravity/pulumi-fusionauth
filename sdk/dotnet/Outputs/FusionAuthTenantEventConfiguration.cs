@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantEventConfiguration
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether or not FusionAuth should send these types of events to any configured Webhooks.
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>

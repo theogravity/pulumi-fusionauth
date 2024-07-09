@@ -49,6 +49,9 @@ namespace theogravity.Fusionauth.Inputs
         [Input("clientAuthenticationPolicy")]
         public Input<string>? ClientAuthenticationPolicy { get; set; }
 
+        /// <summary>
+        /// The OAuth 2.0 client id. If you leave this blank during a POST, a client id will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
+        /// </summary>
         [Input("clientId")]
         public Input<string>? ClientId { get; set; }
 
@@ -59,7 +62,16 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? ClientSecret { get; set; }
 
         /// <summary>
-        /// Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
+        /// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
+        /// - `AlwaysPrompt` - Always prompt the user for consent.
+        /// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+        /// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+        /// </summary>
+        [Input("consentMode")]
+        public Input<string>? ConsentMode { get; set; }
+
+        /// <summary>
+        /// Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
         /// </summary>
         [Input("debug")]
         public Input<bool>? Debug { get; set; }
@@ -95,7 +107,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? LogoutBehavior { get; set; }
 
         /// <summary>
-        /// The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
+        /// The logout URL for the Application. FusionAuth will redirect to this URL after the user logs out of OAuth.
         /// </summary>
         [Input("logoutUrl")]
         public Input<string>? LogoutUrl { get; set; }
@@ -105,6 +117,26 @@ namespace theogravity.Fusionauth.Inputs
         /// </summary>
         [Input("proofKeyForCodeExchangePolicy")]
         public Input<string>? ProofKeyForCodeExchangePolicy { get; set; }
+
+        [Input("providedScopePolicies")]
+        private InputList<Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs>? _providedScopePolicies;
+
+        /// <summary>
+        /// Configures which of the default scopes are enabled and required.
+        /// </summary>
+        public InputList<Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs> ProvidedScopePolicies
+        {
+            get => _providedScopePolicies ?? (_providedScopePolicies = new InputList<Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs>());
+            set => _providedScopePolicies = value;
+        }
+
+        /// <summary>
+        /// The application’s relationship to the OAuth server. The possible values are: 
+        /// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+        /// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+        /// </summary>
+        [Input("relationship")]
+        public Input<string>? Relationship { get; set; }
 
         /// <summary>
         /// Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The client_id and client_secret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
@@ -117,6 +149,23 @@ namespace theogravity.Fusionauth.Inputs
         /// </summary>
         [Input("requireRegistration")]
         public Input<bool>? RequireRegistration { get; set; }
+
+        /// <summary>
+        /// Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
+        /// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+        /// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+        /// </summary>
+        [Input("scopeHandlingPolicy", required: true)]
+        public Input<string> ScopeHandlingPolicy { get; set; } = null!;
+
+        /// <summary>
+        /// Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
+        /// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+        /// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+        /// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+        /// </summary>
+        [Input("unknownScopePolicy", required: true)]
+        public Input<string> UnknownScopePolicy { get; set; } = null!;
 
         public FusionAuthApplicationOauthConfigurationArgs()
         {

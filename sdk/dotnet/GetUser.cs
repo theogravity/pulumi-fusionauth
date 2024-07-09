@@ -19,12 +19,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Users API](https://fusionauth.io/docs/v1/tech/apis/users)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -37,8 +36,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetUserResult> InvokeAsync(GetUserArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetUserResult>("fusionauth:index/getUser:getUser", args ?? new GetUserArgs(), options.WithDefaults());
@@ -50,12 +47,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Users API](https://fusionauth.io/docs/v1/tech/apis/users)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -68,8 +64,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetUserResult> Invoke(GetUserInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetUserResult>("fusionauth:index/getUser:getUser", args ?? new GetUserInvokeArgs(), options.WithDefaults());

@@ -15,9 +15,12 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthApplicationRegistrationConfiguration
     {
         public readonly Outputs.FusionAuthApplicationRegistrationConfigurationBirthDate? BirthDate;
+        /// <summary>
+        /// Determines if the password should be confirmed during self service registration, this means that the user will be required to type the password twice.
+        /// </summary>
         public readonly bool? ConfirmPassword;
         /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
+        /// Determines if self service registration is enabled for this application. When this value is false, you may still use the Registration API, this only affects if the self service option is available during the OAuth 2.0 login.
         /// </summary>
         public readonly bool? Enabled;
         public readonly Outputs.FusionAuthApplicationRegistrationConfigurationFirstName? FirstName;
@@ -33,6 +36,7 @@ namespace theogravity.Fusionauth.Outputs
         public readonly string? LoginIdType;
         public readonly Outputs.FusionAuthApplicationRegistrationConfigurationMiddleName? MiddleName;
         public readonly Outputs.FusionAuthApplicationRegistrationConfigurationMobilePhone? MobilePhone;
+        public readonly Outputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguages? PreferredLanguages;
         /// <summary>
         /// The type of registration flow.
         /// </summary>
@@ -60,6 +64,8 @@ namespace theogravity.Fusionauth.Outputs
 
             Outputs.FusionAuthApplicationRegistrationConfigurationMobilePhone? mobilePhone,
 
+            Outputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguages? preferredLanguages,
+
             string? type)
         {
             BirthDate = birthDate;
@@ -72,6 +78,7 @@ namespace theogravity.Fusionauth.Outputs
             LoginIdType = loginIdType;
             MiddleName = middleName;
             MobilePhone = mobilePhone;
+            PreferredLanguages = preferredLanguages;
             Type = type;
         }
     }

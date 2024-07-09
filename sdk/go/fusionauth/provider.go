@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // The provider type for the fusionauth package. By default, resources use package-wide configuration
@@ -29,12 +30,16 @@ func NewProvider(ctx *pulumi.Context,
 	}
 
 	if args.ApiKey == nil {
-		args.ApiKey = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_API_KEY").(string))
+		if d := internal.GetEnvOrDefault(nil, nil, "FUSION_AUTH_API_KEY"); d != nil {
+			args.ApiKey = pulumi.StringPtr(d.(string))
+		}
 	}
 	if args.Host == nil {
-		args.Host = pulumi.StringPtr(getEnvOrDefault("", nil, "FUSION_AUTH_HOST_URL").(string))
+		if d := internal.GetEnvOrDefault(nil, nil, "FUSION_AUTH_HOST_URL"); d != nil {
+			args.Host = pulumi.StringPtr(d.(string))
+		}
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Provider
 	err := ctx.RegisterResource("pulumi:providers:fusionauth", name, args, &resource, opts...)
 	if err != nil {

@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether rate limiting is enabled for send two factor.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

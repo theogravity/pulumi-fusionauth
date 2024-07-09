@@ -13,14 +13,15 @@ namespace theogravity.Fusionauth
     /// <summary>
     /// ## # Theme Resource
     /// 
-    /// This Resource is used to create a role for an Application.
+    /// UI login themes can be configured to enable custom branding for your FusionAuth login workflow. Themes are configured per Tenant or optionally by Application.
     /// 
-    /// [Themes API]https://fusionauth.io/docs/v1/tech/apis/themes)
+    /// [Themes API](https://fusionauth.io/docs/v1/tech/apis/themes)
     /// 
     /// ## Example Usage
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -36,6 +37,7 @@ namespace theogravity.Fusionauth
     ///         AccountWebauthnAdd = "[#ftl/]",
     ///         AccountWebauthnDelete = "[#ftl/]",
     ///         AccountWebauthnIndex = "[#ftl/]",
+    ///         ConfirmationRequired = "[#ftl/]",
     ///         DefaultMessages = "[#ftl/]",
     ///         EmailComplete = "[#ftl/]",
     ///         EmailSend = "[#ftl/]",
@@ -49,6 +51,7 @@ namespace theogravity.Fusionauth
     ///         Oauth2ChildRegistrationNotAllowed = "[#ftl/]",
     ///         Oauth2ChildRegistrationNotAllowedComplete = "[#ftl/]",
     ///         Oauth2CompleteRegistration = "[#ftl/]",
+    ///         Oauth2Consent = "[#ftl/]",
     ///         Oauth2Device = "[#ftl/]",
     ///         Oauth2DeviceComplete = "[#ftl/]",
     ///         Oauth2Error = "[#ftl/]",
@@ -133,7 +136,15 @@ namespace theogravity.Fusionauth
         public Output<string> AccountWebauthnIndex { get; private set; } = null!;
 
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        /// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        /// </summary>
+        [Output("confirmationRequired")]
+        public Output<string> ConfirmationRequired { get; private set; } = null!;
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// 
+        /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
         [Output("defaultMessages")]
         public Output<string> DefaultMessages { get; private set; } = null!;
@@ -145,7 +156,10 @@ namespace theogravity.Fusionauth
         public Output<string> EmailComplete { get; private set; } = null!;
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        /// asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        /// In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        /// submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         /// </summary>
         [Output("emailSend")]
         public Output<string> EmailSend { get; private set; } = null!;
@@ -221,6 +235,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("oauth2CompleteRegistration")]
         public Output<string> Oauth2CompleteRegistration { get; private set; } = null!;
+
+        /// <summary>
+        /// A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        /// </summary>
+        [Output("oauth2Consent")]
+        public Output<string> Oauth2Consent { get; private set; } = null!;
 
         /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
@@ -343,7 +363,11 @@ namespace theogravity.Fusionauth
         public Output<string> RegistrationComplete { get; private set; } = null!;
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        /// user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        /// expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        /// the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        /// redirected to this page.
         /// </summary>
         [Output("registrationSend")]
         public Output<string> RegistrationSend { get; private set; } = null!;
@@ -486,7 +510,15 @@ namespace theogravity.Fusionauth
         public Input<string>? AccountWebauthnIndex { get; set; }
 
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        /// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        /// </summary>
+        [Input("confirmationRequired")]
+        public Input<string>? ConfirmationRequired { get; set; }
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// 
+        /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
         [Input("defaultMessages")]
         public Input<string>? DefaultMessages { get; set; }
@@ -498,7 +530,10 @@ namespace theogravity.Fusionauth
         public Input<string>? EmailComplete { get; set; }
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        /// asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        /// In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        /// submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         /// </summary>
         [Input("emailSend")]
         public Input<string>? EmailSend { get; set; }
@@ -580,6 +615,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("oauth2CompleteRegistration")]
         public Input<string>? Oauth2CompleteRegistration { get; set; }
+
+        /// <summary>
+        /// A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        /// </summary>
+        [Input("oauth2Consent")]
+        public Input<string>? Oauth2Consent { get; set; }
 
         /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
@@ -702,7 +743,11 @@ namespace theogravity.Fusionauth
         public Input<string>? RegistrationComplete { get; set; }
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        /// user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        /// expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        /// the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        /// redirected to this page.
         /// </summary>
         [Input("registrationSend")]
         public Input<string>? RegistrationSend { get; set; }
@@ -806,7 +851,15 @@ namespace theogravity.Fusionauth
         public Input<string>? AccountWebauthnIndex { get; set; }
 
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. Required if not copying an existing Theme.
+        /// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
+        /// </summary>
+        [Input("confirmationRequired")]
+        public Input<string>? ConfirmationRequired { get; set; }
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// 
+        /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
         [Input("defaultMessages")]
         public Input<string>? DefaultMessages { get; set; }
@@ -818,7 +871,10 @@ namespace theogravity.Fusionauth
         public Input<string>? EmailComplete { get; set; }
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /email/send page. This page is used after a user has
+        /// asked for the verification email to be resent. This can happen if the URL in the email expired and the user clicked it.
+        /// In this case, the user can provide their email address again and FusionAuth will resend the email. After the user
+        /// submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
         /// </summary>
         [Input("emailSend")]
         public Input<string>? EmailSend { get; set; }
@@ -900,6 +956,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("oauth2CompleteRegistration")]
         public Input<string>? Oauth2CompleteRegistration { get; set; }
+
+        /// <summary>
+        /// A FreeMarker template that is rendered when a third party application requests scopes from the user.
+        /// </summary>
+        [Input("oauth2Consent")]
+        public Input<string>? Oauth2Consent { get; set; }
 
         /// <summary>
         /// A FreeMarker template that is rendered when the user requests the /oauth2/device path. This page contains a form for accepting an end user’s short code for the interactive portion of the OAuth Device Authorization Grant workflow.
@@ -1022,7 +1084,11 @@ namespace theogravity.Fusionauth
         public Input<string>? RegistrationComplete { get; set; }
 
         /// <summary>
-        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a user has asked for the application specific verification email to be resent. This can happen if the URL in the email expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is redirected to this page.
+        /// A FreeMarker template that is rendered when the user requests the /registration/send page. This page is used after a
+        /// user has asked for the application specific verification email to be resent. This can happen if the URL in the email
+        /// expired and the user clicked it. In this case, the user can provide their email address again and FusionAuth will resend
+        /// the email. After the user submits their email and FusionAuth re-sends a verification email to them, the browser is
+        /// redirected to this page.
         /// </summary>
         [Input("registrationSend")]
         public Input<string>? RegistrationSend { get; set; }

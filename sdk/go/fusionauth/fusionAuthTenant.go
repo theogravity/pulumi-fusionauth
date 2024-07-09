@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Tenant Resource
@@ -29,7 +30,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -56,6 +57,10 @@ import (
 //					Username:                      pulumi.String("username"),
 //					VerifyEmail:                   pulumi.Bool(true),
 //					VerifyEmailWhenChanged:        pulumi.Bool(true),
+//					AdditionalHeaders: pulumi.Map{
+//						"HeaderName1": pulumi.Any("HeaderValue1"),
+//						"HeaderName2": pulumi.Any("HeaderValue2"),
+//					},
 //				},
 //				EventConfigurations: fusionauth.FusionAuthTenantEventConfigurationArray{
 //					&fusionauth.FusionAuthTenantEventConfigurationArgs{
@@ -352,7 +357,8 @@ import (
 //						Length: pulumi.Int(6),
 //						Type:   pulumi.String("randomDigits"),
 //					},
-//					TwoFactorTrustIdTimeToLiveInSeconds: pulumi.Int(2592000),
+//					TwoFactorOneTimeCodeIdTimeToLiveInSeconds: pulumi.Int(60),
+//					TwoFactorTrustIdTimeToLiveInSeconds:       pulumi.Int(2592000),
 //				},
 //				FailedAuthenticationConfiguration: &fusionauth.FusionAuthTenantFailedAuthenticationConfigurationArgs{
 //					ActionDuration:      pulumi.Int(3),
@@ -540,7 +546,7 @@ func NewFusionAuthTenant(ctx *pulumi.Context,
 	if args.ThemeId == nil {
 		return nil, errors.New("invalid value for required argument 'ThemeId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthTenant
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthTenant:FusionAuthTenant", name, args, &resource, opts...)
 	if err != nil {

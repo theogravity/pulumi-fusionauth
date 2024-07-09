@@ -26,6 +26,14 @@ namespace theogravity.Fusionauth.Outputs
         /// The Id of the Lambda that will be invoked when a a SAML response is generated during a SAML authentication request.
         /// </summary>
         public readonly string? Samlv2PopulateId;
+        /// <summary>
+        /// The unique Id of the lambda that will be used to perform additional validation on registration form steps.
+        /// </summary>
+        public readonly string? SelfServiceRegistrationValidationId;
+        /// <summary>
+        /// The Id of the Lambda that will be invoked when a UserInfo response is generated for this application.
+        /// </summary>
+        public readonly string? UserinfoPopulateId;
 
         [OutputConstructor]
         private FusionAuthApplicationLambdaConfiguration(
@@ -33,11 +41,17 @@ namespace theogravity.Fusionauth.Outputs
 
             string? idTokenPopulateId,
 
-            string? samlv2PopulateId)
+            string? samlv2PopulateId,
+
+            string? selfServiceRegistrationValidationId,
+
+            string? userinfoPopulateId)
         {
             AccessTokenPopulateId = accessTokenPopulateId;
             IdTokenPopulateId = idTokenPopulateId;
             Samlv2PopulateId = samlv2PopulateId;
+            SelfServiceRegistrationValidationId = selfServiceRegistrationValidationId;
+            UserinfoPopulateId = userinfoPopulateId;
         }
     }
 }

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Webhook Resource
@@ -25,7 +26,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -43,7 +44,7 @@ import (
 //					UserDelete: pulumi.Bool(false),
 //				},
 //				Global: pulumi.Bool(false),
-//				Headers: pulumi.AnyMap{
+//				Headers: pulumi.Map{
 //					"foo": pulumi.Any("bar"),
 //					"bar": pulumi.Any("baz"),
 //				},
@@ -115,7 +116,7 @@ func NewFusionAuthWebhook(ctx *pulumi.Context,
 		"httpAuthenticationUsername",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthWebhook
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthWebhook:FusionAuthWebhook", name, args, &resource, opts...)
 	if err != nil {

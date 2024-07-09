@@ -19,12 +19,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Forms API](https://fusionauth.io/docs/v1/tech/apis/forms)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -37,8 +36,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetFormResult> InvokeAsync(GetFormArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetFormResult>("fusionauth:index/getForm:getForm", args ?? new GetFormArgs(), options.WithDefaults());
@@ -50,12 +47,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Forms API](https://fusionauth.io/docs/v1/tech/apis/forms)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -68,8 +64,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetFormResult> Invoke(GetFormInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetFormResult>("fusionauth:index/getForm:getForm", args ?? new GetFormInvokeArgs(), options.WithDefaults());

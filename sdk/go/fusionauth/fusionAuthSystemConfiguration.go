@@ -8,6 +8,7 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # System Configuration Resource
@@ -24,7 +25,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
@@ -71,7 +72,7 @@ func NewFusionAuthSystemConfiguration(ctx *pulumi.Context,
 		args = &FusionAuthSystemConfigurationArgs{}
 	}
 
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthSystemConfiguration
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthSystemConfiguration:FusionAuthSystemConfiguration", name, args, &resource, opts...)
 	if err != nil {

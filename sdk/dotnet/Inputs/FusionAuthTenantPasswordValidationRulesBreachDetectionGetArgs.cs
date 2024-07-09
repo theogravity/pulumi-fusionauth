@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantPasswordValidationRulesBreachDetectionGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When true, FusionAuth will handle username collisions by generating a random suffix.
+        /// Whether to enable Reactor breach detection. Requires an activated license.
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }

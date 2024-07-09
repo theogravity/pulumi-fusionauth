@@ -19,6 +19,7 @@ namespace theogravity.Fusionauth
     /// 
     /// ```csharp
     /// using System.Collections.Generic;
+    /// using System.Linq;
     /// using Pulumi;
     /// using Fusionauth = theogravity.Fusionauth;
     /// 
@@ -75,6 +76,32 @@ namespace theogravity.Fusionauth
     ///             LogoutBehavior = "AllApplications",
     ///             LogoutUrl = "http://www.example.com/logout",
     ///             RequireClientAuthentication = false,
+    ///             ProvidedScopePolicies = new[]
+    ///             {
+    ///                 new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs
+    ///                 {
+    ///                     Address = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs
+    ///                     {
+    ///                         Enabled = false,
+    ///                         Required = false,
+    ///                     },
+    ///                     Email = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs
+    ///                     {
+    ///                         Enabled = false,
+    ///                         Required = false,
+    ///                     },
+    ///                     Phone = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs
+    ///                     {
+    ///                         Enabled = false,
+    ///                         Required = false,
+    ///                     },
+    ///                     Profile = new Fusionauth.Inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs
+    ///                     {
+    ///                         Enabled = false,
+    ///                         Required = false,
+    ///                     },
+    ///                 },
+    ///             },
     ///         },
     ///         RegistrationConfiguration = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationArgs
     ///         {
@@ -111,6 +138,11 @@ namespace theogravity.Fusionauth
     ///                 Enabled = false,
     ///                 Required = false,
     ///             },
+    ///             PreferredLanguages = new Fusionauth.Inputs.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs
+    ///             {
+    ///                 Enabled = false,
+    ///                 Required = false,
+    ///             },
     ///             Type = "",
     ///         },
     ///         PasswordlessConfigurationEnabled = false,
@@ -131,7 +163,7 @@ namespace theogravity.Fusionauth
         public Output<Outputs.FusionAuthApplicationAccessControlConfiguration> AccessControlConfiguration { get; private set; } = null!;
 
         /// <summary>
-        /// The Id of the CleanSpeak application that usernames are sent to for moderation.
+        /// The Id to use for the new Application. If not specified a secure random UUID will be generated.
         /// </summary>
         [Output("applicationId")]
         public Output<string?> ApplicationId { get; private set; } = null!;
@@ -271,7 +303,7 @@ namespace theogravity.Fusionauth
         public Input<Inputs.FusionAuthApplicationAccessControlConfigurationArgs>? AccessControlConfiguration { get; set; }
 
         /// <summary>
-        /// The Id of the CleanSpeak application that usernames are sent to for moderation.
+        /// The Id to use for the new Application. If not specified a secure random UUID will be generated.
         /// </summary>
         [Input("applicationId")]
         public Input<string>? ApplicationId { get; set; }
@@ -378,7 +410,7 @@ namespace theogravity.Fusionauth
         public Input<Inputs.FusionAuthApplicationAccessControlConfigurationGetArgs>? AccessControlConfiguration { get; set; }
 
         /// <summary>
-        /// The Id of the CleanSpeak application that usernames are sent to for moderation.
+        /// The Id to use for the new Application. If not specified a secure random UUID will be generated.
         /// </summary>
         [Input("applicationId")]
         public Input<string>? ApplicationId { get; set; }

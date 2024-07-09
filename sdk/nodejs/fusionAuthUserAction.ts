@@ -64,7 +64,7 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
      */
     public readonly includeEmailInEventJson!: pulumi.Output<boolean | undefined>;
     /**
-     * A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+     * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
     public readonly localizedNames!: pulumi.Output<{[key: string]: any} | undefined>;
     /**
@@ -72,7 +72,7 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
      */
     public readonly modifyEmailTemplateId!: pulumi.Output<string | undefined>;
     /**
-     * The name of this User Action Option.
+     * The name of this User Action.
      */
     public readonly name!: pulumi.Output<string>;
     /**
@@ -174,7 +174,7 @@ export interface FusionAuthUserActionState {
      */
     includeEmailInEventJson?: pulumi.Input<boolean>;
     /**
-     * A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+     * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
     localizedNames?: pulumi.Input<{[key: string]: any}>;
     /**
@@ -182,7 +182,7 @@ export interface FusionAuthUserActionState {
      */
     modifyEmailTemplateId?: pulumi.Input<string>;
     /**
-     * The name of this User Action Option.
+     * The name of this User Action.
      */
     name?: pulumi.Input<string>;
     /**
@@ -236,7 +236,7 @@ export interface FusionAuthUserActionArgs {
      */
     includeEmailInEventJson?: pulumi.Input<boolean>;
     /**
-     * A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
+     * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
     localizedNames?: pulumi.Input<{[key: string]: any}>;
     /**
@@ -244,7 +244,7 @@ export interface FusionAuthUserActionArgs {
      */
     modifyEmailTemplateId?: pulumi.Input<string>;
     /**
-     * The name of this User Action Option.
+     * The name of this User Action.
      */
     name?: pulumi.Input<string>;
     /**

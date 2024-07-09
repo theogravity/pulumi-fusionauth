@@ -13,9 +13,6 @@ namespace theogravity.Fusionauth.Inputs
 
     public sealed class FusionAuthApplicationRegistrationConfigurationMiddleNameGetArgs : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// Whether or not SAML Single Logout for this SAML IdP is enabled.
-        /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 

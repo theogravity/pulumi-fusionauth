@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Form Resource
@@ -25,14 +26,14 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthForm(ctx, "form", &fusionauth.FusionAuthFormArgs{
-//				Data: pulumi.AnyMap{
+//				Data: pulumi.Map{
 //					"description": pulumi.Any("This form customizes the registration experience."),
 //				},
 //				Steps: fusionauth.FusionAuthFormStepArray{
@@ -82,7 +83,7 @@ func NewFusionAuthForm(ctx *pulumi.Context,
 	if args.Steps == nil {
 		return nil, errors.New("invalid value for required argument 'Steps'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthForm
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthForm:FusionAuthForm", name, args, &resource, opts...)
 	if err != nil {

@@ -9,6 +9,7 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth/internal"
 )
 
 // ## # Lambda Resource
@@ -25,14 +26,21 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/theogravity/pulumi-fusionauth/sdk/v3/go/fusionauth"
+//	"github.com/theogravity/pulumi-fusionauth/sdk/v4/go/fusionauth"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthLambda(ctx, "preferred Username", &fusionauth.FusionAuthLambdaArgs{
-//				Body:    pulumi.String("// Using the user and registration parameters add additional values to the jwt object.\nfunction populate(jwt, user, registration) {\n  jwt.preferred_username = registration.username;\n}\n  \n"),
+//				Body: pulumi.String(`// Using the user and registration parameters add additional values to the jwt object.
+//
+//	function populate(jwt, user, registration) {
+//	  jwt.preferred_username = registration.username;
+//	}
+//
+// `),
+//
 //				Enabled: pulumi.Bool(true),
 //				Type:    pulumi.String("JWTPopulate"),
 //			})
@@ -62,6 +70,26 @@ type FusionAuthLambda struct {
 	// The name of the lambda.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type pulumi.StringOutput `pulumi:"type"`
 }
 
@@ -78,7 +106,7 @@ func NewFusionAuthLambda(ctx *pulumi.Context,
 	if args.Type == nil {
 		return nil, errors.New("invalid value for required argument 'Type'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthLambda
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthLambda:FusionAuthLambda", name, args, &resource, opts...)
 	if err != nil {
@@ -116,6 +144,26 @@ type fusionAuthLambdaState struct {
 	// The name of the lambda.
 	Name *string `pulumi:"name"`
 	// The lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type *string `pulumi:"type"`
 }
 
@@ -135,6 +183,26 @@ type FusionAuthLambdaState struct {
 	// The name of the lambda.
 	Name pulumi.StringPtrInput
 	// The lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type pulumi.StringPtrInput
 }
 
@@ -158,6 +226,26 @@ type fusionAuthLambdaArgs struct {
 	// The name of the lambda.
 	Name *string `pulumi:"name"`
 	// The lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type string `pulumi:"type"`
 }
 
@@ -178,6 +266,26 @@ type FusionAuthLambdaArgs struct {
 	// The name of the lambda.
 	Name pulumi.StringPtrInput
 	// The lambda type. The possible values are:
+	// - `JWTPopulate`
+	// - `OpenIDReconcile`
+	// - `SAMLv2Reconcile`
+	// - `SAMLv2Populate`
+	// - `AppleReconcile`
+	// - `ExternalJWTReconcile`
+	// - `FacebookReconcile`
+	// - `GoogleReconcile`
+	// - `HYPRReconcile`
+	// - `TwitterReconcile`
+	// - `LDAPConnectorReconcile`
+	// - `LinkedInReconcile`
+	// - `EpicGamesReconcile`
+	// - `NintendoReconcile`
+	// - `SonyPSNReconcile`
+	// - `SteamReconcile`
+	// - `TwitchReconcile`
+	// - `XboxReconcile`
+	// - `SelfServiceRegistrationValidation`
+	// - `ClientCredentialsJWTPopulate`
 	Type pulumi.StringInput
 }
 
@@ -301,6 +409,26 @@ func (o FusionAuthLambdaOutput) Name() pulumi.StringOutput {
 }
 
 // The lambda type. The possible values are:
+// - `JWTPopulate`
+// - `OpenIDReconcile`
+// - `SAMLv2Reconcile`
+// - `SAMLv2Populate`
+// - `AppleReconcile`
+// - `ExternalJWTReconcile`
+// - `FacebookReconcile`
+// - `GoogleReconcile`
+// - `HYPRReconcile`
+// - `TwitterReconcile`
+// - `LDAPConnectorReconcile`
+// - `LinkedInReconcile`
+// - `EpicGamesReconcile`
+// - `NintendoReconcile`
+// - `SonyPSNReconcile`
+// - `SteamReconcile`
+// - `TwitchReconcile`
+// - `XboxReconcile`
+// - `SelfServiceRegistrationValidation`
+// - `ClientCredentialsJWTPopulate`
 func (o FusionAuthLambdaOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthLambda) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }

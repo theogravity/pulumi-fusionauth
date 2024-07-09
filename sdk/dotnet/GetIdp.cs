@@ -17,12 +17,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -36,8 +35,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetIdpResult> InvokeAsync(GetIdpArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpArgs(), options.WithDefaults());
@@ -47,12 +44,11 @@ namespace theogravity.Fusionauth
         /// 
         /// [Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Fusionauth = Pulumi.Fusionauth;
         /// 
@@ -66,8 +62,6 @@ namespace theogravity.Fusionauth
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetIdpResult> Invoke(GetIdpInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpInvokeArgs(), options.WithDefaults());

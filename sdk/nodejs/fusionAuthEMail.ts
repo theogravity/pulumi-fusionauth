@@ -20,9 +20,9 @@ import * as utilities from "./utilities";
  *
  * const helloWorld = new fusionauth.FusionAuthEMail("helloWorld", {
  *     defaultFromName: "Welcome Team",
- *     defaultHtmlTemplate: fs.readFileSync(`${path.module}/email_templates/HelloWorld.html.ftl`),
+ *     defaultHtmlTemplate: fs.readFileSync(`${path.module}/email_templates/HelloWorld.html.ftl`, "utf8"),
  *     defaultSubject: "Hello",
- *     defaultTextTemplate: fs.readFileSync(`${path.module}/email_templates/HelloWorld.txt.ftl`),
+ *     defaultTextTemplate: fs.readFileSync(`${path.module}/email_templates/HelloWorld.txt.ftl`, "utf8"),
  *     fromEmail: "welcome@example.com.com",
  * });
  * ```

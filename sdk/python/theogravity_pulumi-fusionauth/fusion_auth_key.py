@@ -21,6 +21,15 @@ class FusionAuthKeyArgs:
         """
         The set of arguments for constructing a FusionAuthKey resource.
         :param pulumi.Input[str] algorithm: The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+               - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+               - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+               - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+               - `RS256` - RSA using SHA-256 hash algorithm
+               - `RS384` - RSA using SHA-384 hash algorithm
+               - `RS512` - RSA using SHA-512 hash algorithm
+               - `HS256` - HMAC using SHA-256 hash algorithm
+               - `HS384` - HMAC using SHA-384 hash algorithm
+               - `HS512` - HMAC using SHA-512 hash algorithm
         :param pulumi.Input[str] key_id: The Id to use for the new key. If not specified a secure random UUID will be generated.
         :param pulumi.Input[int] length: The length of the RSA or EC certificate. This field is required when generating RSA key types.
         :param pulumi.Input[str] name: The name of the Key.
@@ -38,6 +47,15 @@ class FusionAuthKeyArgs:
     def algorithm(self) -> pulumi.Input[str]:
         """
         The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+        - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        - `RS256` - RSA using SHA-256 hash algorithm
+        - `RS384` - RSA using SHA-384 hash algorithm
+        - `RS512` - RSA using SHA-512 hash algorithm
+        - `HS256` - HMAC using SHA-256 hash algorithm
+        - `HS384` - HMAC using SHA-384 hash algorithm
+        - `HS512` - HMAC using SHA-512 hash algorithm
         """
         return pulumi.get(self, "algorithm")
 
@@ -93,6 +111,15 @@ class _FusionAuthKeyState:
         """
         Input properties used for looking up and filtering FusionAuthKey resources.
         :param pulumi.Input[str] algorithm: The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+               - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+               - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+               - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+               - `RS256` - RSA using SHA-256 hash algorithm
+               - `RS384` - RSA using SHA-384 hash algorithm
+               - `RS512` - RSA using SHA-512 hash algorithm
+               - `HS256` - HMAC using SHA-256 hash algorithm
+               - `HS384` - HMAC using SHA-384 hash algorithm
+               - `HS512` - HMAC using SHA-512 hash algorithm
         :param pulumi.Input[str] key_id: The Id to use for the new key. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] kid: The id used in the JWT header to identify the key used to generate the signature
         :param pulumi.Input[int] length: The length of the RSA or EC certificate. This field is required when generating RSA key types.
@@ -114,6 +141,15 @@ class _FusionAuthKeyState:
     def algorithm(self) -> Optional[pulumi.Input[str]]:
         """
         The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+        - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        - `RS256` - RSA using SHA-256 hash algorithm
+        - `RS384` - RSA using SHA-384 hash algorithm
+        - `RS512` - RSA using SHA-512 hash algorithm
+        - `HS256` - HMAC using SHA-256 hash algorithm
+        - `HS384` - HMAC using SHA-384 hash algorithm
+        - `HS512` - HMAC using SHA-512 hash algorithm
         """
         return pulumi.get(self, "algorithm")
 
@@ -201,6 +237,15 @@ class FusionAuthKey(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] algorithm: The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+               - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+               - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+               - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+               - `RS256` - RSA using SHA-256 hash algorithm
+               - `RS384` - RSA using SHA-384 hash algorithm
+               - `RS512` - RSA using SHA-512 hash algorithm
+               - `HS256` - HMAC using SHA-256 hash algorithm
+               - `HS384` - HMAC using SHA-384 hash algorithm
+               - `HS512` - HMAC using SHA-512 hash algorithm
         :param pulumi.Input[str] key_id: The Id to use for the new key. If not specified a secure random UUID will be generated.
         :param pulumi.Input[int] length: The length of the RSA or EC certificate. This field is required when generating RSA key types.
         :param pulumi.Input[str] name: The name of the Key.
@@ -287,6 +332,15 @@ class FusionAuthKey(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] algorithm: The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+               - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+               - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+               - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+               - `RS256` - RSA using SHA-256 hash algorithm
+               - `RS384` - RSA using SHA-384 hash algorithm
+               - `RS512` - RSA using SHA-512 hash algorithm
+               - `HS256` - HMAC using SHA-256 hash algorithm
+               - `HS384` - HMAC using SHA-384 hash algorithm
+               - `HS512` - HMAC using SHA-512 hash algorithm
         :param pulumi.Input[str] key_id: The Id to use for the new key. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] kid: The id used in the JWT header to identify the key used to generate the signature
         :param pulumi.Input[int] length: The length of the RSA or EC certificate. This field is required when generating RSA key types.
@@ -308,6 +362,15 @@ class FusionAuthKey(pulumi.CustomResource):
     def algorithm(self) -> pulumi.Output[str]:
         """
         The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
+        - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        - `RS256` - RSA using SHA-256 hash algorithm
+        - `RS384` - RSA using SHA-384 hash algorithm
+        - `RS512` - RSA using SHA-512 hash algorithm
+        - `HS256` - HMAC using SHA-256 hash algorithm
+        - `HS384` - HMAC using SHA-384 hash algorithm
+        - `HS512` - HMAC using SHA-512 hash algorithm
         """
         return pulumi.get(self, "algorithm")
 

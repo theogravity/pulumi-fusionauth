@@ -15,6 +15,10 @@ namespace theogravity.Fusionauth.Inputs
     {
         [Input("fields", required: true)]
         private List<string>? _fields;
+
+        /// <summary>
+        /// An ordered list of Form Field Ids assigned to this step.
+        /// </summary>
         public List<string> Fields
         {
             get => _fields ?? (_fields = new List<string>());

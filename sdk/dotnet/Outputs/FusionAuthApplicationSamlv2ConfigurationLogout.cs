@@ -23,7 +23,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? DefaultVerificationKeyId;
         /// <summary>
-        /// The unique Id of the Key used to sign the SAML Single Logout response.
+        /// The unique Id of the Key used to sign the SAML Logout response.
         /// </summary>
         public readonly string? KeyId;
         /// <summary>
@@ -32,7 +32,7 @@ namespace theogravity.Fusionauth.Outputs
         public readonly bool? RequireSignedRequests;
         public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout? SingleLogout;
         /// <summary>
-        /// The XML signature canonicalization method used when digesting and signing the SAML response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
+        /// The XML signature canonicalization method used when digesting and signing the SAML Logout response. Unfortunately, many service providers do not correctly implement the XML signature specifications and force a specific canonicalization method. This setting allows you to change the canonicalization method to match the service provider. Often, service providers don’t even document their required method. You might need to contact enterprise support at the service provider to figure out what method they use.
         /// </summary>
         public readonly string? XmlSignatureCanonicalizationMethod;
 
