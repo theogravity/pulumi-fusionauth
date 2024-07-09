@@ -15,14 +15,18 @@
 package fusionauth
 
 import (
+	// Allow embedding bridge-metadata.json in the provider.
+	_ "embed"
 	"fmt"
 	"path/filepath"
 
-	"github.com/gpsinsight/terraform-provider-fusionauth/fusionauth"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+
+	// Replace this provider with the provider you are bridging.
+	"github.com/gpsinsight/terraform-provider-fusionauth/fusionauth"
+
 	"github.com/theogravity/pulumi-fusionauth/provider/pkg/version"
 )
 
@@ -35,13 +39,8 @@ const (
 	mainMod = "index" // the fusionauth module
 )
 
-// preConfigureCallback is called before the providerConfigure function of the underlying provider.
-// It should validate that the provider can be configured, and provide actionable errors in the case
-// it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
-// for example `stringValue(vars, "accessKey")`.
-func preConfigureCallback(_ resource.PropertyMap, _ shim.ResourceConfig) error {
-	return nil
-}
+//go:embed cmd/pulumi-resource-fusionauth/bridge-metadata.json
+var metadata []byte
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
@@ -80,7 +79,8 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/theogravity/pulumi-fusionauth",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "gpsinsight",
+		GitHubOrg:    "gpsinsight",
+		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
 		Config: map[string]*tfbridge.SchemaInfo{
 			"api_key": {
 				Default: &tfbridge.DefaultInfo{
@@ -93,7 +93,6 @@ func Provider() tfbridge.ProviderInfo {
 				},
 			},
 		},
-		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"fusionauth_lambda":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthLambda")},
 			"fusionauth_application":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FusionAuthApplication")},
@@ -187,6 +186,16 @@ func Provider() tfbridge.ProviderInfo {
 		},
 	}
 
+	// MustComputeTokens maps all resources and datasources from the upstream provider into Pulumi.
+	//
+	// tokens.SingleModule puts every upstream item into your provider's main module.
+	//
+	// You shouldn't need to override anything, but if you do, use the [tfbridge.ProviderInfo.Resources]
+	// and [tfbridge.ProviderInfo.DataSources].
+	prov.MustComputeTokens(tokens.SingleModule("fusionauth_", mainMod,
+		tokens.MakeStandard(mainPkg)))
+
+	prov.MustApplyAutoAliases()
 	prov.SetAutonaming(255, "-")
 
 	return prov

@@ -1,0 +1,681 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "fusionauth_api_key": {
+                "current": "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey",
+                "fields": {
+                    "permissions_endpoints": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_application": {
+                "current": "fusionauth:index/fusionAuthApplication:FusionAuthApplication",
+                "fields": {
+                    "access_control_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "clean_speak_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "application_ids": {
+                                    "maxItemsOne": false
+                                },
+                                "username_moderation": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "email_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "form_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "jwt_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "lambda_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "login_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "multi_factor_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "oauth_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "authorized_origin_urls": {
+                                    "maxItemsOne": false
+                                },
+                                "authorized_redirect_urls": {
+                                    "maxItemsOne": false
+                                },
+                                "enabled_grants": {
+                                    "maxItemsOne": false
+                                },
+                                "provided_scope_policy": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "address": {
+                                                "maxItemsOne": true
+                                            },
+                                            "email": {
+                                                "maxItemsOne": true
+                                            },
+                                            "phone": {
+                                                "maxItemsOne": true
+                                            },
+                                            "profile": {
+                                                "maxItemsOne": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "registration_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "birth_date": {
+                                    "maxItemsOne": true
+                                },
+                                "first_name": {
+                                    "maxItemsOne": true
+                                },
+                                "full_name": {
+                                    "maxItemsOne": true
+                                },
+                                "last_name": {
+                                    "maxItemsOne": true
+                                },
+                                "middle_name": {
+                                    "maxItemsOne": true
+                                },
+                                "mobile_phone": {
+                                    "maxItemsOne": true
+                                },
+                                "preferred_languages": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "registration_delete_policy": {
+                        "maxItemsOne": true
+                    },
+                    "samlv2_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "authorized_redirect_urls": {
+                                    "maxItemsOne": false
+                                },
+                                "logout": {
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "single_logout": {
+                                                "maxItemsOne": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "fusionauth_application_role": {
+                "current": "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole"
+            },
+            "fusionauth_email": {
+                "current": "fusionauth:index/fusionAuthEMail:FusionAuthEMail"
+            },
+            "fusionauth_entity": {
+                "current": "fusionauth:index/fusionAuthEntity:FusionAuthEntity"
+            },
+            "fusionauth_entity_grant": {
+                "current": "fusionauth:index/fusionAuthEntityGrant:FusionAuthEntityGrant",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_entity_type": {
+                "current": "fusionauth:index/fusionAuthEntityType:FusionAuthEntityType",
+                "fields": {
+                    "jwt_configuration": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "fusionauth_entity_type_permission": {
+                "current": "fusionauth:index/fusionAuthEntityTypePermission:FusionAuthEntityTypePermission"
+            },
+            "fusionauth_form": {
+                "current": "fusionauth:index/fusionAuthForm:FusionAuthForm",
+                "fields": {
+                    "steps": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "fields": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "fusionauth_form_field": {
+                "current": "fusionauth:index/fusionAuthFormField:FusionAuthFormField",
+                "fields": {
+                    "options": {
+                        "maxItemsOne": false
+                    },
+                    "validator": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "fusionauth_generic_connector": {
+                "current": "fusionauth:index/fusionAuthGenericConnector:FusionAuthGenericConnector"
+            },
+            "fusionauth_group": {
+                "current": "fusionauth:index/fusionAuthGroup:FusionAuthGroup",
+                "fields": {
+                    "role_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_apple": {
+                "current": "fusionauth:index/fusionAuthIdpApple:FusionAuthIdpApple",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_external_jwt": {
+                "current": "fusionauth:index/fusionAuthIdpExternalJwt:FusionAuthIdpExternalJwt",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "domains": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_facebook": {
+                "current": "fusionauth:index/fusionAuthIdpFacebook:FusionAuthIdpFacebook",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_google": {
+                "current": "fusionauth:index/fusionAuthIdpGoogle:FusionAuthIdpGoogle",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_linkedin": {
+                "current": "fusionauth:index/fusionAuthIdpLinkedIn:FusionAuthIdpLinkedIn",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_open_id_connect": {
+                "current": "fusionauth:index/fusionAuthIdpOpenIdConnect:FusionAuthIdpOpenIdConnect",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "domains": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_saml_v2": {
+                "current": "fusionauth:index/fusionAuthIdpSamlv2:FusionAuthIdpSamlv2",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "domains": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_saml_v2_idp_initated": {
+                "current": "fusionauth:index/fusionAuthIdpSamlV2IdpInitiated:FusionAuthIdpSamlV2IdpInitiated",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_sony_psn": {
+                "current": "fusionauth:index/fusionAuthIdpPsn:FusionAuthIdpPsn",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_steam": {
+                "current": "fusionauth:index/fusionAuthIdpSteam:FusionAuthIdpSteam",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_twitch": {
+                "current": "fusionauth:index/fusionAuthIdpTwitch:FusionAuthIdpTwitch",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_idp_xbox": {
+                "current": "fusionauth:index/fusionAuthIdpXBox:FusionAuthIdpXBox",
+                "fields": {
+                    "application_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "tenant_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_imported_key": {
+                "current": "fusionauth:index/fusionAuthImportedKey:FusionAuthImportedKey"
+            },
+            "fusionauth_key": {
+                "current": "fusionauth:index/fusionAuthKey:FusionAuthKey"
+            },
+            "fusionauth_lambda": {
+                "current": "fusionauth:index/fusionAuthLambda:FusionAuthLambda"
+            },
+            "fusionauth_reactor": {
+                "current": "fusionauth:index/fusionAuthReactor:FusionAuthReactor"
+            },
+            "fusionauth_registration": {
+                "current": "fusionauth:index/fusionAuthRegistration:FusionAuthRegistration",
+                "fields": {
+                    "preferred_languages": {
+                        "maxItemsOne": false
+                    },
+                    "roles": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_system_configuration": {
+                "current": "fusionauth:index/fusionAuthSystemConfiguration:FusionAuthSystemConfiguration",
+                "fields": {
+                    "audit_log_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "delete": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "cors_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "allowed_headers": {
+                                    "maxItemsOne": false
+                                },
+                                "allowed_methods": {
+                                    "maxItemsOne": false
+                                },
+                                "allowed_origins": {
+                                    "maxItemsOne": false
+                                },
+                                "exposed_headers": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "event_log_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "login_record_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "delete": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "ui_configuration": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "fusionauth_tenant": {
+                "current": "fusionauth:index/fusionAuthTenant:FusionAuthTenant",
+                "fields": {
+                    "access_control_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "captcha_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "connector_policy": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "domains": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "email_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "unverified": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "event_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "external_identifier_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "change_password_id_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "device_user_code_id_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "email_verification_id_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "email_verification_one_time_code_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "passwordless_login_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "registration_verification_id_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "registration_verification_one_time_code_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "setup_password_id_generator": {
+                                    "maxItemsOne": true
+                                },
+                                "two_factor_one_time_code_id_generator": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "failed_authentication_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "family_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "form_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "jwt_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "login_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "maximum_password_age": {
+                        "maxItemsOne": true
+                    },
+                    "minimum_password_age": {
+                        "maxItemsOne": true
+                    },
+                    "multi_factor_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "authenticator": {
+                                    "maxItemsOne": true
+                                },
+                                "email": {
+                                    "maxItemsOne": true
+                                },
+                                "sms": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "oauth_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "password_encryption_configuration": {
+                        "maxItemsOne": false
+                    },
+                    "password_validation_rules": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "breach_detection": {
+                                    "maxItemsOne": true
+                                },
+                                "remember_previous_passwords": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "rate_limit_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "failed_login": {
+                                    "maxItemsOne": true
+                                },
+                                "forgot_password": {
+                                    "maxItemsOne": true
+                                },
+                                "send_email_verification": {
+                                    "maxItemsOne": true
+                                },
+                                "send_passwordless": {
+                                    "maxItemsOne": true
+                                },
+                                "send_registration_verification": {
+                                    "maxItemsOne": true
+                                },
+                                "send_two_factor": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "registration_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "blocked_domains": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "user_delete_policy": {
+                        "maxItemsOne": true
+                    },
+                    "username_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "unique": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "fusionauth_theme": {
+                "current": "fusionauth:index/fusionAuthTheme:FusionAuthTheme"
+            },
+            "fusionauth_user": {
+                "current": "fusionauth:index/fusionAuthUser:FusionAuthUser",
+                "fields": {
+                    "preferred_languages": {
+                        "maxItemsOne": false
+                    },
+                    "two_factor_methods": {
+                        "maxItemsOne": false
+                    },
+                    "two_factor_recovery_codes": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_user_action": {
+                "current": "fusionauth:index/fusionAuthUserAction:FusionAuthUserAction",
+                "fields": {
+                    "options": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_webhook": {
+                "current": "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook",
+                "fields": {
+                    "events_enabled": {
+                        "maxItemsOne": true
+                    },
+                    "tenant_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            }
+        },
+        "datasources": {
+            "fusionauth_application": {
+                "current": "fusionauth:index/getApplication:getApplication"
+            },
+            "fusionauth_application_role": {
+                "current": "fusionauth:index/getApplicationRole:getApplicationRole"
+            },
+            "fusionauth_email": {
+                "current": "fusionauth:index/getEMail:getEMail"
+            },
+            "fusionauth_form": {
+                "current": "fusionauth:index/getForm:getForm",
+                "fields": {
+                    "steps": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "fields": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "fusionauth_form_field": {
+                "current": "fusionauth:index/getFormField:getFormField",
+                "fields": {
+                    "options": {
+                        "maxItemsOne": false
+                    },
+                    "validator": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "fusionauth_idp": {
+                "current": "fusionauth:index/getIdp:getIdp"
+            },
+            "fusionauth_lambda": {
+                "current": "fusionauth:index/getLambda:getLambda"
+            },
+            "fusionauth_tenant": {
+                "current": "fusionauth:index/getTenant:getTenant"
+            },
+            "fusionauth_user": {
+                "current": "fusionauth:index/getUser:getUser",
+                "fields": {
+                    "preferred_languages": {
+                        "maxItemsOne": false
+                    }
+                }
+            }
+        }
+    },
+    "auto-settings": {}
+}

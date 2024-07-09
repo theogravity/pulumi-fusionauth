@@ -15,9 +15,10 @@ linters:
   - nakedret
   - unconvert
   enable-all: false
-run:
-  skip-files:
+issues:
+  exclude-files:
   - schema.go
   - pulumiManifest.go
   - doc.go
+run:
   timeout: 20m
