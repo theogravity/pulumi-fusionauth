@@ -26,8 +26,6 @@ import (
 
 	// Replace this provider with the provider you are bridging.
 	"github.com/gpsinsight/terraform-provider-fusionauth/fusionauth"
-
-	"github.com/theogravity/pulumi-fusionauth/provider/pkg/version"
 )
 
 // all of the token components used below.
@@ -172,7 +170,6 @@ func Provider() tfbridge.ProviderInfo {
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
 				fmt.Sprintf("github.com/theogravity/pulumi-%[1]s/sdk/", mainPkg),
-				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
 			),
