@@ -39,7 +39,7 @@ jobs:
       - name: Unshallow clone for tags
         run: git fetch --prune --unshallow --tags
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: ${{matrix.goversion}}
       - name: Install pulumictl
@@ -67,7 +67,7 @@ jobs:
       fail-fast: true
       matrix:
         goversion:
-          - 1.19.x
+          - 1.22.4
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
       - name: Unshallow clone for tags
         run: git fetch --prune --unshallow --tags
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.goversion }}
       - name: Install pulumictl
@@ -86,14 +86,14 @@ jobs:
         with:
           repo: pulumi/pulumictl
       - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v2.0.0
+        uses: pulumi/actions@v5
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.nodeversion}}
           registry-url: ${{env.NPM_REGISTRY_URL}}
       - name: Setup DotNet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{matrix.dotnetverson}}
       - name: Setup Python
@@ -124,15 +124,15 @@ jobs:
       fail-fast: true
       matrix:
         dotnetversion:
-          - 3.1.301
+          - 6.0.x
         goversion:
-          - 1.19.x
+          - 1.22.4
         language:
           - nodejs
           - python
           - dotnet
           - go
         nodeversion:
-          - 16.x
+          - 18.x
         pythonversion:
           - "3.9"

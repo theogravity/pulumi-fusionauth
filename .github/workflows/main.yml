@@ -20,16 +20,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: ci-scripts
         repository: pulumi/scripts
+    - run: git config --global --add safe.directory /__w/pulumi-fusionauth/pulumi-fusionauth
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
@@ -37,14 +38,14 @@ jobs:
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
-      uses: pulumi/action-install-pulumi-cli@v2
+      uses: pulumi/actions@v5
     - name: Setup Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{matrix.nodeversion}}
         registry-url: https://registry.npmjs.org
     - name: Setup DotNet
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{matrix.dotnetversion}}
     - name: Setup Python
@@ -82,34 +83,35 @@ jobs:
       fail-fast: true
       matrix:
         dotnetversion:
-        - 3.1.301
+        - 6.0.x
         goversion:
-        - 1.19.x
+        - 1.22.4
         language:
         - nodejs
         - python
         - dotnet
         - go
         nodeversion:
-        - 16.x
+        - 18.x
         pythonversion:
         - "3.7"
   lint:
-    container: golangci/golangci-lint:v1.50.1
+    container: golangci/golangci-lint:v1.59.1
     name: lint
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: ci-scripts
         repository: pulumi/scripts
+    - run: git config --global --add safe.directory /__w/pulumi-fusionauth/pulumi-fusionauth
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
@@ -117,30 +119,31 @@ jobs:
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
-      uses: pulumi/action-install-pulumi-cli@v2
+      uses: pulumi/actions@v5
     - run: make lint_provider
     strategy:
       fail-fast: true
       matrix:
         goversion:
-        - 1.19.x
+        - 1.22.4
   lint_sdk:
-    container: golangci/golangci-lint:v1.50.1
+    container: golangci/golangci-lint:v1.59.1
     name: lint-sdk
     needs: build_sdk
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: ci-scripts
         repository: pulumi/scripts
+    - run: git config --global --add safe.directory /__w/pulumi-fusionauth/pulumi-fusionauth
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
@@ -148,28 +151,29 @@ jobs:
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
-      uses: pulumi/action-install-pulumi-cli@v2
+      uses: pulumi/actions@v5
     - run: cd sdk/go/fusionauth && golangci-lint run -c ../../../.golangci.yml
     strategy:
       fail-fast: true
       matrix:
         goversion:
-        - 1.19.x
+        - 1.22.4
   prerequisites:
     name: prerequisites
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: ci-scripts
         repository: pulumi/scripts
+    - run: git config --global --add safe.directory /__w/pulumi-fusionauth/pulumi-fusionauth
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
@@ -177,7 +181,7 @@ jobs:
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
-      uses: pulumi/action-install-pulumi-cli@v2
+      uses: pulumi/actions@v5
     - name: Build tfgen & provider binaries
       run: make provider
     - name: Tar provider binaries
@@ -193,11 +197,11 @@ jobs:
       fail-fast: true
       matrix:
         dotnetversion:
-        - 3.1.301
+        - 6.0.x
         goversion:
-        - 1.19.x
+        - 1.22.4
         nodeversion:
-        - 16.x
+        - 18.x
         pythonversion:
         - "3.7"
   test:
@@ -206,16 +210,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checkout Scripts Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: ci-scripts
         repository: pulumi/scripts
+    - run: git config --global --add safe.directory /__w/pulumi-fusionauth/pulumi-fusionauth
     - name: Unshallow clone for tags
       run: git fetch --prune --unshallow --tags
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
@@ -223,14 +228,14 @@ jobs:
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
-      uses: pulumi/action-install-pulumi-cli@v2
+      uses: pulumi/actions@v5
     - name: Setup Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{matrix.nodeversion}}
         registry-url: https://registry.npmjs.org
     - name: Setup DotNet
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{matrix.dotnetversion}}
     - name: Setup Python
@@ -276,9 +281,9 @@ jobs:
       fail-fast: true
       matrix:
         dotnetversion:
-        - 3.1.301
+        - 6.0.x
         goversion:
-        - 1.19.x
+        - 1.22.4
         javaversion:
         - "11"
         language:
@@ -287,7 +292,7 @@ jobs:
         - dotnet
         - go
         nodeversion:
-        - 16.x
+        - 18.x
         pythonversion:
         - "3.7"
 name: main
