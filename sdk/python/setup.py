@@ -17,7 +17,7 @@ def readme():
         return "fusionauth Pulumi Package - Development Version"
 
 
-setup(name='theogravity_pulumi-fusionauth',
+setup(name='theogravity_pulumi_fusionauth',
       python_requires='>=3.8',
       version=VERSION,
       description="A Pulumi package for managing FusionAuth instances.",
