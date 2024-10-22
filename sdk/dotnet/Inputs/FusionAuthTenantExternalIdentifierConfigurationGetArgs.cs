@@ -56,6 +56,12 @@ namespace theogravity.Fusionauth.Inputs
         public Input<int> ExternalAuthenticationIdTimeToLiveInSeconds { get; set; } = null!;
 
         /// <summary>
+        /// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+        /// </summary>
+        [Input("loginIntentTimeToLiveInSeconds", required: true)]
+        public Input<int> LoginIntentTimeToLiveInSeconds { get; set; } = null!;
+
+        /// <summary>
         /// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
         /// </summary>
         [Input("oneTimePasswordTimeToLiveInSeconds", required: true)]

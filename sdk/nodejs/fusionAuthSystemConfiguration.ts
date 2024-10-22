@@ -72,6 +72,7 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
      */
     public readonly reportTimezone!: pulumi.Output<string | undefined>;
     public readonly uiConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationUiConfiguration>;
+    public readonly webhookEventLogConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 
     /**
      * Create a FusionAuthSystemConfiguration resource with the given unique name, arguments, and options.
@@ -92,6 +93,7 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
             resourceInputs["loginRecordConfiguration"] = state ? state.loginRecordConfiguration : undefined;
             resourceInputs["reportTimezone"] = state ? state.reportTimezone : undefined;
             resourceInputs["uiConfiguration"] = state ? state.uiConfiguration : undefined;
+            resourceInputs["webhookEventLogConfiguration"] = state ? state.webhookEventLogConfiguration : undefined;
         } else {
             const args = argsOrState as FusionAuthSystemConfigurationArgs | undefined;
             resourceInputs["auditLogConfiguration"] = args ? args.auditLogConfiguration : undefined;
@@ -100,6 +102,7 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
             resourceInputs["loginRecordConfiguration"] = args ? args.loginRecordConfiguration : undefined;
             resourceInputs["reportTimezone"] = args ? args.reportTimezone : undefined;
             resourceInputs["uiConfiguration"] = args ? args.uiConfiguration : undefined;
+            resourceInputs["webhookEventLogConfiguration"] = args ? args.webhookEventLogConfiguration : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FusionAuthSystemConfiguration.__pulumiType, name, resourceInputs, opts);
@@ -119,6 +122,7 @@ export interface FusionAuthSystemConfigurationState {
      */
     reportTimezone?: pulumi.Input<string>;
     uiConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUiConfiguration>;
+    webhookEventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 }
 
 /**
@@ -134,4 +138,5 @@ export interface FusionAuthSystemConfigurationArgs {
      */
     reportTimezone?: pulumi.Input<string>;
     uiConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUiConfiguration>;
+    webhookEventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 }

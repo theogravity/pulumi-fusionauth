@@ -5,7 +5,7 @@ go 1.21
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20240229143312-4f60ee4e2975
 
 require (
-	github.com/gpsinsight/terraform-provider-fusionauth v0.1.108
+	github.com/gpsinsight/terraform-provider-fusionauth v0.1.110
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.86.0
 )
 
@@ -26,7 +26,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/keyvault/internal v0.7.1 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.2.2 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/FusionAuth/go-client v0.0.0-20240425220342-2317e10dfcf5 // indirect
+	github.com/FusionAuth/go-client v0.0.0-20240912225700-ce40548e5bef // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect

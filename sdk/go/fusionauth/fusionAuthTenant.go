@@ -331,6 +331,7 @@ import (
 //						Type:   pulumi.String("randomAlphaNumeric"),
 //					},
 //					ExternalAuthenticationIdTimeToLiveInSeconds: pulumi.Int(300),
+//					LoginIntentTimeToLiveInSeconds:              pulumi.Int(1800),
 //					OneTimePasswordTimeToLiveInSeconds:          pulumi.Int(60),
 //					PasswordlessLoginGenerator: &fusionauth.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs{
 //						Length: pulumi.Int(32),
@@ -522,6 +523,8 @@ type FusionAuthTenant struct {
 	ThemeId               pulumi.StringOutput                         `pulumi:"themeId"`
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyOutput      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationOutput `pulumi:"usernameConfiguration"`
+	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+	WebhookIds pulumi.StringArrayOutput `pulumi:"webhookIds"`
 }
 
 // NewFusionAuthTenant registers a new resource with the given unique name, arguments, and options.
@@ -607,6 +610,8 @@ type fusionAuthTenantState struct {
 	ThemeId               *string                                `pulumi:"themeId"`
 	UserDeletePolicy      *FusionAuthTenantUserDeletePolicy      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration *FusionAuthTenantUsernameConfiguration `pulumi:"usernameConfiguration"`
+	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+	WebhookIds []string `pulumi:"webhookIds"`
 }
 
 type FusionAuthTenantState struct {
@@ -648,6 +653,8 @@ type FusionAuthTenantState struct {
 	ThemeId               pulumi.StringPtrInput
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyPtrInput
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationPtrInput
+	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+	WebhookIds pulumi.StringArrayInput
 }
 
 func (FusionAuthTenantState) ElementType() reflect.Type {
@@ -693,6 +700,8 @@ type fusionAuthTenantArgs struct {
 	ThemeId               string                                 `pulumi:"themeId"`
 	UserDeletePolicy      *FusionAuthTenantUserDeletePolicy      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration *FusionAuthTenantUsernameConfiguration `pulumi:"usernameConfiguration"`
+	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+	WebhookIds []string `pulumi:"webhookIds"`
 }
 
 // The set of arguments for constructing a FusionAuthTenant resource.
@@ -735,6 +744,8 @@ type FusionAuthTenantArgs struct {
 	ThemeId               pulumi.StringInput
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyPtrInput
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationPtrInput
+	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+	WebhookIds pulumi.StringArrayInput
 }
 
 func (FusionAuthTenantArgs) ElementType() reflect.Type {
@@ -963,6 +974,11 @@ func (o FusionAuthTenantOutput) UserDeletePolicy() FusionAuthTenantUserDeletePol
 
 func (o FusionAuthTenantOutput) UsernameConfiguration() FusionAuthTenantUsernameConfigurationOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantUsernameConfigurationOutput { return v.UsernameConfiguration }).(FusionAuthTenantUsernameConfigurationOutput)
+}
+
+// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+func (o FusionAuthTenantOutput) WebhookIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) pulumi.StringArrayOutput { return v.WebhookIds }).(pulumi.StringArrayOutput)
 }
 
 type FusionAuthTenantArrayOutput struct{ *pulumi.OutputState }
