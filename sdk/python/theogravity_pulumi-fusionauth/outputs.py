@@ -73,6 +73,8 @@ __all__ = [
     'FusionAuthSystemConfigurationLoginRecordConfiguration',
     'FusionAuthSystemConfigurationLoginRecordConfigurationDelete',
     'FusionAuthSystemConfigurationUiConfiguration',
+    'FusionAuthSystemConfigurationWebhookEventLogConfiguration',
+    'FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete',
     'FusionAuthTenantAccessControlConfiguration',
     'FusionAuthTenantCaptchaConfiguration',
     'FusionAuthTenantConnectorPolicy',
@@ -4651,6 +4653,67 @@ class FusionAuthSystemConfigurationUiConfiguration(dict):
 
 
 @pulumi.output_type
+class FusionAuthSystemConfigurationWebhookEventLogConfiguration(dict):
+    def __init__(__self__, *,
+                 delete: Optional['outputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete'] = None):
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional['outputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete']:
+        return pulumi.get(self, "delete")
+
+
+@pulumi.output_type
+class FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "numberOfDaysToRetain":
+            suggest = "number_of_days_to_retain"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 number_of_days_to_retain: Optional[int] = None):
+        """
+        :param bool enabled: Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+        :param int number_of_days_to_retain: The number of days to retain webhook event logs.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if number_of_days_to_retain is not None:
+            pulumi.set(__self__, "number_of_days_to_retain", number_of_days_to_retain)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        """
+        Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="numberOfDaysToRetain")
+    def number_of_days_to_retain(self) -> Optional[int]:
+        """
+        The number of days to retain webhook event logs.
+        """
+        return pulumi.get(self, "number_of_days_to_retain")
+
+
+@pulumi.output_type
 class FusionAuthTenantAccessControlConfiguration(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -5359,6 +5422,8 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
             suggest = "email_verification_one_time_code_generator"
         elif key == "externalAuthenticationIdTimeToLiveInSeconds":
             suggest = "external_authentication_id_time_to_live_in_seconds"
+        elif key == "loginIntentTimeToLiveInSeconds":
+            suggest = "login_intent_time_to_live_in_seconds"
         elif key == "oneTimePasswordTimeToLiveInSeconds":
             suggest = "one_time_password_time_to_live_in_seconds"
         elif key == "passwordlessLoginGenerator":
@@ -5411,6 +5476,7 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
                  email_verification_id_time_to_live_in_seconds: int,
                  email_verification_one_time_code_generator: 'outputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator',
                  external_authentication_id_time_to_live_in_seconds: int,
+                 login_intent_time_to_live_in_seconds: int,
                  one_time_password_time_to_live_in_seconds: int,
                  passwordless_login_generator: 'outputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator',
                  passwordless_login_time_to_live_in_seconds: int,
@@ -5432,6 +5498,7 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
         :param int device_code_time_to_live_in_seconds: The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
         :param int email_verification_id_time_to_live_in_seconds: The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
         :param int external_authentication_id_time_to_live_in_seconds: The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+        :param int login_intent_time_to_live_in_seconds: The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
         :param int one_time_password_time_to_live_in_seconds: The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
         :param int passwordless_login_time_to_live_in_seconds: The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
         :param int registration_verification_id_time_to_live_in_seconds: The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
@@ -5452,6 +5519,7 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
         pulumi.set(__self__, "email_verification_id_time_to_live_in_seconds", email_verification_id_time_to_live_in_seconds)
         pulumi.set(__self__, "email_verification_one_time_code_generator", email_verification_one_time_code_generator)
         pulumi.set(__self__, "external_authentication_id_time_to_live_in_seconds", external_authentication_id_time_to_live_in_seconds)
+        pulumi.set(__self__, "login_intent_time_to_live_in_seconds", login_intent_time_to_live_in_seconds)
         pulumi.set(__self__, "one_time_password_time_to_live_in_seconds", one_time_password_time_to_live_in_seconds)
         pulumi.set(__self__, "passwordless_login_generator", passwordless_login_generator)
         pulumi.set(__self__, "passwordless_login_time_to_live_in_seconds", passwordless_login_time_to_live_in_seconds)
@@ -5531,6 +5599,14 @@ class FusionAuthTenantExternalIdentifierConfiguration(dict):
         The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
         """
         return pulumi.get(self, "external_authentication_id_time_to_live_in_seconds")
+
+    @property
+    @pulumi.getter(name="loginIntentTimeToLiveInSeconds")
+    def login_intent_time_to_live_in_seconds(self) -> int:
+        """
+        The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+        """
+        return pulumi.get(self, "login_intent_time_to_live_in_seconds")
 
     @property
     @pulumi.getter(name="oneTimePasswordTimeToLiveInSeconds")

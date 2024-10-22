@@ -314,6 +314,7 @@ import * as utilities from "./utilities";
  *             type: "randomAlphaNumeric",
  *         },
  *         externalAuthenticationIdTimeToLiveInSeconds: 300,
+ *         loginIntentTimeToLiveInSeconds: 1800,
  *         oneTimePasswordTimeToLiveInSeconds: 60,
  *         passwordlessLoginGenerator: {
  *             length: 32,
@@ -534,6 +535,10 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     public readonly themeId!: pulumi.Output<string>;
     public readonly userDeletePolicy!: pulumi.Output<outputs.FusionAuthTenantUserDeletePolicy>;
     public readonly usernameConfiguration!: pulumi.Output<outputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+     */
+    public readonly webhookIds!: pulumi.Output<string[] | undefined>;
 
     /**
      * Create a FusionAuthTenant resource with the given unique name, arguments, and options.
@@ -577,6 +582,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["themeId"] = state ? state.themeId : undefined;
             resourceInputs["userDeletePolicy"] = state ? state.userDeletePolicy : undefined;
             resourceInputs["usernameConfiguration"] = state ? state.usernameConfiguration : undefined;
+            resourceInputs["webhookIds"] = state ? state.webhookIds : undefined;
         } else {
             const args = argsOrState as FusionAuthTenantArgs | undefined;
             if ((!args || args.emailConfiguration === undefined) && !opts.urn) {
@@ -623,6 +629,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["themeId"] = args ? args.themeId : undefined;
             resourceInputs["userDeletePolicy"] = args ? args.userDeletePolicy : undefined;
             resourceInputs["usernameConfiguration"] = args ? args.usernameConfiguration : undefined;
+            resourceInputs["webhookIds"] = args ? args.webhookIds : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FusionAuthTenant.__pulumiType, name, resourceInputs, opts);
@@ -689,6 +696,10 @@ export interface FusionAuthTenantState {
     themeId?: pulumi.Input<string>;
     userDeletePolicy?: pulumi.Input<inputs.FusionAuthTenantUserDeletePolicy>;
     usernameConfiguration?: pulumi.Input<inputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+     */
+    webhookIds?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 /**
@@ -751,4 +762,8 @@ export interface FusionAuthTenantArgs {
     themeId: pulumi.Input<string>;
     userDeletePolicy?: pulumi.Input<inputs.FusionAuthTenantUserDeletePolicy>;
     usernameConfiguration?: pulumi.Input<inputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+     */
+    webhookIds?: pulumi.Input<pulumi.Input<string>[]>;
 }

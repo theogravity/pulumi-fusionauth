@@ -10301,6 +10301,299 @@ func (o FusionAuthSystemConfigurationUiConfigurationPtrOutput) MenuFontColor() p
 	}).(pulumi.StringPtrOutput)
 }
 
+type FusionAuthSystemConfigurationWebhookEventLogConfiguration struct {
+	Delete *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete `pulumi:"delete"`
+}
+
+// FusionAuthSystemConfigurationWebhookEventLogConfigurationInput is an input type that accepts FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs and FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationWebhookEventLogConfigurationInput` via:
+//
+//	FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{...}
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutputWithContext(context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs struct {
+	Delete FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput `pulumi:"delete"`
+}
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput)
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput).ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput is an input type that accepts FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs, FusionAuthSystemConfigurationWebhookEventLogConfigurationPtr and FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput` via:
+//
+//	        FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput
+}
+
+type fusionAuthSystemConfigurationWebhookEventLogConfigurationPtrType FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs
+
+func FusionAuthSystemConfigurationWebhookEventLogConfigurationPtr(v *FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput {
+	return (*fusionAuthSystemConfigurationWebhookEventLogConfigurationPtrType)(v)
+}
+
+func (*fusionAuthSystemConfigurationWebhookEventLogConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationWebhookEventLogConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthSystemConfigurationWebhookEventLogConfigurationPtrType) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthSystemConfigurationWebhookEventLogConfigurationPtrType) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput)
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return o.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthSystemConfigurationWebhookEventLogConfiguration) *FusionAuthSystemConfigurationWebhookEventLogConfiguration {
+		return &v
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput)
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput) Delete() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationWebhookEventLogConfiguration) *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete {
+		return v.Delete
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput)
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationWebhookEventLogConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput) Elem() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationWebhookEventLogConfiguration) FusionAuthSystemConfigurationWebhookEventLogConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthSystemConfigurationWebhookEventLogConfiguration
+		return ret
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput)
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput) Delete() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationWebhookEventLogConfiguration) *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete {
+		if v == nil {
+			return nil
+		}
+		return v.Delete
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput)
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete struct {
+	// Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+	Enabled *bool `pulumi:"enabled"`
+	// The number of days to retain webhook event logs.
+	NumberOfDaysToRetain *int `pulumi:"numberOfDaysToRetain"`
+}
+
+// FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteInput is an input type that accepts FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs and FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteInput` via:
+//
+//	FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs{...}
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutputWithContext(context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs struct {
+	// Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The number of days to retain webhook event logs.
+	NumberOfDaysToRetain pulumi.IntPtrInput `pulumi:"numberOfDaysToRetain"`
+}
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete)(nil)).Elem()
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput)
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput).ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(ctx)
+}
+
+// FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput is an input type that accepts FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs, FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtr and FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput` via:
+//
+//	        FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput
+	ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput
+}
+
+type fusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrType FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs
+
+func FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtr(v *FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput {
+	return (*fusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrType)(v)
+}
+
+func (*fusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete)(nil)).Elem()
+}
+
+func (i *fusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrType) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return i.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrType) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput)
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o.ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete {
+		return &v
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput)
+}
+
+// Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The number of days to retain webhook event logs.
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput) NumberOfDaysToRetain() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) *int {
+		return v.NumberOfDaysToRetain
+	}).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) ToFusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) Elem() FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete
+		return ret
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput)
+}
+
+// Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The number of days to retain webhook event logs.
+func (o FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput) NumberOfDaysToRetain() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete) *int {
+		if v == nil {
+			return nil
+		}
+		return v.NumberOfDaysToRetain
+	}).(pulumi.IntPtrOutput)
+}
+
 type FusionAuthTenantAccessControlConfiguration struct {
 	// The Id of the IP Access Control List limiting access to all applications in this tenant.
 	UiIpAccessControlListId *string `pulumi:"uiIpAccessControlListId"`
@@ -11700,6 +11993,8 @@ type FusionAuthTenantExternalIdentifierConfiguration struct {
 	EmailVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator `pulumi:"emailVerificationOneTimeCodeGenerator"`
 	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
 	ExternalAuthenticationIdTimeToLiveInSeconds int `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
+	// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+	LoginIntentTimeToLiveInSeconds int `pulumi:"loginIntentTimeToLiveInSeconds"`
 	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
 	OneTimePasswordTimeToLiveInSeconds int                                                                       `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
 	PasswordlessLoginGenerator         FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator `pulumi:"passwordlessLoginGenerator"`
@@ -11753,6 +12048,8 @@ type FusionAuthTenantExternalIdentifierConfigurationArgs struct {
 	EmailVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorInput `pulumi:"emailVerificationOneTimeCodeGenerator"`
 	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
 	ExternalAuthenticationIdTimeToLiveInSeconds pulumi.IntInput `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
+	// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+	LoginIntentTimeToLiveInSeconds pulumi.IntInput `pulumi:"loginIntentTimeToLiveInSeconds"`
 	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
 	OneTimePasswordTimeToLiveInSeconds pulumi.IntInput                                                                `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
 	PasswordlessLoginGenerator         FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorInput `pulumi:"passwordlessLoginGenerator"`
@@ -11912,6 +12209,11 @@ func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ExternalAuthentic
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
 		return v.ExternalAuthenticationIdTimeToLiveInSeconds
 	}).(pulumi.IntOutput)
+}
+
+// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) LoginIntentTimeToLiveInSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int { return v.LoginIntentTimeToLiveInSeconds }).(pulumi.IntOutput)
 }
 
 // The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
@@ -12115,6 +12417,16 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) ExternalAuthen
 			return nil
 		}
 		return &v.ExternalAuthenticationIdTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) LoginIntentTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.LoginIntentTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -19915,6 +20227,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationLoginRecordConfigurationDeletePtrInput)(nil)).Elem(), FusionAuthSystemConfigurationLoginRecordConfigurationDeleteArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUiConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationUiConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUiConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationUiConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantAccessControlConfigurationInput)(nil)).Elem(), FusionAuthTenantAccessControlConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantAccessControlConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantAccessControlConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantCaptchaConfigurationInput)(nil)).Elem(), FusionAuthTenantCaptchaConfigurationArgs{})
@@ -20135,6 +20451,10 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationLoginRecordConfigurationDeletePtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUiConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUiConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeletePtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantAccessControlConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantAccessControlConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantCaptchaConfigurationOutput{})

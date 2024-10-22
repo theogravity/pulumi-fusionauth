@@ -72,6 +72,8 @@ __all__ = [
     'FusionAuthSystemConfigurationLoginRecordConfigurationArgs',
     'FusionAuthSystemConfigurationLoginRecordConfigurationDeleteArgs',
     'FusionAuthSystemConfigurationUiConfigurationArgs',
+    'FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs',
+    'FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs',
     'FusionAuthTenantAccessControlConfigurationArgs',
     'FusionAuthTenantCaptchaConfigurationArgs',
     'FusionAuthTenantConnectorPolicyArgs',
@@ -4667,6 +4669,62 @@ class FusionAuthSystemConfigurationUiConfigurationArgs:
 
 
 @pulumi.input_type
+class FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs:
+    def __init__(__self__, *,
+                 delete: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs']] = None):
+        if delete is not None:
+            pulumi.set(__self__, "delete", delete)
+
+    @property
+    @pulumi.getter
+    def delete(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs']]:
+        return pulumi.get(self, "delete")
+
+    @delete.setter
+    def delete(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs']]):
+        pulumi.set(self, "delete", value)
+
+
+@pulumi.input_type
+class FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 number_of_days_to_retain: Optional[pulumi.Input[int]] = None):
+        """
+        :param pulumi.Input[bool] enabled: Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+        :param pulumi.Input[int] number_of_days_to_retain: The number of days to retain webhook event logs.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if number_of_days_to_retain is not None:
+            pulumi.set(__self__, "number_of_days_to_retain", number_of_days_to_retain)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter(name="numberOfDaysToRetain")
+    def number_of_days_to_retain(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of days to retain webhook event logs.
+        """
+        return pulumi.get(self, "number_of_days_to_retain")
+
+    @number_of_days_to_retain.setter
+    def number_of_days_to_retain(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "number_of_days_to_retain", value)
+
+
+@pulumi.input_type
 class FusionAuthTenantAccessControlConfigurationArgs:
     def __init__(__self__, *,
                  ui_ip_access_control_list_id: Optional[pulumi.Input[str]] = None):
@@ -5386,6 +5444,7 @@ class FusionAuthTenantExternalIdentifierConfigurationArgs:
                  email_verification_id_time_to_live_in_seconds: pulumi.Input[int],
                  email_verification_one_time_code_generator: pulumi.Input['FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorArgs'],
                  external_authentication_id_time_to_live_in_seconds: pulumi.Input[int],
+                 login_intent_time_to_live_in_seconds: pulumi.Input[int],
                  one_time_password_time_to_live_in_seconds: pulumi.Input[int],
                  passwordless_login_generator: pulumi.Input['FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs'],
                  passwordless_login_time_to_live_in_seconds: pulumi.Input[int],
@@ -5407,6 +5466,7 @@ class FusionAuthTenantExternalIdentifierConfigurationArgs:
         :param pulumi.Input[int] device_code_time_to_live_in_seconds: The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
         :param pulumi.Input[int] email_verification_id_time_to_live_in_seconds: The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
         :param pulumi.Input[int] external_authentication_id_time_to_live_in_seconds: The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+        :param pulumi.Input[int] login_intent_time_to_live_in_seconds: The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
         :param pulumi.Input[int] one_time_password_time_to_live_in_seconds: The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
         :param pulumi.Input[int] passwordless_login_time_to_live_in_seconds: The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
         :param pulumi.Input[int] registration_verification_id_time_to_live_in_seconds: The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
@@ -5427,6 +5487,7 @@ class FusionAuthTenantExternalIdentifierConfigurationArgs:
         pulumi.set(__self__, "email_verification_id_time_to_live_in_seconds", email_verification_id_time_to_live_in_seconds)
         pulumi.set(__self__, "email_verification_one_time_code_generator", email_verification_one_time_code_generator)
         pulumi.set(__self__, "external_authentication_id_time_to_live_in_seconds", external_authentication_id_time_to_live_in_seconds)
+        pulumi.set(__self__, "login_intent_time_to_live_in_seconds", login_intent_time_to_live_in_seconds)
         pulumi.set(__self__, "one_time_password_time_to_live_in_seconds", one_time_password_time_to_live_in_seconds)
         pulumi.set(__self__, "passwordless_login_generator", passwordless_login_generator)
         pulumi.set(__self__, "passwordless_login_time_to_live_in_seconds", passwordless_login_time_to_live_in_seconds)
@@ -5542,6 +5603,18 @@ class FusionAuthTenantExternalIdentifierConfigurationArgs:
     @external_authentication_id_time_to_live_in_seconds.setter
     def external_authentication_id_time_to_live_in_seconds(self, value: pulumi.Input[int]):
         pulumi.set(self, "external_authentication_id_time_to_live_in_seconds", value)
+
+    @property
+    @pulumi.getter(name="loginIntentTimeToLiveInSeconds")
+    def login_intent_time_to_live_in_seconds(self) -> pulumi.Input[int]:
+        """
+        The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+        """
+        return pulumi.get(self, "login_intent_time_to_live_in_seconds")
+
+    @login_intent_time_to_live_in_seconds.setter
+    def login_intent_time_to_live_in_seconds(self, value: pulumi.Input[int]):
+        pulumi.set(self, "login_intent_time_to_live_in_seconds", value)
 
     @property
     @pulumi.getter(name="oneTimePasswordTimeToLiveInSeconds")

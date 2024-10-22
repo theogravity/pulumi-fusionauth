@@ -44,7 +44,8 @@ class FusionAuthTenantArgs:
                  source_tenant_id: Optional[pulumi.Input[str]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  user_delete_policy: Optional[pulumi.Input['FusionAuthTenantUserDeletePolicyArgs']] = None,
-                 username_configuration: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']] = None):
+                 username_configuration: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']] = None,
+                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a FusionAuthTenant resource.
         :param pulumi.Input[str] issuer: The named issuer used to sign tokens, this is generally your public fully qualified domain.
@@ -56,6 +57,7 @@ class FusionAuthTenantArgs:
         :param pulumi.Input[str] name: The unique name of the Tenant.
         :param pulumi.Input[str] source_tenant_id: The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         :param pulumi.Input[str] tenant_id: The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
         """
         pulumi.set(__self__, "email_configuration", email_configuration)
         pulumi.set(__self__, "external_identifier_configuration", external_identifier_configuration)
@@ -110,6 +112,8 @@ class FusionAuthTenantArgs:
             pulumi.set(__self__, "user_delete_policy", user_delete_policy)
         if username_configuration is not None:
             pulumi.set(__self__, "username_configuration", username_configuration)
+        if webhook_ids is not None:
+            pulumi.set(__self__, "webhook_ids", webhook_ids)
 
     @property
     @pulumi.getter(name="emailConfiguration")
@@ -399,6 +403,18 @@ class FusionAuthTenantArgs:
     def username_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']]):
         pulumi.set(self, "username_configuration", value)
 
+    @property
+    @pulumi.getter(name="webhookIds")
+    def webhook_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        """
+        return pulumi.get(self, "webhook_ids")
+
+    @webhook_ids.setter
+    def webhook_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "webhook_ids", value)
+
 
 @pulumi.input_type
 class _FusionAuthTenantState:
@@ -431,7 +447,8 @@ class _FusionAuthTenantState:
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
                  user_delete_policy: Optional[pulumi.Input['FusionAuthTenantUserDeletePolicyArgs']] = None,
-                 username_configuration: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']] = None):
+                 username_configuration: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']] = None,
+                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering FusionAuthTenant resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthTenantConnectorPolicyArgs']]] connector_policies: A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
@@ -443,6 +460,7 @@ class _FusionAuthTenantState:
         :param pulumi.Input[str] source_tenant_id: The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         :param pulumi.Input[str] tenant_id: The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
         """
         if access_control_configuration is not None:
             pulumi.set(__self__, "access_control_configuration", access_control_configuration)
@@ -502,6 +520,8 @@ class _FusionAuthTenantState:
             pulumi.set(__self__, "user_delete_policy", user_delete_policy)
         if username_configuration is not None:
             pulumi.set(__self__, "username_configuration", username_configuration)
+        if webhook_ids is not None:
+            pulumi.set(__self__, "webhook_ids", webhook_ids)
 
     @property
     @pulumi.getter(name="accessControlConfiguration")
@@ -791,6 +811,18 @@ class _FusionAuthTenantState:
     def username_configuration(self, value: Optional[pulumi.Input['FusionAuthTenantUsernameConfigurationArgs']]):
         pulumi.set(self, "username_configuration", value)
 
+    @property
+    @pulumi.getter(name="webhookIds")
+    def webhook_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        """
+        return pulumi.get(self, "webhook_ids")
+
+    @webhook_ids.setter
+    def webhook_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "webhook_ids", value)
+
 
 class FusionAuthTenant(pulumi.CustomResource):
     @overload
@@ -826,6 +858,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                  theme_id: Optional[pulumi.Input[str]] = None,
                  user_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUserDeletePolicyArgs']]] = None,
                  username_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUsernameConfigurationArgs']]] = None,
+                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         """
         ## # Tenant Resource
@@ -1135,6 +1168,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                     type="randomAlphaNumeric",
                 ),
                 external_authentication_id_time_to_live_in_seconds=300,
+                login_intent_time_to_live_in_seconds=1800,
                 one_time_password_time_to_live_in_seconds=60,
                 passwordless_login_generator=fusionauth.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs(
                     length=32,
@@ -1281,6 +1315,7 @@ class FusionAuthTenant(pulumi.CustomResource):
         :param pulumi.Input[str] source_tenant_id: The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         :param pulumi.Input[str] tenant_id: The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
         """
         ...
     @overload
@@ -1596,6 +1631,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                     type="randomAlphaNumeric",
                 ),
                 external_authentication_id_time_to_live_in_seconds=300,
+                login_intent_time_to_live_in_seconds=1800,
                 one_time_password_time_to_live_in_seconds=60,
                 passwordless_login_generator=fusionauth.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs(
                     length=32,
@@ -1775,6 +1811,7 @@ class FusionAuthTenant(pulumi.CustomResource):
                  theme_id: Optional[pulumi.Input[str]] = None,
                  user_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUserDeletePolicyArgs']]] = None,
                  username_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUsernameConfigurationArgs']]] = None,
+                 webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -1823,6 +1860,7 @@ class FusionAuthTenant(pulumi.CustomResource):
             __props__.__dict__["theme_id"] = theme_id
             __props__.__dict__["user_delete_policy"] = user_delete_policy
             __props__.__dict__["username_configuration"] = username_configuration
+            __props__.__dict__["webhook_ids"] = webhook_ids
         super(FusionAuthTenant, __self__).__init__(
             'fusionauth:index/fusionAuthTenant:FusionAuthTenant',
             resource_name,
@@ -1861,7 +1899,8 @@ class FusionAuthTenant(pulumi.CustomResource):
             tenant_id: Optional[pulumi.Input[str]] = None,
             theme_id: Optional[pulumi.Input[str]] = None,
             user_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUserDeletePolicyArgs']]] = None,
-            username_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUsernameConfigurationArgs']]] = None) -> 'FusionAuthTenant':
+            username_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthTenantUsernameConfigurationArgs']]] = None,
+            webhook_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> 'FusionAuthTenant':
         """
         Get an existing FusionAuthTenant resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -1878,6 +1917,7 @@ class FusionAuthTenant(pulumi.CustomResource):
         :param pulumi.Input[str] source_tenant_id: The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         :param pulumi.Input[str] tenant_id: The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] webhook_ids: An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -1912,6 +1952,7 @@ class FusionAuthTenant(pulumi.CustomResource):
         __props__.__dict__["theme_id"] = theme_id
         __props__.__dict__["user_delete_policy"] = user_delete_policy
         __props__.__dict__["username_configuration"] = username_configuration
+        __props__.__dict__["webhook_ids"] = webhook_ids
         return FusionAuthTenant(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -2085,4 +2126,12 @@ class FusionAuthTenant(pulumi.CustomResource):
     @pulumi.getter(name="usernameConfiguration")
     def username_configuration(self) -> pulumi.Output['outputs.FusionAuthTenantUsernameConfiguration']:
         return pulumi.get(self, "username_configuration")
+
+    @property
+    @pulumi.getter(name="webhookIds")
+    def webhook_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        """
+        return pulumi.get(self, "webhook_ids")
 

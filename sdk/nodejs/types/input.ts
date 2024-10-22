@@ -1154,6 +1154,21 @@ export interface FusionAuthSystemConfigurationUiConfiguration {
     menuFontColor?: pulumi.Input<string>;
 }
 
+export interface FusionAuthSystemConfigurationWebhookEventLogConfiguration {
+    delete?: pulumi.Input<inputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete>;
+}
+
+export interface FusionAuthSystemConfigurationWebhookEventLogConfigurationDelete {
+    /**
+     * Whether or not FusionAuth should delete the webhook event logs based upon this configuration. When true the webhookEventLogConfiguration.delete.numberOfDaysToRetain will be used to identify webhook event logs that are eligible for deletion. When this value is set to false webhook event logs will be preserved forever.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The number of days to retain webhook event logs.
+     */
+    numberOfDaysToRetain?: pulumi.Input<number>;
+}
+
 export interface FusionAuthTenantAccessControlConfiguration {
     /**
      * The Id of the IP Access Control List limiting access to all applications in this tenant.
@@ -1362,6 +1377,10 @@ export interface FusionAuthTenantExternalIdentifierConfiguration {
      * The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
      */
     externalAuthenticationIdTimeToLiveInSeconds: pulumi.Input<number>;
+    /**
+     * The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+     */
+    loginIntentTimeToLiveInSeconds: pulumi.Input<number>;
     /**
      * The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
      */

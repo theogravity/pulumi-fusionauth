@@ -61,8 +61,9 @@ type FusionAuthSystemConfiguration struct {
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationOutput    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationOutput `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone  pulumi.StringPtrOutput                             `pulumi:"reportTimezone"`
-	UiConfiguration FusionAuthSystemConfigurationUiConfigurationOutput `pulumi:"uiConfiguration"`
+	ReportTimezone               pulumi.StringPtrOutput                                          `pulumi:"reportTimezone"`
+	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationOutput              `pulumi:"uiConfiguration"`
+	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput `pulumi:"webhookEventLogConfiguration"`
 }
 
 // NewFusionAuthSystemConfiguration registers a new resource with the given unique name, arguments, and options.
@@ -100,8 +101,9 @@ type fusionAuthSystemConfigurationState struct {
 	EventLogConfiguration    *FusionAuthSystemConfigurationEventLogConfiguration    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration *FusionAuthSystemConfigurationLoginRecordConfiguration `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone  *string                                       `pulumi:"reportTimezone"`
-	UiConfiguration *FusionAuthSystemConfigurationUiConfiguration `pulumi:"uiConfiguration"`
+	ReportTimezone               *string                                                    `pulumi:"reportTimezone"`
+	UiConfiguration              *FusionAuthSystemConfigurationUiConfiguration              `pulumi:"uiConfiguration"`
+	WebhookEventLogConfiguration *FusionAuthSystemConfigurationWebhookEventLogConfiguration `pulumi:"webhookEventLogConfiguration"`
 }
 
 type FusionAuthSystemConfigurationState struct {
@@ -110,8 +112,9 @@ type FusionAuthSystemConfigurationState struct {
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationPtrInput
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationPtrInput
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone  pulumi.StringPtrInput
-	UiConfiguration FusionAuthSystemConfigurationUiConfigurationPtrInput
+	ReportTimezone               pulumi.StringPtrInput
+	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationPtrInput
+	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput
 }
 
 func (FusionAuthSystemConfigurationState) ElementType() reflect.Type {
@@ -124,8 +127,9 @@ type fusionAuthSystemConfigurationArgs struct {
 	EventLogConfiguration    *FusionAuthSystemConfigurationEventLogConfiguration    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration *FusionAuthSystemConfigurationLoginRecordConfiguration `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone  *string                                       `pulumi:"reportTimezone"`
-	UiConfiguration *FusionAuthSystemConfigurationUiConfiguration `pulumi:"uiConfiguration"`
+	ReportTimezone               *string                                                    `pulumi:"reportTimezone"`
+	UiConfiguration              *FusionAuthSystemConfigurationUiConfiguration              `pulumi:"uiConfiguration"`
+	WebhookEventLogConfiguration *FusionAuthSystemConfigurationWebhookEventLogConfiguration `pulumi:"webhookEventLogConfiguration"`
 }
 
 // The set of arguments for constructing a FusionAuthSystemConfiguration resource.
@@ -135,8 +139,9 @@ type FusionAuthSystemConfigurationArgs struct {
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationPtrInput
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationPtrInput
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone  pulumi.StringPtrInput
-	UiConfiguration FusionAuthSystemConfigurationUiConfigurationPtrInput
+	ReportTimezone               pulumi.StringPtrInput
+	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationPtrInput
+	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput
 }
 
 func (FusionAuthSystemConfigurationArgs) ElementType() reflect.Type {
@@ -259,6 +264,12 @@ func (o FusionAuthSystemConfigurationOutput) UiConfiguration() FusionAuthSystemC
 	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationUiConfigurationOutput {
 		return v.UiConfiguration
 	}).(FusionAuthSystemConfigurationUiConfigurationOutput)
+}
+
+func (o FusionAuthSystemConfigurationOutput) WebhookEventLogConfiguration() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {
+		return v.WebhookEventLogConfiguration
+	}).(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput)
 }
 
 type FusionAuthSystemConfigurationArrayOutput struct{ *pulumi.OutputState }

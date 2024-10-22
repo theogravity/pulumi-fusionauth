@@ -21,7 +21,8 @@ class FusionAuthSystemConfigurationArgs:
                  event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationEventLogConfigurationArgs']] = None,
                  login_record_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
-                 ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None):
+                 ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']] = None):
         """
         The set of arguments for constructing a FusionAuthSystemConfiguration resource.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
@@ -38,6 +39,8 @@ class FusionAuthSystemConfigurationArgs:
             pulumi.set(__self__, "report_timezone", report_timezone)
         if ui_configuration is not None:
             pulumi.set(__self__, "ui_configuration", ui_configuration)
+        if webhook_event_log_configuration is not None:
+            pulumi.set(__self__, "webhook_event_log_configuration", webhook_event_log_configuration)
 
     @property
     @pulumi.getter(name="auditLogConfiguration")
@@ -96,6 +99,15 @@ class FusionAuthSystemConfigurationArgs:
     def ui_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]):
         pulumi.set(self, "ui_configuration", value)
 
+    @property
+    @pulumi.getter(name="webhookEventLogConfiguration")
+    def webhook_event_log_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]:
+        return pulumi.get(self, "webhook_event_log_configuration")
+
+    @webhook_event_log_configuration.setter
+    def webhook_event_log_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]):
+        pulumi.set(self, "webhook_event_log_configuration", value)
+
 
 @pulumi.input_type
 class _FusionAuthSystemConfigurationState:
@@ -105,7 +117,8 @@ class _FusionAuthSystemConfigurationState:
                  event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationEventLogConfigurationArgs']] = None,
                  login_record_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
-                 ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None):
+                 ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']] = None):
         """
         Input properties used for looking up and filtering FusionAuthSystemConfiguration resources.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
@@ -122,6 +135,8 @@ class _FusionAuthSystemConfigurationState:
             pulumi.set(__self__, "report_timezone", report_timezone)
         if ui_configuration is not None:
             pulumi.set(__self__, "ui_configuration", ui_configuration)
+        if webhook_event_log_configuration is not None:
+            pulumi.set(__self__, "webhook_event_log_configuration", webhook_event_log_configuration)
 
     @property
     @pulumi.getter(name="auditLogConfiguration")
@@ -180,6 +195,15 @@ class _FusionAuthSystemConfigurationState:
     def ui_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]):
         pulumi.set(self, "ui_configuration", value)
 
+    @property
+    @pulumi.getter(name="webhookEventLogConfiguration")
+    def webhook_event_log_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]:
+        return pulumi.get(self, "webhook_event_log_configuration")
+
+    @webhook_event_log_configuration.setter
+    def webhook_event_log_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]):
+        pulumi.set(self, "webhook_event_log_configuration", value)
+
 
 class FusionAuthSystemConfiguration(pulumi.CustomResource):
     @overload
@@ -192,6 +216,7 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
                  login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
                  ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None,
                  __props__=None):
         """
         ## # System Configuration Resource
@@ -280,6 +305,7 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
                  login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
                  ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -295,6 +321,7 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
             __props__.__dict__["login_record_configuration"] = login_record_configuration
             __props__.__dict__["report_timezone"] = report_timezone
             __props__.__dict__["ui_configuration"] = ui_configuration
+            __props__.__dict__["webhook_event_log_configuration"] = webhook_event_log_configuration
         super(FusionAuthSystemConfiguration, __self__).__init__(
             'fusionauth:index/fusionAuthSystemConfiguration:FusionAuthSystemConfiguration',
             resource_name,
@@ -310,7 +337,8 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
             event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationEventLogConfigurationArgs']]] = None,
             login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
             report_timezone: Optional[pulumi.Input[str]] = None,
-            ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None) -> 'FusionAuthSystemConfiguration':
+            ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
+            webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None) -> 'FusionAuthSystemConfiguration':
         """
         Get an existing FusionAuthSystemConfiguration resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -330,6 +358,7 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
         __props__.__dict__["login_record_configuration"] = login_record_configuration
         __props__.__dict__["report_timezone"] = report_timezone
         __props__.__dict__["ui_configuration"] = ui_configuration
+        __props__.__dict__["webhook_event_log_configuration"] = webhook_event_log_configuration
         return FusionAuthSystemConfiguration(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -364,4 +393,9 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
     @pulumi.getter(name="uiConfiguration")
     def ui_configuration(self) -> pulumi.Output['outputs.FusionAuthSystemConfigurationUiConfiguration']:
         return pulumi.get(self, "ui_configuration")
+
+    @property
+    @pulumi.getter(name="webhookEventLogConfiguration")
+    def webhook_event_log_configuration(self) -> pulumi.Output['outputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration']:
+        return pulumi.get(self, "webhook_event_log_configuration")
 

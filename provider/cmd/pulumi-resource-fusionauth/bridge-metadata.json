@@ -410,6 +410,16 @@
                     },
                     "ui_configuration": {
                         "maxItemsOne": true
+                    },
+                    "webhook_event_log_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "delete": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -582,6 +592,9 @@
                                 }
                             }
                         }
+                    },
+                    "webhook_ids": {
+                        "maxItemsOne": false
                     }
                 }
             },

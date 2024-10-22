@@ -387,6 +387,7 @@ namespace theogravity.Fusionauth
     ///                 Type = "randomAlphaNumeric",
     ///             },
     ///             ExternalAuthenticationIdTimeToLiveInSeconds = 300,
+    ///             LoginIntentTimeToLiveInSeconds = 1800,
     ///             OneTimePasswordTimeToLiveInSeconds = 60,
     ///             PasswordlessLoginGenerator = new Fusionauth.Inputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs
     ///             {
@@ -680,6 +681,12 @@ namespace theogravity.Fusionauth
         [Output("usernameConfiguration")]
         public Output<Outputs.FusionAuthTenantUsernameConfiguration> UsernameConfiguration { get; private set; } = null!;
 
+        /// <summary>
+        /// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        /// </summary>
+        [Output("webhookIds")]
+        public Output<ImmutableArray<string>> WebhookIds { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a FusionAuthTenant resource with the given unique name, arguments, and options.
@@ -873,6 +880,18 @@ namespace theogravity.Fusionauth
         [Input("usernameConfiguration")]
         public Input<Inputs.FusionAuthTenantUsernameConfigurationArgs>? UsernameConfiguration { get; set; }
 
+        [Input("webhookIds")]
+        private InputList<string>? _webhookIds;
+
+        /// <summary>
+        /// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        /// </summary>
+        public InputList<string> WebhookIds
+        {
+            get => _webhookIds ?? (_webhookIds = new InputList<string>());
+            set => _webhookIds = value;
+        }
+
         public FusionAuthTenantArgs()
         {
         }
@@ -1026,6 +1045,18 @@ namespace theogravity.Fusionauth
 
         [Input("usernameConfiguration")]
         public Input<Inputs.FusionAuthTenantUsernameConfigurationGetArgs>? UsernameConfiguration { get; set; }
+
+        [Input("webhookIds")]
+        private InputList<string>? _webhookIds;
+
+        /// <summary>
+        /// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
+        /// </summary>
+        public InputList<string> WebhookIds
+        {
+            get => _webhookIds ?? (_webhookIds = new InputList<string>());
+            set => _webhookIds = value;
+        }
 
         public FusionAuthTenantState()
         {

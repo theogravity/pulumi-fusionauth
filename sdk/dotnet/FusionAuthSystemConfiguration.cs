@@ -74,6 +74,9 @@ namespace theogravity.Fusionauth
         [Output("uiConfiguration")]
         public Output<Outputs.FusionAuthSystemConfigurationUiConfiguration> UiConfiguration { get; private set; } = null!;
 
+        [Output("webhookEventLogConfiguration")]
+        public Output<Outputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration> WebhookEventLogConfiguration { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a FusionAuthSystemConfiguration resource with the given unique name, arguments, and options.
@@ -142,6 +145,9 @@ namespace theogravity.Fusionauth
         [Input("uiConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationUiConfigurationArgs>? UiConfiguration { get; set; }
 
+        [Input("webhookEventLogConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs>? WebhookEventLogConfiguration { get; set; }
+
         public FusionAuthSystemConfigurationArgs()
         {
         }
@@ -170,6 +176,9 @@ namespace theogravity.Fusionauth
 
         [Input("uiConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationUiConfigurationGetArgs>? UiConfiguration { get; set; }
+
+        [Input("webhookEventLogConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationGetArgs>? WebhookEventLogConfiguration { get; set; }
 
         public FusionAuthSystemConfigurationState()
         {
