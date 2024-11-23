@@ -58,7 +58,7 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -295,7 +295,7 @@ class FusionAuthUserArgs:
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 
@@ -478,7 +478,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -715,7 +715,7 @@ class _FusionAuthUserState:
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 
@@ -942,7 +942,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -1136,7 +1136,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -1296,7 +1296,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter
     def password(self) -> pulumi.Output[Optional[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 
