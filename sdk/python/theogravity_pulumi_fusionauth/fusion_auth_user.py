@@ -163,7 +163,7 @@ class FusionAuthUserArgs:
     @pulumi.getter(name="disableDomainBlock")
     def disable_domain_block(self) -> Optional[pulumi.Input[bool]]:
         """
-        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update.  Setting this property equal to true will override the tenant configuration.
         """
         return pulumi.get(self, "disable_domain_block")
 
@@ -467,7 +467,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
-        :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[bool] disable_domain_block: A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update.  Setting this property equal to true will override the tenant configuration.
         :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
