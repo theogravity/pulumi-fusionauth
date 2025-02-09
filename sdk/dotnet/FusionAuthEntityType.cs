@@ -49,15 +49,13 @@ namespace theogravity.Fusionauth
     public partial class FusionAuthEntityType : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// An object that can hold any information about the Entity Type that should be persisted. Must be a
-        /// JSON string.
+        /// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         /// </summary>
         [Output("data")]
         public Output<string?> Data { get; private set; } = null!;
 
         /// <summary>
-        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        /// generated.
+        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         /// </summary>
         [Output("entityTypeId")]
         public Output<string> EntityTypeId { get; private set; } = null!;
@@ -122,15 +120,13 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthEntityTypeArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// An object that can hold any information about the Entity Type that should be persisted. Must be a
-        /// JSON string.
+        /// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         /// </summary>
         [Input("data")]
         public Input<string>? Data { get; set; }
 
         /// <summary>
-        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        /// generated.
+        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         /// </summary>
         [Input("entityTypeId")]
         public Input<string>? EntityTypeId { get; set; }
@@ -156,15 +152,13 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthEntityTypeState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// An object that can hold any information about the Entity Type that should be persisted. Must be a
-        /// JSON string.
+        /// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         /// </summary>
         [Input("data")]
         public Input<string>? Data { get; set; }
 
         /// <summary>
-        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        /// generated.
+        /// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         /// </summary>
         [Input("entityTypeId")]
         public Input<string>? EntityTypeId { get; set; }

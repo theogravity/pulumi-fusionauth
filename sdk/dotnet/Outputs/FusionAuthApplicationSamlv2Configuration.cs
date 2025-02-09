@@ -14,6 +14,7 @@ namespace theogravity.Fusionauth.Outputs
     [OutputType]
     public sealed class FusionAuthApplicationSamlv2Configuration
     {
+        public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration? AssertionEncryptionConfiguration;
         /// <summary>
         /// The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
         /// </summary>
@@ -38,6 +39,7 @@ namespace theogravity.Fusionauth.Outputs
         /// Whether or not the SAML IdP for this Application is enabled or not.
         /// </summary>
         public readonly bool? Enabled;
+        public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationInitiatedLogin? InitiatedLogin;
         /// <summary>
         /// The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
         /// </summary>
@@ -46,6 +48,7 @@ namespace theogravity.Fusionauth.Outputs
         /// The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
         /// </summary>
         public readonly string? KeyId;
+        public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration? LoginHintConfiguration;
         public readonly Outputs.FusionAuthApplicationSamlv2ConfigurationLogout? Logout;
         /// <summary>
         /// The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
@@ -66,6 +69,8 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthApplicationSamlv2Configuration(
+            Outputs.FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration? assertionEncryptionConfiguration,
+
             string? audience,
 
             ImmutableArray<string> authorizedRedirectUrls,
@@ -78,9 +83,13 @@ namespace theogravity.Fusionauth.Outputs
 
             bool? enabled,
 
+            Outputs.FusionAuthApplicationSamlv2ConfigurationInitiatedLogin? initiatedLogin,
+
             string issuer,
 
             string? keyId,
+
+            Outputs.FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration? loginHintConfiguration,
 
             Outputs.FusionAuthApplicationSamlv2ConfigurationLogout? logout,
 
@@ -92,14 +101,17 @@ namespace theogravity.Fusionauth.Outputs
 
             string? xmlSignatureLocation)
         {
+            AssertionEncryptionConfiguration = assertionEncryptionConfiguration;
             Audience = audience;
             AuthorizedRedirectUrls = authorizedRedirectUrls;
             CallbackUrl = callbackUrl;
             Debug = debug;
             DefaultVerificationKeyId = defaultVerificationKeyId;
             Enabled = enabled;
+            InitiatedLogin = initiatedLogin;
             Issuer = issuer;
             KeyId = keyId;
+            LoginHintConfiguration = loginHintConfiguration;
             Logout = logout;
             LogoutUrl = logoutUrl;
             RequiredSignedRequests = requiredSignedRequests;

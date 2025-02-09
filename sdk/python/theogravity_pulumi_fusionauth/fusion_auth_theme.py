@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthThemeArgs', 'FusionAuthTheme']
@@ -23,6 +28,7 @@ class FusionAuthThemeArgs:
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
                  confirmation_required: Optional[pulumi.Input[str]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -31,7 +37,7 @@ class FusionAuthThemeArgs:
                  email_verify: Optional[pulumi.Input[str]] = None,
                  helpers: Optional[pulumi.Input[str]] = None,
                  index: Optional[pulumi.Input[str]] = None,
-                 localized_messages: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_messages: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorize: Optional[pulumi.Input[str]] = None,
                  oauth2_authorized_not_registered: Optional[pulumi.Input[str]] = None,
@@ -66,6 +72,7 @@ class FusionAuthThemeArgs:
                  samlv2_logout: Optional[pulumi.Input[str]] = None,
                  source_theme_id: Optional[pulumi.Input[str]] = None,
                  stylesheet: Optional[pulumi.Input[str]] = None,
+                 theme_id: Optional[pulumi.Input[str]] = None,
                  unauthorized: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthTheme resource.
@@ -78,7 +85,8 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
         :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Theme that should be persisted.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
                
                > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
@@ -91,7 +99,7 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] helpers: A FreeMarker template that contains all of the macros and templates used by the rest of the login Theme FreeMarker templates. This allows you to configure the general layout of your UI configuration and login theme without having to copy and paste HTML into each of the templates.
         :param pulumi.Input[str] index: A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
-        :param pulumi.Input[Mapping[str, Any]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         :param pulumi.Input[str] name: A unique name for the Theme.
         :param pulumi.Input[str] oauth2_authorize: A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
         :param pulumi.Input[str] oauth2_authorized_not_registered: A FreeMarker template that is rendered when the user requests the /oauth2/authorized-not-registered path. This page is rendered when a user is not registered and the Application configuration requires registration before FusionAuth will complete the redirect.
@@ -128,8 +136,10 @@ class FusionAuthThemeArgs:
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] samlv2_logout: A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
-        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+               and stylesheet from the source Theme will be copied to the new Theme.
         :param pulumi.Input[str] stylesheet: A CSS stylesheet used to style the templates.
+        :param pulumi.Input[str] theme_id: The Id to use for the new Theme. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] unauthorized: An optional FreeMarker template that contains the unauthorized page.
         """
         if account_edit is not None:
@@ -150,6 +160,8 @@ class FusionAuthThemeArgs:
             pulumi.set(__self__, "account_webauthn_index", account_webauthn_index)
         if confirmation_required is not None:
             pulumi.set(__self__, "confirmation_required", confirmation_required)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if default_messages is not None:
             pulumi.set(__self__, "default_messages", default_messages)
         if email_complete is not None:
@@ -242,6 +254,8 @@ class FusionAuthThemeArgs:
             pulumi.set(__self__, "source_theme_id", source_theme_id)
         if stylesheet is not None:
             pulumi.set(__self__, "stylesheet", stylesheet)
+        if theme_id is not None:
+            pulumi.set(__self__, "theme_id", theme_id)
         if unauthorized is not None:
             pulumi.set(__self__, "unauthorized", unauthorized)
 
@@ -354,10 +368,22 @@ class FusionAuthThemeArgs:
         pulumi.set(self, "confirmation_required", value)
 
     @property
+    @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the Theme that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> Optional[pulumi.Input[str]]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 
         > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
@@ -457,14 +483,14 @@ class FusionAuthThemeArgs:
 
     @property
     @pulumi.getter(name="localizedMessages")
-    def localized_messages(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_messages(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         """
         return pulumi.get(self, "localized_messages")
 
     @localized_messages.setter
-    def localized_messages(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_messages(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_messages", value)
 
     @property
@@ -860,7 +886,8 @@ class FusionAuthThemeArgs:
     @pulumi.getter(name="sourceThemeId")
     def source_theme_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        and stylesheet from the source Theme will be copied to the new Theme.
         """
         return pulumi.get(self, "source_theme_id")
 
@@ -879,6 +906,18 @@ class FusionAuthThemeArgs:
     @stylesheet.setter
     def stylesheet(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "stylesheet", value)
+
+    @property
+    @pulumi.getter(name="themeId")
+    def theme_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "theme_id")
+
+    @theme_id.setter
+    def theme_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "theme_id", value)
 
     @property
     @pulumi.getter
@@ -905,6 +944,7 @@ class _FusionAuthThemeState:
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
                  confirmation_required: Optional[pulumi.Input[str]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -913,7 +953,7 @@ class _FusionAuthThemeState:
                  email_verify: Optional[pulumi.Input[str]] = None,
                  helpers: Optional[pulumi.Input[str]] = None,
                  index: Optional[pulumi.Input[str]] = None,
-                 localized_messages: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_messages: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorize: Optional[pulumi.Input[str]] = None,
                  oauth2_authorized_not_registered: Optional[pulumi.Input[str]] = None,
@@ -948,6 +988,7 @@ class _FusionAuthThemeState:
                  samlv2_logout: Optional[pulumi.Input[str]] = None,
                  source_theme_id: Optional[pulumi.Input[str]] = None,
                  stylesheet: Optional[pulumi.Input[str]] = None,
+                 theme_id: Optional[pulumi.Input[str]] = None,
                  unauthorized: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthTheme resources.
@@ -960,7 +1001,8 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
         :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Theme that should be persisted.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
                
                > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
@@ -973,7 +1015,7 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] helpers: A FreeMarker template that contains all of the macros and templates used by the rest of the login Theme FreeMarker templates. This allows you to configure the general layout of your UI configuration and login theme without having to copy and paste HTML into each of the templates.
         :param pulumi.Input[str] index: A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
-        :param pulumi.Input[Mapping[str, Any]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         :param pulumi.Input[str] name: A unique name for the Theme.
         :param pulumi.Input[str] oauth2_authorize: A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
         :param pulumi.Input[str] oauth2_authorized_not_registered: A FreeMarker template that is rendered when the user requests the /oauth2/authorized-not-registered path. This page is rendered when a user is not registered and the Application configuration requires registration before FusionAuth will complete the redirect.
@@ -1010,8 +1052,10 @@ class _FusionAuthThemeState:
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] samlv2_logout: A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
-        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+               and stylesheet from the source Theme will be copied to the new Theme.
         :param pulumi.Input[str] stylesheet: A CSS stylesheet used to style the templates.
+        :param pulumi.Input[str] theme_id: The Id to use for the new Theme. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] unauthorized: An optional FreeMarker template that contains the unauthorized page.
         """
         if account_edit is not None:
@@ -1032,6 +1076,8 @@ class _FusionAuthThemeState:
             pulumi.set(__self__, "account_webauthn_index", account_webauthn_index)
         if confirmation_required is not None:
             pulumi.set(__self__, "confirmation_required", confirmation_required)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if default_messages is not None:
             pulumi.set(__self__, "default_messages", default_messages)
         if email_complete is not None:
@@ -1124,6 +1170,8 @@ class _FusionAuthThemeState:
             pulumi.set(__self__, "source_theme_id", source_theme_id)
         if stylesheet is not None:
             pulumi.set(__self__, "stylesheet", stylesheet)
+        if theme_id is not None:
+            pulumi.set(__self__, "theme_id", theme_id)
         if unauthorized is not None:
             pulumi.set(__self__, "unauthorized", unauthorized)
 
@@ -1236,10 +1284,22 @@ class _FusionAuthThemeState:
         pulumi.set(self, "confirmation_required", value)
 
     @property
+    @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the Theme that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> Optional[pulumi.Input[str]]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 
         > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
@@ -1339,14 +1399,14 @@ class _FusionAuthThemeState:
 
     @property
     @pulumi.getter(name="localizedMessages")
-    def localized_messages(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_messages(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         """
         return pulumi.get(self, "localized_messages")
 
     @localized_messages.setter
-    def localized_messages(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_messages(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_messages", value)
 
     @property
@@ -1742,7 +1802,8 @@ class _FusionAuthThemeState:
     @pulumi.getter(name="sourceThemeId")
     def source_theme_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        and stylesheet from the source Theme will be copied to the new Theme.
         """
         return pulumi.get(self, "source_theme_id")
 
@@ -1761,6 +1822,18 @@ class _FusionAuthThemeState:
     @stylesheet.setter
     def stylesheet(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "stylesheet", value)
+
+    @property
+    @pulumi.getter(name="themeId")
+    def theme_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "theme_id")
+
+    @theme_id.setter
+    def theme_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "theme_id", value)
 
     @property
     @pulumi.getter
@@ -1789,6 +1862,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
                  confirmation_required: Optional[pulumi.Input[str]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -1797,7 +1871,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  email_verify: Optional[pulumi.Input[str]] = None,
                  helpers: Optional[pulumi.Input[str]] = None,
                  index: Optional[pulumi.Input[str]] = None,
-                 localized_messages: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_messages: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorize: Optional[pulumi.Input[str]] = None,
                  oauth2_authorized_not_registered: Optional[pulumi.Input[str]] = None,
@@ -1832,6 +1906,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  samlv2_logout: Optional[pulumi.Input[str]] = None,
                  source_theme_id: Optional[pulumi.Input[str]] = None,
                  stylesheet: Optional[pulumi.Input[str]] = None,
+                 theme_id: Optional[pulumi.Input[str]] = None,
                  unauthorized: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -1911,7 +1986,8 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
         :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Theme that should be persisted.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
                
                > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
@@ -1924,7 +2000,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] helpers: A FreeMarker template that contains all of the macros and templates used by the rest of the login Theme FreeMarker templates. This allows you to configure the general layout of your UI configuration and login theme without having to copy and paste HTML into each of the templates.
         :param pulumi.Input[str] index: A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
-        :param pulumi.Input[Mapping[str, Any]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         :param pulumi.Input[str] name: A unique name for the Theme.
         :param pulumi.Input[str] oauth2_authorize: A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
         :param pulumi.Input[str] oauth2_authorized_not_registered: A FreeMarker template that is rendered when the user requests the /oauth2/authorized-not-registered path. This page is rendered when a user is not registered and the Application configuration requires registration before FusionAuth will complete the redirect.
@@ -1961,8 +2037,10 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] samlv2_logout: A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
-        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+               and stylesheet from the source Theme will be copied to the new Theme.
         :param pulumi.Input[str] stylesheet: A CSS stylesheet used to style the templates.
+        :param pulumi.Input[str] theme_id: The Id to use for the new Theme. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] unauthorized: An optional FreeMarker template that contains the unauthorized page.
         """
         ...
@@ -2061,6 +2139,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  account_webauthn_delete: Optional[pulumi.Input[str]] = None,
                  account_webauthn_index: Optional[pulumi.Input[str]] = None,
                  confirmation_required: Optional[pulumi.Input[str]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  default_messages: Optional[pulumi.Input[str]] = None,
                  email_complete: Optional[pulumi.Input[str]] = None,
                  email_send: Optional[pulumi.Input[str]] = None,
@@ -2069,7 +2148,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  email_verify: Optional[pulumi.Input[str]] = None,
                  helpers: Optional[pulumi.Input[str]] = None,
                  index: Optional[pulumi.Input[str]] = None,
-                 localized_messages: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_messages: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorize: Optional[pulumi.Input[str]] = None,
                  oauth2_authorized_not_registered: Optional[pulumi.Input[str]] = None,
@@ -2104,6 +2183,7 @@ class FusionAuthTheme(pulumi.CustomResource):
                  samlv2_logout: Optional[pulumi.Input[str]] = None,
                  source_theme_id: Optional[pulumi.Input[str]] = None,
                  stylesheet: Optional[pulumi.Input[str]] = None,
+                 theme_id: Optional[pulumi.Input[str]] = None,
                  unauthorized: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -2123,6 +2203,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["account_webauthn_delete"] = account_webauthn_delete
             __props__.__dict__["account_webauthn_index"] = account_webauthn_index
             __props__.__dict__["confirmation_required"] = confirmation_required
+            __props__.__dict__["data"] = data
             __props__.__dict__["default_messages"] = default_messages
             __props__.__dict__["email_complete"] = email_complete
             __props__.__dict__["email_send"] = email_send
@@ -2166,6 +2247,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             __props__.__dict__["samlv2_logout"] = samlv2_logout
             __props__.__dict__["source_theme_id"] = source_theme_id
             __props__.__dict__["stylesheet"] = stylesheet
+            __props__.__dict__["theme_id"] = theme_id
             __props__.__dict__["unauthorized"] = unauthorized
         super(FusionAuthTheme, __self__).__init__(
             'fusionauth:index/fusionAuthTheme:FusionAuthTheme',
@@ -2186,6 +2268,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             account_webauthn_delete: Optional[pulumi.Input[str]] = None,
             account_webauthn_index: Optional[pulumi.Input[str]] = None,
             confirmation_required: Optional[pulumi.Input[str]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             default_messages: Optional[pulumi.Input[str]] = None,
             email_complete: Optional[pulumi.Input[str]] = None,
             email_send: Optional[pulumi.Input[str]] = None,
@@ -2194,7 +2277,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             email_verify: Optional[pulumi.Input[str]] = None,
             helpers: Optional[pulumi.Input[str]] = None,
             index: Optional[pulumi.Input[str]] = None,
-            localized_messages: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            localized_messages: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
             oauth2_authorize: Optional[pulumi.Input[str]] = None,
             oauth2_authorized_not_registered: Optional[pulumi.Input[str]] = None,
@@ -2229,6 +2312,7 @@ class FusionAuthTheme(pulumi.CustomResource):
             samlv2_logout: Optional[pulumi.Input[str]] = None,
             source_theme_id: Optional[pulumi.Input[str]] = None,
             stylesheet: Optional[pulumi.Input[str]] = None,
+            theme_id: Optional[pulumi.Input[str]] = None,
             unauthorized: Optional[pulumi.Input[str]] = None) -> 'FusionAuthTheme':
         """
         Get an existing FusionAuthTheme resource's state with the given name, id, and optional extra
@@ -2246,7 +2330,8 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] account_webauthn_delete: A FreeMarker template that is rendered when the user requests the /account/webauthn/delete path. This page contains a form that allows a user to delete a WebAuthn passkey.
         :param pulumi.Input[str] account_webauthn_index: A FreeMarker template that is rendered when the user requests the /account/webauthn/ path. This page displays an authenticated user’s registered WebAuthn passkeys. Additionally, it provides links to delete an existing passkey and register a new passkey.
         :param pulumi.Input[str] confirmation_required: A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
-        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Theme that should be persisted.
+        :param pulumi.Input[str] default_messages: A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
                
                > **Note:** `default_messages` Is Required if not copying an existing Theme.
         :param pulumi.Input[str] email_complete: A FreeMarker template that is rendered when the user requests the /email/complete path. This page is used after a user has verified their email address by clicking the URL in the email. After FusionAuth has updated their user object to indicate that their email was verified, the browser is redirected to this page.
@@ -2259,7 +2344,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] email_verify: A FreeMarker template that is rendered when the user requests the /email/verify path. This page is rendered when a user clicks the URL from the verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] helpers: A FreeMarker template that contains all of the macros and templates used by the rest of the login Theme FreeMarker templates. This allows you to configure the general layout of your UI configuration and login theme without having to copy and paste HTML into each of the templates.
         :param pulumi.Input[str] index: A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
-        :param pulumi.Input[Mapping[str, Any]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_messages: A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         :param pulumi.Input[str] name: A unique name for the Theme.
         :param pulumi.Input[str] oauth2_authorize: A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
         :param pulumi.Input[str] oauth2_authorized_not_registered: A FreeMarker template that is rendered when the user requests the /oauth2/authorized-not-registered path. This page is rendered when a user is not registered and the Application configuration requires registration before FusionAuth will complete the redirect.
@@ -2296,8 +2381,10 @@ class FusionAuthTheme(pulumi.CustomResource):
         :param pulumi.Input[str] registration_verification_required: A FreeMarker template that is rendered when the user requests the /registration/verification-required path. This page is rendered when a user is required to verify their registration prior to being allowed to proceed with the registration flow. This occurs when Unverified behavior is set to Gated in registration verification settings on the Application.
         :param pulumi.Input[str] registration_verify: A FreeMarker template that is rendered when the user requests the /registration/verify path. This page is used when a user clicks the URL from the application specific verification email and the verificationId has expired. FusionAuth expires verificationId after a period of time (which is configurable). If the user has a URL from the verification email that has expired, this page will be rendered and the error will be displayed to the user.
         :param pulumi.Input[str] samlv2_logout: A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
-        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        :param pulumi.Input[str] source_theme_id: The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+               and stylesheet from the source Theme will be copied to the new Theme.
         :param pulumi.Input[str] stylesheet: A CSS stylesheet used to style the templates.
+        :param pulumi.Input[str] theme_id: The Id to use for the new Theme. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] unauthorized: An optional FreeMarker template that contains the unauthorized page.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -2313,6 +2400,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         __props__.__dict__["account_webauthn_delete"] = account_webauthn_delete
         __props__.__dict__["account_webauthn_index"] = account_webauthn_index
         __props__.__dict__["confirmation_required"] = confirmation_required
+        __props__.__dict__["data"] = data
         __props__.__dict__["default_messages"] = default_messages
         __props__.__dict__["email_complete"] = email_complete
         __props__.__dict__["email_send"] = email_send
@@ -2356,6 +2444,7 @@ class FusionAuthTheme(pulumi.CustomResource):
         __props__.__dict__["samlv2_logout"] = samlv2_logout
         __props__.__dict__["source_theme_id"] = source_theme_id
         __props__.__dict__["stylesheet"] = stylesheet
+        __props__.__dict__["theme_id"] = theme_id
         __props__.__dict__["unauthorized"] = unauthorized
         return FusionAuthTheme(resource_name, opts=opts, __props__=__props__)
 
@@ -2432,10 +2521,18 @@ class FusionAuthTheme(pulumi.CustomResource):
         return pulumi.get(self, "confirmation_required")
 
     @property
+    @pulumi.getter
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        An object that can hold any information about the Theme that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @property
     @pulumi.getter(name="defaultMessages")
     def default_messages(self) -> pulumi.Output[str]:
         """
-        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 
         > **Note:** `default_messages` Is Required if not copying an existing Theme.
         """
@@ -2503,7 +2600,7 @@ class FusionAuthTheme(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="localizedMessages")
-    def localized_messages(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def localized_messages(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         """
@@ -2774,7 +2871,8 @@ class FusionAuthTheme(pulumi.CustomResource):
     @pulumi.getter(name="sourceThemeId")
     def source_theme_id(self) -> pulumi.Output[Optional[str]]:
         """
-        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        and stylesheet from the source Theme will be copied to the new Theme.
         """
         return pulumi.get(self, "source_theme_id")
 
@@ -2785,6 +2883,14 @@ class FusionAuthTheme(pulumi.CustomResource):
         A CSS stylesheet used to style the templates.
         """
         return pulumi.get(self, "stylesheet")
+
+    @property
+    @pulumi.getter(name="themeId")
+    def theme_id(self) -> pulumi.Output[str]:
+        """
+        The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "theme_id")
 
     @property
     @pulumi.getter

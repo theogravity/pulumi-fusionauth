@@ -40,6 +40,10 @@ import * as utilities from "./utilities";
  *     readTimeout: 2000,
  *     sslCertificate: "  -----BEGIN CERTIFICATE-----\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\n-----END CERTIFICATE-----\n",
  *     url: "http://mygameserver.local:7001/fusionauth-webhook",
+ *     signatureConfiguration: {
+ *         enabled: true,
+ *         signingKeyId: fusionauth_key.webhook_key.id,
+ *     },
  * });
  * ```
  */
@@ -76,6 +80,10 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
      */
     public readonly connectTimeout!: pulumi.Output<number>;
     /**
+     * An object that can hold any information about the Webhook that should be persisted.
+     */
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
      * A description of the Webhook. This is used for display purposes only.
      */
     public readonly description!: pulumi.Output<string | undefined>;
@@ -90,7 +98,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
     /**
      * An object that contains headers that are sent as part of the HTTP request for the events.
      */
-    public readonly headers!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly headers!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */
@@ -104,9 +112,17 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
      */
     public readonly readTimeout!: pulumi.Output<number>;
     /**
+     * Configuration for webhook signing
+     */
+    public readonly signatureConfiguration!: pulumi.Output<outputs.FusionAuthWebhookSignatureConfiguration | undefined>;
+    /**
      * An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
      */
     public readonly sslCertificate!: pulumi.Output<string | undefined>;
+    /**
+     * The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+     */
+    public readonly sslCertificateKeyId!: pulumi.Output<string | undefined>;
     /**
      * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
      */
@@ -115,6 +131,10 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */
     public readonly url!: pulumi.Output<string>;
+    /**
+     * The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+     */
+    public readonly webhookId!: pulumi.Output<string>;
 
     /**
      * Create a FusionAuthWebhook resource with the given unique name, arguments, and options.
@@ -130,6 +150,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as FusionAuthWebhookState | undefined;
             resourceInputs["connectTimeout"] = state ? state.connectTimeout : undefined;
+            resourceInputs["data"] = state ? state.data : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
             resourceInputs["eventsEnabled"] = state ? state.eventsEnabled : undefined;
             resourceInputs["global"] = state ? state.global : undefined;
@@ -137,9 +158,12 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             resourceInputs["httpAuthenticationPassword"] = state ? state.httpAuthenticationPassword : undefined;
             resourceInputs["httpAuthenticationUsername"] = state ? state.httpAuthenticationUsername : undefined;
             resourceInputs["readTimeout"] = state ? state.readTimeout : undefined;
+            resourceInputs["signatureConfiguration"] = state ? state.signatureConfiguration : undefined;
             resourceInputs["sslCertificate"] = state ? state.sslCertificate : undefined;
+            resourceInputs["sslCertificateKeyId"] = state ? state.sslCertificateKeyId : undefined;
             resourceInputs["tenantIds"] = state ? state.tenantIds : undefined;
             resourceInputs["url"] = state ? state.url : undefined;
+            resourceInputs["webhookId"] = state ? state.webhookId : undefined;
         } else {
             const args = argsOrState as FusionAuthWebhookArgs | undefined;
             if ((!args || args.connectTimeout === undefined) && !opts.urn) {
@@ -152,6 +176,7 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
                 throw new Error("Missing required property 'url'");
             }
             resourceInputs["connectTimeout"] = args ? args.connectTimeout : undefined;
+            resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["eventsEnabled"] = args ? args.eventsEnabled : undefined;
             resourceInputs["global"] = args ? args.global : undefined;
@@ -159,9 +184,12 @@ export class FusionAuthWebhook extends pulumi.CustomResource {
             resourceInputs["httpAuthenticationPassword"] = args?.httpAuthenticationPassword ? pulumi.secret(args.httpAuthenticationPassword) : undefined;
             resourceInputs["httpAuthenticationUsername"] = args?.httpAuthenticationUsername ? pulumi.secret(args.httpAuthenticationUsername) : undefined;
             resourceInputs["readTimeout"] = args ? args.readTimeout : undefined;
+            resourceInputs["signatureConfiguration"] = args ? args.signatureConfiguration : undefined;
             resourceInputs["sslCertificate"] = args ? args.sslCertificate : undefined;
+            resourceInputs["sslCertificateKeyId"] = args ? args.sslCertificateKeyId : undefined;
             resourceInputs["tenantIds"] = args ? args.tenantIds : undefined;
             resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["webhookId"] = args ? args.webhookId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["httpAuthenticationPassword", "httpAuthenticationUsername"] };
@@ -179,6 +207,10 @@ export interface FusionAuthWebhookState {
      */
     connectTimeout?: pulumi.Input<number>;
     /**
+     * An object that can hold any information about the Webhook that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
      * A description of the Webhook. This is used for display purposes only.
      */
     description?: pulumi.Input<string>;
@@ -193,7 +225,7 @@ export interface FusionAuthWebhookState {
     /**
      * An object that contains headers that are sent as part of the HTTP request for the events.
      */
-    headers?: pulumi.Input<{[key: string]: any}>;
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */
@@ -207,9 +239,17 @@ export interface FusionAuthWebhookState {
      */
     readTimeout?: pulumi.Input<number>;
     /**
+     * Configuration for webhook signing
+     */
+    signatureConfiguration?: pulumi.Input<inputs.FusionAuthWebhookSignatureConfiguration>;
+    /**
      * An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
      */
     sslCertificate?: pulumi.Input<string>;
+    /**
+     * The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+     */
+    sslCertificateKeyId?: pulumi.Input<string>;
     /**
      * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
      */
@@ -218,6 +258,10 @@ export interface FusionAuthWebhookState {
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */
     url?: pulumi.Input<string>;
+    /**
+     * The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+     */
+    webhookId?: pulumi.Input<string>;
 }
 
 /**
@@ -228,6 +272,10 @@ export interface FusionAuthWebhookArgs {
      * The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
      */
     connectTimeout: pulumi.Input<number>;
+    /**
+     * An object that can hold any information about the Webhook that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A description of the Webhook. This is used for display purposes only.
      */
@@ -243,7 +291,7 @@ export interface FusionAuthWebhookArgs {
     /**
      * An object that contains headers that are sent as part of the HTTP request for the events.
      */
-    headers?: pulumi.Input<{[key: string]: any}>;
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */
@@ -257,9 +305,17 @@ export interface FusionAuthWebhookArgs {
      */
     readTimeout: pulumi.Input<number>;
     /**
+     * Configuration for webhook signing
+     */
+    signatureConfiguration?: pulumi.Input<inputs.FusionAuthWebhookSignatureConfiguration>;
+    /**
      * An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
      */
     sslCertificate?: pulumi.Input<string>;
+    /**
+     * The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+     */
+    sslCertificateKeyId?: pulumi.Input<string>;
     /**
      * The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
      */
@@ -268,4 +324,8 @@ export interface FusionAuthWebhookArgs {
      * The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
      */
     url: pulumi.Input<string>;
+    /**
+     * The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+     */
+    webhookId?: pulumi.Input<string>;
 }

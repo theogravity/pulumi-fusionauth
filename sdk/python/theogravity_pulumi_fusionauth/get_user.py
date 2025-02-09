@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -316,13 +321,10 @@ def get_user(tenant_id: Optional[str] = None,
         user_id=pulumi.get(__ret__, 'user_id'),
         username=pulumi.get(__ret__, 'username'),
         username_status=pulumi.get(__ret__, 'username_status'))
-
-
-@_utilities.lift_output_func(get_user)
 def get_user_output(tenant_id: Optional[pulumi.Input[Optional[str]]] = None,
                     user_id: Optional[pulumi.Input[Optional[str]]] = None,
                     username: Optional[pulumi.Input[Optional[str]]] = None,
-                    opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetUserResult]:
+                    opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetUserResult]:
     """
     ## # User Data Source
 
@@ -344,4 +346,30 @@ def get_user_output(tenant_id: Optional[pulumi.Input[Optional[str]]] = None,
     :param str user_id: The Id of the user. Either `user_id` or `username` must be specified.
     :param str username: The username of the user. Either `user_id` or `username` must be specified.
     """
-    ...
+    __args__ = dict()
+    __args__['tenantId'] = tenant_id
+    __args__['userId'] = user_id
+    __args__['username'] = username
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getUser:getUser', __args__, opts=opts, typ=GetUserResult)
+    return __ret__.apply(lambda __response__: GetUserResult(
+        active=pulumi.get(__response__, 'active'),
+        birth_date=pulumi.get(__response__, 'birth_date'),
+        data=pulumi.get(__response__, 'data'),
+        email=pulumi.get(__response__, 'email'),
+        expiry=pulumi.get(__response__, 'expiry'),
+        first_name=pulumi.get(__response__, 'first_name'),
+        full_name=pulumi.get(__response__, 'full_name'),
+        id=pulumi.get(__response__, 'id'),
+        image_url=pulumi.get(__response__, 'image_url'),
+        last_name=pulumi.get(__response__, 'last_name'),
+        middle_name=pulumi.get(__response__, 'middle_name'),
+        mobile_phone=pulumi.get(__response__, 'mobile_phone'),
+        parent_email=pulumi.get(__response__, 'parent_email'),
+        password_change_required=pulumi.get(__response__, 'password_change_required'),
+        preferred_languages=pulumi.get(__response__, 'preferred_languages'),
+        tenant_id=pulumi.get(__response__, 'tenant_id'),
+        timezone=pulumi.get(__response__, 'timezone'),
+        user_id=pulumi.get(__response__, 'user_id'),
+        username=pulumi.get(__response__, 'username'),
+        username_status=pulumi.get(__response__, 'username_status')))

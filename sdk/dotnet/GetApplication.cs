@@ -63,6 +63,32 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetApplicationResult> Invoke(GetApplicationInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Application Resource
+        /// 
+        /// [Applications API](https://fusionauth.io/docs/v1/tech/apis/applications)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var fusionAuth = Fusionauth.GetApplication.Invoke(new()
+        ///     {
+        ///         Name = "FusionAuth",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetApplicationResult> Invoke(GetApplicationInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationResult>("fusionauth:index/getApplication:getApplication", args ?? new GetApplicationInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -103,15 +129,23 @@ namespace theogravity.Fusionauth
         /// </summary>
         public readonly string Id;
         public readonly string Name;
+        public readonly string TenantId;
+        public readonly ImmutableArray<Outputs.GetApplicationWebauthnConfigurationResult> WebauthnConfigurations;
 
         [OutputConstructor]
         private GetApplicationResult(
             string id,
 
-            string name)
+            string name,
+
+            string tenantId,
+
+            ImmutableArray<Outputs.GetApplicationWebauthnConfigurationResult> webauthnConfigurations)
         {
             Id = id;
             Name = name;
+            TenantId = tenantId;
+            WebauthnConfigurations = webauthnConfigurations;
         }
     }
 }

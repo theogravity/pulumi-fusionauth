@@ -19,6 +19,9 @@ namespace theogravity.Fusionauth.Inputs
         [Input("adminRegistrationFormId")]
         public Input<string>? AdminRegistrationFormId { get; set; }
 
+        [Input("selfServiceFormConfiguration")]
+        public Input<Inputs.FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs>? SelfServiceFormConfiguration { get; set; }
+
         /// <summary>
         /// The unique Id of the form to to enable authenticated users to manage their profile on the account page.
         /// </summary>

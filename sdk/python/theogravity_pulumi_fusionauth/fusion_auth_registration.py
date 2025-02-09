@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthRegistrationArgs', 'FusionAuthRegistration']
@@ -17,9 +22,10 @@ class FusionAuthRegistrationArgs:
                  application_id: pulumi.Input[str],
                  user_id: pulumi.Input[str],
                  authentication_token: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  generate_authentication_token: Optional[pulumi.Input[bool]] = None,
                  preferred_languages: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 registration_id: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  skip_registration_validation: Optional[pulumi.Input[bool]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
@@ -29,9 +35,10 @@ class FusionAuthRegistrationArgs:
         :param pulumi.Input[str] application_id: The Id of the Application that this registration is for.
         :param pulumi.Input[str] user_id: The Id of the User that is registering for the Application.
         :param pulumi.Input[str] authentication_token: The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the User for this registration that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the User for this registration that should be persisted.
         :param pulumi.Input[bool] generate_authentication_token: Determines if FusionAuth should generate an Authentication Token for this registration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
+        :param pulumi.Input[str] registration_id: The Id of this registration. If not specified a secure random UUID will be generated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: The list of roles that the User has for this registration.
         :param pulumi.Input[bool] skip_registration_validation: Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
         :param pulumi.Input[str] timezone: The User’s preferred timezone for this registration. The string will be in an IANA time zone format.
@@ -47,6 +54,8 @@ class FusionAuthRegistrationArgs:
             pulumi.set(__self__, "generate_authentication_token", generate_authentication_token)
         if preferred_languages is not None:
             pulumi.set(__self__, "preferred_languages", preferred_languages)
+        if registration_id is not None:
+            pulumi.set(__self__, "registration_id", registration_id)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
         if skip_registration_validation is not None:
@@ -94,14 +103,14 @@ class FusionAuthRegistrationArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the User for this registration that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -127,6 +136,18 @@ class FusionAuthRegistrationArgs:
     @preferred_languages.setter
     def preferred_languages(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "preferred_languages", value)
+
+    @property
+    @pulumi.getter(name="registrationId")
+    def registration_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id of this registration. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "registration_id")
+
+    @registration_id.setter
+    def registration_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "registration_id", value)
 
     @property
     @pulumi.getter
@@ -182,9 +203,10 @@ class _FusionAuthRegistrationState:
     def __init__(__self__, *,
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  generate_authentication_token: Optional[pulumi.Input[bool]] = None,
                  preferred_languages: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 registration_id: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  skip_registration_validation: Optional[pulumi.Input[bool]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
@@ -194,9 +216,10 @@ class _FusionAuthRegistrationState:
         Input properties used for looking up and filtering FusionAuthRegistration resources.
         :param pulumi.Input[str] application_id: The Id of the Application that this registration is for.
         :param pulumi.Input[str] authentication_token: The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the User for this registration that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the User for this registration that should be persisted.
         :param pulumi.Input[bool] generate_authentication_token: Determines if FusionAuth should generate an Authentication Token for this registration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
+        :param pulumi.Input[str] registration_id: The Id of this registration. If not specified a secure random UUID will be generated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: The list of roles that the User has for this registration.
         :param pulumi.Input[bool] skip_registration_validation: Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
         :param pulumi.Input[str] timezone: The User’s preferred timezone for this registration. The string will be in an IANA time zone format.
@@ -213,6 +236,8 @@ class _FusionAuthRegistrationState:
             pulumi.set(__self__, "generate_authentication_token", generate_authentication_token)
         if preferred_languages is not None:
             pulumi.set(__self__, "preferred_languages", preferred_languages)
+        if registration_id is not None:
+            pulumi.set(__self__, "registration_id", registration_id)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
         if skip_registration_validation is not None:
@@ -250,14 +275,14 @@ class _FusionAuthRegistrationState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the User for this registration that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -283,6 +308,18 @@ class _FusionAuthRegistrationState:
     @preferred_languages.setter
     def preferred_languages(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "preferred_languages", value)
+
+    @property
+    @pulumi.getter(name="registrationId")
+    def registration_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id of this registration. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "registration_id")
+
+    @registration_id.setter
+    def registration_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "registration_id", value)
 
     @property
     @pulumi.getter
@@ -352,9 +389,10 @@ class FusionAuthRegistration(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  generate_authentication_token: Optional[pulumi.Input[bool]] = None,
                  preferred_languages: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 registration_id: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  skip_registration_validation: Optional[pulumi.Input[bool]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
@@ -385,9 +423,10 @@ class FusionAuthRegistration(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] application_id: The Id of the Application that this registration is for.
         :param pulumi.Input[str] authentication_token: The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the User for this registration that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the User for this registration that should be persisted.
         :param pulumi.Input[bool] generate_authentication_token: Determines if FusionAuth should generate an Authentication Token for this registration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
+        :param pulumi.Input[str] registration_id: The Id of this registration. If not specified a secure random UUID will be generated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: The list of roles that the User has for this registration.
         :param pulumi.Input[bool] skip_registration_validation: Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
         :param pulumi.Input[str] timezone: The User’s preferred timezone for this registration. The string will be in an IANA time zone format.
@@ -437,9 +476,10 @@ class FusionAuthRegistration(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  generate_authentication_token: Optional[pulumi.Input[bool]] = None,
                  preferred_languages: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 registration_id: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  skip_registration_validation: Optional[pulumi.Input[bool]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
@@ -461,6 +501,7 @@ class FusionAuthRegistration(pulumi.CustomResource):
             __props__.__dict__["data"] = data
             __props__.__dict__["generate_authentication_token"] = generate_authentication_token
             __props__.__dict__["preferred_languages"] = preferred_languages
+            __props__.__dict__["registration_id"] = registration_id
             __props__.__dict__["roles"] = roles
             __props__.__dict__["skip_registration_validation"] = skip_registration_validation
             __props__.__dict__["timezone"] = timezone
@@ -482,9 +523,10 @@ class FusionAuthRegistration(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             application_id: Optional[pulumi.Input[str]] = None,
             authentication_token: Optional[pulumi.Input[str]] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             generate_authentication_token: Optional[pulumi.Input[bool]] = None,
             preferred_languages: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+            registration_id: Optional[pulumi.Input[str]] = None,
             roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             skip_registration_validation: Optional[pulumi.Input[bool]] = None,
             timezone: Optional[pulumi.Input[str]] = None,
@@ -499,9 +541,10 @@ class FusionAuthRegistration(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] application_id: The Id of the Application that this registration is for.
         :param pulumi.Input[str] authentication_token: The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the User for this registration that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the User for this registration that should be persisted.
         :param pulumi.Input[bool] generate_authentication_token: Determines if FusionAuth should generate an Authentication Token for this registration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
+        :param pulumi.Input[str] registration_id: The Id of this registration. If not specified a secure random UUID will be generated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: The list of roles that the User has for this registration.
         :param pulumi.Input[bool] skip_registration_validation: Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
         :param pulumi.Input[str] timezone: The User’s preferred timezone for this registration. The string will be in an IANA time zone format.
@@ -517,6 +560,7 @@ class FusionAuthRegistration(pulumi.CustomResource):
         __props__.__dict__["data"] = data
         __props__.__dict__["generate_authentication_token"] = generate_authentication_token
         __props__.__dict__["preferred_languages"] = preferred_languages
+        __props__.__dict__["registration_id"] = registration_id
         __props__.__dict__["roles"] = roles
         __props__.__dict__["skip_registration_validation"] = skip_registration_validation
         __props__.__dict__["timezone"] = timezone
@@ -542,7 +586,7 @@ class FusionAuthRegistration(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the User for this registration that should be persisted.
         """
@@ -563,6 +607,14 @@ class FusionAuthRegistration(pulumi.CustomResource):
         An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
         """
         return pulumi.get(self, "preferred_languages")
+
+    @property
+    @pulumi.getter(name="registrationId")
+    def registration_id(self) -> pulumi.Output[str]:
+        """
+        The Id of this registration. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "registration_id")
 
     @property
     @pulumi.getter

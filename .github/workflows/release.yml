@@ -135,4 +135,4 @@ jobs:
         nodeversion:
           - 18.x
         pythonversion:
-          - "3.9"
+          - "3.9.21"

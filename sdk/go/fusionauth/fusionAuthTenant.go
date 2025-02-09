@@ -7,7 +7,6 @@ import (
 	"context"
 	"reflect"
 
-	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth/internal"
 )
@@ -57,9 +56,9 @@ import (
 //					Username:                      pulumi.String("username"),
 //					VerifyEmail:                   pulumi.Bool(true),
 //					VerifyEmailWhenChanged:        pulumi.Bool(true),
-//					AdditionalHeaders: pulumi.Map{
-//						"HeaderName1": pulumi.Any("HeaderValue1"),
-//						"HeaderName2": pulumi.Any("HeaderValue2"),
+//					AdditionalHeaders: pulumi.StringMap{
+//						"HeaderName1": pulumi.String("HeaderValue1"),
+//						"HeaderName2": pulumi.String("HeaderValue2"),
 //					},
 //				},
 //				EventConfigurations: fusionauth.FusionAuthTenantEventConfigurationArray{
@@ -490,24 +489,28 @@ type FusionAuthTenant struct {
 	// A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
 	ConnectorPolicies FusionAuthTenantConnectorPolicyArrayOutput `pulumi:"connectorPolicies"`
 	// An object that can hold any information about the Tenant that should be persisted.
-	Data                              pulumi.MapOutput                                        `pulumi:"data"`
-	EmailConfiguration                FusionAuthTenantEmailConfigurationOutput                `pulumi:"emailConfiguration"`
-	EventConfigurations               FusionAuthTenantEventConfigurationArrayOutput           `pulumi:"eventConfigurations"`
-	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfigurationOutput   `pulumi:"externalIdentifierConfiguration"`
-	FailedAuthenticationConfiguration FusionAuthTenantFailedAuthenticationConfigurationOutput `pulumi:"failedAuthenticationConfiguration"`
-	FamilyConfiguration               FusionAuthTenantFamilyConfigurationOutput               `pulumi:"familyConfiguration"`
-	FormConfiguration                 FusionAuthTenantFormConfigurationOutput                 `pulumi:"formConfiguration"`
+	Data pulumi.StringMapOutput `pulumi:"data"`
+	// The email configuration for the tenant.
+	EmailConfiguration                FusionAuthTenantEmailConfigurationPtrOutput              `pulumi:"emailConfiguration"`
+	EventConfigurations               FusionAuthTenantEventConfigurationArrayOutput            `pulumi:"eventConfigurations"`
+	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfigurationPtrOutput `pulumi:"externalIdentifierConfiguration"`
+	FailedAuthenticationConfiguration FusionAuthTenantFailedAuthenticationConfigurationOutput  `pulumi:"failedAuthenticationConfiguration"`
+	FamilyConfiguration               FusionAuthTenantFamilyConfigurationOutput                `pulumi:"familyConfiguration"`
+	FormConfiguration                 FusionAuthTenantFormConfigurationOutput                  `pulumi:"formConfiguration"`
 	// Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
 	HttpSessionMaxInactiveInterval pulumi.IntPtrOutput `pulumi:"httpSessionMaxInactiveInterval"`
 	// The named issuer used to sign tokens, this is generally your public fully qualified domain.
-	Issuer             pulumi.StringOutput                         `pulumi:"issuer"`
-	JwtConfigurations  FusionAuthTenantJwtConfigurationArrayOutput `pulumi:"jwtConfigurations"`
-	LoginConfiguration FusionAuthTenantLoginConfigurationPtrOutput `pulumi:"loginConfiguration"`
+	Issuer pulumi.StringOutput `pulumi:"issuer"`
+	// The JWT configuration for the tenant.
+	JwtConfigurations FusionAuthTenantJwtConfigurationArrayOutput `pulumi:"jwtConfigurations"`
+	// Lamnda configuration for this tenant.
+	LambdaConfiguration FusionAuthTenantLambdaConfigurationPtrOutput `pulumi:"lambdaConfiguration"`
+	LoginConfiguration  FusionAuthTenantLoginConfigurationPtrOutput  `pulumi:"loginConfiguration"`
 	// The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
-	LogoutUrl                pulumi.StringPtrOutput                         `pulumi:"logoutUrl"`
-	MaximumPasswordAge       FusionAuthTenantMaximumPasswordAgeOutput       `pulumi:"maximumPasswordAge"`
-	MinimumPasswordAge       FusionAuthTenantMinimumPasswordAgeOutput       `pulumi:"minimumPasswordAge"`
-	MultiFactorConfiguration FusionAuthTenantMultiFactorConfigurationOutput `pulumi:"multiFactorConfiguration"`
+	LogoutUrl                pulumi.StringPtrOutput                            `pulumi:"logoutUrl"`
+	MaximumPasswordAge       FusionAuthTenantMaximumPasswordAgeOutput          `pulumi:"maximumPasswordAge"`
+	MinimumPasswordAge       FusionAuthTenantMinimumPasswordAgeOutput          `pulumi:"minimumPasswordAge"`
+	MultiFactorConfiguration FusionAuthTenantMultiFactorConfigurationPtrOutput `pulumi:"multiFactorConfiguration"`
 	// The unique name of the Tenant.
 	Name                             pulumi.StringOutput                                        `pulumi:"name"`
 	OauthConfigurations              FusionAuthTenantOauthConfigurationArrayOutput              `pulumi:"oauthConfigurations"`
@@ -515,14 +518,18 @@ type FusionAuthTenant struct {
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesOutput              `pulumi:"passwordValidationRules"`
 	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationOutput               `pulumi:"rateLimitConfiguration"`
 	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationOutput            `pulumi:"registrationConfiguration"`
+	ScimServerConfiguration          FusionAuthTenantScimServerConfigurationPtrOutput           `pulumi:"scimServerConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
-	SourceTenantId pulumi.StringPtrOutput `pulumi:"sourceTenantId"`
+	SourceTenantId   pulumi.StringPtrOutput                    `pulumi:"sourceTenantId"`
+	SsoConfiguration FusionAuthTenantSsoConfigurationPtrOutput `pulumi:"ssoConfiguration"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
 	TenantId pulumi.StringOutput `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId               pulumi.StringOutput                         `pulumi:"themeId"`
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyOutput      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationOutput `pulumi:"usernameConfiguration"`
+	// The WebAuthn configuration for this tenant.
+	WebauthnConfiguration FusionAuthTenantWebauthnConfigurationPtrOutput `pulumi:"webauthnConfiguration"`
 	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
 	WebhookIds pulumi.StringArrayOutput `pulumi:"webhookIds"`
 }
@@ -531,24 +538,9 @@ type FusionAuthTenant struct {
 func NewFusionAuthTenant(ctx *pulumi.Context,
 	name string, args *FusionAuthTenantArgs, opts ...pulumi.ResourceOption) (*FusionAuthTenant, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &FusionAuthTenantArgs{}
 	}
 
-	if args.EmailConfiguration == nil {
-		return nil, errors.New("invalid value for required argument 'EmailConfiguration'")
-	}
-	if args.ExternalIdentifierConfiguration == nil {
-		return nil, errors.New("invalid value for required argument 'ExternalIdentifierConfiguration'")
-	}
-	if args.Issuer == nil {
-		return nil, errors.New("invalid value for required argument 'Issuer'")
-	}
-	if args.JwtConfigurations == nil {
-		return nil, errors.New("invalid value for required argument 'JwtConfigurations'")
-	}
-	if args.ThemeId == nil {
-		return nil, errors.New("invalid value for required argument 'ThemeId'")
-	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthTenant
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthTenant:FusionAuthTenant", name, args, &resource, opts...)
@@ -577,7 +569,8 @@ type fusionAuthTenantState struct {
 	// A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
 	ConnectorPolicies []FusionAuthTenantConnectorPolicy `pulumi:"connectorPolicies"`
 	// An object that can hold any information about the Tenant that should be persisted.
-	Data                              map[string]interface{}                             `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
+	// The email configuration for the tenant.
 	EmailConfiguration                *FusionAuthTenantEmailConfiguration                `pulumi:"emailConfiguration"`
 	EventConfigurations               []FusionAuthTenantEventConfiguration               `pulumi:"eventConfigurations"`
 	ExternalIdentifierConfiguration   *FusionAuthTenantExternalIdentifierConfiguration   `pulumi:"externalIdentifierConfiguration"`
@@ -587,9 +580,12 @@ type fusionAuthTenantState struct {
 	// Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
 	HttpSessionMaxInactiveInterval *int `pulumi:"httpSessionMaxInactiveInterval"`
 	// The named issuer used to sign tokens, this is generally your public fully qualified domain.
-	Issuer             *string                             `pulumi:"issuer"`
-	JwtConfigurations  []FusionAuthTenantJwtConfiguration  `pulumi:"jwtConfigurations"`
-	LoginConfiguration *FusionAuthTenantLoginConfiguration `pulumi:"loginConfiguration"`
+	Issuer *string `pulumi:"issuer"`
+	// The JWT configuration for the tenant.
+	JwtConfigurations []FusionAuthTenantJwtConfiguration `pulumi:"jwtConfigurations"`
+	// Lamnda configuration for this tenant.
+	LambdaConfiguration *FusionAuthTenantLambdaConfiguration `pulumi:"lambdaConfiguration"`
+	LoginConfiguration  *FusionAuthTenantLoginConfiguration  `pulumi:"loginConfiguration"`
 	// The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
 	LogoutUrl                *string                                   `pulumi:"logoutUrl"`
 	MaximumPasswordAge       *FusionAuthTenantMaximumPasswordAge       `pulumi:"maximumPasswordAge"`
@@ -602,14 +598,18 @@ type fusionAuthTenantState struct {
 	PasswordValidationRules          *FusionAuthTenantPasswordValidationRules          `pulumi:"passwordValidationRules"`
 	RateLimitConfiguration           *FusionAuthTenantRateLimitConfiguration           `pulumi:"rateLimitConfiguration"`
 	RegistrationConfiguration        *FusionAuthTenantRegistrationConfiguration        `pulumi:"registrationConfiguration"`
+	ScimServerConfiguration          *FusionAuthTenantScimServerConfiguration          `pulumi:"scimServerConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
-	SourceTenantId *string `pulumi:"sourceTenantId"`
+	SourceTenantId   *string                           `pulumi:"sourceTenantId"`
+	SsoConfiguration *FusionAuthTenantSsoConfiguration `pulumi:"ssoConfiguration"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
 	TenantId *string `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId               *string                                `pulumi:"themeId"`
 	UserDeletePolicy      *FusionAuthTenantUserDeletePolicy      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration *FusionAuthTenantUsernameConfiguration `pulumi:"usernameConfiguration"`
+	// The WebAuthn configuration for this tenant.
+	WebauthnConfiguration *FusionAuthTenantWebauthnConfiguration `pulumi:"webauthnConfiguration"`
 	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
 	WebhookIds []string `pulumi:"webhookIds"`
 }
@@ -620,7 +620,8 @@ type FusionAuthTenantState struct {
 	// A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
 	ConnectorPolicies FusionAuthTenantConnectorPolicyArrayInput
 	// An object that can hold any information about the Tenant that should be persisted.
-	Data                              pulumi.MapInput
+	Data pulumi.StringMapInput
+	// The email configuration for the tenant.
 	EmailConfiguration                FusionAuthTenantEmailConfigurationPtrInput
 	EventConfigurations               FusionAuthTenantEventConfigurationArrayInput
 	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfigurationPtrInput
@@ -630,9 +631,12 @@ type FusionAuthTenantState struct {
 	// Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
 	HttpSessionMaxInactiveInterval pulumi.IntPtrInput
 	// The named issuer used to sign tokens, this is generally your public fully qualified domain.
-	Issuer             pulumi.StringPtrInput
-	JwtConfigurations  FusionAuthTenantJwtConfigurationArrayInput
-	LoginConfiguration FusionAuthTenantLoginConfigurationPtrInput
+	Issuer pulumi.StringPtrInput
+	// The JWT configuration for the tenant.
+	JwtConfigurations FusionAuthTenantJwtConfigurationArrayInput
+	// Lamnda configuration for this tenant.
+	LambdaConfiguration FusionAuthTenantLambdaConfigurationPtrInput
+	LoginConfiguration  FusionAuthTenantLoginConfigurationPtrInput
 	// The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
 	LogoutUrl                pulumi.StringPtrInput
 	MaximumPasswordAge       FusionAuthTenantMaximumPasswordAgePtrInput
@@ -645,14 +649,18 @@ type FusionAuthTenantState struct {
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesPtrInput
 	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationPtrInput
 	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationPtrInput
+	ScimServerConfiguration          FusionAuthTenantScimServerConfigurationPtrInput
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
-	SourceTenantId pulumi.StringPtrInput
+	SourceTenantId   pulumi.StringPtrInput
+	SsoConfiguration FusionAuthTenantSsoConfigurationPtrInput
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
 	TenantId pulumi.StringPtrInput
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId               pulumi.StringPtrInput
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyPtrInput
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationPtrInput
+	// The WebAuthn configuration for this tenant.
+	WebauthnConfiguration FusionAuthTenantWebauthnConfigurationPtrInput
 	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
 	WebhookIds pulumi.StringArrayInput
 }
@@ -667,19 +675,23 @@ type fusionAuthTenantArgs struct {
 	// A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
 	ConnectorPolicies []FusionAuthTenantConnectorPolicy `pulumi:"connectorPolicies"`
 	// An object that can hold any information about the Tenant that should be persisted.
-	Data                              map[string]interface{}                             `pulumi:"data"`
-	EmailConfiguration                FusionAuthTenantEmailConfiguration                 `pulumi:"emailConfiguration"`
+	Data map[string]string `pulumi:"data"`
+	// The email configuration for the tenant.
+	EmailConfiguration                *FusionAuthTenantEmailConfiguration                `pulumi:"emailConfiguration"`
 	EventConfigurations               []FusionAuthTenantEventConfiguration               `pulumi:"eventConfigurations"`
-	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfiguration    `pulumi:"externalIdentifierConfiguration"`
+	ExternalIdentifierConfiguration   *FusionAuthTenantExternalIdentifierConfiguration   `pulumi:"externalIdentifierConfiguration"`
 	FailedAuthenticationConfiguration *FusionAuthTenantFailedAuthenticationConfiguration `pulumi:"failedAuthenticationConfiguration"`
 	FamilyConfiguration               *FusionAuthTenantFamilyConfiguration               `pulumi:"familyConfiguration"`
 	FormConfiguration                 *FusionAuthTenantFormConfiguration                 `pulumi:"formConfiguration"`
 	// Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
 	HttpSessionMaxInactiveInterval *int `pulumi:"httpSessionMaxInactiveInterval"`
 	// The named issuer used to sign tokens, this is generally your public fully qualified domain.
-	Issuer             string                              `pulumi:"issuer"`
-	JwtConfigurations  []FusionAuthTenantJwtConfiguration  `pulumi:"jwtConfigurations"`
-	LoginConfiguration *FusionAuthTenantLoginConfiguration `pulumi:"loginConfiguration"`
+	Issuer *string `pulumi:"issuer"`
+	// The JWT configuration for the tenant.
+	JwtConfigurations []FusionAuthTenantJwtConfiguration `pulumi:"jwtConfigurations"`
+	// Lamnda configuration for this tenant.
+	LambdaConfiguration *FusionAuthTenantLambdaConfiguration `pulumi:"lambdaConfiguration"`
+	LoginConfiguration  *FusionAuthTenantLoginConfiguration  `pulumi:"loginConfiguration"`
 	// The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
 	LogoutUrl                *string                                   `pulumi:"logoutUrl"`
 	MaximumPasswordAge       *FusionAuthTenantMaximumPasswordAge       `pulumi:"maximumPasswordAge"`
@@ -692,14 +704,18 @@ type fusionAuthTenantArgs struct {
 	PasswordValidationRules          *FusionAuthTenantPasswordValidationRules          `pulumi:"passwordValidationRules"`
 	RateLimitConfiguration           *FusionAuthTenantRateLimitConfiguration           `pulumi:"rateLimitConfiguration"`
 	RegistrationConfiguration        *FusionAuthTenantRegistrationConfiguration        `pulumi:"registrationConfiguration"`
+	ScimServerConfiguration          *FusionAuthTenantScimServerConfiguration          `pulumi:"scimServerConfiguration"`
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
-	SourceTenantId *string `pulumi:"sourceTenantId"`
+	SourceTenantId   *string                           `pulumi:"sourceTenantId"`
+	SsoConfiguration *FusionAuthTenantSsoConfiguration `pulumi:"ssoConfiguration"`
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
 	TenantId *string `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
-	ThemeId               string                                 `pulumi:"themeId"`
+	ThemeId               *string                                `pulumi:"themeId"`
 	UserDeletePolicy      *FusionAuthTenantUserDeletePolicy      `pulumi:"userDeletePolicy"`
 	UsernameConfiguration *FusionAuthTenantUsernameConfiguration `pulumi:"usernameConfiguration"`
+	// The WebAuthn configuration for this tenant.
+	WebauthnConfiguration *FusionAuthTenantWebauthnConfiguration `pulumi:"webauthnConfiguration"`
 	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
 	WebhookIds []string `pulumi:"webhookIds"`
 }
@@ -711,19 +727,23 @@ type FusionAuthTenantArgs struct {
 	// A list of Connector policies. Users will be authenticated against Connectors in order. Each Connector can be included in this list at most once and must exist.
 	ConnectorPolicies FusionAuthTenantConnectorPolicyArrayInput
 	// An object that can hold any information about the Tenant that should be persisted.
-	Data                              pulumi.MapInput
-	EmailConfiguration                FusionAuthTenantEmailConfigurationInput
+	Data pulumi.StringMapInput
+	// The email configuration for the tenant.
+	EmailConfiguration                FusionAuthTenantEmailConfigurationPtrInput
 	EventConfigurations               FusionAuthTenantEventConfigurationArrayInput
-	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfigurationInput
+	ExternalIdentifierConfiguration   FusionAuthTenantExternalIdentifierConfigurationPtrInput
 	FailedAuthenticationConfiguration FusionAuthTenantFailedAuthenticationConfigurationPtrInput
 	FamilyConfiguration               FusionAuthTenantFamilyConfigurationPtrInput
 	FormConfiguration                 FusionAuthTenantFormConfigurationPtrInput
 	// Time in seconds until an inactive session will be invalidated. Used when creating a new session in the FusionAuth OAuth frontend.
 	HttpSessionMaxInactiveInterval pulumi.IntPtrInput
 	// The named issuer used to sign tokens, this is generally your public fully qualified domain.
-	Issuer             pulumi.StringInput
-	JwtConfigurations  FusionAuthTenantJwtConfigurationArrayInput
-	LoginConfiguration FusionAuthTenantLoginConfigurationPtrInput
+	Issuer pulumi.StringPtrInput
+	// The JWT configuration for the tenant.
+	JwtConfigurations FusionAuthTenantJwtConfigurationArrayInput
+	// Lamnda configuration for this tenant.
+	LambdaConfiguration FusionAuthTenantLambdaConfigurationPtrInput
+	LoginConfiguration  FusionAuthTenantLoginConfigurationPtrInput
 	// The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
 	LogoutUrl                pulumi.StringPtrInput
 	MaximumPasswordAge       FusionAuthTenantMaximumPasswordAgePtrInput
@@ -736,14 +756,18 @@ type FusionAuthTenantArgs struct {
 	PasswordValidationRules          FusionAuthTenantPasswordValidationRulesPtrInput
 	RateLimitConfiguration           FusionAuthTenantRateLimitConfigurationPtrInput
 	RegistrationConfiguration        FusionAuthTenantRegistrationConfigurationPtrInput
+	ScimServerConfiguration          FusionAuthTenantScimServerConfigurationPtrInput
 	// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
-	SourceTenantId pulumi.StringPtrInput
+	SourceTenantId   pulumi.StringPtrInput
+	SsoConfiguration FusionAuthTenantSsoConfigurationPtrInput
 	// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
 	TenantId pulumi.StringPtrInput
 	// The unique Id of the theme to be used to style the login page and other end user templates.
-	ThemeId               pulumi.StringInput
+	ThemeId               pulumi.StringPtrInput
 	UserDeletePolicy      FusionAuthTenantUserDeletePolicyPtrInput
 	UsernameConfiguration FusionAuthTenantUsernameConfigurationPtrInput
+	// The WebAuthn configuration for this tenant.
+	WebauthnConfiguration FusionAuthTenantWebauthnConfigurationPtrInput
 	// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
 	WebhookIds pulumi.StringArrayInput
 }
@@ -851,22 +875,23 @@ func (o FusionAuthTenantOutput) ConnectorPolicies() FusionAuthTenantConnectorPol
 }
 
 // An object that can hold any information about the Tenant that should be persisted.
-func (o FusionAuthTenantOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthTenant) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthTenantOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
-func (o FusionAuthTenantOutput) EmailConfiguration() FusionAuthTenantEmailConfigurationOutput {
-	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantEmailConfigurationOutput { return v.EmailConfiguration }).(FusionAuthTenantEmailConfigurationOutput)
+// The email configuration for the tenant.
+func (o FusionAuthTenantOutput) EmailConfiguration() FusionAuthTenantEmailConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantEmailConfigurationPtrOutput { return v.EmailConfiguration }).(FusionAuthTenantEmailConfigurationPtrOutput)
 }
 
 func (o FusionAuthTenantOutput) EventConfigurations() FusionAuthTenantEventConfigurationArrayOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantEventConfigurationArrayOutput { return v.EventConfigurations }).(FusionAuthTenantEventConfigurationArrayOutput)
 }
 
-func (o FusionAuthTenantOutput) ExternalIdentifierConfiguration() FusionAuthTenantExternalIdentifierConfigurationOutput {
-	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantExternalIdentifierConfigurationOutput {
+func (o FusionAuthTenantOutput) ExternalIdentifierConfiguration() FusionAuthTenantExternalIdentifierConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantExternalIdentifierConfigurationPtrOutput {
 		return v.ExternalIdentifierConfiguration
-	}).(FusionAuthTenantExternalIdentifierConfigurationOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationPtrOutput)
 }
 
 func (o FusionAuthTenantOutput) FailedAuthenticationConfiguration() FusionAuthTenantFailedAuthenticationConfigurationOutput {
@@ -893,8 +918,14 @@ func (o FusionAuthTenantOutput) Issuer() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) pulumi.StringOutput { return v.Issuer }).(pulumi.StringOutput)
 }
 
+// The JWT configuration for the tenant.
 func (o FusionAuthTenantOutput) JwtConfigurations() FusionAuthTenantJwtConfigurationArrayOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantJwtConfigurationArrayOutput { return v.JwtConfigurations }).(FusionAuthTenantJwtConfigurationArrayOutput)
+}
+
+// Lamnda configuration for this tenant.
+func (o FusionAuthTenantOutput) LambdaConfiguration() FusionAuthTenantLambdaConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantLambdaConfigurationPtrOutput { return v.LambdaConfiguration }).(FusionAuthTenantLambdaConfigurationPtrOutput)
 }
 
 func (o FusionAuthTenantOutput) LoginConfiguration() FusionAuthTenantLoginConfigurationPtrOutput {
@@ -914,10 +945,10 @@ func (o FusionAuthTenantOutput) MinimumPasswordAge() FusionAuthTenantMinimumPass
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantMinimumPasswordAgeOutput { return v.MinimumPasswordAge }).(FusionAuthTenantMinimumPasswordAgeOutput)
 }
 
-func (o FusionAuthTenantOutput) MultiFactorConfiguration() FusionAuthTenantMultiFactorConfigurationOutput {
-	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantMultiFactorConfigurationOutput {
+func (o FusionAuthTenantOutput) MultiFactorConfiguration() FusionAuthTenantMultiFactorConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantMultiFactorConfigurationPtrOutput {
 		return v.MultiFactorConfiguration
-	}).(FusionAuthTenantMultiFactorConfigurationOutput)
+	}).(FusionAuthTenantMultiFactorConfigurationPtrOutput)
 }
 
 // The unique name of the Tenant.
@@ -953,9 +984,19 @@ func (o FusionAuthTenantOutput) RegistrationConfiguration() FusionAuthTenantRegi
 	}).(FusionAuthTenantRegistrationConfigurationOutput)
 }
 
+func (o FusionAuthTenantOutput) ScimServerConfiguration() FusionAuthTenantScimServerConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantScimServerConfigurationPtrOutput {
+		return v.ScimServerConfiguration
+	}).(FusionAuthTenantScimServerConfigurationPtrOutput)
+}
+
 // The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
 func (o FusionAuthTenantOutput) SourceTenantId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) pulumi.StringPtrOutput { return v.SourceTenantId }).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthTenantOutput) SsoConfiguration() FusionAuthTenantSsoConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantSsoConfigurationPtrOutput { return v.SsoConfiguration }).(FusionAuthTenantSsoConfigurationPtrOutput)
 }
 
 // The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -974,6 +1015,13 @@ func (o FusionAuthTenantOutput) UserDeletePolicy() FusionAuthTenantUserDeletePol
 
 func (o FusionAuthTenantOutput) UsernameConfiguration() FusionAuthTenantUsernameConfigurationOutput {
 	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantUsernameConfigurationOutput { return v.UsernameConfiguration }).(FusionAuthTenantUsernameConfigurationOutput)
+}
+
+// The WebAuthn configuration for this tenant.
+func (o FusionAuthTenantOutput) WebauthnConfiguration() FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenant) FusionAuthTenantWebauthnConfigurationPtrOutput {
+		return v.WebauthnConfiguration
+	}).(FusionAuthTenantWebauthnConfigurationPtrOutput)
 }
 
 // An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.

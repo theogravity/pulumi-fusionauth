@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -17,6 +22,7 @@ __all__ = ['FusionAuthApiKeyArgs', 'FusionAuthApiKey']
 class FusionAuthApiKeyArgs:
     def __init__(__self__, *,
                  description: Optional[pulumi.Input[str]] = None,
+                 expiration_instant: Optional[pulumi.Input[int]] = None,
                  ip_access_control_list_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
@@ -25,14 +31,17 @@ class FusionAuthApiKeyArgs:
         """
         The set of arguments for constructing a FusionAuthApiKey resource.
         :param pulumi.Input[str] description: Description of the key.
+        :param pulumi.Input[int] expiration_instant: The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
         :param pulumi.Input[str] ip_access_control_list_id: The Id of the IP Access Control List limiting access to this API key.
         :param pulumi.Input[str] key: API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
         :param pulumi.Input[str] key_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
-        :param pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]] permissions_endpoints: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        :param pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]] permissions_endpoints: Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         :param pulumi.Input[str] tenant_id: The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
         """
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if expiration_instant is not None:
+            pulumi.set(__self__, "expiration_instant", expiration_instant)
         if ip_access_control_list_id is not None:
             pulumi.set(__self__, "ip_access_control_list_id", ip_access_control_list_id)
         if key is not None:
@@ -55,6 +64,18 @@ class FusionAuthApiKeyArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="expirationInstant")
+    def expiration_instant(self) -> Optional[pulumi.Input[int]]:
+        """
+        The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        """
+        return pulumi.get(self, "expiration_instant")
+
+    @expiration_instant.setter
+    def expiration_instant(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "expiration_instant", value)
 
     @property
     @pulumi.getter(name="ipAccessControlListId")
@@ -96,7 +117,7 @@ class FusionAuthApiKeyArgs:
     @pulumi.getter(name="permissionsEndpoints")
     def permissions_endpoints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]]]:
         """
-        The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         """
         return pulumi.get(self, "permissions_endpoints")
 
@@ -121,6 +142,7 @@ class FusionAuthApiKeyArgs:
 class _FusionAuthApiKeyState:
     def __init__(__self__, *,
                  description: Optional[pulumi.Input[str]] = None,
+                 expiration_instant: Optional[pulumi.Input[int]] = None,
                  ip_access_control_list_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
@@ -129,14 +151,17 @@ class _FusionAuthApiKeyState:
         """
         Input properties used for looking up and filtering FusionAuthApiKey resources.
         :param pulumi.Input[str] description: Description of the key.
+        :param pulumi.Input[int] expiration_instant: The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
         :param pulumi.Input[str] ip_access_control_list_id: The Id of the IP Access Control List limiting access to this API key.
         :param pulumi.Input[str] key: API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
         :param pulumi.Input[str] key_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
-        :param pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]] permissions_endpoints: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        :param pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]] permissions_endpoints: Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         :param pulumi.Input[str] tenant_id: The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
         """
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if expiration_instant is not None:
+            pulumi.set(__self__, "expiration_instant", expiration_instant)
         if ip_access_control_list_id is not None:
             pulumi.set(__self__, "ip_access_control_list_id", ip_access_control_list_id)
         if key is not None:
@@ -159,6 +184,18 @@ class _FusionAuthApiKeyState:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="expirationInstant")
+    def expiration_instant(self) -> Optional[pulumi.Input[int]]:
+        """
+        The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        """
+        return pulumi.get(self, "expiration_instant")
+
+    @expiration_instant.setter
+    def expiration_instant(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "expiration_instant", value)
 
     @property
     @pulumi.getter(name="ipAccessControlListId")
@@ -200,7 +237,7 @@ class _FusionAuthApiKeyState:
     @pulumi.getter(name="permissionsEndpoints")
     def permissions_endpoints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthApiKeyPermissionsEndpointArgs']]]]:
         """
-        The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         """
         return pulumi.get(self, "permissions_endpoints")
 
@@ -227,10 +264,11 @@ class FusionAuthApiKey(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 expiration_instant: Optional[pulumi.Input[int]] = None,
                  ip_access_control_list_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
-                 permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthApiKeyPermissionsEndpointArgs']]]]] = None,
+                 permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthApiKeyPermissionsEndpointArgs', 'FusionAuthApiKeyPermissionsEndpointArgsDict']]]]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -249,24 +287,25 @@ class FusionAuthApiKey(pulumi.CustomResource):
         example = fusionauth.FusionAuthApiKey("example",
             description="my super secret key",
             key="super-secret-key",
-            permissions_endpoints=[fusionauth.FusionAuthApiKeyPermissionsEndpointArgs(
-                delete=True,
-                endpoint="/api/application",
-                get=True,
-                patch=True,
-                post=True,
-                put=True,
-            )],
+            permissions_endpoints=[{
+                "delete": True,
+                "endpoint": "/api/application",
+                "get": True,
+                "patch": True,
+                "post": True,
+                "put": True,
+            }],
             tenant_id="94f751c5-4883-4684-a817-6b106778edec")
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: Description of the key.
+        :param pulumi.Input[int] expiration_instant: The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
         :param pulumi.Input[str] ip_access_control_list_id: The Id of the IP Access Control List limiting access to this API key.
         :param pulumi.Input[str] key: API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
         :param pulumi.Input[str] key_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthApiKeyPermissionsEndpointArgs']]]] permissions_endpoints: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthApiKeyPermissionsEndpointArgs', 'FusionAuthApiKeyPermissionsEndpointArgsDict']]]] permissions_endpoints: Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         :param pulumi.Input[str] tenant_id: The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
         """
         ...
@@ -291,14 +330,14 @@ class FusionAuthApiKey(pulumi.CustomResource):
         example = fusionauth.FusionAuthApiKey("example",
             description="my super secret key",
             key="super-secret-key",
-            permissions_endpoints=[fusionauth.FusionAuthApiKeyPermissionsEndpointArgs(
-                delete=True,
-                endpoint="/api/application",
-                get=True,
-                patch=True,
-                post=True,
-                put=True,
-            )],
+            permissions_endpoints=[{
+                "delete": True,
+                "endpoint": "/api/application",
+                "get": True,
+                "patch": True,
+                "post": True,
+                "put": True,
+            }],
             tenant_id="94f751c5-4883-4684-a817-6b106778edec")
         ```
 
@@ -318,10 +357,11 @@ class FusionAuthApiKey(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 expiration_instant: Optional[pulumi.Input[int]] = None,
                  ip_access_control_list_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
-                 permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthApiKeyPermissionsEndpointArgs']]]]] = None,
+                 permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthApiKeyPermissionsEndpointArgs', 'FusionAuthApiKeyPermissionsEndpointArgsDict']]]]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -333,6 +373,7 @@ class FusionAuthApiKey(pulumi.CustomResource):
             __props__ = FusionAuthApiKeyArgs.__new__(FusionAuthApiKeyArgs)
 
             __props__.__dict__["description"] = description
+            __props__.__dict__["expiration_instant"] = expiration_instant
             __props__.__dict__["ip_access_control_list_id"] = ip_access_control_list_id
             __props__.__dict__["key"] = None if key is None else pulumi.Output.secret(key)
             __props__.__dict__["key_id"] = key_id
@@ -351,10 +392,11 @@ class FusionAuthApiKey(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             description: Optional[pulumi.Input[str]] = None,
+            expiration_instant: Optional[pulumi.Input[int]] = None,
             ip_access_control_list_id: Optional[pulumi.Input[str]] = None,
             key: Optional[pulumi.Input[str]] = None,
             key_id: Optional[pulumi.Input[str]] = None,
-            permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthApiKeyPermissionsEndpointArgs']]]]] = None,
+            permissions_endpoints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthApiKeyPermissionsEndpointArgs', 'FusionAuthApiKeyPermissionsEndpointArgsDict']]]]] = None,
             tenant_id: Optional[pulumi.Input[str]] = None) -> 'FusionAuthApiKey':
         """
         Get an existing FusionAuthApiKey resource's state with the given name, id, and optional extra
@@ -364,10 +406,11 @@ class FusionAuthApiKey(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: Description of the key.
+        :param pulumi.Input[int] expiration_instant: The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
         :param pulumi.Input[str] ip_access_control_list_id: The Id of the IP Access Control List limiting access to this API key.
         :param pulumi.Input[str] key: API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
         :param pulumi.Input[str] key_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthApiKeyPermissionsEndpointArgs']]]] permissions_endpoints: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthApiKeyPermissionsEndpointArgs', 'FusionAuthApiKeyPermissionsEndpointArgsDict']]]] permissions_endpoints: Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         :param pulumi.Input[str] tenant_id: The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -375,6 +418,7 @@ class FusionAuthApiKey(pulumi.CustomResource):
         __props__ = _FusionAuthApiKeyState.__new__(_FusionAuthApiKeyState)
 
         __props__.__dict__["description"] = description
+        __props__.__dict__["expiration_instant"] = expiration_instant
         __props__.__dict__["ip_access_control_list_id"] = ip_access_control_list_id
         __props__.__dict__["key"] = key
         __props__.__dict__["key_id"] = key_id
@@ -389,6 +433,14 @@ class FusionAuthApiKey(pulumi.CustomResource):
         Description of the key.
         """
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter(name="expirationInstant")
+    def expiration_instant(self) -> pulumi.Output[Optional[int]]:
+        """
+        The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        """
+        return pulumi.get(self, "expiration_instant")
 
     @property
     @pulumi.getter(name="ipAccessControlListId")
@@ -418,7 +470,7 @@ class FusionAuthApiKey(pulumi.CustomResource):
     @pulumi.getter(name="permissionsEndpoints")
     def permissions_endpoints(self) -> pulumi.Output[Optional[Sequence['outputs.FusionAuthApiKeyPermissionsEndpoint']]]:
         """
-        The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         """
         return pulumi.get(self, "permissions_endpoints")
 

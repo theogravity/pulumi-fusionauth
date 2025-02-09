@@ -4,10 +4,16 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
 
 __all__ = [
     'GetApplicationResult',
@@ -21,13 +27,19 @@ class GetApplicationResult:
     """
     A collection of values returned by getApplication.
     """
-    def __init__(__self__, id=None, name=None):
+    def __init__(__self__, id=None, name=None, tenant_id=None, webauthn_configurations=None):
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
+        if tenant_id and not isinstance(tenant_id, str):
+            raise TypeError("Expected argument 'tenant_id' to be a str")
+        pulumi.set(__self__, "tenant_id", tenant_id)
+        if webauthn_configurations and not isinstance(webauthn_configurations, list):
+            raise TypeError("Expected argument 'webauthn_configurations' to be a list")
+        pulumi.set(__self__, "webauthn_configurations", webauthn_configurations)
 
     @property
     @pulumi.getter
@@ -42,6 +54,16 @@ class GetApplicationResult:
     def name(self) -> str:
         return pulumi.get(self, "name")
 
+    @property
+    @pulumi.getter(name="tenantId")
+    def tenant_id(self) -> str:
+        return pulumi.get(self, "tenant_id")
+
+    @property
+    @pulumi.getter(name="webauthnConfigurations")
+    def webauthn_configurations(self) -> Sequence['outputs.GetApplicationWebauthnConfigurationResult']:
+        return pulumi.get(self, "webauthn_configurations")
+
 
 class AwaitableGetApplicationResult(GetApplicationResult):
     # pylint: disable=using-constant-test
@@ -50,7 +72,9 @@ class AwaitableGetApplicationResult(GetApplicationResult):
             yield self
         return GetApplicationResult(
             id=self.id,
-            name=self.name)
+            name=self.name,
+            tenant_id=self.tenant_id,
+            webauthn_configurations=self.webauthn_configurations)
 
 
 def get_application(name: Optional[str] = None,
@@ -79,12 +103,11 @@ def get_application(name: Optional[str] = None,
 
     return AwaitableGetApplicationResult(
         id=pulumi.get(__ret__, 'id'),
-        name=pulumi.get(__ret__, 'name'))
-
-
-@_utilities.lift_output_func(get_application)
+        name=pulumi.get(__ret__, 'name'),
+        tenant_id=pulumi.get(__ret__, 'tenant_id'),
+        webauthn_configurations=pulumi.get(__ret__, 'webauthn_configurations'))
 def get_application_output(name: Optional[pulumi.Input[str]] = None,
-                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetApplicationResult]:
+                           opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetApplicationResult]:
     """
     ## # Application Resource
 
@@ -102,4 +125,12 @@ def get_application_output(name: Optional[pulumi.Input[str]] = None,
 
     :param str name: The name of the Application.
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getApplication:getApplication', __args__, opts=opts, typ=GetApplicationResult)
+    return __ret__.apply(lambda __response__: GetApplicationResult(
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        tenant_id=pulumi.get(__response__, 'tenant_id'),
+        webauthn_configurations=pulumi.get(__response__, 'webauthn_configurations')))

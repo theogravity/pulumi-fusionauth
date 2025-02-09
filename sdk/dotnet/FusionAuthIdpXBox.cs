@@ -67,7 +67,7 @@ namespace theogravity.Fusionauth
         public Output<string> ButtonText { get; private set; } = null!;
 
         /// <summary>
-        /// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        /// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         /// </summary>
         [Output("clientId")]
         public Output<string> ClientId { get; private set; } = null!;
@@ -186,7 +186,7 @@ namespace theogravity.Fusionauth
         public Input<string> ButtonText { get; set; } = null!;
 
         /// <summary>
-        /// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        /// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         /// </summary>
         [Input("clientId", required: true)]
         public Input<string> ClientId { get; set; } = null!;
@@ -272,7 +272,7 @@ namespace theogravity.Fusionauth
         public Input<string>? ButtonText { get; set; }
 
         /// <summary>
-        /// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        /// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         /// </summary>
         [Input("clientId")]
         public Input<string>? ClientId { get; set; }

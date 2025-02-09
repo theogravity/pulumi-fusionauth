@@ -14,14 +14,14 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthUserActionOptionGetArgs : global::Pulumi.ResourceArgs
     {
         [Input("localizedNames")]
-        private InputMap<object>? _localizedNames;
+        private InputMap<string>? _localizedNames;
 
         /// <summary>
         /// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
         /// </summary>
-        public InputMap<object> LocalizedNames
+        public InputMap<string> LocalizedNames
         {
-            get => _localizedNames ?? (_localizedNames = new InputMap<object>());
+            get => _localizedNames ?? (_localizedNames = new InputMap<string>());
             set => _localizedNames = value;
         }
 

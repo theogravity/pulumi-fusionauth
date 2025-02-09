@@ -65,6 +65,10 @@ export class FusionAuthIdpSteam extends pulumi.CustomResource {
     }
 
     /**
+     * Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+     */
+    public readonly apiMode!: pulumi.Output<string | undefined>;
+    /**
      * The configuration for each Application that the identity provider is enabled for.
      */
     public readonly applicationConfigurations!: pulumi.Output<outputs.FusionAuthIdpSteamApplicationConfiguration[] | undefined>;
@@ -122,6 +126,7 @@ export class FusionAuthIdpSteam extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as FusionAuthIdpSteamState | undefined;
+            resourceInputs["apiMode"] = state ? state.apiMode : undefined;
             resourceInputs["applicationConfigurations"] = state ? state.applicationConfigurations : undefined;
             resourceInputs["buttonText"] = state ? state.buttonText : undefined;
             resourceInputs["clientId"] = state ? state.clientId : undefined;
@@ -144,6 +149,7 @@ export class FusionAuthIdpSteam extends pulumi.CustomResource {
             if ((!args || args.webApiKey === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'webApiKey'");
             }
+            resourceInputs["apiMode"] = args ? args.apiMode : undefined;
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
             resourceInputs["buttonText"] = args ? args.buttonText : undefined;
             resourceInputs["clientId"] = args ? args.clientId : undefined;
@@ -165,6 +171,10 @@ export class FusionAuthIdpSteam extends pulumi.CustomResource {
  * Input properties used for looking up and filtering FusionAuthIdpSteam resources.
  */
 export interface FusionAuthIdpSteamState {
+    /**
+     * Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+     */
+    apiMode?: pulumi.Input<string>;
     /**
      * The configuration for each Application that the identity provider is enabled for.
      */
@@ -215,6 +225,10 @@ export interface FusionAuthIdpSteamState {
  * The set of arguments for constructing a FusionAuthIdpSteam resource.
  */
 export interface FusionAuthIdpSteamArgs {
+    /**
+     * Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+     */
+    apiMode?: pulumi.Input<string>;
     /**
      * The configuration for each Application that the identity provider is enabled for.
      */

@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? AllowEmailChangeWhenGated;
         /// <summary>
-        /// = (Optional) The behavior when detecting breaches at time of user login
+        /// = (Optional) The behavior when detecting breaches at time of user login.
         /// </summary>
         public readonly string? Behavior;
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -21,7 +26,7 @@ class FusionAuthApplicationArgs:
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token_configuration_enabled: Optional[pulumi.Input[bool]] = None,
                  clean_speak_configuration: Optional[pulumi.Input['FusionAuthApplicationCleanSpeakConfigurationArgs']] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  email_configuration: Optional[pulumi.Input['FusionAuthApplicationEmailConfigurationArgs']] = None,
                  form_configuration: Optional[pulumi.Input['FusionAuthApplicationFormConfigurationArgs']] = None,
                  jwt_configuration: Optional[pulumi.Input['FusionAuthApplicationJwtConfigurationArgs']] = None,
@@ -37,12 +42,14 @@ class FusionAuthApplicationArgs:
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verification_strategy: Optional[pulumi.Input[str]] = None,
-                 verify_registration: Optional[pulumi.Input[bool]] = None):
+                 verify_registration: Optional[pulumi.Input[bool]] = None,
+                 webauthn_configuration: Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']] = None):
         """
         The set of arguments for constructing a FusionAuthApplication resource.
+        :param pulumi.Input[str] tenant_id: The Id of the Tenant that this Application belongs to.
         :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
         :param pulumi.Input[bool] passwordless_configuration_enabled: Determines if passwordless login is enabled for this application.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
@@ -93,10 +100,15 @@ class FusionAuthApplicationArgs:
             pulumi.set(__self__, "verification_strategy", verification_strategy)
         if verify_registration is not None:
             pulumi.set(__self__, "verify_registration", verify_registration)
+        if webauthn_configuration is not None:
+            pulumi.set(__self__, "webauthn_configuration", webauthn_configuration)
 
     @property
     @pulumi.getter(name="tenantId")
     def tenant_id(self) -> pulumi.Input[str]:
+        """
+        The Id of the Tenant that this Application belongs to.
+        """
         return pulumi.get(self, "tenant_id")
 
     @tenant_id.setter
@@ -147,14 +159,14 @@ class FusionAuthApplicationArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Application that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -319,6 +331,15 @@ class FusionAuthApplicationArgs:
     def verify_registration(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "verify_registration", value)
 
+    @property
+    @pulumi.getter(name="webauthnConfiguration")
+    def webauthn_configuration(self) -> Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']]:
+        return pulumi.get(self, "webauthn_configuration")
+
+    @webauthn_configuration.setter
+    def webauthn_configuration(self, value: Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']]):
+        pulumi.set(self, "webauthn_configuration", value)
+
 
 @pulumi.input_type
 class _FusionAuthApplicationState:
@@ -327,11 +348,13 @@ class _FusionAuthApplicationState:
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token_configuration_enabled: Optional[pulumi.Input[bool]] = None,
                  clean_speak_configuration: Optional[pulumi.Input['FusionAuthApplicationCleanSpeakConfigurationArgs']] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  email_configuration: Optional[pulumi.Input['FusionAuthApplicationEmailConfigurationArgs']] = None,
                  form_configuration: Optional[pulumi.Input['FusionAuthApplicationFormConfigurationArgs']] = None,
+                 insert_instant: Optional[pulumi.Input[int]] = None,
                  jwt_configuration: Optional[pulumi.Input['FusionAuthApplicationJwtConfigurationArgs']] = None,
                  lambda_configuration: Optional[pulumi.Input['FusionAuthApplicationLambdaConfigurationArgs']] = None,
+                 last_update_instant: Optional[pulumi.Input[int]] = None,
                  login_configuration: Optional[pulumi.Input['FusionAuthApplicationLoginConfigurationArgs']] = None,
                  multi_factor_configuration: Optional[pulumi.Input['FusionAuthApplicationMultiFactorConfigurationArgs']] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -344,14 +367,18 @@ class _FusionAuthApplicationState:
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verification_strategy: Optional[pulumi.Input[str]] = None,
-                 verify_registration: Optional[pulumi.Input[bool]] = None):
+                 verify_registration: Optional[pulumi.Input[bool]] = None,
+                 webauthn_configuration: Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']] = None):
         """
         Input properties used for looking up and filtering FusionAuthApplication resources.
         :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[int] insert_instant: The instant that the Application was added to the FusionAuth database.
+        :param pulumi.Input[int] last_update_instant: The instant that the Application was last updated in the FusionAuth database.
         :param pulumi.Input[str] name: The name of the Application.
         :param pulumi.Input[bool] passwordless_configuration_enabled: Determines if passwordless login is enabled for this application.
+        :param pulumi.Input[str] tenant_id: The Id of the Tenant that this Application belongs to.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[str] verification_strategy: The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
@@ -371,10 +398,14 @@ class _FusionAuthApplicationState:
             pulumi.set(__self__, "email_configuration", email_configuration)
         if form_configuration is not None:
             pulumi.set(__self__, "form_configuration", form_configuration)
+        if insert_instant is not None:
+            pulumi.set(__self__, "insert_instant", insert_instant)
         if jwt_configuration is not None:
             pulumi.set(__self__, "jwt_configuration", jwt_configuration)
         if lambda_configuration is not None:
             pulumi.set(__self__, "lambda_configuration", lambda_configuration)
+        if last_update_instant is not None:
+            pulumi.set(__self__, "last_update_instant", last_update_instant)
         if login_configuration is not None:
             pulumi.set(__self__, "login_configuration", login_configuration)
         if multi_factor_configuration is not None:
@@ -401,6 +432,8 @@ class _FusionAuthApplicationState:
             pulumi.set(__self__, "verification_strategy", verification_strategy)
         if verify_registration is not None:
             pulumi.set(__self__, "verify_registration", verify_registration)
+        if webauthn_configuration is not None:
+            pulumi.set(__self__, "webauthn_configuration", webauthn_configuration)
 
     @property
     @pulumi.getter(name="accessControlConfiguration")
@@ -446,14 +479,14 @@ class _FusionAuthApplicationState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Application that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -475,6 +508,18 @@ class _FusionAuthApplicationState:
         pulumi.set(self, "form_configuration", value)
 
     @property
+    @pulumi.getter(name="insertInstant")
+    def insert_instant(self) -> Optional[pulumi.Input[int]]:
+        """
+        The instant that the Application was added to the FusionAuth database.
+        """
+        return pulumi.get(self, "insert_instant")
+
+    @insert_instant.setter
+    def insert_instant(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "insert_instant", value)
+
+    @property
     @pulumi.getter(name="jwtConfiguration")
     def jwt_configuration(self) -> Optional[pulumi.Input['FusionAuthApplicationJwtConfigurationArgs']]:
         return pulumi.get(self, "jwt_configuration")
@@ -491,6 +536,18 @@ class _FusionAuthApplicationState:
     @lambda_configuration.setter
     def lambda_configuration(self, value: Optional[pulumi.Input['FusionAuthApplicationLambdaConfigurationArgs']]):
         pulumi.set(self, "lambda_configuration", value)
+
+    @property
+    @pulumi.getter(name="lastUpdateInstant")
+    def last_update_instant(self) -> Optional[pulumi.Input[int]]:
+        """
+        The instant that the Application was last updated in the FusionAuth database.
+        """
+        return pulumi.get(self, "last_update_instant")
+
+    @last_update_instant.setter
+    def last_update_instant(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "last_update_instant", value)
 
     @property
     @pulumi.getter(name="loginConfiguration")
@@ -573,6 +630,9 @@ class _FusionAuthApplicationState:
     @property
     @pulumi.getter(name="tenantId")
     def tenant_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id of the Tenant that this Application belongs to.
+        """
         return pulumi.get(self, "tenant_id")
 
     @tenant_id.setter
@@ -627,34 +687,44 @@ class _FusionAuthApplicationState:
     def verify_registration(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "verify_registration", value)
 
+    @property
+    @pulumi.getter(name="webauthnConfiguration")
+    def webauthn_configuration(self) -> Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']]:
+        return pulumi.get(self, "webauthn_configuration")
+
+    @webauthn_configuration.setter
+    def webauthn_configuration(self, value: Optional[pulumi.Input['FusionAuthApplicationWebauthnConfigurationArgs']]):
+        pulumi.set(self, "webauthn_configuration", value)
+
 
 class FusionAuthApplication(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access_control_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationAccessControlConfigurationArgs']]] = None,
+                 access_control_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationAccessControlConfigurationArgs', 'FusionAuthApplicationAccessControlConfigurationArgsDict']]] = None,
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-                 clean_speak_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationCleanSpeakConfigurationArgs']]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 email_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationEmailConfigurationArgs']]] = None,
-                 form_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationFormConfigurationArgs']]] = None,
-                 jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationJwtConfigurationArgs']]] = None,
-                 lambda_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLambdaConfigurationArgs']]] = None,
-                 login_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLoginConfigurationArgs']]] = None,
-                 multi_factor_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationMultiFactorConfigurationArgs']]] = None,
+                 clean_speak_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationCleanSpeakConfigurationArgs', 'FusionAuthApplicationCleanSpeakConfigurationArgsDict']]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 email_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationEmailConfigurationArgs', 'FusionAuthApplicationEmailConfigurationArgsDict']]] = None,
+                 form_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationFormConfigurationArgs', 'FusionAuthApplicationFormConfigurationArgsDict']]] = None,
+                 jwt_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationJwtConfigurationArgs', 'FusionAuthApplicationJwtConfigurationArgsDict']]] = None,
+                 lambda_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLambdaConfigurationArgs', 'FusionAuthApplicationLambdaConfigurationArgsDict']]] = None,
+                 login_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLoginConfigurationArgs', 'FusionAuthApplicationLoginConfigurationArgsDict']]] = None,
+                 multi_factor_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationMultiFactorConfigurationArgs', 'FusionAuthApplicationMultiFactorConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 oauth_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationOauthConfigurationArgs']]] = None,
+                 oauth_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationOauthConfigurationArgs', 'FusionAuthApplicationOauthConfigurationArgsDict']]] = None,
                  passwordless_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-                 registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationConfigurationArgs']]] = None,
-                 registration_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationDeletePolicyArgs']]] = None,
-                 samlv2_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationSamlv2ConfigurationArgs']]] = None,
+                 registration_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationConfigurationArgs', 'FusionAuthApplicationRegistrationConfigurationArgsDict']]] = None,
+                 registration_delete_policy: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationDeletePolicyArgs', 'FusionAuthApplicationRegistrationDeletePolicyArgsDict']]] = None,
+                 samlv2_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationSamlv2ConfigurationArgs', 'FusionAuthApplicationSamlv2ConfigurationArgsDict']]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verification_strategy: Optional[pulumi.Input[str]] = None,
                  verify_registration: Optional[pulumi.Input[bool]] = None,
+                 webauthn_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationWebauthnConfigurationArgs', 'FusionAuthApplicationWebauthnConfigurationArgsDict']]] = None,
                  __props__=None):
         """
         ## # Application Resource
@@ -670,110 +740,111 @@ class FusionAuthApplication(pulumi.CustomResource):
         forum = fusionauth.FusionAuthApplication("forum",
             tenant_id=fusionauth_tenant["portal"]["id"],
             authentication_token_configuration_enabled=False,
-            form_configuration=fusionauth.FusionAuthApplicationFormConfigurationArgs(
-                admin_registration_form_id=fusionauth_form["admin_registration"]["id"],
-                self_service_form_id=fusionauth_form["self_service"]["id"],
-            ),
-            jwt_configuration=fusionauth.FusionAuthApplicationJwtConfigurationArgs(
-                access_token_id=fusionauth_key["access_token"]["id"],
-                enabled=True,
-                id_token_key_id=fusionauth_key["id_token"]["id"],
-                refresh_token_ttl_minutes=43200,
-                ttl_seconds=3600,
-            ),
-            lambda_configuration=fusionauth.FusionAuthApplicationLambdaConfigurationArgs(
-                access_token_populate_id=fusionauth_lambda["token_populate"]["id"],
-                id_token_populate_id=fusionauth_lambda["id_token_populate"]["id"],
-            ),
-            login_configuration=fusionauth.FusionAuthApplicationLoginConfigurationArgs(
-                allow_token_refresh=False,
-                generate_refresh_tokens=False,
-                require_authentication=True,
-            ),
-            multi_factor_configuration=fusionauth.FusionAuthApplicationMultiFactorConfigurationArgs(
-                email_template_id="859f394b-22a6-4fa6-ba55-de700df9e950",
-                sms_template_id="17760f96-dca7-448b-9a8f-c49016aa7210",
-                login_policy="Required",
-                trust_policy="Any",
-            ),
-            oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
-                authorized_origin_urls=["http://www.example.com/oauth-callback"],
-                authorized_url_validation_policy="ExactMatch",
-                enabled_grants=[
+            form_configuration={
+                "admin_registration_form_id": fusionauth_form["admin_registration"]["id"],
+                "self_service_form_id": fusionauth_form["self_service"]["id"],
+            },
+            jwt_configuration={
+                "access_token_id": fusionauth_key["access_token"]["id"],
+                "enabled": True,
+                "id_token_key_id": fusionauth_key["id_token"]["id"],
+                "refresh_token_ttl_minutes": 43200,
+                "ttl_seconds": 3600,
+            },
+            lambda_configuration={
+                "access_token_populate_id": fusionauth_lambda["token_populate"]["id"],
+                "id_token_populate_id": fusionauth_lambda["id_token_populate"]["id"],
+            },
+            login_configuration={
+                "allow_token_refresh": False,
+                "generate_refresh_tokens": False,
+                "require_authentication": True,
+            },
+            multi_factor_configuration={
+                "email_template_id": "859f394b-22a6-4fa6-ba55-de700df9e950",
+                "sms_template_id": "17760f96-dca7-448b-9a8f-c49016aa7210",
+                "login_policy": "Required",
+                "trust_policy": "Any",
+            },
+            oauth_configuration={
+                "authorized_origin_urls": ["http://www.example.com/oauth-callback"],
+                "authorized_url_validation_policy": "ExactMatch",
+                "enabled_grants": [
                     "authorization_code",
                     "implicit",
                 ],
-                generate_refresh_tokens=False,
-                logout_behavior="AllApplications",
-                logout_url="http://www.example.com/logout",
-                require_client_authentication=False,
-                provided_scope_policies=[fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs(
-                    address=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    email=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    phone=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    profile=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                )],
-            ),
-            registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(
-                birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                confirm_password=False,
-                enabled=False,
-                first_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                full_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                last_name=fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                login_id_type="",
-                middle_name=fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                mobile_phone=fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                preferred_languages=fusionauth.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                type="",
-            ),
+                "generate_refresh_tokens": False,
+                "logout_behavior": "AllApplications",
+                "logout_url": "http://www.example.com/logout",
+                "require_client_authentication": False,
+                "provided_scope_policies": [{
+                    "address": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "email": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "phone": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "profile": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                }],
+            },
+            registration_configuration={
+                "birth_date": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "confirm_password": False,
+                "enabled": False,
+                "first_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "full_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "last_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "login_id_type": "",
+                "middle_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "mobile_phone": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "preferred_languages": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "type": "",
+            },
             passwordless_configuration_enabled=False,
-            registration_delete_policy=fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs(
-                unverified_enabled=True,
-                unverified_number_of_days_to_retain=30,
-            ))
+            registration_delete_policy={
+                "unverified_enabled": True,
+                "unverified_number_of_days_to_retain": 30,
+            })
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Application that should be persisted.
         :param pulumi.Input[str] name: The name of the Application.
         :param pulumi.Input[bool] passwordless_configuration_enabled: Determines if passwordless login is enabled for this application.
+        :param pulumi.Input[str] tenant_id: The Id of the Tenant that this Application belongs to.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[str] verification_strategy: The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
@@ -799,101 +870,101 @@ class FusionAuthApplication(pulumi.CustomResource):
         forum = fusionauth.FusionAuthApplication("forum",
             tenant_id=fusionauth_tenant["portal"]["id"],
             authentication_token_configuration_enabled=False,
-            form_configuration=fusionauth.FusionAuthApplicationFormConfigurationArgs(
-                admin_registration_form_id=fusionauth_form["admin_registration"]["id"],
-                self_service_form_id=fusionauth_form["self_service"]["id"],
-            ),
-            jwt_configuration=fusionauth.FusionAuthApplicationJwtConfigurationArgs(
-                access_token_id=fusionauth_key["access_token"]["id"],
-                enabled=True,
-                id_token_key_id=fusionauth_key["id_token"]["id"],
-                refresh_token_ttl_minutes=43200,
-                ttl_seconds=3600,
-            ),
-            lambda_configuration=fusionauth.FusionAuthApplicationLambdaConfigurationArgs(
-                access_token_populate_id=fusionauth_lambda["token_populate"]["id"],
-                id_token_populate_id=fusionauth_lambda["id_token_populate"]["id"],
-            ),
-            login_configuration=fusionauth.FusionAuthApplicationLoginConfigurationArgs(
-                allow_token_refresh=False,
-                generate_refresh_tokens=False,
-                require_authentication=True,
-            ),
-            multi_factor_configuration=fusionauth.FusionAuthApplicationMultiFactorConfigurationArgs(
-                email_template_id="859f394b-22a6-4fa6-ba55-de700df9e950",
-                sms_template_id="17760f96-dca7-448b-9a8f-c49016aa7210",
-                login_policy="Required",
-                trust_policy="Any",
-            ),
-            oauth_configuration=fusionauth.FusionAuthApplicationOauthConfigurationArgs(
-                authorized_origin_urls=["http://www.example.com/oauth-callback"],
-                authorized_url_validation_policy="ExactMatch",
-                enabled_grants=[
+            form_configuration={
+                "admin_registration_form_id": fusionauth_form["admin_registration"]["id"],
+                "self_service_form_id": fusionauth_form["self_service"]["id"],
+            },
+            jwt_configuration={
+                "access_token_id": fusionauth_key["access_token"]["id"],
+                "enabled": True,
+                "id_token_key_id": fusionauth_key["id_token"]["id"],
+                "refresh_token_ttl_minutes": 43200,
+                "ttl_seconds": 3600,
+            },
+            lambda_configuration={
+                "access_token_populate_id": fusionauth_lambda["token_populate"]["id"],
+                "id_token_populate_id": fusionauth_lambda["id_token_populate"]["id"],
+            },
+            login_configuration={
+                "allow_token_refresh": False,
+                "generate_refresh_tokens": False,
+                "require_authentication": True,
+            },
+            multi_factor_configuration={
+                "email_template_id": "859f394b-22a6-4fa6-ba55-de700df9e950",
+                "sms_template_id": "17760f96-dca7-448b-9a8f-c49016aa7210",
+                "login_policy": "Required",
+                "trust_policy": "Any",
+            },
+            oauth_configuration={
+                "authorized_origin_urls": ["http://www.example.com/oauth-callback"],
+                "authorized_url_validation_policy": "ExactMatch",
+                "enabled_grants": [
                     "authorization_code",
                     "implicit",
                 ],
-                generate_refresh_tokens=False,
-                logout_behavior="AllApplications",
-                logout_url="http://www.example.com/logout",
-                require_client_authentication=False,
-                provided_scope_policies=[fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyArgs(
-                    address=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyAddressArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    email=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyEmailArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    phone=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyPhoneArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                    profile=fusionauth.FusionAuthApplicationOauthConfigurationProvidedScopePolicyProfileArgs(
-                        enabled=False,
-                        required=False,
-                    ),
-                )],
-            ),
-            registration_configuration=fusionauth.FusionAuthApplicationRegistrationConfigurationArgs(
-                birth_date=fusionauth.FusionAuthApplicationRegistrationConfigurationBirthDateArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                confirm_password=False,
-                enabled=False,
-                first_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFirstNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                full_name=fusionauth.FusionAuthApplicationRegistrationConfigurationFullNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                last_name=fusionauth.FusionAuthApplicationRegistrationConfigurationLastNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                login_id_type="",
-                middle_name=fusionauth.FusionAuthApplicationRegistrationConfigurationMiddleNameArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                mobile_phone=fusionauth.FusionAuthApplicationRegistrationConfigurationMobilePhoneArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                preferred_languages=fusionauth.FusionAuthApplicationRegistrationConfigurationPreferredLanguagesArgs(
-                    enabled=False,
-                    required=False,
-                ),
-                type="",
-            ),
+                "generate_refresh_tokens": False,
+                "logout_behavior": "AllApplications",
+                "logout_url": "http://www.example.com/logout",
+                "require_client_authentication": False,
+                "provided_scope_policies": [{
+                    "address": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "email": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "phone": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                    "profile": {
+                        "enabled": False,
+                        "required": False,
+                    },
+                }],
+            },
+            registration_configuration={
+                "birth_date": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "confirm_password": False,
+                "enabled": False,
+                "first_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "full_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "last_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "login_id_type": "",
+                "middle_name": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "mobile_phone": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "preferred_languages": {
+                    "enabled": False,
+                    "required": False,
+                },
+                "type": "",
+            },
             passwordless_configuration_enabled=False,
-            registration_delete_policy=fusionauth.FusionAuthApplicationRegistrationDeletePolicyArgs(
-                unverified_enabled=True,
-                unverified_number_of_days_to_retain=30,
-            ))
+            registration_delete_policy={
+                "unverified_enabled": True,
+                "unverified_number_of_days_to_retain": 30,
+            })
         ```
 
         :param str resource_name: The name of the resource.
@@ -911,28 +982,29 @@ class FusionAuthApplication(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access_control_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationAccessControlConfigurationArgs']]] = None,
+                 access_control_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationAccessControlConfigurationArgs', 'FusionAuthApplicationAccessControlConfigurationArgsDict']]] = None,
                  application_id: Optional[pulumi.Input[str]] = None,
                  authentication_token_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-                 clean_speak_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationCleanSpeakConfigurationArgs']]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 email_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationEmailConfigurationArgs']]] = None,
-                 form_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationFormConfigurationArgs']]] = None,
-                 jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationJwtConfigurationArgs']]] = None,
-                 lambda_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLambdaConfigurationArgs']]] = None,
-                 login_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLoginConfigurationArgs']]] = None,
-                 multi_factor_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationMultiFactorConfigurationArgs']]] = None,
+                 clean_speak_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationCleanSpeakConfigurationArgs', 'FusionAuthApplicationCleanSpeakConfigurationArgsDict']]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 email_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationEmailConfigurationArgs', 'FusionAuthApplicationEmailConfigurationArgsDict']]] = None,
+                 form_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationFormConfigurationArgs', 'FusionAuthApplicationFormConfigurationArgsDict']]] = None,
+                 jwt_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationJwtConfigurationArgs', 'FusionAuthApplicationJwtConfigurationArgsDict']]] = None,
+                 lambda_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLambdaConfigurationArgs', 'FusionAuthApplicationLambdaConfigurationArgsDict']]] = None,
+                 login_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLoginConfigurationArgs', 'FusionAuthApplicationLoginConfigurationArgsDict']]] = None,
+                 multi_factor_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationMultiFactorConfigurationArgs', 'FusionAuthApplicationMultiFactorConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 oauth_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationOauthConfigurationArgs']]] = None,
+                 oauth_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationOauthConfigurationArgs', 'FusionAuthApplicationOauthConfigurationArgsDict']]] = None,
                  passwordless_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-                 registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationConfigurationArgs']]] = None,
-                 registration_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationDeletePolicyArgs']]] = None,
-                 samlv2_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationSamlv2ConfigurationArgs']]] = None,
+                 registration_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationConfigurationArgs', 'FusionAuthApplicationRegistrationConfigurationArgsDict']]] = None,
+                 registration_delete_policy: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationDeletePolicyArgs', 'FusionAuthApplicationRegistrationDeletePolicyArgsDict']]] = None,
+                 samlv2_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationSamlv2ConfigurationArgs', 'FusionAuthApplicationSamlv2ConfigurationArgsDict']]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  theme_id: Optional[pulumi.Input[str]] = None,
                  verification_email_template_id: Optional[pulumi.Input[str]] = None,
                  verification_strategy: Optional[pulumi.Input[str]] = None,
                  verify_registration: Optional[pulumi.Input[bool]] = None,
+                 webauthn_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationWebauthnConfigurationArgs', 'FusionAuthApplicationWebauthnConfigurationArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -966,6 +1038,9 @@ class FusionAuthApplication(pulumi.CustomResource):
             __props__.__dict__["verification_email_template_id"] = verification_email_template_id
             __props__.__dict__["verification_strategy"] = verification_strategy
             __props__.__dict__["verify_registration"] = verify_registration
+            __props__.__dict__["webauthn_configuration"] = webauthn_configuration
+            __props__.__dict__["insert_instant"] = None
+            __props__.__dict__["last_update_instant"] = None
         super(FusionAuthApplication, __self__).__init__(
             'fusionauth:index/fusionAuthApplication:FusionAuthApplication',
             resource_name,
@@ -976,28 +1051,31 @@ class FusionAuthApplication(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            access_control_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationAccessControlConfigurationArgs']]] = None,
+            access_control_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationAccessControlConfigurationArgs', 'FusionAuthApplicationAccessControlConfigurationArgsDict']]] = None,
             application_id: Optional[pulumi.Input[str]] = None,
             authentication_token_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-            clean_speak_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationCleanSpeakConfigurationArgs']]] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-            email_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationEmailConfigurationArgs']]] = None,
-            form_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationFormConfigurationArgs']]] = None,
-            jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationJwtConfigurationArgs']]] = None,
-            lambda_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLambdaConfigurationArgs']]] = None,
-            login_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationLoginConfigurationArgs']]] = None,
-            multi_factor_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationMultiFactorConfigurationArgs']]] = None,
+            clean_speak_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationCleanSpeakConfigurationArgs', 'FusionAuthApplicationCleanSpeakConfigurationArgsDict']]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            email_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationEmailConfigurationArgs', 'FusionAuthApplicationEmailConfigurationArgsDict']]] = None,
+            form_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationFormConfigurationArgs', 'FusionAuthApplicationFormConfigurationArgsDict']]] = None,
+            insert_instant: Optional[pulumi.Input[int]] = None,
+            jwt_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationJwtConfigurationArgs', 'FusionAuthApplicationJwtConfigurationArgsDict']]] = None,
+            lambda_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLambdaConfigurationArgs', 'FusionAuthApplicationLambdaConfigurationArgsDict']]] = None,
+            last_update_instant: Optional[pulumi.Input[int]] = None,
+            login_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationLoginConfigurationArgs', 'FusionAuthApplicationLoginConfigurationArgsDict']]] = None,
+            multi_factor_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationMultiFactorConfigurationArgs', 'FusionAuthApplicationMultiFactorConfigurationArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            oauth_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationOauthConfigurationArgs']]] = None,
+            oauth_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationOauthConfigurationArgs', 'FusionAuthApplicationOauthConfigurationArgsDict']]] = None,
             passwordless_configuration_enabled: Optional[pulumi.Input[bool]] = None,
-            registration_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationConfigurationArgs']]] = None,
-            registration_delete_policy: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationRegistrationDeletePolicyArgs']]] = None,
-            samlv2_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthApplicationSamlv2ConfigurationArgs']]] = None,
+            registration_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationConfigurationArgs', 'FusionAuthApplicationRegistrationConfigurationArgsDict']]] = None,
+            registration_delete_policy: Optional[pulumi.Input[Union['FusionAuthApplicationRegistrationDeletePolicyArgs', 'FusionAuthApplicationRegistrationDeletePolicyArgsDict']]] = None,
+            samlv2_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationSamlv2ConfigurationArgs', 'FusionAuthApplicationSamlv2ConfigurationArgsDict']]] = None,
             tenant_id: Optional[pulumi.Input[str]] = None,
             theme_id: Optional[pulumi.Input[str]] = None,
             verification_email_template_id: Optional[pulumi.Input[str]] = None,
             verification_strategy: Optional[pulumi.Input[str]] = None,
-            verify_registration: Optional[pulumi.Input[bool]] = None) -> 'FusionAuthApplication':
+            verify_registration: Optional[pulumi.Input[bool]] = None,
+            webauthn_configuration: Optional[pulumi.Input[Union['FusionAuthApplicationWebauthnConfigurationArgs', 'FusionAuthApplicationWebauthnConfigurationArgsDict']]] = None) -> 'FusionAuthApplication':
         """
         Get an existing FusionAuthApplication resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -1007,9 +1085,12 @@ class FusionAuthApplication(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] application_id: The Id to use for the new Application. If not specified a secure random UUID will be generated.
         :param pulumi.Input[bool] authentication_token_configuration_enabled: Determines if Users can have Authentication Tokens associated with this Application. This feature may not be enabled for the FusionAuth application.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Application that should be persisted.
+        :param pulumi.Input[int] insert_instant: The instant that the Application was added to the FusionAuth database.
+        :param pulumi.Input[int] last_update_instant: The instant that the Application was last updated in the FusionAuth database.
         :param pulumi.Input[str] name: The name of the Application.
         :param pulumi.Input[bool] passwordless_configuration_enabled: Determines if passwordless login is enabled for this application.
+        :param pulumi.Input[str] tenant_id: The Id of the Tenant that this Application belongs to.
         :param pulumi.Input[str] theme_id: The unique Id of the theme to be used to style the login page and other end user templates.
         :param pulumi.Input[str] verification_email_template_id: The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
         :param pulumi.Input[str] verification_strategy: The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
@@ -1026,8 +1107,10 @@ class FusionAuthApplication(pulumi.CustomResource):
         __props__.__dict__["data"] = data
         __props__.__dict__["email_configuration"] = email_configuration
         __props__.__dict__["form_configuration"] = form_configuration
+        __props__.__dict__["insert_instant"] = insert_instant
         __props__.__dict__["jwt_configuration"] = jwt_configuration
         __props__.__dict__["lambda_configuration"] = lambda_configuration
+        __props__.__dict__["last_update_instant"] = last_update_instant
         __props__.__dict__["login_configuration"] = login_configuration
         __props__.__dict__["multi_factor_configuration"] = multi_factor_configuration
         __props__.__dict__["name"] = name
@@ -1041,6 +1124,7 @@ class FusionAuthApplication(pulumi.CustomResource):
         __props__.__dict__["verification_email_template_id"] = verification_email_template_id
         __props__.__dict__["verification_strategy"] = verification_strategy
         __props__.__dict__["verify_registration"] = verify_registration
+        __props__.__dict__["webauthn_configuration"] = webauthn_configuration
         return FusionAuthApplication(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -1071,7 +1155,7 @@ class FusionAuthApplication(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the Application that should be persisted.
         """
@@ -1084,18 +1168,34 @@ class FusionAuthApplication(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="formConfiguration")
-    def form_configuration(self) -> pulumi.Output['outputs.FusionAuthApplicationFormConfiguration']:
+    def form_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthApplicationFormConfiguration']]:
         return pulumi.get(self, "form_configuration")
 
     @property
+    @pulumi.getter(name="insertInstant")
+    def insert_instant(self) -> pulumi.Output[int]:
+        """
+        The instant that the Application was added to the FusionAuth database.
+        """
+        return pulumi.get(self, "insert_instant")
+
+    @property
     @pulumi.getter(name="jwtConfiguration")
-    def jwt_configuration(self) -> pulumi.Output['outputs.FusionAuthApplicationJwtConfiguration']:
+    def jwt_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthApplicationJwtConfiguration']]:
         return pulumi.get(self, "jwt_configuration")
 
     @property
     @pulumi.getter(name="lambdaConfiguration")
     def lambda_configuration(self) -> pulumi.Output['outputs.FusionAuthApplicationLambdaConfiguration']:
         return pulumi.get(self, "lambda_configuration")
+
+    @property
+    @pulumi.getter(name="lastUpdateInstant")
+    def last_update_instant(self) -> pulumi.Output[int]:
+        """
+        The instant that the Application was last updated in the FusionAuth database.
+        """
+        return pulumi.get(self, "last_update_instant")
 
     @property
     @pulumi.getter(name="loginConfiguration")
@@ -1146,6 +1246,9 @@ class FusionAuthApplication(pulumi.CustomResource):
     @property
     @pulumi.getter(name="tenantId")
     def tenant_id(self) -> pulumi.Output[str]:
+        """
+        The Id of the Tenant that this Application belongs to.
+        """
         return pulumi.get(self, "tenant_id")
 
     @property
@@ -1179,4 +1282,9 @@ class FusionAuthApplication(pulumi.CustomResource):
         Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
         """
         return pulumi.get(self, "verify_registration")
+
+    @property
+    @pulumi.getter(name="webauthnConfiguration")
+    def webauthn_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthApplicationWebauthnConfiguration']]:
+        return pulumi.get(self, "webauthn_configuration")
 

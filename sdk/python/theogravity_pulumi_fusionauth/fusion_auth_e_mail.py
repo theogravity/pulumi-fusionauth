@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthEMailArgs', 'FusionAuthEMail']
@@ -20,10 +25,10 @@ class FusionAuthEMailArgs:
                  default_from_name: Optional[pulumi.Input[str]] = None,
                  email_id: Optional[pulumi.Input[str]] = None,
                  from_email: Optional[pulumi.Input[str]] = None,
-                 localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_text_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_from_names: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_html_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_subjects: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_text_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthEMail resource.
@@ -33,10 +38,10 @@ class FusionAuthEMailArgs:
         :param pulumi.Input[str] default_from_name: The default From Name used when sending emails. If not provided, and a localized value cannot be determined, the default value for the tenant will be used. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
         :param pulumi.Input[str] email_id: The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-        :param pulumi.Input[Mapping[str, Any]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[str] name: A descriptive name for the email template (i.e. "April 2016 Coupon Email")
         """
         pulumi.set(__self__, "default_html_template", default_html_template)
@@ -133,50 +138,50 @@ class FusionAuthEMailArgs:
 
     @property
     @pulumi.getter(name="localizedFromNames")
-    def localized_from_names(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_from_names(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_from_names")
 
     @localized_from_names.setter
-    def localized_from_names(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_from_names(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_from_names", value)
 
     @property
     @pulumi.getter(name="localizedHtmlTemplates")
-    def localized_html_templates(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_html_templates(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_html_templates")
 
     @localized_html_templates.setter
-    def localized_html_templates(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_html_templates(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_html_templates", value)
 
     @property
     @pulumi.getter(name="localizedSubjects")
-    def localized_subjects(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_subjects(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_subjects")
 
     @localized_subjects.setter
-    def localized_subjects(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_subjects(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_subjects", value)
 
     @property
     @pulumi.getter(name="localizedTextTemplates")
-    def localized_text_templates(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_text_templates(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_text_templates")
 
     @localized_text_templates.setter
-    def localized_text_templates(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_text_templates(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_text_templates", value)
 
     @property
@@ -201,10 +206,10 @@ class _FusionAuthEMailState:
                  default_text_template: Optional[pulumi.Input[str]] = None,
                  email_id: Optional[pulumi.Input[str]] = None,
                  from_email: Optional[pulumi.Input[str]] = None,
-                 localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_text_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_from_names: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_html_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_subjects: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_text_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthEMail resources.
@@ -214,10 +219,10 @@ class _FusionAuthEMailState:
         :param pulumi.Input[str] default_text_template: The default Text Email Template.
         :param pulumi.Input[str] email_id: The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-        :param pulumi.Input[Mapping[str, Any]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[str] name: A descriptive name for the email template (i.e. "April 2016 Coupon Email")
         """
         if default_from_name is not None:
@@ -317,50 +322,50 @@ class _FusionAuthEMailState:
 
     @property
     @pulumi.getter(name="localizedFromNames")
-    def localized_from_names(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_from_names(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_from_names")
 
     @localized_from_names.setter
-    def localized_from_names(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_from_names(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_from_names", value)
 
     @property
     @pulumi.getter(name="localizedHtmlTemplates")
-    def localized_html_templates(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_html_templates(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_html_templates")
 
     @localized_html_templates.setter
-    def localized_html_templates(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_html_templates(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_html_templates", value)
 
     @property
     @pulumi.getter(name="localizedSubjects")
-    def localized_subjects(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_subjects(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_subjects")
 
     @localized_subjects.setter
-    def localized_subjects(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_subjects(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_subjects", value)
 
     @property
     @pulumi.getter(name="localizedTextTemplates")
-    def localized_text_templates(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def localized_text_templates(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         """
         return pulumi.get(self, "localized_text_templates")
 
     @localized_text_templates.setter
-    def localized_text_templates(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def localized_text_templates(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "localized_text_templates", value)
 
     @property
@@ -387,10 +392,10 @@ class FusionAuthEMail(pulumi.CustomResource):
                  default_text_template: Optional[pulumi.Input[str]] = None,
                  email_id: Optional[pulumi.Input[str]] = None,
                  from_email: Optional[pulumi.Input[str]] = None,
-                 localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_text_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_from_names: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_html_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_subjects: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_text_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -422,10 +427,10 @@ class FusionAuthEMail(pulumi.CustomResource):
         :param pulumi.Input[str] default_text_template: The default Text Email Template.
         :param pulumi.Input[str] email_id: The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-        :param pulumi.Input[Mapping[str, Any]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[str] name: A descriptive name for the email template (i.e. "April 2016 Coupon Email")
         """
         ...
@@ -476,10 +481,10 @@ class FusionAuthEMail(pulumi.CustomResource):
                  default_text_template: Optional[pulumi.Input[str]] = None,
                  email_id: Optional[pulumi.Input[str]] = None,
                  from_email: Optional[pulumi.Input[str]] = None,
-                 localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 localized_text_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 localized_from_names: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_html_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_subjects: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 localized_text_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -523,10 +528,10 @@ class FusionAuthEMail(pulumi.CustomResource):
             default_text_template: Optional[pulumi.Input[str]] = None,
             email_id: Optional[pulumi.Input[str]] = None,
             from_email: Optional[pulumi.Input[str]] = None,
-            localized_from_names: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-            localized_html_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-            localized_subjects: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-            localized_text_templates: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            localized_from_names: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            localized_html_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            localized_subjects: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            localized_text_templates: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None) -> 'FusionAuthEMail':
         """
         Get an existing FusionAuthEMail resource's state with the given name, id, and optional extra
@@ -541,10 +546,10 @@ class FusionAuthEMail(pulumi.CustomResource):
         :param pulumi.Input[str] default_text_template: The default Text Email Template.
         :param pulumi.Input[str] email_id: The Id to use for the new Email Template. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] from_email: The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
-        :param pulumi.Input[Mapping[str, Any]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-        :param pulumi.Input[Mapping[str, Any]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_from_names: The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_html_templates: The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_subjects: The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] localized_text_templates: The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         :param pulumi.Input[str] name: A descriptive name for the email template (i.e. "April 2016 Coupon Email")
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -614,7 +619,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="localizedFromNames")
-    def localized_from_names(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def localized_from_names(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         """
@@ -622,7 +627,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="localizedHtmlTemplates")
-    def localized_html_templates(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def localized_html_templates(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         """
@@ -630,7 +635,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="localizedSubjects")
-    def localized_subjects(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def localized_subjects(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         """
@@ -638,7 +643,7 @@ class FusionAuthEMail(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="localizedTextTemplates")
-    def localized_text_templates(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def localized_text_templates(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         """

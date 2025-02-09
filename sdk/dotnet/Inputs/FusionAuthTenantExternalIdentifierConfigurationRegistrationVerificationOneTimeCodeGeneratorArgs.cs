@@ -14,13 +14,13 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The length of the secure generator used for generating the registration verification one time code.
+        /// The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
         /// </summary>
-        [Input("length", required: true)]
-        public Input<int> Length { get; set; } = null!;
+        [Input("length")]
+        public Input<int>? Length { get; set; }
 
         /// <summary>
-        /// The type of the secure generator used for generating the registration verification one time code.
+        /// The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

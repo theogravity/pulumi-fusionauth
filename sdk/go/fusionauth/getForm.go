@@ -55,7 +55,7 @@ func GetForm(ctx *pulumi.Context, args *GetFormArgs, opts ...pulumi.InvokeOption
 // A collection of arguments for invoking getForm.
 type GetFormArgs struct {
 	// An object that can hold any information about the Form that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// The unique id of the Form. Either `formId` or `name` must be specified.
 	FormId *string `pulumi:"formId"`
 	// The name of the Form. Either `formId` or `name` must be specified.
@@ -63,14 +63,16 @@ type GetFormArgs struct {
 	// An ordered list of objects containing one or more Form Fields.
 	Steps []GetFormStep `pulumi:"steps"`
 	// The form type. The possible values are:
+	// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+	// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
 	Type *string `pulumi:"type"`
 }
 
 // A collection of values returned by getForm.
 type GetFormResult struct {
 	// An object that can hold any information about the Form that should be persisted.
-	Data   map[string]interface{} `pulumi:"data"`
-	FormId string                 `pulumi:"formId"`
+	Data   map[string]string `pulumi:"data"`
+	FormId string            `pulumi:"formId"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// The unique name of the Form.
@@ -78,26 +80,24 @@ type GetFormResult struct {
 	// An ordered list of objects containing one or more Form Fields.
 	Steps []GetFormStep `pulumi:"steps"`
 	// The form type. The possible values are:
+	// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+	// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
 	Type *string `pulumi:"type"`
 }
 
 func GetFormOutput(ctx *pulumi.Context, args GetFormOutputArgs, opts ...pulumi.InvokeOption) GetFormResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetFormResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetFormResultOutput, error) {
 			args := v.(GetFormArgs)
-			r, err := GetForm(ctx, &args, opts...)
-			var s GetFormResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getForm:getForm", args, GetFormResultOutput{}, options).(GetFormResultOutput), nil
 		}).(GetFormResultOutput)
 }
 
 // A collection of arguments for invoking getForm.
 type GetFormOutputArgs struct {
 	// An object that can hold any information about the Form that should be persisted.
-	Data pulumi.MapInput `pulumi:"data"`
+	Data pulumi.StringMapInput `pulumi:"data"`
 	// The unique id of the Form. Either `formId` or `name` must be specified.
 	FormId pulumi.StringPtrInput `pulumi:"formId"`
 	// The name of the Form. Either `formId` or `name` must be specified.
@@ -105,6 +105,8 @@ type GetFormOutputArgs struct {
 	// An ordered list of objects containing one or more Form Fields.
 	Steps GetFormStepArrayInput `pulumi:"steps"`
 	// The form type. The possible values are:
+	// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+	// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
 	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
@@ -128,8 +130,8 @@ func (o GetFormResultOutput) ToGetFormResultOutputWithContext(ctx context.Contex
 }
 
 // An object that can hold any information about the Form that should be persisted.
-func (o GetFormResultOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v GetFormResult) map[string]interface{} { return v.Data }).(pulumi.MapOutput)
+func (o GetFormResultOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetFormResult) map[string]string { return v.Data }).(pulumi.StringMapOutput)
 }
 
 func (o GetFormResultOutput) FormId() pulumi.StringOutput {
@@ -152,6 +154,8 @@ func (o GetFormResultOutput) Steps() GetFormStepArrayOutput {
 }
 
 // The form type. The possible values are:
+// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
 func (o GetFormResultOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetFormResult) *string { return v.Type }).(pulumi.StringPtrOutput)
 }

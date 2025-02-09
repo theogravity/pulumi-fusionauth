@@ -69,14 +69,17 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
      */
     public readonly applicationConfigurations!: pulumi.Output<outputs.FusionAuthIdpExternalJwtApplicationConfiguration[] | undefined>;
     /**
-     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-     * from the configured identity provider.
+     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
      */
-    public readonly claimMap!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly claimMap!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
      */
     public readonly debug!: pulumi.Output<boolean | undefined>;
+    /**
+     * When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+     */
+    public readonly defaultKeyId!: pulumi.Output<string | undefined>;
     /**
      * An array of domains that are managed by this Identity Provider.
      */
@@ -110,17 +113,35 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
      */
     public readonly oauth2AuthorizationEndpoint!: pulumi.Output<string | undefined>;
     /**
-     * TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+     * The name of the claim that contains the user's email address. This will only be used when the `linkingStrategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+     */
+    public readonly oauth2EmailClaim!: pulumi.Output<string | undefined>;
+    /**
+     * The name of the claim that identities if the user's email address has been verified. When the `linkingStrategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+     */
+    public readonly oauth2EmailVerifiedClaim!: pulumi.Output<string | undefined>;
+    /**
+     * The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
      */
     public readonly oauth2TokenEndpoint!: pulumi.Output<string | undefined>;
+    /**
+     * The name of the claim that contains the user's unique user Id.
+     */
+    public readonly oauth2UniqueIdClaim!: pulumi.Output<string | undefined>;
+    /**
+     * The name of the claim that contains the user's username. This will only be used when the `linkingStrategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    public readonly oauth2UsernameClaim!: pulumi.Output<string | undefined>;
     /**
      * The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
      */
     public readonly tenantConfigurations!: pulumi.Output<outputs.FusionAuthIdpExternalJwtTenantConfiguration[] | undefined>;
     /**
-     * The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     * (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     *
+     * @deprecated This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.
      */
-    public readonly uniqueIdentityClaim!: pulumi.Output<string>;
+    public readonly uniqueIdentityClaim!: pulumi.Output<string | undefined>;
 
     /**
      * Create a FusionAuthIdpExternalJwt resource with the given unique name, arguments, and options.
@@ -138,6 +159,7 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
             resourceInputs["applicationConfigurations"] = state ? state.applicationConfigurations : undefined;
             resourceInputs["claimMap"] = state ? state.claimMap : undefined;
             resourceInputs["debug"] = state ? state.debug : undefined;
+            resourceInputs["defaultKeyId"] = state ? state.defaultKeyId : undefined;
             resourceInputs["domains"] = state ? state.domains : undefined;
             resourceInputs["enabled"] = state ? state.enabled : undefined;
             resourceInputs["headerKeyParameter"] = state ? state.headerKeyParameter : undefined;
@@ -146,7 +168,11 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
             resourceInputs["linkingStrategy"] = state ? state.linkingStrategy : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["oauth2AuthorizationEndpoint"] = state ? state.oauth2AuthorizationEndpoint : undefined;
+            resourceInputs["oauth2EmailClaim"] = state ? state.oauth2EmailClaim : undefined;
+            resourceInputs["oauth2EmailVerifiedClaim"] = state ? state.oauth2EmailVerifiedClaim : undefined;
             resourceInputs["oauth2TokenEndpoint"] = state ? state.oauth2TokenEndpoint : undefined;
+            resourceInputs["oauth2UniqueIdClaim"] = state ? state.oauth2UniqueIdClaim : undefined;
+            resourceInputs["oauth2UsernameClaim"] = state ? state.oauth2UsernameClaim : undefined;
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
             resourceInputs["uniqueIdentityClaim"] = state ? state.uniqueIdentityClaim : undefined;
         } else {
@@ -154,12 +180,10 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
             if ((!args || args.headerKeyParameter === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'headerKeyParameter'");
             }
-            if ((!args || args.uniqueIdentityClaim === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'uniqueIdentityClaim'");
-            }
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
             resourceInputs["claimMap"] = args ? args.claimMap : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
+            resourceInputs["defaultKeyId"] = args ? args.defaultKeyId : undefined;
             resourceInputs["domains"] = args ? args.domains : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["headerKeyParameter"] = args ? args.headerKeyParameter : undefined;
@@ -168,7 +192,11 @@ export class FusionAuthIdpExternalJwt extends pulumi.CustomResource {
             resourceInputs["linkingStrategy"] = args ? args.linkingStrategy : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["oauth2AuthorizationEndpoint"] = args ? args.oauth2AuthorizationEndpoint : undefined;
+            resourceInputs["oauth2EmailClaim"] = args ? args.oauth2EmailClaim : undefined;
+            resourceInputs["oauth2EmailVerifiedClaim"] = args ? args.oauth2EmailVerifiedClaim : undefined;
             resourceInputs["oauth2TokenEndpoint"] = args ? args.oauth2TokenEndpoint : undefined;
+            resourceInputs["oauth2UniqueIdClaim"] = args ? args.oauth2UniqueIdClaim : undefined;
+            resourceInputs["oauth2UsernameClaim"] = args ? args.oauth2UsernameClaim : undefined;
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
             resourceInputs["uniqueIdentityClaim"] = args ? args.uniqueIdentityClaim : undefined;
         }
@@ -186,14 +214,17 @@ export interface FusionAuthIdpExternalJwtState {
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpExternalJwtApplicationConfiguration>[]>;
     /**
-     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-     * from the configured identity provider.
+     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
      */
-    claimMap?: pulumi.Input<{[key: string]: any}>;
+    claimMap?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
      */
     debug?: pulumi.Input<boolean>;
+    /**
+     * When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+     */
+    defaultKeyId?: pulumi.Input<string>;
     /**
      * An array of domains that are managed by this Identity Provider.
      */
@@ -227,15 +258,33 @@ export interface FusionAuthIdpExternalJwtState {
      */
     oauth2AuthorizationEndpoint?: pulumi.Input<string>;
     /**
-     * TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+     * The name of the claim that contains the user's email address. This will only be used when the `linkingStrategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+     */
+    oauth2EmailClaim?: pulumi.Input<string>;
+    /**
+     * The name of the claim that identities if the user's email address has been verified. When the `linkingStrategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+     */
+    oauth2EmailVerifiedClaim?: pulumi.Input<string>;
+    /**
+     * The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
      */
     oauth2TokenEndpoint?: pulumi.Input<string>;
+    /**
+     * The name of the claim that contains the user's unique user Id.
+     */
+    oauth2UniqueIdClaim?: pulumi.Input<string>;
+    /**
+     * The name of the claim that contains the user's username. This will only be used when the `linkingStrategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    oauth2UsernameClaim?: pulumi.Input<string>;
     /**
      * The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpExternalJwtTenantConfiguration>[]>;
     /**
-     * The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     * (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     *
+     * @deprecated This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.
      */
     uniqueIdentityClaim?: pulumi.Input<string>;
 }
@@ -249,14 +298,17 @@ export interface FusionAuthIdpExternalJwtArgs {
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpExternalJwtApplicationConfiguration>[]>;
     /**
-     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-     * from the configured identity provider.
+     * A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
      */
-    claimMap?: pulumi.Input<{[key: string]: any}>;
+    claimMap?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
      */
     debug?: pulumi.Input<boolean>;
+    /**
+     * When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+     */
+    defaultKeyId?: pulumi.Input<string>;
     /**
      * An array of domains that are managed by this Identity Provider.
      */
@@ -290,15 +342,33 @@ export interface FusionAuthIdpExternalJwtArgs {
      */
     oauth2AuthorizationEndpoint?: pulumi.Input<string>;
     /**
-     * TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+     * The name of the claim that contains the user's email address. This will only be used when the `linkingStrategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+     */
+    oauth2EmailClaim?: pulumi.Input<string>;
+    /**
+     * The name of the claim that identities if the user's email address has been verified. When the `linkingStrategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+     */
+    oauth2EmailVerifiedClaim?: pulumi.Input<string>;
+    /**
+     * The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
      */
     oauth2TokenEndpoint?: pulumi.Input<string>;
+    /**
+     * The name of the claim that contains the user's unique user Id.
+     */
+    oauth2UniqueIdClaim?: pulumi.Input<string>;
+    /**
+     * The name of the claim that contains the user's username. This will only be used when the `linkingStrategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+     */
+    oauth2UsernameClaim?: pulumi.Input<string>;
     /**
      * The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpExternalJwtTenantConfiguration>[]>;
     /**
-     * The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     * (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+     *
+     * @deprecated This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.
      */
-    uniqueIdentityClaim: pulumi.Input<string>;
+    uniqueIdentityClaim?: pulumi.Input<string>;
 }

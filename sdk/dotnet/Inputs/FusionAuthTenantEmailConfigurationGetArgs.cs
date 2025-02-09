@@ -14,16 +14,22 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantEmailConfigurationGetArgs : global::Pulumi.ResourceArgs
     {
         [Input("additionalHeaders")]
-        private InputMap<object>? _additionalHeaders;
+        private InputMap<string>? _additionalHeaders;
 
         /// <summary>
         /// The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
         /// </summary>
-        public InputMap<object> AdditionalHeaders
+        public InputMap<string> AdditionalHeaders
         {
-            get => _additionalHeaders ?? (_additionalHeaders = new InputMap<object>());
+            get => _additionalHeaders ?? (_additionalHeaders = new InputMap<string>());
             set => _additionalHeaders = value;
         }
+
+        /// <summary>
+        /// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+        /// </summary>
+        [Input("debug")]
+        public Input<bool>? Debug { get; set; }
 
         /// <summary>
         /// The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
@@ -58,8 +64,8 @@ namespace theogravity.Fusionauth.Inputs
         /// <summary>
         /// The host name of the SMTP server that FusionAuth will use.
         /// </summary>
-        [Input("host", required: true)]
-        public Input<string> Host { get; set; } = null!;
+        [Input("host")]
+        public Input<string>? Host { get; set; }
 
         /// <summary>
         /// When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
@@ -128,8 +134,8 @@ namespace theogravity.Fusionauth.Inputs
         /// <summary>
         /// The port of the SMTP server that FusionAuth will use.
         /// </summary>
-        [Input("port", required: true)]
-        public Input<int> Port { get; set; } = null!;
+        [Input("port")]
+        public Input<int>? Port { get; set; }
 
         [Input("properties")]
         private Input<string>? _properties;

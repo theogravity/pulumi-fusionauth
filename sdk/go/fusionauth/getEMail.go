@@ -75,26 +75,22 @@ type GetEMailResult struct {
 	// The Id of the Email Template.
 	Id string `pulumi:"id"`
 	// The From Name used when sending emails to users who speak other languages.
-	LocalizedFromNames map[string]interface{} `pulumi:"localizedFromNames"`
+	LocalizedFromNames map[string]string `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages.
-	LocalizedHtmlTemplates map[string]interface{} `pulumi:"localizedHtmlTemplates"`
+	LocalizedHtmlTemplates map[string]string `pulumi:"localizedHtmlTemplates"`
 	// The Subject used when sending emails to users who speak other languages.
-	LocalizedSubjects map[string]interface{} `pulumi:"localizedSubjects"`
+	LocalizedSubjects map[string]string `pulumi:"localizedSubjects"`
 	// The Text Email Template used when sending emails to users who speak other languages.
-	LocalizedTextTemplates map[string]interface{} `pulumi:"localizedTextTemplates"`
-	Name                   string                 `pulumi:"name"`
+	LocalizedTextTemplates map[string]string `pulumi:"localizedTextTemplates"`
+	Name                   string            `pulumi:"name"`
 }
 
 func GetEMailOutput(ctx *pulumi.Context, args GetEMailOutputArgs, opts ...pulumi.InvokeOption) GetEMailResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetEMailResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetEMailResultOutput, error) {
 			args := v.(GetEMailArgs)
-			r, err := GetEMail(ctx, &args, opts...)
-			var s GetEMailResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getEMail:getEMail", args, GetEMailResultOutput{}, options).(GetEMailResultOutput), nil
 		}).(GetEMailResultOutput)
 }
 
@@ -156,23 +152,23 @@ func (o GetEMailResultOutput) Id() pulumi.StringOutput {
 }
 
 // The From Name used when sending emails to users who speak other languages.
-func (o GetEMailResultOutput) LocalizedFromNames() pulumi.MapOutput {
-	return o.ApplyT(func(v GetEMailResult) map[string]interface{} { return v.LocalizedFromNames }).(pulumi.MapOutput)
+func (o GetEMailResultOutput) LocalizedFromNames() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEMailResult) map[string]string { return v.LocalizedFromNames }).(pulumi.StringMapOutput)
 }
 
 // The HTML Email Template used when sending emails to users who speak other languages.
-func (o GetEMailResultOutput) LocalizedHtmlTemplates() pulumi.MapOutput {
-	return o.ApplyT(func(v GetEMailResult) map[string]interface{} { return v.LocalizedHtmlTemplates }).(pulumi.MapOutput)
+func (o GetEMailResultOutput) LocalizedHtmlTemplates() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEMailResult) map[string]string { return v.LocalizedHtmlTemplates }).(pulumi.StringMapOutput)
 }
 
 // The Subject used when sending emails to users who speak other languages.
-func (o GetEMailResultOutput) LocalizedSubjects() pulumi.MapOutput {
-	return o.ApplyT(func(v GetEMailResult) map[string]interface{} { return v.LocalizedSubjects }).(pulumi.MapOutput)
+func (o GetEMailResultOutput) LocalizedSubjects() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEMailResult) map[string]string { return v.LocalizedSubjects }).(pulumi.StringMapOutput)
 }
 
 // The Text Email Template used when sending emails to users who speak other languages.
-func (o GetEMailResultOutput) LocalizedTextTemplates() pulumi.MapOutput {
-	return o.ApplyT(func(v GetEMailResult) map[string]interface{} { return v.LocalizedTextTemplates }).(pulumi.MapOutput)
+func (o GetEMailResultOutput) LocalizedTextTemplates() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetEMailResult) map[string]string { return v.LocalizedTextTemplates }).(pulumi.StringMapOutput)
 }
 
 func (o GetEMailResultOutput) Name() pulumi.StringOutput {

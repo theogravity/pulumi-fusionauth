@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthLambdaArgs', 'FusionAuthLambda']
@@ -25,26 +30,32 @@ class FusionAuthLambdaArgs:
         The set of arguments for constructing a FusionAuthLambda resource.
         :param pulumi.Input[str] body: The lambda function body, a JavaScript function.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
-               - `JWTPopulate`
-               - `OpenIDReconcile`
-               - `SAMLv2Reconcile`
-               - `SAMLv2Populate`
-               - `AppleReconcile`
-               - `ExternalJWTReconcile`
-               - `FacebookReconcile`
-               - `GoogleReconcile`
-               - `HYPRReconcile`
-               - `TwitterReconcile`
-               - `LDAPConnectorReconcile`
-               - `LinkedInReconcile`
-               - `EpicGamesReconcile`
-               - `NintendoReconcile`
-               - `SonyPSNReconcile`
-               - `SteamReconcile`
-               - `TwitchReconcile`
-               - `XboxReconcile`
-               - `SelfServiceRegistrationValidation`
-               - `ClientCredentialsJWTPopulate`
+               * `AppleReconcile`
+               * `ClientCredentialsJWTPopulate`
+               * `EpicGamesReconcile`
+               * `ExternalJWTReconcile`
+               * `FacebookReconcile`
+               * `GoogleReconcile`
+               * `HYPRReconcile`
+               * `JWTPopulate`
+               * `LDAPConnectorReconcile`
+               * `LinkedInReconcile`
+               * `LoginValidation`
+               * `NintendoReconcile`
+               * `OpenIDReconcile`
+               * `SAMLv2Populate`
+               * `SAMLv2Reconcile`
+               * `SCIMServerGroupRequestConverter`
+               * `SCIMServerGroupResponseConverter`
+               * `SCIMServerUserRequestConverter`
+               * `SCIMServerUserResponseConverter`
+               * `SelfServiceRegistrationValidation`
+               * `SonyPSNReconcile`
+               * `SteamReconcile`
+               * `TwitchReconcile`
+               * `TwitterReconcile`
+               * `UserInfoPopulate`
+               * `XboxReconcile`
         :param pulumi.Input[bool] debug: Whether or not debug event logging is enabled for this Lambda.
         :param pulumi.Input[bool] enabled: Whether or not this Lambda is enabled.
         :param pulumi.Input[str] engine_type: The JavaScript execution engine for the lambda.
@@ -84,26 +95,32 @@ class FusionAuthLambdaArgs:
     def type(self) -> pulumi.Input[str]:
         """
         The lambda type. The possible values are:
-        - `JWTPopulate`
-        - `OpenIDReconcile`
-        - `SAMLv2Reconcile`
-        - `SAMLv2Populate`
-        - `AppleReconcile`
-        - `ExternalJWTReconcile`
-        - `FacebookReconcile`
-        - `GoogleReconcile`
-        - `HYPRReconcile`
-        - `TwitterReconcile`
-        - `LDAPConnectorReconcile`
-        - `LinkedInReconcile`
-        - `EpicGamesReconcile`
-        - `NintendoReconcile`
-        - `SonyPSNReconcile`
-        - `SteamReconcile`
-        - `TwitchReconcile`
-        - `XboxReconcile`
-        - `SelfServiceRegistrationValidation`
-        - `ClientCredentialsJWTPopulate`
+        * `AppleReconcile`
+        * `ClientCredentialsJWTPopulate`
+        * `EpicGamesReconcile`
+        * `ExternalJWTReconcile`
+        * `FacebookReconcile`
+        * `GoogleReconcile`
+        * `HYPRReconcile`
+        * `JWTPopulate`
+        * `LDAPConnectorReconcile`
+        * `LinkedInReconcile`
+        * `LoginValidation`
+        * `NintendoReconcile`
+        * `OpenIDReconcile`
+        * `SAMLv2Populate`
+        * `SAMLv2Reconcile`
+        * `SCIMServerGroupRequestConverter`
+        * `SCIMServerGroupResponseConverter`
+        * `SCIMServerUserRequestConverter`
+        * `SCIMServerUserResponseConverter`
+        * `SelfServiceRegistrationValidation`
+        * `SonyPSNReconcile`
+        * `SteamReconcile`
+        * `TwitchReconcile`
+        * `TwitterReconcile`
+        * `UserInfoPopulate`
+        * `XboxReconcile`
         """
         return pulumi.get(self, "type")
 
@@ -192,26 +209,32 @@ class _FusionAuthLambdaState:
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
-               - `JWTPopulate`
-               - `OpenIDReconcile`
-               - `SAMLv2Reconcile`
-               - `SAMLv2Populate`
-               - `AppleReconcile`
-               - `ExternalJWTReconcile`
-               - `FacebookReconcile`
-               - `GoogleReconcile`
-               - `HYPRReconcile`
-               - `TwitterReconcile`
-               - `LDAPConnectorReconcile`
-               - `LinkedInReconcile`
-               - `EpicGamesReconcile`
-               - `NintendoReconcile`
-               - `SonyPSNReconcile`
-               - `SteamReconcile`
-               - `TwitchReconcile`
-               - `XboxReconcile`
-               - `SelfServiceRegistrationValidation`
-               - `ClientCredentialsJWTPopulate`
+               * `AppleReconcile`
+               * `ClientCredentialsJWTPopulate`
+               * `EpicGamesReconcile`
+               * `ExternalJWTReconcile`
+               * `FacebookReconcile`
+               * `GoogleReconcile`
+               * `HYPRReconcile`
+               * `JWTPopulate`
+               * `LDAPConnectorReconcile`
+               * `LinkedInReconcile`
+               * `LoginValidation`
+               * `NintendoReconcile`
+               * `OpenIDReconcile`
+               * `SAMLv2Populate`
+               * `SAMLv2Reconcile`
+               * `SCIMServerGroupRequestConverter`
+               * `SCIMServerGroupResponseConverter`
+               * `SCIMServerUserRequestConverter`
+               * `SCIMServerUserResponseConverter`
+               * `SelfServiceRegistrationValidation`
+               * `SonyPSNReconcile`
+               * `SteamReconcile`
+               * `TwitchReconcile`
+               * `TwitterReconcile`
+               * `UserInfoPopulate`
+               * `XboxReconcile`
         """
         if body is not None:
             pulumi.set(__self__, "body", body)
@@ -309,26 +332,32 @@ class _FusionAuthLambdaState:
     def type(self) -> Optional[pulumi.Input[str]]:
         """
         The lambda type. The possible values are:
-        - `JWTPopulate`
-        - `OpenIDReconcile`
-        - `SAMLv2Reconcile`
-        - `SAMLv2Populate`
-        - `AppleReconcile`
-        - `ExternalJWTReconcile`
-        - `FacebookReconcile`
-        - `GoogleReconcile`
-        - `HYPRReconcile`
-        - `TwitterReconcile`
-        - `LDAPConnectorReconcile`
-        - `LinkedInReconcile`
-        - `EpicGamesReconcile`
-        - `NintendoReconcile`
-        - `SonyPSNReconcile`
-        - `SteamReconcile`
-        - `TwitchReconcile`
-        - `XboxReconcile`
-        - `SelfServiceRegistrationValidation`
-        - `ClientCredentialsJWTPopulate`
+        * `AppleReconcile`
+        * `ClientCredentialsJWTPopulate`
+        * `EpicGamesReconcile`
+        * `ExternalJWTReconcile`
+        * `FacebookReconcile`
+        * `GoogleReconcile`
+        * `HYPRReconcile`
+        * `JWTPopulate`
+        * `LDAPConnectorReconcile`
+        * `LinkedInReconcile`
+        * `LoginValidation`
+        * `NintendoReconcile`
+        * `OpenIDReconcile`
+        * `SAMLv2Populate`
+        * `SAMLv2Reconcile`
+        * `SCIMServerGroupRequestConverter`
+        * `SCIMServerGroupResponseConverter`
+        * `SCIMServerUserRequestConverter`
+        * `SCIMServerUserResponseConverter`
+        * `SelfServiceRegistrationValidation`
+        * `SonyPSNReconcile`
+        * `SteamReconcile`
+        * `TwitchReconcile`
+        * `TwitterReconcile`
+        * `UserInfoPopulate`
+        * `XboxReconcile`
         """
         return pulumi.get(self, "type")
 
@@ -363,7 +392,7 @@ class FusionAuthLambda(pulumi.CustomResource):
         import pulumi
         import theogravity_pulumi_fusionauth as fusionauth
 
-        preferred__username = fusionauth.FusionAuthLambda("preferred Username",
+        preferred_username = fusionauth.FusionAuthLambda("preferredUsername",
             body=\"\"\"// Using the user and registration parameters add additional values to the jwt object.
         function populate(jwt, user, registration) {
           jwt.preferred_username = registration.username;
@@ -383,26 +412,32 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
-               - `JWTPopulate`
-               - `OpenIDReconcile`
-               - `SAMLv2Reconcile`
-               - `SAMLv2Populate`
-               - `AppleReconcile`
-               - `ExternalJWTReconcile`
-               - `FacebookReconcile`
-               - `GoogleReconcile`
-               - `HYPRReconcile`
-               - `TwitterReconcile`
-               - `LDAPConnectorReconcile`
-               - `LinkedInReconcile`
-               - `EpicGamesReconcile`
-               - `NintendoReconcile`
-               - `SonyPSNReconcile`
-               - `SteamReconcile`
-               - `TwitchReconcile`
-               - `XboxReconcile`
-               - `SelfServiceRegistrationValidation`
-               - `ClientCredentialsJWTPopulate`
+               * `AppleReconcile`
+               * `ClientCredentialsJWTPopulate`
+               * `EpicGamesReconcile`
+               * `ExternalJWTReconcile`
+               * `FacebookReconcile`
+               * `GoogleReconcile`
+               * `HYPRReconcile`
+               * `JWTPopulate`
+               * `LDAPConnectorReconcile`
+               * `LinkedInReconcile`
+               * `LoginValidation`
+               * `NintendoReconcile`
+               * `OpenIDReconcile`
+               * `SAMLv2Populate`
+               * `SAMLv2Reconcile`
+               * `SCIMServerGroupRequestConverter`
+               * `SCIMServerGroupResponseConverter`
+               * `SCIMServerUserRequestConverter`
+               * `SCIMServerUserResponseConverter`
+               * `SelfServiceRegistrationValidation`
+               * `SonyPSNReconcile`
+               * `SteamReconcile`
+               * `TwitchReconcile`
+               * `TwitterReconcile`
+               * `UserInfoPopulate`
+               * `XboxReconcile`
         """
         ...
     @overload
@@ -423,7 +458,7 @@ class FusionAuthLambda(pulumi.CustomResource):
         import pulumi
         import theogravity_pulumi_fusionauth as fusionauth
 
-        preferred__username = fusionauth.FusionAuthLambda("preferred Username",
+        preferred_username = fusionauth.FusionAuthLambda("preferredUsername",
             body=\"\"\"// Using the user and registration parameters add additional values to the jwt object.
         function populate(jwt, user, registration) {
           jwt.preferred_username = registration.username;
@@ -507,26 +542,32 @@ class FusionAuthLambda(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_id: The Id to use for the new lambda. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the lambda.
         :param pulumi.Input[str] type: The lambda type. The possible values are:
-               - `JWTPopulate`
-               - `OpenIDReconcile`
-               - `SAMLv2Reconcile`
-               - `SAMLv2Populate`
-               - `AppleReconcile`
-               - `ExternalJWTReconcile`
-               - `FacebookReconcile`
-               - `GoogleReconcile`
-               - `HYPRReconcile`
-               - `TwitterReconcile`
-               - `LDAPConnectorReconcile`
-               - `LinkedInReconcile`
-               - `EpicGamesReconcile`
-               - `NintendoReconcile`
-               - `SonyPSNReconcile`
-               - `SteamReconcile`
-               - `TwitchReconcile`
-               - `XboxReconcile`
-               - `SelfServiceRegistrationValidation`
-               - `ClientCredentialsJWTPopulate`
+               * `AppleReconcile`
+               * `ClientCredentialsJWTPopulate`
+               * `EpicGamesReconcile`
+               * `ExternalJWTReconcile`
+               * `FacebookReconcile`
+               * `GoogleReconcile`
+               * `HYPRReconcile`
+               * `JWTPopulate`
+               * `LDAPConnectorReconcile`
+               * `LinkedInReconcile`
+               * `LoginValidation`
+               * `NintendoReconcile`
+               * `OpenIDReconcile`
+               * `SAMLv2Populate`
+               * `SAMLv2Reconcile`
+               * `SCIMServerGroupRequestConverter`
+               * `SCIMServerGroupResponseConverter`
+               * `SCIMServerUserRequestConverter`
+               * `SCIMServerUserResponseConverter`
+               * `SelfServiceRegistrationValidation`
+               * `SonyPSNReconcile`
+               * `SteamReconcile`
+               * `TwitchReconcile`
+               * `TwitterReconcile`
+               * `UserInfoPopulate`
+               * `XboxReconcile`
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -595,26 +636,32 @@ class FusionAuthLambda(pulumi.CustomResource):
     def type(self) -> pulumi.Output[str]:
         """
         The lambda type. The possible values are:
-        - `JWTPopulate`
-        - `OpenIDReconcile`
-        - `SAMLv2Reconcile`
-        - `SAMLv2Populate`
-        - `AppleReconcile`
-        - `ExternalJWTReconcile`
-        - `FacebookReconcile`
-        - `GoogleReconcile`
-        - `HYPRReconcile`
-        - `TwitterReconcile`
-        - `LDAPConnectorReconcile`
-        - `LinkedInReconcile`
-        - `EpicGamesReconcile`
-        - `NintendoReconcile`
-        - `SonyPSNReconcile`
-        - `SteamReconcile`
-        - `TwitchReconcile`
-        - `XboxReconcile`
-        - `SelfServiceRegistrationValidation`
-        - `ClientCredentialsJWTPopulate`
+        * `AppleReconcile`
+        * `ClientCredentialsJWTPopulate`
+        * `EpicGamesReconcile`
+        * `ExternalJWTReconcile`
+        * `FacebookReconcile`
+        * `GoogleReconcile`
+        * `HYPRReconcile`
+        * `JWTPopulate`
+        * `LDAPConnectorReconcile`
+        * `LinkedInReconcile`
+        * `LoginValidation`
+        * `NintendoReconcile`
+        * `OpenIDReconcile`
+        * `SAMLv2Populate`
+        * `SAMLv2Reconcile`
+        * `SCIMServerGroupRequestConverter`
+        * `SCIMServerGroupResponseConverter`
+        * `SCIMServerUserRequestConverter`
+        * `SCIMServerUserResponseConverter`
+        * `SelfServiceRegistrationValidation`
+        * `SonyPSNReconcile`
+        * `SteamReconcile`
+        * `TwitchReconcile`
+        * `TwitterReconcile`
+        * `UserInfoPopulate`
+        * `XboxReconcile`
         """
         return pulumi.get(self, "type")
 

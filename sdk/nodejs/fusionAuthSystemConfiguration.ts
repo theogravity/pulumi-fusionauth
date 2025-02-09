@@ -65,13 +65,25 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
 
     public readonly auditLogConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationAuditLogConfiguration>;
     public readonly corsConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationCorsConfiguration>;
+    /**
+     * An object that can hold any information about the System that should be persisted.
+     */
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     public readonly eventLogConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationEventLogConfiguration>;
     public readonly loginRecordConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationLoginRecordConfiguration>;
     /**
      * The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
      */
     public readonly reportTimezone!: pulumi.Output<string | undefined>;
+    /**
+     * The trusted proxy configuration.
+     */
+    public readonly trustedProxyConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationTrustedProxyConfiguration | undefined>;
     public readonly uiConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationUiConfiguration>;
+    /**
+     * The usage data configuration.
+     */
+    public readonly usageDataConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationUsageDataConfiguration | undefined>;
     public readonly webhookEventLogConfiguration!: pulumi.Output<outputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 
     /**
@@ -89,19 +101,25 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
             const state = argsOrState as FusionAuthSystemConfigurationState | undefined;
             resourceInputs["auditLogConfiguration"] = state ? state.auditLogConfiguration : undefined;
             resourceInputs["corsConfiguration"] = state ? state.corsConfiguration : undefined;
+            resourceInputs["data"] = state ? state.data : undefined;
             resourceInputs["eventLogConfiguration"] = state ? state.eventLogConfiguration : undefined;
             resourceInputs["loginRecordConfiguration"] = state ? state.loginRecordConfiguration : undefined;
             resourceInputs["reportTimezone"] = state ? state.reportTimezone : undefined;
+            resourceInputs["trustedProxyConfiguration"] = state ? state.trustedProxyConfiguration : undefined;
             resourceInputs["uiConfiguration"] = state ? state.uiConfiguration : undefined;
+            resourceInputs["usageDataConfiguration"] = state ? state.usageDataConfiguration : undefined;
             resourceInputs["webhookEventLogConfiguration"] = state ? state.webhookEventLogConfiguration : undefined;
         } else {
             const args = argsOrState as FusionAuthSystemConfigurationArgs | undefined;
             resourceInputs["auditLogConfiguration"] = args ? args.auditLogConfiguration : undefined;
             resourceInputs["corsConfiguration"] = args ? args.corsConfiguration : undefined;
+            resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["eventLogConfiguration"] = args ? args.eventLogConfiguration : undefined;
             resourceInputs["loginRecordConfiguration"] = args ? args.loginRecordConfiguration : undefined;
             resourceInputs["reportTimezone"] = args ? args.reportTimezone : undefined;
+            resourceInputs["trustedProxyConfiguration"] = args ? args.trustedProxyConfiguration : undefined;
             resourceInputs["uiConfiguration"] = args ? args.uiConfiguration : undefined;
+            resourceInputs["usageDataConfiguration"] = args ? args.usageDataConfiguration : undefined;
             resourceInputs["webhookEventLogConfiguration"] = args ? args.webhookEventLogConfiguration : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -115,13 +133,25 @@ export class FusionAuthSystemConfiguration extends pulumi.CustomResource {
 export interface FusionAuthSystemConfigurationState {
     auditLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationAuditLogConfiguration>;
     corsConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationCorsConfiguration>;
+    /**
+     * An object that can hold any information about the System that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     eventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationEventLogConfiguration>;
     loginRecordConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationLoginRecordConfiguration>;
     /**
      * The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
      */
     reportTimezone?: pulumi.Input<string>;
+    /**
+     * The trusted proxy configuration.
+     */
+    trustedProxyConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationTrustedProxyConfiguration>;
     uiConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUiConfiguration>;
+    /**
+     * The usage data configuration.
+     */
+    usageDataConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUsageDataConfiguration>;
     webhookEventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 }
 
@@ -131,12 +161,24 @@ export interface FusionAuthSystemConfigurationState {
 export interface FusionAuthSystemConfigurationArgs {
     auditLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationAuditLogConfiguration>;
     corsConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationCorsConfiguration>;
+    /**
+     * An object that can hold any information about the System that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     eventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationEventLogConfiguration>;
     loginRecordConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationLoginRecordConfiguration>;
     /**
      * The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
      */
     reportTimezone?: pulumi.Input<string>;
+    /**
+     * The trusted proxy configuration.
+     */
+    trustedProxyConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationTrustedProxyConfiguration>;
     uiConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUiConfiguration>;
+    /**
+     * The usage data configuration.
+     */
+    usageDataConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationUsageDataConfiguration>;
     webhookEventLogConfiguration?: pulumi.Input<inputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration>;
 }

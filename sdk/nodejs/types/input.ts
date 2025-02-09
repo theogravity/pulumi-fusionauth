@@ -119,10 +119,18 @@ export interface FusionAuthApplicationFormConfiguration {
      * The unique Id of the form to use for the Add and Edit User Registration form when used in the FusionAuth admin UI.
      */
     adminRegistrationFormId?: pulumi.Input<string>;
+    selfServiceFormConfiguration?: pulumi.Input<inputs.FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration>;
     /**
      * The unique Id of the form to to enable authenticated users to manage their profile on the account page.
      */
     selfServiceFormId?: pulumi.Input<string>;
+}
+
+export interface FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+    /**
+     * When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+     */
+    requireCurrentPasswordOnPasswordChange?: pulumi.Input<boolean>;
 }
 
 export interface FusionAuthApplicationJwtConfiguration {
@@ -139,13 +147,13 @@ export interface FusionAuthApplicationJwtConfiguration {
      */
     idTokenKeyId?: pulumi.Input<string>;
     /**
-     * The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+     * The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
      */
     refreshTokenExpirationPolicy?: pulumi.Input<string>;
     /**
      * The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
      */
-    refreshTokenSlidingWindowMaximumTimeToLiveInMinutes?: pulumi.Input<number>;
+    refreshTokenSlidingWindowMaximumTtlInMinutes?: pulumi.Input<number>;
     /**
      * The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
      */
@@ -243,10 +251,10 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     clientSecret?: pulumi.Input<string>;
     /**
-     * Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
-     * - `AlwaysPrompt` - Always prompt the user for consent.
-     * - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-     * - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+     * Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
+     * * `AlwaysPrompt` - Always prompt the user for consent.
+     * * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+     * * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
      */
     consentMode?: pulumi.Input<string>;
     /**
@@ -282,9 +290,9 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     providedScopePolicies?: pulumi.Input<pulumi.Input<inputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy>[]>;
     /**
-     * The application’s relationship to the OAuth server. The possible values are: 
-     * - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-     * - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+     * The application’s relationship to the OAuth server. The possible values are:
+     * * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+     * * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
      */
     relationship?: pulumi.Input<string>;
     /**
@@ -299,15 +307,15 @@ export interface FusionAuthApplicationOauthConfiguration {
     requireRegistration?: pulumi.Input<boolean>;
     /**
      * Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-     * - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-     * - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+     * * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+     * * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
      */
     scopeHandlingPolicy: pulumi.Input<string>;
     /**
-     * Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
-     * - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-     * - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-     * - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+     * Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
+     * * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+     * * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+     * * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
      */
     unknownScopePolicy: pulumi.Input<string>;
 }
@@ -416,6 +424,7 @@ export interface FusionAuthApplicationRegistrationDeletePolicy {
 }
 
 export interface FusionAuthApplicationSamlv2Configuration {
+    assertionEncryptionConfiguration?: pulumi.Input<inputs.FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration>;
     /**
      * The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
      */
@@ -442,6 +451,7 @@ export interface FusionAuthApplicationSamlv2Configuration {
      * Whether or not the SAML IdP for this Application is enabled or not.
      */
     enabled?: pulumi.Input<boolean>;
+    initiatedLogin?: pulumi.Input<inputs.FusionAuthApplicationSamlv2ConfigurationInitiatedLogin>;
     /**
      * The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
      */
@@ -450,6 +460,7 @@ export interface FusionAuthApplicationSamlv2Configuration {
      * The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
      */
     keyId?: pulumi.Input<string>;
+    loginHintConfiguration?: pulumi.Input<inputs.FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration>;
     logout?: pulumi.Input<inputs.FusionAuthApplicationSamlv2ConfigurationLogout>;
     /**
      * The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
@@ -467,6 +478,59 @@ export interface FusionAuthApplicationSamlv2Configuration {
      * The location to place the XML signature when signing a successful SAML response.
      */
     xmlSignatureLocation?: pulumi.Input<string>;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+    /**
+     * The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+     */
+    digestAlgorithm?: pulumi.Input<string>;
+    /**
+     * Determines if SAML assertion encryption is enabled for this Application.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+     */
+    encryptionAlgorithm?: pulumi.Input<string>;
+    /**
+     * The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+     */
+    keyLocation?: pulumi.Input<string>;
+    /**
+     * The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+     */
+    keyTransportAlgorithm?: pulumi.Input<string>;
+    /**
+     * The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+     */
+    keyTransportEncryptionKeyId?: pulumi.Input<string>;
+    /**
+     * The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+     */
+    maskGenerationFunction?: pulumi.Input<string>;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+    /**
+     * Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+     */
+    nameIdFormat?: pulumi.Input<string>;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+    /**
+     * When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+     */
+    parameterName?: pulumi.Input<string>;
 }
 
 export interface FusionAuthApplicationSamlv2ConfigurationLogout {
@@ -512,6 +576,21 @@ export interface FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout {
     xmlSignatureCanonicalizationMethod?: pulumi.Input<string>;
 }
 
+export interface FusionAuthApplicationWebauthnConfiguration {
+    /**
+     * Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+     */
+    bootstrapWorkflowEnabled?: pulumi.Input<boolean>;
+    /**
+     * Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+     */
+    reauthenticationWorkflowEnabled?: pulumi.Input<boolean>;
+}
+
 export interface FusionAuthEntityTypeJwtConfiguration {
     /**
      * The unique ID of the signing key used to sign the access token. Required when
@@ -525,8 +604,7 @@ export interface FusionAuthEntityTypeJwtConfiguration {
      */
     enabled?: pulumi.Input<boolean>;
     /**
-     * The length of time in seconds the JWT will live before it is expired and no
-     * longer valid. Required when enabled is set to true.
+     * The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
      */
     timeToLiveInSeconds?: pulumi.Input<number>;
 }
@@ -555,7 +633,7 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
      */
     applicationId?: pulumi.Input<string>;
     /**
-     * This is an optional Application specific override for for the top level bundleId.
+     * The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundleId` or `servicesId` . If `servicesId` is omitted, this field is required.
      */
     bundleId?: pulumi.Input<string>;
     /**
@@ -590,7 +668,7 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
 
 export interface FusionAuthIdpAppleTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -620,7 +698,7 @@ export interface FusionAuthIdpExternalJwtApplicationConfiguration {
 
 export interface FusionAuthIdpExternalJwtTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -670,7 +748,7 @@ export interface FusionAuthIdpFacebookApplicationConfiguration {
 
 export interface FusionAuthIdpFacebookTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -709,14 +787,40 @@ export interface FusionAuthIdpGoogleApplicationConfiguration {
      */
     enabled?: pulumi.Input<boolean>;
     /**
+     * This is an optional Application specific override for the top level properties.
+     */
+    properties?: pulumi.Input<inputs.FusionAuthIdpGoogleApplicationConfigurationProperties>;
+    /**
      * This is an optional Application specific override for for the top level scope.
      */
     scope?: pulumi.Input<string>;
 }
 
+export interface FusionAuthIdpGoogleApplicationConfigurationProperties {
+    /**
+     * This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+     */
+    api?: pulumi.Input<string>;
+    /**
+     * This is an optional Application specific override for the top level `button`.
+     */
+    button?: pulumi.Input<string>;
+}
+
+export interface FusionAuthIdpGoogleProperties {
+    /**
+     * Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+     */
+    api?: pulumi.Input<string>;
+    /**
+     * Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+     */
+    button?: pulumi.Input<string>;
+}
+
 export interface FusionAuthIdpGoogleTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -739,7 +843,7 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     buttonText?: pulumi.Input<string>;
     /**
-     * The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+     * This is an optional Application specific override for the top level `clientId`.
      */
     clientId?: pulumi.Input<string>;
     /**
@@ -755,14 +859,14 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     enabled?: pulumi.Input<boolean>;
     /**
-     * The top-level scope that you are requesting from LinkedIn.
+     * This is an optional Application specific override for the top level `scope`.
      */
     scope?: pulumi.Input<string>;
 }
 
 export interface FusionAuthIdpLinkedInTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -812,7 +916,7 @@ export interface FusionAuthIdpOpenIdConnectApplicationConfiguration {
 
 export interface FusionAuthIdpOpenIdConnectTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -858,7 +962,7 @@ export interface FusionAuthIdpPsnApplicationConfiguration {
 
 export interface FusionAuthIdpPsnTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -881,6 +985,24 @@ export interface FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration {
      * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: pulumi.Input<boolean>;
+}
+
+export interface FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration {
+    /**
+     * The decryption configuration for the SAML v2 identity provider.
+     */
+    decryption?: pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption>;
+}
+
+export interface FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+    /**
+     * Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+     */
+    keyTransportDecryptionKeyId: pulumi.Input<string>;
 }
 
 export interface FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration {
@@ -918,9 +1040,64 @@ export interface FusionAuthIdpSamlv2ApplicationConfiguration {
     enabled?: pulumi.Input<boolean>;
 }
 
+export interface FusionAuthIdpSamlv2AssertionConfiguration {
+    /**
+     * The configuration for the SAML assertion decryption.
+     */
+    decryption?: pulumi.Input<inputs.FusionAuthIdpSamlv2AssertionConfigurationDecryption>;
+    /**
+     * The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+     */
+    destination?: pulumi.Input<inputs.FusionAuthIdpSamlv2AssertionConfigurationDestination>;
+}
+
+export interface FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+    /**
+     * Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+     */
+    keyTransportDecryptionKeyId: pulumi.Input<string>;
+}
+
+export interface FusionAuthIdpSamlv2AssertionConfigurationDestination {
+    /**
+     * The alternate destinations of the assertion.
+     */
+    alternates?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+     */
+    policy?: pulumi.Input<string>;
+}
+
+export interface FusionAuthIdpSamlv2IdpInitiatedConfiguration {
+    /**
+     * Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+     */
+    issuer?: pulumi.Input<string>;
+}
+
+export interface FusionAuthIdpSamlv2LoginHintConfiguration {
+    /**
+     * When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+     */
+    parameterName?: pulumi.Input<string>;
+}
+
 export interface FusionAuthIdpSamlv2TenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -934,6 +1111,10 @@ export interface FusionAuthIdpSamlv2TenantConfiguration {
 }
 
 export interface FusionAuthIdpSteamApplicationConfiguration {
+    /**
+     * This is an optional Application specific override for the top level apiMode.
+     */
+    apiMode?: pulumi.Input<string>;
     /**
      * ID of the Application to apply this configuration to.
      */
@@ -966,7 +1147,7 @@ export interface FusionAuthIdpSteamApplicationConfiguration {
 
 export interface FusionAuthIdpSteamTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -1012,7 +1193,7 @@ export interface FusionAuthIdpTwitchApplicationConfiguration {
 
 export interface FusionAuthIdpTwitchTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -1058,7 +1239,7 @@ export interface FusionAuthIdpXBoxApplicationConfiguration {
 
 export interface FusionAuthIdpXBoxTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: pulumi.Input<boolean>;
     /**
@@ -1104,6 +1285,10 @@ export interface FusionAuthSystemConfigurationCorsConfiguration {
      */
     allowedOrigins?: pulumi.Input<pulumi.Input<string>[]>;
     /**
+     * Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+     */
+    debug?: pulumi.Input<boolean>;
+    /**
      * Whether the FusionAuth CORS filter will process requests made to FusionAuth.
      */
     enabled?: pulumi.Input<boolean>;
@@ -1139,6 +1324,17 @@ export interface FusionAuthSystemConfigurationLoginRecordConfigurationDelete {
     numberOfDaysToRetain?: pulumi.Input<number>;
 }
 
+export interface FusionAuthSystemConfigurationTrustedProxyConfiguration {
+    /**
+     * This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+     */
+    trustPolicy?: pulumi.Input<string>;
+    /**
+     * An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+     */
+    trusteds?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface FusionAuthSystemConfigurationUiConfiguration {
     /**
      * A hexadecimal color to override the default menu color in the user interface.
@@ -1152,6 +1348,13 @@ export interface FusionAuthSystemConfigurationUiConfiguration {
      * A hexadecimal color to override the default menu font color in the user interface.
      */
     menuFontColor?: pulumi.Input<string>;
+}
+
+export interface FusionAuthSystemConfigurationUsageDataConfiguration {
+    /**
+     * Whether or not FusionAuth collects and sends usage data to improve the product.
+     */
+    enabled?: pulumi.Input<boolean>;
 }
 
 export interface FusionAuthSystemConfigurationWebhookEventLogConfiguration {
@@ -1218,7 +1421,11 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
      */
-    additionalHeaders?: pulumi.Input<{[key: string]: any}>;
+    additionalHeaders?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+     */
+    debug?: pulumi.Input<boolean>;
     /**
      * The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
      */
@@ -1242,7 +1449,7 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The host name of the SMTP server that FusionAuth will use.
      */
-    host: pulumi.Input<string>;
+    host?: pulumi.Input<string>;
     /**
      * When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
      */
@@ -1282,7 +1489,7 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The port of the SMTP server that FusionAuth will use.
      */
-    port: pulumi.Input<number>;
+    port?: pulumi.Input<number>;
     /**
      * Additional Email Configuration in a properties file formatted String.
      */
@@ -1332,7 +1539,7 @@ export interface FusionAuthTenantEmailConfigurationUnverified {
      */
     allowEmailChangeWhenGated?: pulumi.Input<boolean>;
     /**
-     * = (Optional) The behavior when detecting breaches at time of user login
+     * = (Optional) The behavior when detecting breaches at time of user login.
      */
     behavior?: pulumi.Input<string>;
 }
@@ -1354,175 +1561,187 @@ export interface FusionAuthTenantEventConfiguration {
 
 export interface FusionAuthTenantExternalIdentifierConfiguration {
     /**
-     * The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
+     * The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
      */
-    authorizationGrantIdTimeToLiveInSeconds: pulumi.Input<number>;
-    changePasswordIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator>;
+    authorizationGrantIdTimeToLiveInSeconds?: pulumi.Input<number>;
+    changePasswordIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator>;
     /**
-     * The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
+     * The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
      */
-    changePasswordIdTimeToLiveInSeconds: pulumi.Input<number>;
+    changePasswordIdTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+     * The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
      */
-    deviceCodeTimeToLiveInSeconds: pulumi.Input<number>;
-    deviceUserCodeIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator>;
-    emailVerificationIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator>;
+    deviceCodeTimeToLiveInSeconds?: pulumi.Input<number>;
+    deviceUserCodeIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator>;
+    emailVerificationIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator>;
     /**
      * The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
      */
-    emailVerificationIdTimeToLiveInSeconds: pulumi.Input<number>;
-    emailVerificationOneTimeCodeGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator>;
+    emailVerificationIdTimeToLiveInSeconds?: pulumi.Input<number>;
+    emailVerificationOneTimeCodeGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator>;
     /**
-     * The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+     * The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
      */
-    externalAuthenticationIdTimeToLiveInSeconds: pulumi.Input<number>;
+    externalAuthenticationIdTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+     * The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
      */
-    loginIntentTimeToLiveInSeconds: pulumi.Input<number>;
+    loginIntentTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
+     * The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
      */
-    oneTimePasswordTimeToLiveInSeconds: pulumi.Input<number>;
-    passwordlessLoginGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator>;
+    oneTimePasswordTimeToLiveInSeconds?: pulumi.Input<number>;
+    passwordlessLoginGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator>;
     /**
-     * The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
+     * The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
      */
-    passwordlessLoginTimeToLiveInSeconds: pulumi.Input<number>;
+    passwordlessLoginTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
+     * The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
      */
     pendingAccountLinkTimeToLiveInSeconds?: pulumi.Input<number>;
-    registrationVerificationIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator>;
+    registrationVerificationIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator>;
     /**
      * The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
      */
-    registrationVerificationIdTimeToLiveInSeconds: pulumi.Input<number>;
-    registrationVerificationOneTimeCodeGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator>;
+    registrationVerificationIdTimeToLiveInSeconds?: pulumi.Input<number>;
+    registrationVerificationOneTimeCodeGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator>;
     /**
-     * The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
+     * The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+     */
+    rememberOauthScopeConsentChoiceTimeToLiveInSeconds?: pulumi.Input<number>;
+    /**
+     * The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
      */
     samlV2AuthnRequestIdTtlSeconds?: pulumi.Input<number>;
-    setupPasswordIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator>;
+    setupPasswordIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator>;
     /**
      * The time in seconds until a setup password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
      */
-    setupPasswordIdTimeToLiveInSeconds: pulumi.Input<number>;
+    setupPasswordIdTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+     * The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
      */
     trustTokenTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
+     * The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
      */
-    twoFactorIdTimeToLiveInSeconds: pulumi.Input<number>;
-    twoFactorOneTimeCodeIdGenerator: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator>;
+    twoFactorIdTimeToLiveInSeconds?: pulumi.Input<number>;
+    twoFactorOneTimeCodeIdGenerator?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator>;
     /**
-     * The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+     * The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
      */
     twoFactorOneTimeCodeIdTimeToLiveInSeconds?: pulumi.Input<number>;
     /**
-     * The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+     * The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
      */
-    twoFactorTrustIdTimeToLiveInSeconds: pulumi.Input<number>;
+    twoFactorTrustIdTimeToLiveInSeconds?: pulumi.Input<number>;
+    /**
+     * The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+     */
+    webauthnAuthenticationChallengeTimeToLiveInSeconds?: pulumi.Input<number>;
+    /**
+     * The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+     */
+    webauthnRegistrationChallengeTimeToLiveInSeconds?: pulumi.Input<number>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 6.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator {
     /**
-     * The length of the secure generator used for generating the email verification one time code.
+     * The length of the secure generator used for generating the email verification one time code. Defaults to 6.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the email verification one time code.
+     * The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
      */
     type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator {
     /**
-     * The length of the secure generator used for generating the registration verification one time code.
+     * The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the registration verification one time code.
+     * The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
      */
     type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: pulumi.Input<string>;
+    type?: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the the two factor code Id. Defaults to 6
      */
-    length: pulumi.Input<number>;
+    length?: pulumi.Input<number>;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
      */
     type?: pulumi.Input<string>;
 }
@@ -1622,9 +1841,21 @@ export interface FusionAuthTenantJwtConfiguration {
      */
     refreshTokenExpirationPolicy?: pulumi.Input<string>;
     /**
+     * The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+     */
+    refreshTokenOneTimeUseConfigurationGracePeriodInSeconds?: pulumi.Input<number>;
+    /**
      * When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
      */
     refreshTokenRevocationPolicyOnLoginPrevented?: pulumi.Input<boolean>;
+    /**
+     * When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+     */
+    refreshTokenRevocationPolicyOnMultiFactorEnable?: pulumi.Input<boolean>;
+    /**
+     * When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+     */
+    refreshTokenRevocationPolicyOnOneTimeTokenReuse?: pulumi.Input<boolean>;
     /**
      * When enabled, the refresh token will be revoked when a user changes their password."
      */
@@ -1636,7 +1867,7 @@ export interface FusionAuthTenantJwtConfiguration {
     /**
      * The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
      */
-    refreshTokenTimeToLiveInMinutes: pulumi.Input<number>;
+    refreshTokenTimeToLiveInMinutes?: pulumi.Input<number>;
     /**
      * The refresh token usage policy.
      */
@@ -1644,7 +1875,38 @@ export interface FusionAuthTenantJwtConfiguration {
     /**
      * The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
      */
-    timeToLiveInSeconds: pulumi.Input<number>;
+    timeToLiveInSeconds?: pulumi.Input<number>;
+}
+
+export interface FusionAuthTenantLambdaConfiguration {
+    /**
+     * The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+     */
+    loginValidationId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimEnterpriseUserRequestConverterId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimEnterpriseUserResponseConverterId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimGroupRequestConverterId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimGroupResponseConverterId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimUserRequestConverterId: pulumi.Input<string>;
+    /**
+     * The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimUserResponseConverterId: pulumi.Input<string>;
 }
 
 export interface FusionAuthTenantLoginConfiguration {
@@ -1906,6 +2168,32 @@ export interface FusionAuthTenantRegistrationConfiguration {
     blockedDomains?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface FusionAuthTenantScimServerConfiguration {
+    /**
+     * The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    clientEntityTypeId: pulumi.Input<string>;
+    /**
+     * Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+     */
+    schemas?: pulumi.Input<string>;
+    /**
+     * The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    serverEntityTypeId: pulumi.Input<string>;
+}
+
+export interface FusionAuthTenantSsoConfiguration {
+    /**
+     * The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+     */
+    deviceTrustTimeToLiveInSeconds?: pulumi.Input<number>;
+}
+
 export interface FusionAuthTenantUserDeletePolicy {
     /**
      * Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
@@ -1943,11 +2231,68 @@ export interface FusionAuthTenantUsernameConfigurationUnique {
     strategy?: pulumi.Input<string>;
 }
 
+export interface FusionAuthTenantWebauthnConfiguration {
+    /**
+     * The Bootstrap Workflow configuration.
+     */
+    bootstrapWorkflow?: pulumi.Input<inputs.FusionAuthTenantWebauthnConfigurationBootstrapWorkflow>;
+    /**
+     * Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+     */
+    debug?: pulumi.Input<boolean>;
+    /**
+     * Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The Reauthentication Workflow configuration.
+     */
+    reauthenticationWorkflow?: pulumi.Input<inputs.FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow>;
+    /**
+     * The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+     */
+    relyingPartyId?: pulumi.Input<string>;
+    /**
+     * The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+     */
+    relyingPartyName?: pulumi.Input<string>;
+}
+
+export interface FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+    /**
+     * Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+     */
+    authenticatorAttachmentPreference?: pulumi.Input<string>;
+    /**
+     * Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+     */
+    userVerificationRequirement?: pulumi.Input<string>;
+}
+
+export interface FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+    /**
+     * Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+     */
+    authenticatorAttachmentPreference?: pulumi.Input<string>;
+    /**
+     * Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+     */
+    userVerificationRequirement?: pulumi.Input<string>;
+}
+
 export interface FusionAuthUserActionOption {
     /**
      * A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
      */
-    localizedNames?: pulumi.Input<{[key: string]: any}>;
+    localizedNames?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The name of this User Action Option.
      */
@@ -2150,6 +2495,17 @@ export interface FusionAuthWebhookEventsEnabled {
      * When a user update transaction has completed
      */
     userUpdateComplete?: pulumi.Input<boolean>;
+}
+
+export interface FusionAuthWebhookSignatureConfiguration {
+    /**
+     * Wether or not webhook signing is enabled
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * The UUID key used for signing the Webhook
+     */
+    signingKeyId?: pulumi.Input<string>;
 }
 
 export interface GetFormFieldValidator {

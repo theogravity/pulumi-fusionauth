@@ -88,7 +88,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
      */
     public readonly data!: pulumi.Output<string | undefined>;
     /**
-     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
      */
     public readonly disableDomainBlock!: pulumi.Output<boolean | undefined>;
     /**
@@ -103,6 +103,12 @@ export class FusionAuthUser extends pulumi.CustomResource {
      * The expiration instant of the User’s account. An expired user is not permitted to login.
      */
     public readonly expiry!: pulumi.Output<number | undefined>;
+    /**
+     * The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+     * Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+     * PasswordEncryptor implementation.
+     */
+    public readonly factor!: pulumi.Output<number>;
     /**
      * The first name of the User.
      */
@@ -132,7 +138,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
      */
     public readonly parentEmail!: pulumi.Output<string | undefined>;
     /**
-     * The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+     * The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
      */
     public readonly password!: pulumi.Output<string | undefined>;
     /**
@@ -197,6 +203,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
             resourceInputs["email"] = state ? state.email : undefined;
             resourceInputs["encryptionScheme"] = state ? state.encryptionScheme : undefined;
             resourceInputs["expiry"] = state ? state.expiry : undefined;
+            resourceInputs["factor"] = state ? state.factor : undefined;
             resourceInputs["firstName"] = state ? state.firstName : undefined;
             resourceInputs["fullName"] = state ? state.fullName : undefined;
             resourceInputs["imageUrl"] = state ? state.imageUrl : undefined;
@@ -225,6 +232,7 @@ export class FusionAuthUser extends pulumi.CustomResource {
             resourceInputs["email"] = args ? args.email : undefined;
             resourceInputs["encryptionScheme"] = args ? args.encryptionScheme : undefined;
             resourceInputs["expiry"] = args ? args.expiry : undefined;
+            resourceInputs["factor"] = args ? args.factor : undefined;
             resourceInputs["firstName"] = args ? args.firstName : undefined;
             resourceInputs["fullName"] = args ? args.fullName : undefined;
             resourceInputs["imageUrl"] = args ? args.imageUrl : undefined;
@@ -269,7 +277,7 @@ export interface FusionAuthUserState {
      */
     data?: pulumi.Input<string>;
     /**
-     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
      */
     disableDomainBlock?: pulumi.Input<boolean>;
     /**
@@ -284,6 +292,12 @@ export interface FusionAuthUserState {
      * The expiration instant of the User’s account. An expired user is not permitted to login.
      */
     expiry?: pulumi.Input<number>;
+    /**
+     * The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+     * Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+     * PasswordEncryptor implementation.
+     */
+    factor?: pulumi.Input<number>;
     /**
      * The first name of the User.
      */
@@ -313,7 +327,7 @@ export interface FusionAuthUserState {
      */
     parentEmail?: pulumi.Input<string>;
     /**
-     * The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+     * The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
      */
     password?: pulumi.Input<string>;
     /**
@@ -376,7 +390,7 @@ export interface FusionAuthUserArgs {
      */
     data?: pulumi.Input<string>;
     /**
-     * An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+     * A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
      */
     disableDomainBlock?: pulumi.Input<boolean>;
     /**
@@ -391,6 +405,12 @@ export interface FusionAuthUserArgs {
      * The expiration instant of the User’s account. An expired user is not permitted to login.
      */
     expiry?: pulumi.Input<number>;
+    /**
+     * The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+     * Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+     * PasswordEncryptor implementation.
+     */
+    factor?: pulumi.Input<number>;
     /**
      * The first name of the User.
      */
@@ -420,7 +440,7 @@ export interface FusionAuthUserArgs {
      */
     parentEmail?: pulumi.Input<string>;
     /**
-     * The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+     * The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
      */
     password?: pulumi.Input<string>;
     /**

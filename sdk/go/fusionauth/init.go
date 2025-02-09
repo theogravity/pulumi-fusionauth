@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &FusionAuthApiKey{}
 	case "fusionauth:index/fusionAuthApplication:FusionAuthApplication":
 		r = &FusionAuthApplication{}
+	case "fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope":
+		r = &FusionAuthApplicationOAuthScope{}
 	case "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole":
 		r = &FusionAuthApplicationRole{}
 	case "fusionauth:index/fusionAuthEMail:FusionAuthEMail":
@@ -89,6 +91,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &FusionAuthUser{}
 	case "fusionauth:index/fusionAuthUserAction:FusionAuthUserAction":
 		r = &FusionAuthUserAction{}
+	case "fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership":
+		r = &FusionAuthUserGroupMembership{}
 	case "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook":
 		r = &FusionAuthWebhook{}
 	default:
@@ -130,6 +134,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"fusionauth",
 		"index/fusionAuthApplication",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
+		"index/fusionAuthApplicationOAuthScope",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -290,6 +299,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"fusionauth",
 		"index/fusionAuthUserAction",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
+		"index/fusionAuthUserGroupMembership",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

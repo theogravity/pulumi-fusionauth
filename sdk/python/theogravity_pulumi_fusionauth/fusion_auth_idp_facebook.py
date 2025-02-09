@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -41,16 +46,16 @@ class FusionAuthIdpFacebookArgs:
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
                The valid values are:
-               - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-               - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-               - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-               - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-               - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-               - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+               * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+               * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+               * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+               * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+               * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+               * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
                The valid values are:
-               - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-               - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+               * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+               * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         :param pulumi.Input[str] permissions: The top-level permissions that your application is asking of the user’s Facebook account.
                Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpFacebookTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -180,12 +185,12 @@ class FusionAuthIdpFacebookArgs:
         """
         The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         The valid values are:
-        - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-        - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-        - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-        - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-        - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-        - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+        * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         """
         return pulumi.get(self, "linking_strategy")
 
@@ -199,8 +204,8 @@ class FusionAuthIdpFacebookArgs:
         """
         The login method to use for this Identity Provider.
         The valid values are:
-        - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-        - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+        * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         """
         return pulumi.get(self, "login_method")
 
@@ -262,16 +267,16 @@ class _FusionAuthIdpFacebookState:
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
                The valid values are:
-               - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-               - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-               - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-               - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-               - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-               - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+               * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+               * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+               * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+               * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+               * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+               * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
                The valid values are:
-               - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-               - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+               * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+               * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         :param pulumi.Input[str] permissions: The top-level permissions that your application is asking of the user’s Facebook account.
                Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpFacebookTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -404,12 +409,12 @@ class _FusionAuthIdpFacebookState:
         """
         The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         The valid values are:
-        - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-        - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-        - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-        - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-        - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-        - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+        * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         """
         return pulumi.get(self, "linking_strategy")
 
@@ -423,8 +428,8 @@ class _FusionAuthIdpFacebookState:
         """
         The login method to use for this Identity Provider.
         The valid values are:
-        - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-        - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+        * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         """
         return pulumi.get(self, "login_method")
 
@@ -464,7 +469,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookApplicationConfigurationArgs', 'FusionAuthIdpFacebookApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -474,7 +479,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
                  permissions: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookTenantConfigurationArgs', 'FusionAuthIdpFacebookTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         """
         ## # Facebook Identity Provider Resource
@@ -498,11 +503,11 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         facebook = fusionauth.FusionAuthIdpFacebook("facebook",
-            application_configurations=[fusionauth.FusionAuthIdpFacebookApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Facebook",
             debug=False,
             enabled=True,
@@ -515,7 +520,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] app_id: The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookApplicationConfigurationArgs', 'FusionAuthIdpFacebookApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_secret: The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, an Event Log is created each time this provider is invoked to reconcile a login.
@@ -525,19 +530,19 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
                The valid values are:
-               - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-               - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-               - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-               - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-               - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-               - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+               * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+               * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+               * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+               * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+               * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+               * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
                The valid values are:
-               - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-               - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+               * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+               * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         :param pulumi.Input[str] permissions: The top-level permissions that your application is asking of the user’s Facebook account.
                Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookTenantConfigurationArgs', 'FusionAuthIdpFacebookTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
     @overload
@@ -567,11 +572,11 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         facebook = fusionauth.FusionAuthIdpFacebook("facebook",
-            application_configurations=[fusionauth.FusionAuthIdpFacebookApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Facebook",
             debug=False,
             enabled=True,
@@ -597,7 +602,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  app_id: Optional[pulumi.Input[str]] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookApplicationConfigurationArgs', 'FusionAuthIdpFacebookApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -607,7 +612,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
                  permissions: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookTenantConfigurationArgs', 'FusionAuthIdpFacebookTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -648,7 +653,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             app_id: Optional[pulumi.Input[str]] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookApplicationConfigurationArgs', 'FusionAuthIdpFacebookApplicationConfigurationArgsDict']]]]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             client_secret: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
@@ -658,7 +663,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
             linking_strategy: Optional[pulumi.Input[str]] = None,
             login_method: Optional[pulumi.Input[str]] = None,
             permissions: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpFacebook':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookTenantConfigurationArgs', 'FusionAuthIdpFacebookTenantConfigurationArgsDict']]]]] = None) -> 'FusionAuthIdpFacebook':
         """
         Get an existing FusionAuthIdpFacebook resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -667,7 +672,7 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] app_id: The top-level Facebook `appId` for your Application. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookApplicationConfigurationArgs', 'FusionAuthIdpFacebookApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_secret: The top-level client secret, also known as 'App Secret', to use with the Facebook Identity Provider when retrieving the long-lived token. This value is retrieved from the Facebook developer website when you setup your Facebook developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, an Event Log is created each time this provider is invoked to reconcile a login.
@@ -677,19 +682,19 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
                The valid values are:
-               - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-               - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-               - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-               - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-               - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-               - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+               * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+               * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+               * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+               * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+               * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+               * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
                The valid values are:
-               - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-               - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+               * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+               * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         :param pulumi.Input[str] permissions: The top-level permissions that your application is asking of the user’s Facebook account.
                Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpFacebookTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpFacebookTenantConfigurationArgs', 'FusionAuthIdpFacebookTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -780,12 +785,12 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         """
         The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
         The valid values are:
-        - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-        - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-        - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-        - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-        - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-        - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+        * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+        * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+        * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+        * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+        * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+        * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
         """
         return pulumi.get(self, "linking_strategy")
 
@@ -795,8 +800,8 @@ class FusionAuthIdpFacebook(pulumi.CustomResource):
         """
         The login method to use for this Identity Provider.
         The valid values are:
-        - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-        - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+        * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+        * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
         """
         return pulumi.get(self, "login_method")
 

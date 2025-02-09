@@ -20,7 +20,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? AllowEmailChangeWhenGated { get; set; }
 
         /// <summary>
-        /// = (Optional) The behavior when detecting breaches at time of user login
+        /// = (Optional) The behavior when detecting breaches at time of user login.
         /// </summary>
         [Input("behavior")]
         public Input<string>? Behavior { get; set; }

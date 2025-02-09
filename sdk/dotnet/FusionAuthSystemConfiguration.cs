@@ -59,6 +59,12 @@ namespace theogravity.Fusionauth
         [Output("corsConfiguration")]
         public Output<Outputs.FusionAuthSystemConfigurationCorsConfiguration> CorsConfiguration { get; private set; } = null!;
 
+        /// <summary>
+        /// An object that can hold any information about the System that should be persisted.
+        /// </summary>
+        [Output("data")]
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
+
         [Output("eventLogConfiguration")]
         public Output<Outputs.FusionAuthSystemConfigurationEventLogConfiguration> EventLogConfiguration { get; private set; } = null!;
 
@@ -71,8 +77,20 @@ namespace theogravity.Fusionauth
         [Output("reportTimezone")]
         public Output<string?> ReportTimezone { get; private set; } = null!;
 
+        /// <summary>
+        /// The trusted proxy configuration.
+        /// </summary>
+        [Output("trustedProxyConfiguration")]
+        public Output<Outputs.FusionAuthSystemConfigurationTrustedProxyConfiguration?> TrustedProxyConfiguration { get; private set; } = null!;
+
         [Output("uiConfiguration")]
         public Output<Outputs.FusionAuthSystemConfigurationUiConfiguration> UiConfiguration { get; private set; } = null!;
+
+        /// <summary>
+        /// The usage data configuration.
+        /// </summary>
+        [Output("usageDataConfiguration")]
+        public Output<Outputs.FusionAuthSystemConfigurationUsageDataConfiguration?> UsageDataConfiguration { get; private set; } = null!;
 
         [Output("webhookEventLogConfiguration")]
         public Output<Outputs.FusionAuthSystemConfigurationWebhookEventLogConfiguration> WebhookEventLogConfiguration { get; private set; } = null!;
@@ -130,6 +148,18 @@ namespace theogravity.Fusionauth
         [Input("corsConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationCorsConfigurationArgs>? CorsConfiguration { get; set; }
 
+        [Input("data")]
+        private InputMap<string>? _data;
+
+        /// <summary>
+        /// An object that can hold any information about the System that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
+
         [Input("eventLogConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationEventLogConfigurationArgs>? EventLogConfiguration { get; set; }
 
@@ -142,8 +172,20 @@ namespace theogravity.Fusionauth
         [Input("reportTimezone")]
         public Input<string>? ReportTimezone { get; set; }
 
+        /// <summary>
+        /// The trusted proxy configuration.
+        /// </summary>
+        [Input("trustedProxyConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationTrustedProxyConfigurationArgs>? TrustedProxyConfiguration { get; set; }
+
         [Input("uiConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationUiConfigurationArgs>? UiConfiguration { get; set; }
+
+        /// <summary>
+        /// The usage data configuration.
+        /// </summary>
+        [Input("usageDataConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationUsageDataConfigurationArgs>? UsageDataConfiguration { get; set; }
 
         [Input("webhookEventLogConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs>? WebhookEventLogConfiguration { get; set; }
@@ -162,6 +204,18 @@ namespace theogravity.Fusionauth
         [Input("corsConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationCorsConfigurationGetArgs>? CorsConfiguration { get; set; }
 
+        [Input("data")]
+        private InputMap<string>? _data;
+
+        /// <summary>
+        /// An object that can hold any information about the System that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
+
         [Input("eventLogConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationEventLogConfigurationGetArgs>? EventLogConfiguration { get; set; }
 
@@ -174,8 +228,20 @@ namespace theogravity.Fusionauth
         [Input("reportTimezone")]
         public Input<string>? ReportTimezone { get; set; }
 
+        /// <summary>
+        /// The trusted proxy configuration.
+        /// </summary>
+        [Input("trustedProxyConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationTrustedProxyConfigurationGetArgs>? TrustedProxyConfiguration { get; set; }
+
         [Input("uiConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationUiConfigurationGetArgs>? UiConfiguration { get; set; }
+
+        /// <summary>
+        /// The usage data configuration.
+        /// </summary>
+        [Input("usageDataConfiguration")]
+        public Input<Inputs.FusionAuthSystemConfigurationUsageDataConfigurationGetArgs>? UsageDataConfiguration { get; set; }
 
         [Input("webhookEventLogConfiguration")]
         public Input<Inputs.FusionAuthSystemConfigurationWebhookEventLogConfigurationGetArgs>? WebhookEventLogConfiguration { get; set; }

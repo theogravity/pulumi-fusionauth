@@ -18,6 +18,7 @@ namespace theogravity.Fusionauth.Outputs
         /// The unique Id of the form to use for the Add and Edit User Registration form when used in the FusionAuth admin UI.
         /// </summary>
         public readonly string? AdminRegistrationFormId;
+        public readonly Outputs.FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration? SelfServiceFormConfiguration;
         /// <summary>
         /// The unique Id of the form to to enable authenticated users to manage their profile on the account page.
         /// </summary>
@@ -27,9 +28,12 @@ namespace theogravity.Fusionauth.Outputs
         private FusionAuthApplicationFormConfiguration(
             string? adminRegistrationFormId,
 
+            Outputs.FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration? selfServiceFormConfiguration,
+
             string? selfServiceFormId)
         {
             AdminRegistrationFormId = adminRegistrationFormId;
+            SelfServiceFormConfiguration = selfServiceFormConfiguration;
             SelfServiceFormId = selfServiceFormId;
         }
     }

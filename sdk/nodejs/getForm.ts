@@ -26,7 +26,6 @@ import * as utilities from "./utilities";
  */
 export function getForm(args?: GetFormArgs, opts?: pulumi.InvokeOptions): Promise<GetFormResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getForm:getForm", {
         "data": args.data,
@@ -44,7 +43,7 @@ export interface GetFormArgs {
     /**
      * An object that can hold any information about the Form that should be persisted.
      */
-    data?: {[key: string]: any};
+    data?: {[key: string]: string};
     /**
      * The unique id of the Form. Either `formId` or `name` must be specified.
      */
@@ -59,6 +58,8 @@ export interface GetFormArgs {
     steps?: inputs.GetFormStep[];
     /**
      * The form type. The possible values are:
+     * * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+     * * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
      */
     type?: string;
 }
@@ -70,7 +71,7 @@ export interface GetFormResult {
     /**
      * An object that can hold any information about the Form that should be persisted.
      */
-    readonly data?: {[key: string]: any};
+    readonly data?: {[key: string]: string};
     readonly formId: string;
     /**
      * The provider-assigned unique ID for this managed resource.
@@ -86,6 +87,8 @@ export interface GetFormResult {
     readonly steps?: outputs.GetFormStep[];
     /**
      * The form type. The possible values are:
+     * * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+     * * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
      */
     readonly type?: string;
 }
@@ -107,8 +110,16 @@ export interface GetFormResult {
  * });
  * ```
  */
-export function getFormOutput(args?: GetFormOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetFormResult> {
-    return pulumi.output(args).apply((a: any) => getForm(a, opts))
+export function getFormOutput(args?: GetFormOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetFormResult> {
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getForm:getForm", {
+        "data": args.data,
+        "formId": args.formId,
+        "name": args.name,
+        "steps": args.steps,
+        "type": args.type,
+    }, opts);
 }
 
 /**
@@ -118,7 +129,7 @@ export interface GetFormOutputArgs {
     /**
      * An object that can hold any information about the Form that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The unique id of the Form. Either `formId` or `name` must be specified.
      */
@@ -133,6 +144,8 @@ export interface GetFormOutputArgs {
     steps?: pulumi.Input<pulumi.Input<inputs.GetFormStepArgs>[]>;
     /**
      * The form type. The possible values are:
+     * * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+     * * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
      */
     type?: pulumi.Input<string>;
 }

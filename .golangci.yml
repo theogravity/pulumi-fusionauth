@@ -15,6 +15,9 @@ linters:
   - nakedret
   - unconvert
   enable-all: false
+linters-settings:
+  lll:
+    line-length: 130
 issues:
   exclude-files:
   - schema.go

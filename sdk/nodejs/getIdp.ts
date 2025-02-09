@@ -22,7 +22,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getIdp(args: GetIdpArgs, opts?: pulumi.InvokeOptions): Promise<GetIdpResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getIdp:getIdp", {
         "name": args.name,
@@ -72,8 +71,12 @@ export interface GetIdpResult {
  * });
  * ```
  */
-export function getIdpOutput(args: GetIdpOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetIdpResult> {
-    return pulumi.output(args).apply((a: any) => getIdp(a, opts))
+export function getIdpOutput(args: GetIdpOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetIdpResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getIdp:getIdp", {
+        "name": args.name,
+        "type": args.type,
+    }, opts);
 }
 
 /**

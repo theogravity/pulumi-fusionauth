@@ -63,7 +63,7 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         /// <summary>
         /// The Id to use for the new Form. If not specified a secure random UUID will be generated.
@@ -137,14 +137,14 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthFormArgs : global::Pulumi.ResourceArgs
     {
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -187,14 +187,14 @@ namespace theogravity.Fusionauth
     public sealed class FusionAuthFormState : global::Pulumi.ResourceArgs
     {
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 

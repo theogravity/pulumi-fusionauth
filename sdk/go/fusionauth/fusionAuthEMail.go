@@ -45,9 +45,9 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthEMail(ctx, "helloWorld", &fusionauth.FusionAuthEMailArgs{
 //				DefaultFromName:     pulumi.String("Welcome Team"),
-//				DefaultHtmlTemplate: readFileOrPanic(fmt.Sprintf("%v/email_templates/HelloWorld.html.ftl", path.Module)),
+//				DefaultHtmlTemplate: pulumi.String(readFileOrPanic(fmt.Sprintf("%v/email_templates/HelloWorld.html.ftl", path.Module))),
 //				DefaultSubject:      pulumi.String("Hello"),
-//				DefaultTextTemplate: readFileOrPanic(fmt.Sprintf("%v/email_templates/HelloWorld.txt.ftl", path.Module)),
+//				DefaultTextTemplate: pulumi.String(readFileOrPanic(fmt.Sprintf("%v/email_templates/HelloWorld.txt.ftl", path.Module))),
 //				FromEmail:           pulumi.String("welcome@example.com.com"),
 //			})
 //			if err != nil {
@@ -74,13 +74,13 @@ type FusionAuthEMail struct {
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	FromEmail pulumi.StringPtrOutput `pulumi:"fromEmail"`
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-	LocalizedFromNames pulumi.MapOutput `pulumi:"localizedFromNames"`
+	LocalizedFromNames pulumi.StringMapOutput `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-	LocalizedHtmlTemplates pulumi.MapOutput `pulumi:"localizedHtmlTemplates"`
+	LocalizedHtmlTemplates pulumi.StringMapOutput `pulumi:"localizedHtmlTemplates"`
 	// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-	LocalizedSubjects pulumi.MapOutput `pulumi:"localizedSubjects"`
+	LocalizedSubjects pulumi.StringMapOutput `pulumi:"localizedSubjects"`
 	// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-	LocalizedTextTemplates pulumi.MapOutput `pulumi:"localizedTextTemplates"`
+	LocalizedTextTemplates pulumi.StringMapOutput `pulumi:"localizedTextTemplates"`
 	// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
 	Name pulumi.StringOutput `pulumi:"name"`
 }
@@ -137,13 +137,13 @@ type fusionAuthEMailState struct {
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	FromEmail *string `pulumi:"fromEmail"`
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-	LocalizedFromNames map[string]interface{} `pulumi:"localizedFromNames"`
+	LocalizedFromNames map[string]string `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-	LocalizedHtmlTemplates map[string]interface{} `pulumi:"localizedHtmlTemplates"`
+	LocalizedHtmlTemplates map[string]string `pulumi:"localizedHtmlTemplates"`
 	// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-	LocalizedSubjects map[string]interface{} `pulumi:"localizedSubjects"`
+	LocalizedSubjects map[string]string `pulumi:"localizedSubjects"`
 	// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-	LocalizedTextTemplates map[string]interface{} `pulumi:"localizedTextTemplates"`
+	LocalizedTextTemplates map[string]string `pulumi:"localizedTextTemplates"`
 	// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
 	Name *string `pulumi:"name"`
 }
@@ -162,13 +162,13 @@ type FusionAuthEMailState struct {
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	FromEmail pulumi.StringPtrInput
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-	LocalizedFromNames pulumi.MapInput
+	LocalizedFromNames pulumi.StringMapInput
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-	LocalizedHtmlTemplates pulumi.MapInput
+	LocalizedHtmlTemplates pulumi.StringMapInput
 	// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-	LocalizedSubjects pulumi.MapInput
+	LocalizedSubjects pulumi.StringMapInput
 	// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-	LocalizedTextTemplates pulumi.MapInput
+	LocalizedTextTemplates pulumi.StringMapInput
 	// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
 	Name pulumi.StringPtrInput
 }
@@ -191,13 +191,13 @@ type fusionAuthEMailArgs struct {
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	FromEmail *string `pulumi:"fromEmail"`
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-	LocalizedFromNames map[string]interface{} `pulumi:"localizedFromNames"`
+	LocalizedFromNames map[string]string `pulumi:"localizedFromNames"`
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-	LocalizedHtmlTemplates map[string]interface{} `pulumi:"localizedHtmlTemplates"`
+	LocalizedHtmlTemplates map[string]string `pulumi:"localizedHtmlTemplates"`
 	// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-	LocalizedSubjects map[string]interface{} `pulumi:"localizedSubjects"`
+	LocalizedSubjects map[string]string `pulumi:"localizedSubjects"`
 	// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-	LocalizedTextTemplates map[string]interface{} `pulumi:"localizedTextTemplates"`
+	LocalizedTextTemplates map[string]string `pulumi:"localizedTextTemplates"`
 	// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
 	Name *string `pulumi:"name"`
 }
@@ -217,13 +217,13 @@ type FusionAuthEMailArgs struct {
 	// The email address that this email will be sent from. If not provided, the default value for the tenant will be used. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	FromEmail pulumi.StringPtrInput
 	// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-	LocalizedFromNames pulumi.MapInput
+	LocalizedFromNames pulumi.StringMapInput
 	// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-	LocalizedHtmlTemplates pulumi.MapInput
+	LocalizedHtmlTemplates pulumi.StringMapInput
 	// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-	LocalizedSubjects pulumi.MapInput
+	LocalizedSubjects pulumi.StringMapInput
 	// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-	LocalizedTextTemplates pulumi.MapInput
+	LocalizedTextTemplates pulumi.StringMapInput
 	// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
 	Name pulumi.StringPtrInput
 }
@@ -346,23 +346,23 @@ func (o FusionAuthEMailOutput) FromEmail() pulumi.StringPtrOutput {
 }
 
 // The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
-func (o FusionAuthEMailOutput) LocalizedFromNames() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.MapOutput { return v.LocalizedFromNames }).(pulumi.MapOutput)
+func (o FusionAuthEMailOutput) LocalizedFromNames() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringMapOutput { return v.LocalizedFromNames }).(pulumi.StringMapOutput)
 }
 
 // The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
-func (o FusionAuthEMailOutput) LocalizedHtmlTemplates() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.MapOutput { return v.LocalizedHtmlTemplates }).(pulumi.MapOutput)
+func (o FusionAuthEMailOutput) LocalizedHtmlTemplates() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringMapOutput { return v.LocalizedHtmlTemplates }).(pulumi.StringMapOutput)
 }
 
 // The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
-func (o FusionAuthEMailOutput) LocalizedSubjects() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.MapOutput { return v.LocalizedSubjects }).(pulumi.MapOutput)
+func (o FusionAuthEMailOutput) LocalizedSubjects() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringMapOutput { return v.LocalizedSubjects }).(pulumi.StringMapOutput)
 }
 
 // The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
-func (o FusionAuthEMailOutput) LocalizedTextTemplates() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthEMail) pulumi.MapOutput { return v.LocalizedTextTemplates }).(pulumi.MapOutput)
+func (o FusionAuthEMailOutput) LocalizedTextTemplates() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthEMail) pulumi.StringMapOutput { return v.LocalizedTextTemplates }).(pulumi.StringMapOutput)
 }
 
 // A descriptive name for the email template (i.e. "April 2016 Coupon Email")

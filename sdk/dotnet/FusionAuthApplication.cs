@@ -181,19 +181,31 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the Application that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         [Output("emailConfiguration")]
         public Output<Outputs.FusionAuthApplicationEmailConfiguration> EmailConfiguration { get; private set; } = null!;
 
         [Output("formConfiguration")]
-        public Output<Outputs.FusionAuthApplicationFormConfiguration> FormConfiguration { get; private set; } = null!;
+        public Output<Outputs.FusionAuthApplicationFormConfiguration?> FormConfiguration { get; private set; } = null!;
+
+        /// <summary>
+        /// The instant that the Application was added to the FusionAuth database.
+        /// </summary>
+        [Output("insertInstant")]
+        public Output<int> InsertInstant { get; private set; } = null!;
 
         [Output("jwtConfiguration")]
-        public Output<Outputs.FusionAuthApplicationJwtConfiguration> JwtConfiguration { get; private set; } = null!;
+        public Output<Outputs.FusionAuthApplicationJwtConfiguration?> JwtConfiguration { get; private set; } = null!;
 
         [Output("lambdaConfiguration")]
         public Output<Outputs.FusionAuthApplicationLambdaConfiguration> LambdaConfiguration { get; private set; } = null!;
+
+        /// <summary>
+        /// The instant that the Application was last updated in the FusionAuth database.
+        /// </summary>
+        [Output("lastUpdateInstant")]
+        public Output<int> LastUpdateInstant { get; private set; } = null!;
 
         [Output("loginConfiguration")]
         public Output<Outputs.FusionAuthApplicationLoginConfiguration> LoginConfiguration { get; private set; } = null!;
@@ -225,6 +237,9 @@ namespace theogravity.Fusionauth
         [Output("samlv2Configuration")]
         public Output<Outputs.FusionAuthApplicationSamlv2Configuration> Samlv2Configuration { get; private set; } = null!;
 
+        /// <summary>
+        /// The Id of the Tenant that this Application belongs to.
+        /// </summary>
         [Output("tenantId")]
         public Output<string> TenantId { get; private set; } = null!;
 
@@ -251,6 +266,9 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("verifyRegistration")]
         public Output<bool?> VerifyRegistration { get; private set; } = null!;
+
+        [Output("webauthnConfiguration")]
+        public Output<Outputs.FusionAuthApplicationWebauthnConfiguration?> WebauthnConfiguration { get; private set; } = null!;
 
 
         /// <summary>
@@ -318,14 +336,14 @@ namespace theogravity.Fusionauth
         public Input<Inputs.FusionAuthApplicationCleanSpeakConfigurationArgs>? CleanSpeakConfiguration { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Application that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -371,6 +389,9 @@ namespace theogravity.Fusionauth
         [Input("samlv2Configuration")]
         public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationArgs>? Samlv2Configuration { get; set; }
 
+        /// <summary>
+        /// The Id of the Tenant that this Application belongs to.
+        /// </summary>
         [Input("tenantId", required: true)]
         public Input<string> TenantId { get; set; } = null!;
 
@@ -397,6 +418,9 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("verifyRegistration")]
         public Input<bool>? VerifyRegistration { get; set; }
+
+        [Input("webauthnConfiguration")]
+        public Input<Inputs.FusionAuthApplicationWebauthnConfigurationArgs>? WebauthnConfiguration { get; set; }
 
         public FusionAuthApplicationArgs()
         {
@@ -425,14 +449,14 @@ namespace theogravity.Fusionauth
         public Input<Inputs.FusionAuthApplicationCleanSpeakConfigurationGetArgs>? CleanSpeakConfiguration { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Application that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -442,11 +466,23 @@ namespace theogravity.Fusionauth
         [Input("formConfiguration")]
         public Input<Inputs.FusionAuthApplicationFormConfigurationGetArgs>? FormConfiguration { get; set; }
 
+        /// <summary>
+        /// The instant that the Application was added to the FusionAuth database.
+        /// </summary>
+        [Input("insertInstant")]
+        public Input<int>? InsertInstant { get; set; }
+
         [Input("jwtConfiguration")]
         public Input<Inputs.FusionAuthApplicationJwtConfigurationGetArgs>? JwtConfiguration { get; set; }
 
         [Input("lambdaConfiguration")]
         public Input<Inputs.FusionAuthApplicationLambdaConfigurationGetArgs>? LambdaConfiguration { get; set; }
+
+        /// <summary>
+        /// The instant that the Application was last updated in the FusionAuth database.
+        /// </summary>
+        [Input("lastUpdateInstant")]
+        public Input<int>? LastUpdateInstant { get; set; }
 
         [Input("loginConfiguration")]
         public Input<Inputs.FusionAuthApplicationLoginConfigurationGetArgs>? LoginConfiguration { get; set; }
@@ -478,6 +514,9 @@ namespace theogravity.Fusionauth
         [Input("samlv2Configuration")]
         public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationGetArgs>? Samlv2Configuration { get; set; }
 
+        /// <summary>
+        /// The Id of the Tenant that this Application belongs to.
+        /// </summary>
         [Input("tenantId")]
         public Input<string>? TenantId { get; set; }
 
@@ -504,6 +543,9 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("verifyRegistration")]
         public Input<bool>? VerifyRegistration { get; set; }
+
+        [Input("webauthnConfiguration")]
+        public Input<Inputs.FusionAuthApplicationWebauthnConfigurationGetArgs>? WebauthnConfiguration { get; set; }
 
         public FusionAuthApplicationState()
         {

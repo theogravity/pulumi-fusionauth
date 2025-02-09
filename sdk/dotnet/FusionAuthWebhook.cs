@@ -53,6 +53,11 @@ namespace theogravity.Fusionauth
     ///         SslCertificate = @"  -----BEGIN CERTIFICATE-----\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\n-----END CERTIFICATE-----
     /// ",
     ///         Url = "http://mygameserver.local:7001/fusionauth-webhook",
+    ///         SignatureConfiguration = new Fusionauth.Inputs.FusionAuthWebhookSignatureConfigurationArgs
+    ///         {
+    ///             Enabled = true,
+    ///             SigningKeyId = fusionauth_key.Webhook_key.Id,
+    ///         },
     ///     });
     /// 
     /// });
@@ -66,6 +71,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("connectTimeout")]
         public Output<int> ConnectTimeout { get; private set; } = null!;
+
+        /// <summary>
+        /// An object that can hold any information about the Webhook that should be persisted.
+        /// </summary>
+        [Output("data")]
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         /// <summary>
         /// A description of the Webhook. This is used for display purposes only.
@@ -89,7 +100,7 @@ namespace theogravity.Fusionauth
         /// An object that contains headers that are sent as part of the HTTP request for the events.
         /// </summary>
         [Output("headers")]
-        public Output<ImmutableDictionary<string, object>?> Headers { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Headers { get; private set; } = null!;
 
         /// <summary>
         /// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
@@ -110,10 +121,22 @@ namespace theogravity.Fusionauth
         public Output<int> ReadTimeout { get; private set; } = null!;
 
         /// <summary>
+        /// Configuration for webhook signing
+        /// </summary>
+        [Output("signatureConfiguration")]
+        public Output<Outputs.FusionAuthWebhookSignatureConfiguration?> SignatureConfiguration { get; private set; } = null!;
+
+        /// <summary>
         /// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         /// </summary>
         [Output("sslCertificate")]
         public Output<string?> SslCertificate { get; private set; } = null!;
+
+        /// <summary>
+        /// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        /// </summary>
+        [Output("sslCertificateKeyId")]
+        public Output<string?> SslCertificateKeyId { get; private set; } = null!;
 
         /// <summary>
         /// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
@@ -126,6 +149,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("url")]
         public Output<string> Url { get; private set; } = null!;
+
+        /// <summary>
+        /// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Output("webhookId")]
+        public Output<string> WebhookId { get; private set; } = null!;
 
 
         /// <summary>
@@ -185,6 +214,18 @@ namespace theogravity.Fusionauth
         [Input("connectTimeout", required: true)]
         public Input<int> ConnectTimeout { get; set; } = null!;
 
+        [Input("data")]
+        private InputMap<string>? _data;
+
+        /// <summary>
+        /// An object that can hold any information about the Webhook that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
+
         /// <summary>
         /// A description of the Webhook. This is used for display purposes only.
         /// </summary>
@@ -204,14 +245,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? Global { get; set; }
 
         [Input("headers")]
-        private InputMap<object>? _headers;
+        private InputMap<string>? _headers;
 
         /// <summary>
         /// An object that contains headers that are sent as part of the HTTP request for the events.
         /// </summary>
-        public InputMap<object> Headers
+        public InputMap<string> Headers
         {
-            get => _headers ?? (_headers = new InputMap<object>());
+            get => _headers ?? (_headers = new InputMap<string>());
             set => _headers = value;
         }
 
@@ -254,10 +295,22 @@ namespace theogravity.Fusionauth
         public Input<int> ReadTimeout { get; set; } = null!;
 
         /// <summary>
+        /// Configuration for webhook signing
+        /// </summary>
+        [Input("signatureConfiguration")]
+        public Input<Inputs.FusionAuthWebhookSignatureConfigurationArgs>? SignatureConfiguration { get; set; }
+
+        /// <summary>
         /// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         /// </summary>
         [Input("sslCertificate")]
         public Input<string>? SslCertificate { get; set; }
+
+        /// <summary>
+        /// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        /// </summary>
+        [Input("sslCertificateKeyId")]
+        public Input<string>? SslCertificateKeyId { get; set; }
 
         [Input("tenantIds")]
         private InputList<string>? _tenantIds;
@@ -277,6 +330,12 @@ namespace theogravity.Fusionauth
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
+        /// <summary>
+        /// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("webhookId")]
+        public Input<string>? WebhookId { get; set; }
+
         public FusionAuthWebhookArgs()
         {
         }
@@ -290,6 +349,18 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("connectTimeout")]
         public Input<int>? ConnectTimeout { get; set; }
+
+        [Input("data")]
+        private InputMap<string>? _data;
+
+        /// <summary>
+        /// An object that can hold any information about the Webhook that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
 
         /// <summary>
         /// A description of the Webhook. This is used for display purposes only.
@@ -310,14 +381,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? Global { get; set; }
 
         [Input("headers")]
-        private InputMap<object>? _headers;
+        private InputMap<string>? _headers;
 
         /// <summary>
         /// An object that contains headers that are sent as part of the HTTP request for the events.
         /// </summary>
-        public InputMap<object> Headers
+        public InputMap<string> Headers
         {
-            get => _headers ?? (_headers = new InputMap<object>());
+            get => _headers ?? (_headers = new InputMap<string>());
             set => _headers = value;
         }
 
@@ -360,10 +431,22 @@ namespace theogravity.Fusionauth
         public Input<int>? ReadTimeout { get; set; }
 
         /// <summary>
+        /// Configuration for webhook signing
+        /// </summary>
+        [Input("signatureConfiguration")]
+        public Input<Inputs.FusionAuthWebhookSignatureConfigurationGetArgs>? SignatureConfiguration { get; set; }
+
+        /// <summary>
         /// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         /// </summary>
         [Input("sslCertificate")]
         public Input<string>? SslCertificate { get; set; }
+
+        /// <summary>
+        /// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        /// </summary>
+        [Input("sslCertificateKeyId")]
+        public Input<string>? SslCertificateKeyId { get; set; }
 
         [Input("tenantIds")]
         private InputList<string>? _tenantIds;
@@ -382,6 +465,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
+
+        /// <summary>
+        /// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("webhookId")]
+        public Input<string>? WebhookId { get; set; }
 
         public FusionAuthWebhookState()
         {

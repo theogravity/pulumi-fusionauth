@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -45,7 +50,7 @@ class GetFormResult:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[Mapping[str, Any]]:
+    def data(self) -> Optional[Mapping[str, str]]:
         """
         An object that can hold any information about the Form that should be persisted.
         """
@@ -85,6 +90,8 @@ class GetFormResult:
     def type(self) -> Optional[str]:
         """
         The form type. The possible values are:
+        * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+        * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
         """
         return pulumi.get(self, "type")
 
@@ -103,10 +110,10 @@ class AwaitableGetFormResult(GetFormResult):
             type=self.type)
 
 
-def get_form(data: Optional[Mapping[str, Any]] = None,
+def get_form(data: Optional[Mapping[str, str]] = None,
              form_id: Optional[str] = None,
              name: Optional[str] = None,
-             steps: Optional[Sequence[pulumi.InputType['GetFormStepArgs']]] = None,
+             steps: Optional[Sequence[Union['GetFormStepArgs', 'GetFormStepArgsDict']]] = None,
              type: Optional[str] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetFormResult:
     """
@@ -126,11 +133,13 @@ def get_form(data: Optional[Mapping[str, Any]] = None,
     ```
 
 
-    :param Mapping[str, Any] data: An object that can hold any information about the Form that should be persisted.
+    :param Mapping[str, str] data: An object that can hold any information about the Form that should be persisted.
     :param str form_id: The unique id of the Form. Either `form_id` or `name` must be specified.
     :param str name: The name of the Form. Either `form_id` or `name` must be specified.
-    :param Sequence[pulumi.InputType['GetFormStepArgs']] steps: An ordered list of objects containing one or more Form Fields.
+    :param Sequence[Union['GetFormStepArgs', 'GetFormStepArgsDict']] steps: An ordered list of objects containing one or more Form Fields.
     :param str type: The form type. The possible values are:
+           * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+           * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
     """
     __args__ = dict()
     __args__['data'] = data
@@ -148,15 +157,12 @@ def get_form(data: Optional[Mapping[str, Any]] = None,
         name=pulumi.get(__ret__, 'name'),
         steps=pulumi.get(__ret__, 'steps'),
         type=pulumi.get(__ret__, 'type'))
-
-
-@_utilities.lift_output_func(get_form)
-def get_form_output(data: Optional[pulumi.Input[Optional[Mapping[str, Any]]]] = None,
+def get_form_output(data: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
                     form_id: Optional[pulumi.Input[Optional[str]]] = None,
                     name: Optional[pulumi.Input[Optional[str]]] = None,
-                    steps: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetFormStepArgs']]]]] = None,
+                    steps: Optional[pulumi.Input[Optional[Sequence[Union['GetFormStepArgs', 'GetFormStepArgsDict']]]]] = None,
                     type: Optional[pulumi.Input[Optional[str]]] = None,
-                    opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetFormResult]:
+                    opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetFormResult]:
     """
     ## # Form Resource
 
@@ -174,10 +180,26 @@ def get_form_output(data: Optional[pulumi.Input[Optional[Mapping[str, Any]]]] = 
     ```
 
 
-    :param Mapping[str, Any] data: An object that can hold any information about the Form that should be persisted.
+    :param Mapping[str, str] data: An object that can hold any information about the Form that should be persisted.
     :param str form_id: The unique id of the Form. Either `form_id` or `name` must be specified.
     :param str name: The name of the Form. Either `form_id` or `name` must be specified.
-    :param Sequence[pulumi.InputType['GetFormStepArgs']] steps: An ordered list of objects containing one or more Form Fields.
+    :param Sequence[Union['GetFormStepArgs', 'GetFormStepArgsDict']] steps: An ordered list of objects containing one or more Form Fields.
     :param str type: The form type. The possible values are:
+           * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+           * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
     """
-    ...
+    __args__ = dict()
+    __args__['data'] = data
+    __args__['formId'] = form_id
+    __args__['name'] = name
+    __args__['steps'] = steps
+    __args__['type'] = type
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getForm:getForm', __args__, opts=opts, typ=GetFormResult)
+    return __ret__.apply(lambda __response__: GetFormResult(
+        data=pulumi.get(__response__, 'data'),
+        form_id=pulumi.get(__response__, 'form_id'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        steps=pulumi.get(__response__, 'steps'),
+        type=pulumi.get(__response__, 'type')))

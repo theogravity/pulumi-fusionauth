@@ -118,18 +118,26 @@ export interface FusionAuthApplicationFormConfiguration {
     /**
      * The unique Id of the form to use for the Add and Edit User Registration form when used in the FusionAuth admin UI.
      */
-    adminRegistrationFormId?: string;
+    adminRegistrationFormId: string;
+    selfServiceFormConfiguration?: outputs.FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration;
     /**
      * The unique Id of the form to to enable authenticated users to manage their profile on the account page.
      */
     selfServiceFormId?: string;
 }
 
+export interface FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+    /**
+     * When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+     */
+    requireCurrentPasswordOnPasswordChange?: boolean;
+}
+
 export interface FusionAuthApplicationJwtConfiguration {
     /**
      * The Id of the signing key used to sign the access token.
      */
-    accessTokenId?: string;
+    accessTokenId: string;
     /**
      * Indicates if this application is using the JWT configuration defined here or the global JWT configuration defined by the System Configuration. If this is false the signing algorithm configured in the System Configuration will be used. If true the signing algorithm defined in this application will be used.
      */
@@ -137,15 +145,15 @@ export interface FusionAuthApplicationJwtConfiguration {
     /**
      * The Id of the signing key used to sign the Id token.
      */
-    idTokenKeyId?: string;
+    idTokenKeyId: string;
     /**
-     * The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+     * The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
      */
     refreshTokenExpirationPolicy?: string;
     /**
      * The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
      */
-    refreshTokenSlidingWindowMaximumTimeToLiveInMinutes?: number;
+    refreshTokenSlidingWindowMaximumTtlInMinutes?: number;
     /**
      * The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
      */
@@ -243,10 +251,10 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     clientSecret: string;
     /**
-     * Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
-     * - `AlwaysPrompt` - Always prompt the user for consent.
-     * - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-     * - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+     * Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
+     * * `AlwaysPrompt` - Always prompt the user for consent.
+     * * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+     * * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
      */
     consentMode?: string;
     /**
@@ -282,9 +290,9 @@ export interface FusionAuthApplicationOauthConfiguration {
      */
     providedScopePolicies: outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy[];
     /**
-     * The application’s relationship to the OAuth server. The possible values are: 
-     * - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-     * - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+     * The application’s relationship to the OAuth server. The possible values are:
+     * * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+     * * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
      */
     relationship?: string;
     /**
@@ -299,15 +307,15 @@ export interface FusionAuthApplicationOauthConfiguration {
     requireRegistration?: boolean;
     /**
      * Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-     * - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-     * - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+     * * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+     * * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
      */
     scopeHandlingPolicy: string;
     /**
-     * Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
-     * - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-     * - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-     * - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+     * Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
+     * * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+     * * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+     * * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
      */
     unknownScopePolicy: string;
 }
@@ -416,6 +424,7 @@ export interface FusionAuthApplicationRegistrationDeletePolicy {
 }
 
 export interface FusionAuthApplicationSamlv2Configuration {
+    assertionEncryptionConfiguration?: outputs.FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration;
     /**
      * The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
      */
@@ -429,7 +438,7 @@ export interface FusionAuthApplicationSamlv2Configuration {
      *
      * @deprecated In version 1.20.0 and beyond, Callback URLs can be managed via authorized_redirect_urls.
      */
-    callbackUrl?: string;
+    callbackUrl: string;
     /**
      * Whether or not FusionAuth will log SAML debug messages to the event log. This is useful for debugging purposes.
      */
@@ -442,6 +451,7 @@ export interface FusionAuthApplicationSamlv2Configuration {
      * Whether or not the SAML IdP for this Application is enabled or not.
      */
     enabled?: boolean;
+    initiatedLogin?: outputs.FusionAuthApplicationSamlv2ConfigurationInitiatedLogin;
     /**
      * The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
      */
@@ -449,8 +459,9 @@ export interface FusionAuthApplicationSamlv2Configuration {
     /**
      * The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
      */
-    keyId?: string;
-    logout?: outputs.FusionAuthApplicationSamlv2ConfigurationLogout;
+    keyId: string;
+    loginHintConfiguration?: outputs.FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration;
+    logout: outputs.FusionAuthApplicationSamlv2ConfigurationLogout;
     /**
      * The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
      */
@@ -467,6 +478,59 @@ export interface FusionAuthApplicationSamlv2Configuration {
      * The location to place the XML signature when signing a successful SAML response.
      */
     xmlSignatureLocation?: string;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+    /**
+     * The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+     */
+    digestAlgorithm?: string;
+    /**
+     * Determines if SAML assertion encryption is enabled for this Application.
+     */
+    enabled?: boolean;
+    /**
+     * The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+     */
+    encryptionAlgorithm?: string;
+    /**
+     * The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+     */
+    keyLocation?: string;
+    /**
+     * The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+     */
+    keyTransportAlgorithm?: string;
+    /**
+     * The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+     */
+    keyTransportEncryptionKeyId?: string;
+    /**
+     * The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+     */
+    maskGenerationFunction?: string;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+    /**
+     * Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+     */
+    enabled?: boolean;
+    /**
+     * The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+     */
+    nameIdFormat?: string;
+}
+
+export interface FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+    /**
+     * When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+     */
+    enabled?: boolean;
+    /**
+     * The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+     */
+    parameterName?: string;
 }
 
 export interface FusionAuthApplicationSamlv2ConfigurationLogout {
@@ -512,6 +576,21 @@ export interface FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogout {
     xmlSignatureCanonicalizationMethod?: string;
 }
 
+export interface FusionAuthApplicationWebauthnConfiguration {
+    /**
+     * Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+     */
+    bootstrapWorkflowEnabled?: boolean;
+    /**
+     * Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+     */
+    enabled?: boolean;
+    /**
+     * Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+     */
+    reauthenticationWorkflowEnabled?: boolean;
+}
+
 export interface FusionAuthEntityTypeJwtConfiguration {
     /**
      * The unique ID of the signing key used to sign the access token. Required when
@@ -525,8 +604,7 @@ export interface FusionAuthEntityTypeJwtConfiguration {
      */
     enabled?: boolean;
     /**
-     * The length of time in seconds the JWT will live before it is expired and no
-     * longer valid. Required when enabled is set to true.
+     * The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
      */
     timeToLiveInSeconds?: number;
 }
@@ -555,7 +633,7 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
      */
     applicationId?: string;
     /**
-     * This is an optional Application specific override for for the top level bundleId.
+     * The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundleId` or `servicesId` . If `servicesId` is omitted, this field is required.
      */
     bundleId?: string;
     /**
@@ -590,7 +668,7 @@ export interface FusionAuthIdpAppleApplicationConfiguration {
 
 export interface FusionAuthIdpAppleTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -620,7 +698,7 @@ export interface FusionAuthIdpExternalJwtApplicationConfiguration {
 
 export interface FusionAuthIdpExternalJwtTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -670,7 +748,7 @@ export interface FusionAuthIdpFacebookApplicationConfiguration {
 
 export interface FusionAuthIdpFacebookTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -709,14 +787,40 @@ export interface FusionAuthIdpGoogleApplicationConfiguration {
      */
     enabled?: boolean;
     /**
+     * This is an optional Application specific override for the top level properties.
+     */
+    properties?: outputs.FusionAuthIdpGoogleApplicationConfigurationProperties;
+    /**
      * This is an optional Application specific override for for the top level scope.
      */
     scope?: string;
 }
 
+export interface FusionAuthIdpGoogleApplicationConfigurationProperties {
+    /**
+     * This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+     */
+    api?: string;
+    /**
+     * This is an optional Application specific override for the top level `button`.
+     */
+    button?: string;
+}
+
+export interface FusionAuthIdpGoogleProperties {
+    /**
+     * Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+     */
+    api?: string;
+    /**
+     * Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+     */
+    button?: string;
+}
+
 export interface FusionAuthIdpGoogleTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -739,7 +843,7 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     buttonText?: string;
     /**
-     * The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+     * This is an optional Application specific override for the top level `clientId`.
      */
     clientId?: string;
     /**
@@ -755,14 +859,14 @@ export interface FusionAuthIdpLinkedInApplicationConfiguration {
      */
     enabled?: boolean;
     /**
-     * The top-level scope that you are requesting from LinkedIn.
+     * This is an optional Application specific override for the top level `scope`.
      */
     scope?: string;
 }
 
 export interface FusionAuthIdpLinkedInTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -812,7 +916,7 @@ export interface FusionAuthIdpOpenIdConnectApplicationConfiguration {
 
 export interface FusionAuthIdpOpenIdConnectTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -858,7 +962,7 @@ export interface FusionAuthIdpPsnApplicationConfiguration {
 
 export interface FusionAuthIdpPsnTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -881,6 +985,24 @@ export interface FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration {
      * Determines if this identity provider is enabled for the Application specified by the applicationId key.
      */
     enabled?: boolean;
+}
+
+export interface FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration {
+    /**
+     * The decryption configuration for the SAML v2 identity provider.
+     */
+    decryption?: outputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption;
+}
+
+export interface FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+    /**
+     * Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+     */
+    enabled?: boolean;
+    /**
+     * The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+     */
+    keyTransportDecryptionKeyId: string;
 }
 
 export interface FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration {
@@ -918,9 +1040,64 @@ export interface FusionAuthIdpSamlv2ApplicationConfiguration {
     enabled?: boolean;
 }
 
+export interface FusionAuthIdpSamlv2AssertionConfiguration {
+    /**
+     * The configuration for the SAML assertion decryption.
+     */
+    decryption?: outputs.FusionAuthIdpSamlv2AssertionConfigurationDecryption;
+    /**
+     * The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+     */
+    destination?: outputs.FusionAuthIdpSamlv2AssertionConfigurationDestination;
+}
+
+export interface FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+    /**
+     * Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+     */
+    enabled?: boolean;
+    /**
+     * The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+     */
+    keyTransportDecryptionKeyId: string;
+}
+
+export interface FusionAuthIdpSamlv2AssertionConfigurationDestination {
+    /**
+     * The alternate destinations of the assertion.
+     */
+    alternates?: string[];
+    /**
+     * The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+     */
+    policy?: string;
+}
+
+export interface FusionAuthIdpSamlv2IdpInitiatedConfiguration {
+    /**
+     * Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+     */
+    enabled?: boolean;
+    /**
+     * The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+     */
+    issuer?: string;
+}
+
+export interface FusionAuthIdpSamlv2LoginHintConfiguration {
+    /**
+     * When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+     */
+    enabled?: boolean;
+    /**
+     * The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+     */
+    parameterName?: string;
+}
+
 export interface FusionAuthIdpSamlv2TenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -934,6 +1111,10 @@ export interface FusionAuthIdpSamlv2TenantConfiguration {
 }
 
 export interface FusionAuthIdpSteamApplicationConfiguration {
+    /**
+     * This is an optional Application specific override for the top level apiMode.
+     */
+    apiMode?: string;
     /**
      * ID of the Application to apply this configuration to.
      */
@@ -966,7 +1147,7 @@ export interface FusionAuthIdpSteamApplicationConfiguration {
 
 export interface FusionAuthIdpSteamTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -1012,7 +1193,7 @@ export interface FusionAuthIdpTwitchApplicationConfiguration {
 
 export interface FusionAuthIdpTwitchTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -1058,7 +1239,7 @@ export interface FusionAuthIdpXBoxApplicationConfiguration {
 
 export interface FusionAuthIdpXBoxTenantConfiguration {
     /**
-     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+     * When enabled, the number of identity provider links a user may create is enforced by maximumLinks
      */
     limitUserLinkCountEnabled?: boolean;
     /**
@@ -1104,6 +1285,10 @@ export interface FusionAuthSystemConfigurationCorsConfiguration {
      */
     allowedOrigins?: string[];
     /**
+     * Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+     */
+    debug?: boolean;
+    /**
      * Whether the FusionAuth CORS filter will process requests made to FusionAuth.
      */
     enabled?: boolean;
@@ -1139,6 +1324,17 @@ export interface FusionAuthSystemConfigurationLoginRecordConfigurationDelete {
     numberOfDaysToRetain?: number;
 }
 
+export interface FusionAuthSystemConfigurationTrustedProxyConfiguration {
+    /**
+     * This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+     */
+    trustPolicy?: string;
+    /**
+     * An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+     */
+    trusteds?: string[];
+}
+
 export interface FusionAuthSystemConfigurationUiConfiguration {
     /**
      * A hexadecimal color to override the default menu color in the user interface.
@@ -1152,6 +1348,13 @@ export interface FusionAuthSystemConfigurationUiConfiguration {
      * A hexadecimal color to override the default menu font color in the user interface.
      */
     menuFontColor?: string;
+}
+
+export interface FusionAuthSystemConfigurationUsageDataConfiguration {
+    /**
+     * Whether or not FusionAuth collects and sends usage data to improve the product.
+     */
+    enabled?: boolean;
 }
 
 export interface FusionAuthSystemConfigurationWebhookEventLogConfiguration {
@@ -1218,7 +1421,11 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
      */
-    additionalHeaders?: {[key: string]: any};
+    additionalHeaders?: {[key: string]: string};
+    /**
+     * Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+     */
+    debug?: boolean;
     /**
      * The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
      */
@@ -1242,7 +1449,7 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The host name of the SMTP server that FusionAuth will use.
      */
-    host: string;
+    host?: string;
     /**
      * When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
      */
@@ -1282,7 +1489,7 @@ export interface FusionAuthTenantEmailConfiguration {
     /**
      * The port of the SMTP server that FusionAuth will use.
      */
-    port: number;
+    port?: number;
     /**
      * Additional Email Configuration in a properties file formatted String.
      */
@@ -1332,7 +1539,7 @@ export interface FusionAuthTenantEmailConfigurationUnverified {
      */
     allowEmailChangeWhenGated?: boolean;
     /**
-     * = (Optional) The behavior when detecting breaches at time of user login
+     * = (Optional) The behavior when detecting breaches at time of user login.
      */
     behavior?: string;
 }
@@ -1354,175 +1561,187 @@ export interface FusionAuthTenantEventConfiguration {
 
 export interface FusionAuthTenantExternalIdentifierConfiguration {
     /**
-     * The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
+     * The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
      */
-    authorizationGrantIdTimeToLiveInSeconds: number;
-    changePasswordIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator;
+    authorizationGrantIdTimeToLiveInSeconds?: number;
+    changePasswordIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator;
     /**
-     * The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
+     * The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
      */
-    changePasswordIdTimeToLiveInSeconds: number;
+    changePasswordIdTimeToLiveInSeconds?: number;
     /**
-     * The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+     * The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
      */
-    deviceCodeTimeToLiveInSeconds: number;
-    deviceUserCodeIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator;
-    emailVerificationIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator;
+    deviceCodeTimeToLiveInSeconds?: number;
+    deviceUserCodeIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator;
+    emailVerificationIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator;
     /**
      * The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
      */
     emailVerificationIdTimeToLiveInSeconds: number;
-    emailVerificationOneTimeCodeGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator;
+    emailVerificationOneTimeCodeGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator;
     /**
-     * The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+     * The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
      */
-    externalAuthenticationIdTimeToLiveInSeconds: number;
+    externalAuthenticationIdTimeToLiveInSeconds?: number;
     /**
-     * The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+     * The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
      */
-    loginIntentTimeToLiveInSeconds: number;
+    loginIntentTimeToLiveInSeconds?: number;
     /**
-     * The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
+     * The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
      */
-    oneTimePasswordTimeToLiveInSeconds: number;
-    passwordlessLoginGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator;
+    oneTimePasswordTimeToLiveInSeconds?: number;
+    passwordlessLoginGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator;
     /**
-     * The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
+     * The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
      */
-    passwordlessLoginTimeToLiveInSeconds: number;
+    passwordlessLoginTimeToLiveInSeconds?: number;
     /**
-     * The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
+     * The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
      */
     pendingAccountLinkTimeToLiveInSeconds?: number;
-    registrationVerificationIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator;
+    registrationVerificationIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator;
     /**
      * The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
      */
     registrationVerificationIdTimeToLiveInSeconds: number;
-    registrationVerificationOneTimeCodeGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator;
+    registrationVerificationOneTimeCodeGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator;
     /**
-     * The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
+     * The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+     */
+    rememberOauthScopeConsentChoiceTimeToLiveInSeconds?: number;
+    /**
+     * The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
      */
     samlV2AuthnRequestIdTtlSeconds?: number;
-    setupPasswordIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator;
+    setupPasswordIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator;
     /**
      * The time in seconds until a setup password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
      */
     setupPasswordIdTimeToLiveInSeconds: number;
     /**
-     * The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+     * The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
      */
     trustTokenTimeToLiveInSeconds?: number;
     /**
-     * The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
+     * The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
      */
-    twoFactorIdTimeToLiveInSeconds: number;
-    twoFactorOneTimeCodeIdGenerator: outputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator;
+    twoFactorIdTimeToLiveInSeconds?: number;
+    twoFactorOneTimeCodeIdGenerator?: outputs.FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator;
     /**
-     * The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+     * The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
      */
     twoFactorOneTimeCodeIdTimeToLiveInSeconds?: number;
     /**
-     * The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+     * The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
      */
     twoFactorTrustIdTimeToLiveInSeconds: number;
+    /**
+     * The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+     */
+    webauthnAuthenticationChallengeTimeToLiveInSeconds?: number;
+    /**
+     * The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+     */
+    webauthnRegistrationChallengeTimeToLiveInSeconds?: number;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 6.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator {
     /**
-     * The length of the secure generator used for generating the email verification one time code.
+     * The length of the secure generator used for generating the email verification one time code. Defaults to 6.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the email verification one time code.
+     * The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
      */
     type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator {
     /**
-     * The length of the secure generator used for generating the registration verification one time code.
+     * The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the registration verification one time code.
+     * The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
      */
     type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator {
     /**
-     * The length of the secure generator used for generating the change password Id.
+     * The length of the secure generator used for generating the change password Id. Defaults to 32.
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the change password Id.
+     * The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
      */
-    type: string;
+    type?: string;
 }
 
 export interface FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator {
     /**
-     * TThe length of the secure generator used for generating the the two factor code Id.
+     * The length of the secure generator used for generating the the two factor code Id. Defaults to 6
      */
-    length: number;
+    length?: number;
     /**
-     * The type of the secure generator used for generating the two factor one time code Id.
+     * The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
      */
     type?: string;
 }
@@ -1622,9 +1841,21 @@ export interface FusionAuthTenantJwtConfiguration {
      */
     refreshTokenExpirationPolicy?: string;
     /**
+     * The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+     */
+    refreshTokenOneTimeUseConfigurationGracePeriodInSeconds?: number;
+    /**
      * When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
      */
     refreshTokenRevocationPolicyOnLoginPrevented?: boolean;
+    /**
+     * When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+     */
+    refreshTokenRevocationPolicyOnMultiFactorEnable?: boolean;
+    /**
+     * When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+     */
+    refreshTokenRevocationPolicyOnOneTimeTokenReuse?: boolean;
     /**
      * When enabled, the refresh token will be revoked when a user changes their password."
      */
@@ -1636,7 +1867,7 @@ export interface FusionAuthTenantJwtConfiguration {
     /**
      * The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
      */
-    refreshTokenTimeToLiveInMinutes: number;
+    refreshTokenTimeToLiveInMinutes?: number;
     /**
      * The refresh token usage policy.
      */
@@ -1644,7 +1875,38 @@ export interface FusionAuthTenantJwtConfiguration {
     /**
      * The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
      */
-    timeToLiveInSeconds: number;
+    timeToLiveInSeconds?: number;
+}
+
+export interface FusionAuthTenantLambdaConfiguration {
+    /**
+     * The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+     */
+    loginValidationId: string;
+    /**
+     * The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimEnterpriseUserRequestConverterId: string;
+    /**
+     * The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimEnterpriseUserResponseConverterId: string;
+    /**
+     * The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimGroupRequestConverterId: string;
+    /**
+     * The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimGroupResponseConverterId: string;
+    /**
+     * The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimUserRequestConverterId: string;
+    /**
+     * The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    scimUserResponseConverterId: string;
 }
 
 export interface FusionAuthTenantLoginConfiguration {
@@ -1677,7 +1939,7 @@ export interface FusionAuthTenantMinimumPasswordAge {
 }
 
 export interface FusionAuthTenantMultiFactorConfiguration {
-    authenticator: outputs.FusionAuthTenantMultiFactorConfigurationAuthenticator;
+    authenticator?: outputs.FusionAuthTenantMultiFactorConfigurationAuthenticator;
     email: outputs.FusionAuthTenantMultiFactorConfigurationEmail;
     /**
      * When set to `Enabled` and a user has one or more two-factor methods configured, the user will be required to complete a two-factor challenge during login. When set to `Disabled`, even when a user has configured one or more two-factor methods, the user will not be required to complete a two-factor challenge during login. When the login policy is to `Required`, a two-factor challenge will be required during login. If a user does not have configured two-factor methods, they will not be able to log in.
@@ -1690,7 +1952,7 @@ export interface FusionAuthTenantMultiFactorConfigurationAuthenticator {
     /**
      * When enabled, users may utilize an authenticator application to complete a multi-factor authentication request. This method uses TOTP (Time-Based One-Time Password) as defined in RFC 6238 and often uses an native mobile app such as Google Authenticator.
      */
-    enabled?: boolean;
+    enabled: boolean;
 }
 
 export interface FusionAuthTenantMultiFactorConfigurationEmail {
@@ -1906,6 +2168,32 @@ export interface FusionAuthTenantRegistrationConfiguration {
     blockedDomains?: string[];
 }
 
+export interface FusionAuthTenantScimServerConfiguration {
+    /**
+     * The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    clientEntityTypeId: string;
+    /**
+     * Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+     */
+    enabled?: boolean;
+    /**
+     * SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+     */
+    schemas: string;
+    /**
+     * The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+     */
+    serverEntityTypeId: string;
+}
+
+export interface FusionAuthTenantSsoConfiguration {
+    /**
+     * The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+     */
+    deviceTrustTimeToLiveInSeconds?: number;
+}
+
 export interface FusionAuthTenantUserDeletePolicy {
     /**
      * Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
@@ -1943,11 +2231,68 @@ export interface FusionAuthTenantUsernameConfigurationUnique {
     strategy?: string;
 }
 
+export interface FusionAuthTenantWebauthnConfiguration {
+    /**
+     * The Bootstrap Workflow configuration.
+     */
+    bootstrapWorkflow?: outputs.FusionAuthTenantWebauthnConfigurationBootstrapWorkflow;
+    /**
+     * Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+     */
+    debug?: boolean;
+    /**
+     * Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: boolean;
+    /**
+     * The Reauthentication Workflow configuration.
+     */
+    reauthenticationWorkflow?: outputs.FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow;
+    /**
+     * The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+     */
+    relyingPartyId?: string;
+    /**
+     * The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+     */
+    relyingPartyName?: string;
+}
+
+export interface FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+    /**
+     * Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+     */
+    authenticatorAttachmentPreference?: string;
+    /**
+     * Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: boolean;
+    /**
+     * Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+     */
+    userVerificationRequirement?: string;
+}
+
+export interface FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+    /**
+     * Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+     */
+    authenticatorAttachmentPreference?: string;
+    /**
+     * Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+     */
+    enabled?: boolean;
+    /**
+     * Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+     */
+    userVerificationRequirement?: string;
+}
+
 export interface FusionAuthUserActionOption {
     /**
      * A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
      */
-    localizedNames?: {[key: string]: any};
+    localizedNames?: {[key: string]: string};
     /**
      * The name of this User Action Option.
      */
@@ -2150,6 +2495,23 @@ export interface FusionAuthWebhookEventsEnabled {
      * When a user update transaction has completed
      */
     userUpdateComplete?: boolean;
+}
+
+export interface FusionAuthWebhookSignatureConfiguration {
+    /**
+     * Wether or not webhook signing is enabled
+     */
+    enabled?: boolean;
+    /**
+     * The UUID key used for signing the Webhook
+     */
+    signingKeyId?: string;
+}
+
+export interface GetApplicationWebauthnConfiguration {
+    bootstrapWorkflowEnabled: boolean;
+    enabled: boolean;
+    reauthenticationWorkflowEnabled: boolean;
 }
 
 export interface GetFormFieldValidator {

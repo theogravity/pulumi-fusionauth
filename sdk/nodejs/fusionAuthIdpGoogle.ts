@@ -102,6 +102,10 @@ export class FusionAuthIdpGoogle extends pulumi.CustomResource {
      */
     public readonly loginMethod!: pulumi.Output<string | undefined>;
     /**
+     * An object to hold configuration parameters for the Google Identity Services API.
+     */
+    public readonly properties!: pulumi.Output<outputs.FusionAuthIdpGoogleProperties | undefined>;
+    /**
      * The top-level scope that you are requesting from Google.
      */
     public readonly scope!: pulumi.Output<string | undefined>;
@@ -132,6 +136,7 @@ export class FusionAuthIdpGoogle extends pulumi.CustomResource {
             resourceInputs["lambdaReconcileId"] = state ? state.lambdaReconcileId : undefined;
             resourceInputs["linkingStrategy"] = state ? state.linkingStrategy : undefined;
             resourceInputs["loginMethod"] = state ? state.loginMethod : undefined;
+            resourceInputs["properties"] = state ? state.properties : undefined;
             resourceInputs["scope"] = state ? state.scope : undefined;
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
         } else {
@@ -151,6 +156,7 @@ export class FusionAuthIdpGoogle extends pulumi.CustomResource {
             resourceInputs["lambdaReconcileId"] = args ? args.lambdaReconcileId : undefined;
             resourceInputs["linkingStrategy"] = args ? args.linkingStrategy : undefined;
             resourceInputs["loginMethod"] = args ? args.loginMethod : undefined;
+            resourceInputs["properties"] = args ? args.properties : undefined;
             resourceInputs["scope"] = args ? args.scope : undefined;
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
         }
@@ -202,6 +208,10 @@ export interface FusionAuthIdpGoogleState {
      */
     loginMethod?: pulumi.Input<string>;
     /**
+     * An object to hold configuration parameters for the Google Identity Services API.
+     */
+    properties?: pulumi.Input<inputs.FusionAuthIdpGoogleProperties>;
+    /**
      * The top-level scope that you are requesting from Google.
      */
     scope?: pulumi.Input<string>;
@@ -251,6 +261,10 @@ export interface FusionAuthIdpGoogleArgs {
      * The login method to use for this Identity Provider.
      */
     loginMethod?: pulumi.Input<string>;
+    /**
+     * An object to hold configuration parameters for the Google Identity Services API.
+     */
+    properties?: pulumi.Input<inputs.FusionAuthIdpGoogleProperties>;
     /**
      * The top-level scope that you are requesting from Google.
      */

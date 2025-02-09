@@ -67,7 +67,7 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         /// <summary>
         /// A description of the Form Field.
@@ -180,14 +180,14 @@ namespace theogravity.Fusionauth
         public Input<string>? Control { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -269,14 +269,14 @@ namespace theogravity.Fusionauth
         public Input<string>? Control { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 

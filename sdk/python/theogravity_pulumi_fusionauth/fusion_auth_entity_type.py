@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -22,10 +27,8 @@ class FusionAuthEntityTypeArgs:
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthEntityType resource.
-        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be a
-               JSON string.
-        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be
-               generated.
+        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
+        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         :param pulumi.Input['FusionAuthEntityTypeJwtConfigurationArgs'] jwt_configuration: A block to configure JSON Web Token (JWT) options.
         :param pulumi.Input[str] name: A descriptive name for the entity type (i.e. `Customer` or `Email_Service`).
         """
@@ -42,8 +45,7 @@ class FusionAuthEntityTypeArgs:
     @pulumi.getter
     def data(self) -> Optional[pulumi.Input[str]]:
         """
-        An object that can hold any information about the Entity Type that should be persisted. Must be a
-        JSON string.
+        An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         """
         return pulumi.get(self, "data")
 
@@ -55,8 +57,7 @@ class FusionAuthEntityTypeArgs:
     @pulumi.getter(name="entityTypeId")
     def entity_type_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        generated.
+        The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "entity_type_id")
 
@@ -98,10 +99,8 @@ class _FusionAuthEntityTypeState:
                  name: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthEntityType resources.
-        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be a
-               JSON string.
-        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be
-               generated.
+        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
+        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         :param pulumi.Input['FusionAuthEntityTypeJwtConfigurationArgs'] jwt_configuration: A block to configure JSON Web Token (JWT) options.
         :param pulumi.Input[str] name: A descriptive name for the entity type (i.e. `Customer` or `Email_Service`).
         """
@@ -118,8 +117,7 @@ class _FusionAuthEntityTypeState:
     @pulumi.getter
     def data(self) -> Optional[pulumi.Input[str]]:
         """
-        An object that can hold any information about the Entity Type that should be persisted. Must be a
-        JSON string.
+        An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         """
         return pulumi.get(self, "data")
 
@@ -131,8 +129,7 @@ class _FusionAuthEntityTypeState:
     @pulumi.getter(name="entityTypeId")
     def entity_type_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        generated.
+        The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "entity_type_id")
 
@@ -172,7 +169,7 @@ class FusionAuthEntityType(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  data: Optional[pulumi.Input[str]] = None,
                  entity_type_id: Optional[pulumi.Input[str]] = None,
-                 jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthEntityTypeJwtConfigurationArgs']]] = None,
+                 jwt_configuration: Optional[pulumi.Input[Union['FusionAuthEntityTypeJwtConfigurationArgs', 'FusionAuthEntityTypeJwtConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -193,20 +190,18 @@ class FusionAuthEntityType(pulumi.CustomResource):
             data=json.dumps({
                 "createdBy": "jared@fusionauth.io",
             }),
-            jwt_configuration=fusionauth.FusionAuthEntityTypeJwtConfigurationArgs(
-                access_token_key_id="a7516c7c-6234-4021-b0b4-8870c807aeb2",
-                enabled=True,
-                time_to_live_in_seconds=3600,
-            ))
+            jwt_configuration={
+                "access_token_key_id": "a7516c7c-6234-4021-b0b4-8870c807aeb2",
+                "enabled": True,
+                "time_to_live_in_seconds": 3600,
+            })
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be a
-               JSON string.
-        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be
-               generated.
-        :param pulumi.Input[pulumi.InputType['FusionAuthEntityTypeJwtConfigurationArgs']] jwt_configuration: A block to configure JSON Web Token (JWT) options.
+        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
+        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[Union['FusionAuthEntityTypeJwtConfigurationArgs', 'FusionAuthEntityTypeJwtConfigurationArgsDict']] jwt_configuration: A block to configure JSON Web Token (JWT) options.
         :param pulumi.Input[str] name: A descriptive name for the entity type (i.e. `Customer` or `Email_Service`).
         """
         ...
@@ -233,11 +228,11 @@ class FusionAuthEntityType(pulumi.CustomResource):
             data=json.dumps({
                 "createdBy": "jared@fusionauth.io",
             }),
-            jwt_configuration=fusionauth.FusionAuthEntityTypeJwtConfigurationArgs(
-                access_token_key_id="a7516c7c-6234-4021-b0b4-8870c807aeb2",
-                enabled=True,
-                time_to_live_in_seconds=3600,
-            ))
+            jwt_configuration={
+                "access_token_key_id": "a7516c7c-6234-4021-b0b4-8870c807aeb2",
+                "enabled": True,
+                "time_to_live_in_seconds": 3600,
+            })
         ```
 
         :param str resource_name: The name of the resource.
@@ -257,7 +252,7 @@ class FusionAuthEntityType(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  data: Optional[pulumi.Input[str]] = None,
                  entity_type_id: Optional[pulumi.Input[str]] = None,
-                 jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthEntityTypeJwtConfigurationArgs']]] = None,
+                 jwt_configuration: Optional[pulumi.Input[Union['FusionAuthEntityTypeJwtConfigurationArgs', 'FusionAuthEntityTypeJwtConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -284,7 +279,7 @@ class FusionAuthEntityType(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             data: Optional[pulumi.Input[str]] = None,
             entity_type_id: Optional[pulumi.Input[str]] = None,
-            jwt_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthEntityTypeJwtConfigurationArgs']]] = None,
+            jwt_configuration: Optional[pulumi.Input[Union['FusionAuthEntityTypeJwtConfigurationArgs', 'FusionAuthEntityTypeJwtConfigurationArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None) -> 'FusionAuthEntityType':
         """
         Get an existing FusionAuthEntityType resource's state with the given name, id, and optional extra
@@ -293,11 +288,9 @@ class FusionAuthEntityType(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be a
-               JSON string.
-        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be
-               generated.
-        :param pulumi.Input[pulumi.InputType['FusionAuthEntityTypeJwtConfigurationArgs']] jwt_configuration: A block to configure JSON Web Token (JWT) options.
+        :param pulumi.Input[str] data: An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
+        :param pulumi.Input[str] entity_type_id: The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[Union['FusionAuthEntityTypeJwtConfigurationArgs', 'FusionAuthEntityTypeJwtConfigurationArgsDict']] jwt_configuration: A block to configure JSON Web Token (JWT) options.
         :param pulumi.Input[str] name: A descriptive name for the entity type (i.e. `Customer` or `Email_Service`).
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -314,8 +307,7 @@ class FusionAuthEntityType(pulumi.CustomResource):
     @pulumi.getter
     def data(self) -> pulumi.Output[Optional[str]]:
         """
-        An object that can hold any information about the Entity Type that should be persisted. Must be a
-        JSON string.
+        An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
         """
         return pulumi.get(self, "data")
 
@@ -323,8 +315,7 @@ class FusionAuthEntityType(pulumi.CustomResource):
     @pulumi.getter(name="entityTypeId")
     def entity_type_id(self) -> pulumi.Output[str]:
         """
-        The ID to use for the new Entity Type. If not specified a secure random UUID will be
-        generated.
+        The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
         """
         return pulumi.get(self, "entity_type_id")
 

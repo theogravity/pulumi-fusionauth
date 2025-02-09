@@ -32,7 +32,14 @@
                         "maxItemsOne": true
                     },
                     "form_configuration": {
-                        "maxItemsOne": true
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "self_service_form_configuration": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
                     },
                     "jwt_configuration": {
                         "maxItemsOne": true
@@ -116,8 +123,17 @@
                         "maxItemsOne": true,
                         "elem": {
                             "fields": {
+                                "assertion_encryption_configuration": {
+                                    "maxItemsOne": true
+                                },
                                 "authorized_redirect_urls": {
                                     "maxItemsOne": false
+                                },
+                                "initiated_login": {
+                                    "maxItemsOne": true
+                                },
+                                "login_hint_configuration": {
+                                    "maxItemsOne": true
                                 },
                                 "logout": {
                                     "maxItemsOne": true,
@@ -131,8 +147,14 @@
                                 }
                             }
                         }
+                    },
+                    "webauthn_configuration": {
+                        "maxItemsOne": true
                     }
                 }
+            },
+            "fusionauth_application_oauth_scope": {
+                "current": "fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope"
             },
             "fusionauth_application_role": {
                 "current": "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole"
@@ -239,7 +261,17 @@
                 "current": "fusionauth:index/fusionAuthIdpGoogle:FusionAuthIdpGoogle",
                 "fields": {
                     "application_configuration": {
-                        "maxItemsOne": false
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "properties": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "properties": {
+                        "maxItemsOne": true
                     },
                     "tenant_configuration": {
                         "maxItemsOne": false
@@ -277,8 +309,34 @@
                     "application_configuration": {
                         "maxItemsOne": false
                     },
+                    "assertion_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "decryption": {
+                                    "maxItemsOne": true
+                                },
+                                "destination": {
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "alternates": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "domains": {
                         "maxItemsOne": false
+                    },
+                    "idp_initiated_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "login_hint_configuration": {
+                        "maxItemsOne": true
                     },
                     "tenant_configuration": {
                         "maxItemsOne": false
@@ -290,6 +348,16 @@
                 "fields": {
                     "application_configuration": {
                         "maxItemsOne": false
+                    },
+                    "assertion_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "decryption": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
                     },
                     "tenant_configuration": {
                         "maxItemsOne": false
@@ -408,7 +476,20 @@
                             }
                         }
                     },
+                    "trusted_proxy_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "trusted": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
                     "ui_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "usage_data_configuration": {
                         "maxItemsOne": true
                     },
                     "webhook_event_log_configuration": {
@@ -501,6 +582,9 @@
                     "jwt_configuration": {
                         "maxItemsOne": false
                     },
+                    "lambda_configuration": {
+                        "maxItemsOne": true
+                    },
                     "login_configuration": {
                         "maxItemsOne": true
                     },
@@ -580,6 +664,12 @@
                             }
                         }
                     },
+                    "scim_server_configuration": {
+                        "maxItemsOne": true
+                    },
+                    "sso_configuration": {
+                        "maxItemsOne": true
+                    },
                     "user_delete_policy": {
                         "maxItemsOne": true
                     },
@@ -588,6 +678,19 @@
                         "elem": {
                             "fields": {
                                 "unique": {
+                                    "maxItemsOne": true
+                                }
+                            }
+                        }
+                    },
+                    "webauthn_configuration": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "bootstrap_workflow": {
+                                    "maxItemsOne": true
+                                },
+                                "reauthentication_workflow": {
                                     "maxItemsOne": true
                                 }
                             }
@@ -623,10 +726,16 @@
                     }
                 }
             },
+            "fusionauth_user_group_membership": {
+                "current": "fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership"
+            },
             "fusionauth_webhook": {
                 "current": "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook",
                 "fields": {
                     "events_enabled": {
+                        "maxItemsOne": true
+                    },
+                    "signature_configuration": {
                         "maxItemsOne": true
                     },
                     "tenant_ids": {
@@ -637,7 +746,15 @@
         },
         "datasources": {
             "fusionauth_application": {
-                "current": "fusionauth:index/getApplication:getApplication"
+                "current": "fusionauth:index/getApplication:getApplication",
+                "fields": {
+                    "webauthn_configuration": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "fusionauth_application_oauth_scope": {
+                "current": "fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope"
             },
             "fusionauth_application_role": {
                 "current": "fusionauth:index/getApplicationRole:getApplicationRole"
@@ -687,6 +804,9 @@
                         "maxItemsOne": false
                     }
                 }
+            },
+            "fusionauth_user_group_membership": {
+                "current": "fusionauth:index/getUserGroupMembership:getUserGroupMembership"
             }
         }
     },

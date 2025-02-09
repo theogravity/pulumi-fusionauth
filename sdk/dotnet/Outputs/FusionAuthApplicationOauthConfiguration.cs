@@ -39,10 +39,10 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ClientSecret;
         /// <summary>
-        /// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are: 
-        /// - `AlwaysPrompt` - Always prompt the user for consent.
-        /// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-        /// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+        /// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
+        /// * `AlwaysPrompt` - Always prompt the user for consent.
+        /// * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+        /// * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
         /// </summary>
         public readonly string? ConsentMode;
         /// <summary>
@@ -78,9 +78,9 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly ImmutableArray<Outputs.FusionAuthApplicationOauthConfigurationProvidedScopePolicy> ProvidedScopePolicies;
         /// <summary>
-        /// The application’s relationship to the OAuth server. The possible values are: 
-        /// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-        /// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+        /// The application’s relationship to the OAuth server. The possible values are:
+        /// * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+        /// * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
         /// </summary>
         public readonly string? Relationship;
         /// <summary>
@@ -93,15 +93,15 @@ namespace theogravity.Fusionauth.Outputs
         public readonly bool? RequireRegistration;
         /// <summary>
         /// Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-        /// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-        /// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+        /// * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+        /// * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
         /// </summary>
         public readonly string ScopeHandlingPolicy;
         /// <summary>
-        /// Controls the policy for handling unknown scopes on an OAuth request. The possible values are: 
-        /// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-        /// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-        /// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+        /// Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
+        /// * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+        /// * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+        /// * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
         /// </summary>
         public readonly string UnknownScopePolicy;
 

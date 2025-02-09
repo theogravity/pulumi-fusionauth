@@ -52,7 +52,7 @@ type FusionAuthGroup struct {
 	pulumi.CustomResourceState
 
 	// An object that can hold any information about the Group that should be persisted.
-	Data pulumi.MapOutput `pulumi:"data"`
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// The Id to use for the new Group. If not specified a secure random UUID will be generated.
 	GroupId pulumi.StringOutput `pulumi:"groupId"`
 	// The name of the Group.
@@ -97,7 +97,7 @@ func GetFusionAuthGroup(ctx *pulumi.Context,
 // Input properties used for looking up and filtering FusionAuthGroup resources.
 type fusionAuthGroupState struct {
 	// An object that can hold any information about the Group that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// The Id to use for the new Group. If not specified a secure random UUID will be generated.
 	GroupId *string `pulumi:"groupId"`
 	// The name of the Group.
@@ -110,7 +110,7 @@ type fusionAuthGroupState struct {
 
 type FusionAuthGroupState struct {
 	// An object that can hold any information about the Group that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// The Id to use for the new Group. If not specified a secure random UUID will be generated.
 	GroupId pulumi.StringPtrInput
 	// The name of the Group.
@@ -127,7 +127,7 @@ func (FusionAuthGroupState) ElementType() reflect.Type {
 
 type fusionAuthGroupArgs struct {
 	// An object that can hold any information about the Group that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// The Id to use for the new Group. If not specified a secure random UUID will be generated.
 	GroupId *string `pulumi:"groupId"`
 	// The name of the Group.
@@ -141,7 +141,7 @@ type fusionAuthGroupArgs struct {
 // The set of arguments for constructing a FusionAuthGroup resource.
 type FusionAuthGroupArgs struct {
 	// An object that can hold any information about the Group that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// The Id to use for the new Group. If not specified a secure random UUID will be generated.
 	GroupId pulumi.StringPtrInput
 	// The name of the Group.
@@ -240,8 +240,8 @@ func (o FusionAuthGroupOutput) ToFusionAuthGroupOutputWithContext(ctx context.Co
 }
 
 // An object that can hold any information about the Group that should be persisted.
-func (o FusionAuthGroupOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthGroup) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthGroupOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthGroup) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
 // The Id to use for the new Group. If not specified a secure random UUID will be generated.

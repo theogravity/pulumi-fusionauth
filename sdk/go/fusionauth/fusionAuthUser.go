@@ -81,7 +81,7 @@ type FusionAuthUser struct {
 	BirthDate pulumi.StringPtrOutput `pulumi:"birthDate"`
 	// An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
 	Data pulumi.StringPtrOutput `pulumi:"data"`
-	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 	DisableDomainBlock pulumi.BoolPtrOutput `pulumi:"disableDomainBlock"`
 	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrOutput `pulumi:"email"`
@@ -89,6 +89,10 @@ type FusionAuthUser struct {
 	EncryptionScheme pulumi.StringPtrOutput `pulumi:"encryptionScheme"`
 	// The expiration instant of the User’s account. An expired user is not permitted to login.
 	Expiry pulumi.IntPtrOutput `pulumi:"expiry"`
+	// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+	// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+	// PasswordEncryptor implementation.
+	Factor pulumi.IntOutput `pulumi:"factor"`
 	// The first name of the User.
 	FirstName pulumi.StringPtrOutput `pulumi:"firstName"`
 	// The User’s full name as a separate field that is not calculated from firstName and lastName.
@@ -103,7 +107,7 @@ type FusionAuthUser struct {
 	MobilePhone pulumi.StringPtrOutput `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrOutput `pulumi:"parentEmail"`
-	// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+	// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 	Password pulumi.StringPtrOutput `pulumi:"password"`
 	// Indicates that the User’s password needs to be changed during their next login attempt.
 	PasswordChangeRequired pulumi.BoolPtrOutput `pulumi:"passwordChangeRequired"`
@@ -175,7 +179,7 @@ type fusionAuthUserState struct {
 	BirthDate *string `pulumi:"birthDate"`
 	// An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
 	Data *string `pulumi:"data"`
-	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 	DisableDomainBlock *bool `pulumi:"disableDomainBlock"`
 	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email *string `pulumi:"email"`
@@ -183,6 +187,10 @@ type fusionAuthUserState struct {
 	EncryptionScheme *string `pulumi:"encryptionScheme"`
 	// The expiration instant of the User’s account. An expired user is not permitted to login.
 	Expiry *int `pulumi:"expiry"`
+	// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+	// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+	// PasswordEncryptor implementation.
+	Factor *int `pulumi:"factor"`
 	// The first name of the User.
 	FirstName *string `pulumi:"firstName"`
 	// The User’s full name as a separate field that is not calculated from firstName and lastName.
@@ -197,7 +205,7 @@ type fusionAuthUserState struct {
 	MobilePhone *string `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail *string `pulumi:"parentEmail"`
-	// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+	// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 	Password *string `pulumi:"password"`
 	// Indicates that the User’s password needs to be changed during their next login attempt.
 	PasswordChangeRequired *bool `pulumi:"passwordChangeRequired"`
@@ -229,7 +237,7 @@ type FusionAuthUserState struct {
 	BirthDate pulumi.StringPtrInput
 	// An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
 	Data pulumi.StringPtrInput
-	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 	DisableDomainBlock pulumi.BoolPtrInput
 	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrInput
@@ -237,6 +245,10 @@ type FusionAuthUserState struct {
 	EncryptionScheme pulumi.StringPtrInput
 	// The expiration instant of the User’s account. An expired user is not permitted to login.
 	Expiry pulumi.IntPtrInput
+	// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+	// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+	// PasswordEncryptor implementation.
+	Factor pulumi.IntPtrInput
 	// The first name of the User.
 	FirstName pulumi.StringPtrInput
 	// The User’s full name as a separate field that is not calculated from firstName and lastName.
@@ -251,7 +263,7 @@ type FusionAuthUserState struct {
 	MobilePhone pulumi.StringPtrInput
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrInput
-	// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+	// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 	Password pulumi.StringPtrInput
 	// Indicates that the User’s password needs to be changed during their next login attempt.
 	PasswordChangeRequired pulumi.BoolPtrInput
@@ -287,7 +299,7 @@ type fusionAuthUserArgs struct {
 	BirthDate *string `pulumi:"birthDate"`
 	// An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
 	Data *string `pulumi:"data"`
-	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 	DisableDomainBlock *bool `pulumi:"disableDomainBlock"`
 	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email *string `pulumi:"email"`
@@ -295,6 +307,10 @@ type fusionAuthUserArgs struct {
 	EncryptionScheme *string `pulumi:"encryptionScheme"`
 	// The expiration instant of the User’s account. An expired user is not permitted to login.
 	Expiry *int `pulumi:"expiry"`
+	// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+	// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+	// PasswordEncryptor implementation.
+	Factor *int `pulumi:"factor"`
 	// The first name of the User.
 	FirstName *string `pulumi:"firstName"`
 	// The User’s full name as a separate field that is not calculated from firstName and lastName.
@@ -309,7 +325,7 @@ type fusionAuthUserArgs struct {
 	MobilePhone *string `pulumi:"mobilePhone"`
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail *string `pulumi:"parentEmail"`
-	// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+	// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 	Password *string `pulumi:"password"`
 	// Indicates that the User’s password needs to be changed during their next login attempt.
 	PasswordChangeRequired *bool `pulumi:"passwordChangeRequired"`
@@ -342,7 +358,7 @@ type FusionAuthUserArgs struct {
 	BirthDate pulumi.StringPtrInput
 	// An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
 	Data pulumi.StringPtrInput
-	// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+	// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 	DisableDomainBlock pulumi.BoolPtrInput
 	// The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
 	Email pulumi.StringPtrInput
@@ -350,6 +366,10 @@ type FusionAuthUserArgs struct {
 	EncryptionScheme pulumi.StringPtrInput
 	// The expiration instant of the User’s account. An expired user is not permitted to login.
 	Expiry pulumi.IntPtrInput
+	// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+	// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+	// PasswordEncryptor implementation.
+	Factor pulumi.IntPtrInput
 	// The first name of the User.
 	FirstName pulumi.StringPtrInput
 	// The User’s full name as a separate field that is not calculated from firstName and lastName.
@@ -364,7 +384,7 @@ type FusionAuthUserArgs struct {
 	MobilePhone pulumi.StringPtrInput
 	// The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
 	ParentEmail pulumi.StringPtrInput
-	// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+	// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 	Password pulumi.StringPtrInput
 	// Indicates that the User’s password needs to be changed during their next login attempt.
 	PasswordChangeRequired pulumi.BoolPtrInput
@@ -491,7 +511,7 @@ func (o FusionAuthUserOutput) Data() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.Data }).(pulumi.StringPtrOutput)
 }
 
-// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
 func (o FusionAuthUserOutput) DisableDomainBlock() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.BoolPtrOutput { return v.DisableDomainBlock }).(pulumi.BoolPtrOutput)
 }
@@ -509,6 +529,13 @@ func (o FusionAuthUserOutput) EncryptionScheme() pulumi.StringPtrOutput {
 // The expiration instant of the User’s account. An expired user is not permitted to login.
 func (o FusionAuthUserOutput) Expiry() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.IntPtrOutput { return v.Expiry }).(pulumi.IntPtrOutput)
+}
+
+// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+// PasswordEncryptor implementation.
+func (o FusionAuthUserOutput) Factor() pulumi.IntOutput {
+	return o.ApplyT(func(v *FusionAuthUser) pulumi.IntOutput { return v.Factor }).(pulumi.IntOutput)
 }
 
 // The first name of the User.
@@ -546,7 +573,7 @@ func (o FusionAuthUserOutput) ParentEmail() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.ParentEmail }).(pulumi.StringPtrOutput)
 }
 
-// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
 func (o FusionAuthUserOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthUser) pulumi.StringPtrOutput { return v.Password }).(pulumi.StringPtrOutput)
 }

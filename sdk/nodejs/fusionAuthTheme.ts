@@ -136,7 +136,11 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly confirmationRequired!: pulumi.Output<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     * An object that can hold any information about the Theme that should be persisted.
+     */
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
      *
      * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
@@ -177,7 +181,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
     /**
      * A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
      */
-    public readonly localizedMessages!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedMessages!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * A unique name for the Theme.
      */
@@ -313,13 +317,18 @@ export class FusionAuthTheme extends pulumi.CustomResource {
      */
     public readonly samlv2Logout!: pulumi.Output<string>;
     /**
-     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+     * and stylesheet from the source Theme will be copied to the new Theme.
      */
     public readonly sourceThemeId!: pulumi.Output<string | undefined>;
     /**
      * A CSS stylesheet used to style the templates.
      */
     public readonly stylesheet!: pulumi.Output<string>;
+    /**
+     * The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+     */
+    public readonly themeId!: pulumi.Output<string>;
     /**
      * An optional FreeMarker template that contains the unauthorized page.
      */
@@ -347,6 +356,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["accountWebauthnDelete"] = state ? state.accountWebauthnDelete : undefined;
             resourceInputs["accountWebauthnIndex"] = state ? state.accountWebauthnIndex : undefined;
             resourceInputs["confirmationRequired"] = state ? state.confirmationRequired : undefined;
+            resourceInputs["data"] = state ? state.data : undefined;
             resourceInputs["defaultMessages"] = state ? state.defaultMessages : undefined;
             resourceInputs["emailComplete"] = state ? state.emailComplete : undefined;
             resourceInputs["emailSend"] = state ? state.emailSend : undefined;
@@ -390,6 +400,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["samlv2Logout"] = state ? state.samlv2Logout : undefined;
             resourceInputs["sourceThemeId"] = state ? state.sourceThemeId : undefined;
             resourceInputs["stylesheet"] = state ? state.stylesheet : undefined;
+            resourceInputs["themeId"] = state ? state.themeId : undefined;
             resourceInputs["unauthorized"] = state ? state.unauthorized : undefined;
         } else {
             const args = argsOrState as FusionAuthThemeArgs | undefined;
@@ -402,6 +413,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["accountWebauthnDelete"] = args ? args.accountWebauthnDelete : undefined;
             resourceInputs["accountWebauthnIndex"] = args ? args.accountWebauthnIndex : undefined;
             resourceInputs["confirmationRequired"] = args ? args.confirmationRequired : undefined;
+            resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["defaultMessages"] = args ? args.defaultMessages : undefined;
             resourceInputs["emailComplete"] = args ? args.emailComplete : undefined;
             resourceInputs["emailSend"] = args ? args.emailSend : undefined;
@@ -445,6 +457,7 @@ export class FusionAuthTheme extends pulumi.CustomResource {
             resourceInputs["samlv2Logout"] = args ? args.samlv2Logout : undefined;
             resourceInputs["sourceThemeId"] = args ? args.sourceThemeId : undefined;
             resourceInputs["stylesheet"] = args ? args.stylesheet : undefined;
+            resourceInputs["themeId"] = args ? args.themeId : undefined;
             resourceInputs["unauthorized"] = args ? args.unauthorized : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -493,7 +506,11 @@ export interface FusionAuthThemeState {
      */
     confirmationRequired?: pulumi.Input<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     * An object that can hold any information about the Theme that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
      *
      * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
@@ -534,7 +551,7 @@ export interface FusionAuthThemeState {
     /**
      * A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
      */
-    localizedMessages?: pulumi.Input<{[key: string]: any}>;
+    localizedMessages?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A unique name for the Theme.
      */
@@ -670,13 +687,18 @@ export interface FusionAuthThemeState {
      */
     samlv2Logout?: pulumi.Input<string>;
     /**
-     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+     * and stylesheet from the source Theme will be copied to the new Theme.
      */
     sourceThemeId?: pulumi.Input<string>;
     /**
      * A CSS stylesheet used to style the templates.
      */
     stylesheet?: pulumi.Input<string>;
+    /**
+     * The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+     */
+    themeId?: pulumi.Input<string>;
     /**
      * An optional FreeMarker template that contains the unauthorized page.
      */
@@ -724,7 +746,11 @@ export interface FusionAuthThemeArgs {
      */
     confirmationRequired?: pulumi.Input<string>;
     /**
-     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+     * An object that can hold any information about the Theme that should be persisted.
+     */
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
      *
      * > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
      */
@@ -765,7 +791,7 @@ export interface FusionAuthThemeArgs {
     /**
      * A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
      */
-    localizedMessages?: pulumi.Input<{[key: string]: any}>;
+    localizedMessages?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A unique name for the Theme.
      */
@@ -901,13 +927,18 @@ export interface FusionAuthThemeArgs {
      */
     samlv2Logout?: pulumi.Input<string>;
     /**
-     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+     * The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+     * and stylesheet from the source Theme will be copied to the new Theme.
      */
     sourceThemeId?: pulumi.Input<string>;
     /**
      * A CSS stylesheet used to style the templates.
      */
     stylesheet?: pulumi.Input<string>;
+    /**
+     * The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+     */
+    themeId?: pulumi.Input<string>;
     /**
      * An optional FreeMarker template that contains the unauthorized page.
      */

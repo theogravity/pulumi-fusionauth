@@ -14,6 +14,12 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthIdpSteamApplicationConfigurationArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// This is an optional Application specific override for the top level apiMode.
+        /// </summary>
+        [Input("apiMode")]
+        public Input<string>? ApiMode { get; set; }
+
+        /// <summary>
         /// ID of the Application to apply this configuration to.
         /// </summary>
         [Input("applicationId")]

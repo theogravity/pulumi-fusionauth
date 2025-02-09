@@ -74,9 +74,6 @@ export class FusionAuthEntity extends pulumi.CustomResource {
     public readonly entityId!: pulumi.Output<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
-     *
-     * For more information see:
-     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     public readonly entityTypeId!: pulumi.Output<string>;
     /**
@@ -85,6 +82,9 @@ export class FusionAuthEntity extends pulumi.CustomResource {
     public readonly name!: pulumi.Output<string>;
     /**
      * The unique ID of the tenant used to scope this API request.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     public readonly tenantId!: pulumi.Output<string | undefined>;
 
@@ -154,9 +154,6 @@ export interface FusionAuthEntityState {
     entityId?: pulumi.Input<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
-     *
-     * For more information see:
-     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     entityTypeId?: pulumi.Input<string>;
     /**
@@ -165,6 +162,9 @@ export interface FusionAuthEntityState {
     name?: pulumi.Input<string>;
     /**
      * The unique ID of the tenant used to scope this API request.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     tenantId?: pulumi.Input<string>;
 }
@@ -195,9 +195,6 @@ export interface FusionAuthEntityArgs {
     entityId?: pulumi.Input<string>;
     /**
      * The ID of the Entity Type. Types are consulted for permission checks.
-     *
-     * For more information see:
-     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     entityTypeId: pulumi.Input<string>;
     /**
@@ -206,6 +203,9 @@ export interface FusionAuthEntityArgs {
     name?: pulumi.Input<string>;
     /**
      * The unique ID of the tenant used to scope this API request.
+     *
+     * For more information see:
+     * [FusionAuth Entity Management API Overview](https://fusionauth.io/docs/v1/tech/apis/entity-management/)
      */
     tenantId?: pulumi.Input<string>;
 }

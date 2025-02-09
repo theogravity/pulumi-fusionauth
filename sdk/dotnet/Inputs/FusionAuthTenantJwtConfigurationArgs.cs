@@ -32,10 +32,28 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? RefreshTokenExpirationPolicy { get; set; }
 
         /// <summary>
+        /// The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+        /// </summary>
+        [Input("refreshTokenOneTimeUseConfigurationGracePeriodInSeconds")]
+        public Input<int>? RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds { get; set; }
+
+        /// <summary>
         /// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
         /// </summary>
         [Input("refreshTokenRevocationPolicyOnLoginPrevented")]
         public Input<bool>? RefreshTokenRevocationPolicyOnLoginPrevented { get; set; }
+
+        /// <summary>
+        /// When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+        /// </summary>
+        [Input("refreshTokenRevocationPolicyOnMultiFactorEnable")]
+        public Input<bool>? RefreshTokenRevocationPolicyOnMultiFactorEnable { get; set; }
+
+        /// <summary>
+        /// When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+        /// </summary>
+        [Input("refreshTokenRevocationPolicyOnOneTimeTokenReuse")]
+        public Input<bool>? RefreshTokenRevocationPolicyOnOneTimeTokenReuse { get; set; }
 
         /// <summary>
         /// When enabled, the refresh token will be revoked when a user changes their password."
@@ -52,8 +70,8 @@ namespace theogravity.Fusionauth.Inputs
         /// <summary>
         /// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
-        [Input("refreshTokenTimeToLiveInMinutes", required: true)]
-        public Input<int> RefreshTokenTimeToLiveInMinutes { get; set; } = null!;
+        [Input("refreshTokenTimeToLiveInMinutes")]
+        public Input<int>? RefreshTokenTimeToLiveInMinutes { get; set; }
 
         /// <summary>
         /// The refresh token usage policy.
@@ -64,8 +82,8 @@ namespace theogravity.Fusionauth.Inputs
         /// <summary>
         /// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
-        [Input("timeToLiveInSeconds", required: true)]
-        public Input<int> TimeToLiveInSeconds { get; set; } = null!;
+        [Input("timeToLiveInSeconds")]
+        public Input<int>? TimeToLiveInSeconds { get; set; }
 
         public FusionAuthTenantJwtConfigurationArgs()
         {

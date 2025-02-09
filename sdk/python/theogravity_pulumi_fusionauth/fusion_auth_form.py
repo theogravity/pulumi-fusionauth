@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -17,14 +22,14 @@ __all__ = ['FusionAuthFormArgs', 'FusionAuthForm']
 class FusionAuthFormArgs:
     def __init__(__self__, *,
                  steps: pulumi.Input[Sequence[pulumi.Input['FusionAuthFormStepArgs']]],
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  form_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthForm resource.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthFormStepArgs']]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] form_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The unique name of the Form Field.
         :param pulumi.Input[str] type: The type of form being created, a form type cannot be changed after the form has been created.
@@ -53,14 +58,14 @@ class FusionAuthFormArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -103,14 +108,14 @@ class FusionAuthFormArgs:
 @pulumi.input_type
 class _FusionAuthFormState:
     def __init__(__self__, *,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  form_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  steps: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthFormStepArgs']]]] = None,
                  type: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthForm resources.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] form_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The unique name of the Form Field.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthFormStepArgs']]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
@@ -129,14 +134,14 @@ class _FusionAuthFormState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -193,10 +198,10 @@ class FusionAuthForm(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  form_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 steps: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthFormStepArgs']]]]] = None,
+                 steps: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthFormStepArgs', 'FusionAuthFormStepArgsDict']]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -217,24 +222,24 @@ class FusionAuthForm(pulumi.CustomResource):
                 "description": "This form customizes the registration experience.",
             },
             steps=[
-                fusionauth.FusionAuthFormStepArgs(
-                    fields=["91909721-7d4f-b110-8f21-cfdee2a1edb8"],
-                ),
-                fusionauth.FusionAuthFormStepArgs(
-                    fields=[
+                {
+                    "fields": ["91909721-7d4f-b110-8f21-cfdee2a1edb8"],
+                },
+                {
+                    "fields": [
                         "8ed89a31-c325-3156-72ed-6e89183af917",
                         "a977cfd4-a9ed-c4cf-650f-f4539268ac38",
                     ],
-                ),
+                },
             ])
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] form_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The unique name of the Form Field.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthFormStepArgs']]]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthFormStepArgs', 'FusionAuthFormStepArgsDict']]]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
         :param pulumi.Input[str] type: The type of form being created, a form type cannot be changed after the form has been created.
         """
         ...
@@ -261,15 +266,15 @@ class FusionAuthForm(pulumi.CustomResource):
                 "description": "This form customizes the registration experience.",
             },
             steps=[
-                fusionauth.FusionAuthFormStepArgs(
-                    fields=["91909721-7d4f-b110-8f21-cfdee2a1edb8"],
-                ),
-                fusionauth.FusionAuthFormStepArgs(
-                    fields=[
+                {
+                    "fields": ["91909721-7d4f-b110-8f21-cfdee2a1edb8"],
+                },
+                {
+                    "fields": [
                         "8ed89a31-c325-3156-72ed-6e89183af917",
                         "a977cfd4-a9ed-c4cf-650f-f4539268ac38",
                     ],
-                ),
+                },
             ])
         ```
 
@@ -288,10 +293,10 @@ class FusionAuthForm(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  form_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 steps: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthFormStepArgs']]]]] = None,
+                 steps: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthFormStepArgs', 'FusionAuthFormStepArgsDict']]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -319,10 +324,10 @@ class FusionAuthForm(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             form_id: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            steps: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthFormStepArgs']]]]] = None,
+            steps: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthFormStepArgs', 'FusionAuthFormStepArgsDict']]]]] = None,
             type: Optional[pulumi.Input[str]] = None) -> 'FusionAuthForm':
         """
         Get an existing FusionAuthForm resource's state with the given name, id, and optional extra
@@ -331,10 +336,10 @@ class FusionAuthForm(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] form_id: The Id to use for the new Form. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The unique name of the Form Field.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthFormStepArgs']]]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthFormStepArgs', 'FusionAuthFormStepArgsDict']]]] steps: An ordered list of objects containing one or more Form Fields. A Form must have at least one step defined.
         :param pulumi.Input[str] type: The type of form being created, a form type cannot be changed after the form has been created.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -350,7 +355,7 @@ class FusionAuthForm(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """

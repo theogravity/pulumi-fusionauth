@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -31,6 +36,7 @@ class FusionAuthIdpOpenIdConnectArgs:
                  oauth2_client_authentication_method: Optional[pulumi.Input[str]] = None,
                  oauth2_client_secret: Optional[pulumi.Input[str]] = None,
                  oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
@@ -56,6 +62,7 @@ class FusionAuthIdpOpenIdConnectArgs:
         :param pulumi.Input[str] oauth2_client_authentication_method: The client authentication method to use with the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_client_secret: The top-level client secret to use with the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_email_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
+        :param pulumi.Input[str] oauth2_email_verified_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
@@ -93,6 +100,8 @@ class FusionAuthIdpOpenIdConnectArgs:
             pulumi.set(__self__, "oauth2_client_secret", oauth2_client_secret)
         if oauth2_email_claim is not None:
             pulumi.set(__self__, "oauth2_email_claim", oauth2_email_claim)
+        if oauth2_email_verified_claim is not None:
+            pulumi.set(__self__, "oauth2_email_verified_claim", oauth2_email_verified_claim)
         if oauth2_issuer is not None:
             pulumi.set(__self__, "oauth2_issuer", oauth2_issuer)
         if oauth2_scope is not None:
@@ -291,6 +300,18 @@ class FusionAuthIdpOpenIdConnectArgs:
         pulumi.set(self, "oauth2_email_claim", value)
 
     @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
+
+    @oauth2_email_verified_claim.setter
+    def oauth2_email_verified_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_verified_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2Issuer")
     def oauth2_issuer(self) -> Optional[pulumi.Input[str]]:
         """
@@ -405,6 +426,7 @@ class _FusionAuthIdpOpenIdConnectState:
                  oauth2_client_id: Optional[pulumi.Input[str]] = None,
                  oauth2_client_secret: Optional[pulumi.Input[str]] = None,
                  oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
@@ -430,6 +452,7 @@ class _FusionAuthIdpOpenIdConnectState:
         :param pulumi.Input[str] oauth2_client_id: The top-level client id for your Application.
         :param pulumi.Input[str] oauth2_client_secret: The top-level client secret to use with the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_email_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
+        :param pulumi.Input[str] oauth2_email_verified_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
@@ -469,6 +492,8 @@ class _FusionAuthIdpOpenIdConnectState:
             pulumi.set(__self__, "oauth2_client_secret", oauth2_client_secret)
         if oauth2_email_claim is not None:
             pulumi.set(__self__, "oauth2_email_claim", oauth2_email_claim)
+        if oauth2_email_verified_claim is not None:
+            pulumi.set(__self__, "oauth2_email_verified_claim", oauth2_email_verified_claim)
         if oauth2_issuer is not None:
             pulumi.set(__self__, "oauth2_issuer", oauth2_issuer)
         if oauth2_scope is not None:
@@ -667,6 +692,18 @@ class _FusionAuthIdpOpenIdConnectState:
         pulumi.set(self, "oauth2_email_claim", value)
 
     @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
+
+    @oauth2_email_verified_claim.setter
+    def oauth2_email_verified_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_verified_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2Issuer")
     def oauth2_issuer(self) -> Optional[pulumi.Input[str]]:
         """
@@ -768,7 +805,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs', 'FusionAuthIdpOpenIdConnectApplicationConfigurationArgsDict']]]]] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -783,6 +820,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_client_id: Optional[pulumi.Input[str]] = None,
                  oauth2_client_secret: Optional[pulumi.Input[str]] = None,
                  oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
@@ -790,7 +828,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
                  oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectTenantConfigurationArgs', 'FusionAuthIdpOpenIdConnectTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         """
         ## # OpenID Connect Identity Provider Resource
@@ -812,11 +850,11 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         open_id = fusionauth.FusionAuthIdpOpenIdConnect("openID",
-            application_configurations=[fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             oauth2_authorization_endpoint="https://acme.com/oauth2/authorization",
             oauth2_client_id="191c23dc-b772-4558-bd21-dc1cbf74ae21",
             oauth2_client_secret="SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
@@ -827,16 +865,16 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             button_text="Login with OpenID Connect",
             debug=False,
             enabled=True,
-            tenant_configurations=[fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs(
-                tenant_id=fusionauth_tenant["example"]["id"],
-                limit_user_link_count_enabled=False,
-                limit_user_link_count_maximum_links=42,
-            )])
+            tenant_configurations=[{
+                "tenant_id": fusionauth_tenant["example"]["id"],
+                "limit_user_link_count_enabled": False,
+                "limit_user_link_count_maximum_links": 42,
+            }])
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs', 'FusionAuthIdpOpenIdConnectApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -851,6 +889,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_client_id: The top-level client id for your Application.
         :param pulumi.Input[str] oauth2_client_secret: The top-level client secret to use with the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_email_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
+        :param pulumi.Input[str] oauth2_email_verified_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
@@ -858,7 +897,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
         :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectTenantConfigurationArgs', 'FusionAuthIdpOpenIdConnectTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
     @overload
@@ -886,11 +925,11 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         open_id = fusionauth.FusionAuthIdpOpenIdConnect("openID",
-            application_configurations=[fusionauth.FusionAuthIdpOpenIdConnectApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             oauth2_authorization_endpoint="https://acme.com/oauth2/authorization",
             oauth2_client_id="191c23dc-b772-4558-bd21-dc1cbf74ae21",
             oauth2_client_secret="SUsnoP0pWUYfXvWbSe5pvj8Di5nAxOvO",
@@ -901,11 +940,11 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             button_text="Login with OpenID Connect",
             debug=False,
             enabled=True,
-            tenant_configurations=[fusionauth.FusionAuthIdpOpenIdConnectTenantConfigurationArgs(
-                tenant_id=fusionauth_tenant["example"]["id"],
-                limit_user_link_count_enabled=False,
-                limit_user_link_count_maximum_links=42,
-            )])
+            tenant_configurations=[{
+                "tenant_id": fusionauth_tenant["example"]["id"],
+                "limit_user_link_count_enabled": False,
+                "limit_user_link_count_maximum_links": 42,
+            }])
         ```
 
         :param str resource_name: The name of the resource.
@@ -923,7 +962,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs', 'FusionAuthIdpOpenIdConnectApplicationConfigurationArgsDict']]]]] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -938,6 +977,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_client_id: Optional[pulumi.Input[str]] = None,
                  oauth2_client_secret: Optional[pulumi.Input[str]] = None,
                  oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_issuer: Optional[pulumi.Input[str]] = None,
                  oauth2_scope: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
@@ -945,7 +985,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
                  oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
                  oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectTenantConfigurationArgs', 'FusionAuthIdpOpenIdConnectTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -974,6 +1014,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             __props__.__dict__["oauth2_client_id"] = oauth2_client_id
             __props__.__dict__["oauth2_client_secret"] = None if oauth2_client_secret is None else pulumi.Output.secret(oauth2_client_secret)
             __props__.__dict__["oauth2_email_claim"] = oauth2_email_claim
+            __props__.__dict__["oauth2_email_verified_claim"] = oauth2_email_verified_claim
             __props__.__dict__["oauth2_issuer"] = oauth2_issuer
             __props__.__dict__["oauth2_scope"] = oauth2_scope
             __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
@@ -994,7 +1035,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs', 'FusionAuthIdpOpenIdConnectApplicationConfigurationArgsDict']]]]] = None,
             button_image_url: Optional[pulumi.Input[str]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
@@ -1009,6 +1050,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             oauth2_client_id: Optional[pulumi.Input[str]] = None,
             oauth2_client_secret: Optional[pulumi.Input[str]] = None,
             oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+            oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
             oauth2_issuer: Optional[pulumi.Input[str]] = None,
             oauth2_scope: Optional[pulumi.Input[str]] = None,
             oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
@@ -1016,7 +1058,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
             oauth2_user_info_endpoint: Optional[pulumi.Input[str]] = None,
             oauth2_username_claim: Optional[pulumi.Input[str]] = None,
             post_request: Optional[pulumi.Input[bool]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpOpenIdConnect':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectTenantConfigurationArgs', 'FusionAuthIdpOpenIdConnectTenantConfigurationArgsDict']]]]] = None) -> 'FusionAuthIdpOpenIdConnect':
         """
         Get an existing FusionAuthIdpOpenIdConnect resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -1024,7 +1066,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectApplicationConfigurationArgs', 'FusionAuthIdpOpenIdConnectApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -1039,6 +1081,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_client_id: The top-level client id for your Application.
         :param pulumi.Input[str] oauth2_client_secret: The top-level client secret to use with the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_email_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
+        :param pulumi.Input[str] oauth2_email_verified_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
         :param pulumi.Input[str] oauth2_issuer: The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         :param pulumi.Input[str] oauth2_scope: The top-level scope that you are requesting from the OpenID Connect identity provider.
         :param pulumi.Input[str] oauth2_token_endpoint: The top-level token endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the token endpoint. If you provide an issuer then this field will be ignored.
@@ -1046,7 +1089,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         :param pulumi.Input[str] oauth2_user_info_endpoint: The top-level userinfo endpoint for the OpenID Connect identity provider. You can leave this blank if you provide the issuer field, which will be used to make a request to the OpenID Connect .well-known endpoint in order to dynamically resolve the userinfo endpoint. If you provide an issuer then this field will be ignored.
         :param pulumi.Input[str] oauth2_username_claim: An optional configuration to modify the expected name of the claim returned by the IdP that contains the username.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpOpenIdConnectTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpOpenIdConnectTenantConfigurationArgs', 'FusionAuthIdpOpenIdConnectTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -1067,6 +1110,7 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         __props__.__dict__["oauth2_client_id"] = oauth2_client_id
         __props__.__dict__["oauth2_client_secret"] = oauth2_client_secret
         __props__.__dict__["oauth2_email_claim"] = oauth2_email_claim
+        __props__.__dict__["oauth2_email_verified_claim"] = oauth2_email_verified_claim
         __props__.__dict__["oauth2_issuer"] = oauth2_issuer
         __props__.__dict__["oauth2_scope"] = oauth2_scope
         __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
@@ -1196,6 +1240,14 @@ class FusionAuthIdpOpenIdConnect(pulumi.CustomResource):
         An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
         """
         return pulumi.get(self, "oauth2_email_claim")
+
+    @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
 
     @property
     @pulumi.getter(name="oauth2Issuer")

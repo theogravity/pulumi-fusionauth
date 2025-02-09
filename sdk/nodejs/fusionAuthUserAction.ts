@@ -66,7 +66,7 @@ export class FusionAuthUserAction extends pulumi.CustomResource {
     /**
      * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
-    public readonly localizedNames!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedNames!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The Id of the Email Template that is used when User Actions are modified.
      */
@@ -176,7 +176,7 @@ export interface FusionAuthUserActionState {
     /**
      * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
-    localizedNames?: pulumi.Input<{[key: string]: any}>;
+    localizedNames?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id of the Email Template that is used when User Actions are modified.
      */
@@ -238,7 +238,7 @@ export interface FusionAuthUserActionArgs {
     /**
      * A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
      */
-    localizedNames?: pulumi.Input<{[key: string]: any}>;
+    localizedNames?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id of the Email Template that is used when User Actions are modified.
      */

@@ -69,7 +69,7 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the Connector that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         /// <summary>
         /// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
@@ -81,7 +81,7 @@ namespace theogravity.Fusionauth
         /// An object that can hold HTTPHeader key and value pairs.
         /// </summary>
         [Output("headers")]
-        public Output<ImmutableDictionary<string, object>?> Headers { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Headers { get; private set; } = null!;
 
         /// <summary>
         /// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
@@ -178,14 +178,14 @@ namespace theogravity.Fusionauth
         public Input<int> ConnectTimeout { get; set; } = null!;
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Connector that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -196,14 +196,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? Debug { get; set; }
 
         [Input("headers")]
-        private InputMap<object>? _headers;
+        private InputMap<string>? _headers;
 
         /// <summary>
         /// An object that can hold HTTPHeader key and value pairs.
         /// </summary>
-        public InputMap<object> Headers
+        public InputMap<string> Headers
         {
-            get => _headers ?? (_headers = new InputMap<object>());
+            get => _headers ?? (_headers = new InputMap<string>());
             set => _headers = value;
         }
 
@@ -278,14 +278,14 @@ namespace theogravity.Fusionauth
         public Input<int>? ConnectTimeout { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Connector that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -296,14 +296,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? Debug { get; set; }
 
         [Input("headers")]
-        private InputMap<object>? _headers;
+        private InputMap<string>? _headers;
 
         /// <summary>
         /// An object that can hold HTTPHeader key and value pairs.
         /// </summary>
-        public InputMap<object> Headers
+        public InputMap<string> Headers
         {
-            get => _headers ?? (_headers = new InputMap<object>());
+            get => _headers ?? (_headers = new InputMap<string>());
             set => _headers = value;
         }
 

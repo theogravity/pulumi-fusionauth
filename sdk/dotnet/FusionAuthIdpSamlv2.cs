@@ -66,6 +66,12 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpSamlv2ApplicationConfiguration>> ApplicationConfigurations { get; private set; } = null!;
 
         /// <summary>
+        /// The configuration for the SAML assertion.
+        /// </summary>
+        [Output("assertionConfiguration")]
+        public Output<Outputs.FusionAuthIdpSamlv2AssertionConfiguration?> AssertionConfiguration { get; private set; } = null!;
+
+        /// <summary>
         /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         /// </summary>
         [Output("buttonImageUrl")]
@@ -114,6 +120,12 @@ namespace theogravity.Fusionauth
         public Output<string?> IdpId { get; private set; } = null!;
 
         /// <summary>
+        /// The configuration for the IdP initiated login.
+        /// </summary>
+        [Output("idpInitiatedConfiguration")]
+        public Output<Outputs.FusionAuthIdpSamlv2IdpInitiatedConfiguration?> IdpInitiatedConfiguration { get; private set; } = null!;
+
+        /// <summary>
         /// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         /// </summary>
         [Output("keyId")]
@@ -130,6 +142,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("linkingStrategy")]
         public Output<string> LinkingStrategy { get; private set; } = null!;
+
+        /// <summary>
+        /// The configuration for the login hint.
+        /// </summary>
+        [Output("loginHintConfiguration")]
+        public Output<Outputs.FusionAuthIdpSamlv2LoginHintConfiguration?> LoginHintConfiguration { get; private set; } = null!;
 
         /// <summary>
         /// The name of this OpenID Connect identity provider. This is only used for display purposes.
@@ -150,7 +168,7 @@ namespace theogravity.Fusionauth
         public Output<bool?> PostRequest { get; private set; } = null!;
 
         /// <summary>
-        /// TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        /// The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         /// </summary>
         [Output("requestSigningKey")]
         public Output<string?> RequestSigningKey { get; private set; } = null!;
@@ -168,8 +186,7 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpSamlv2TenantConfiguration>> TenantConfigurations { get; private set; } = null!;
 
         /// <summary>
-        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        /// the emailClaim will be used when linking user.
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         /// </summary>
         [Output("uniqueIdClaim")]
         public Output<string?> UniqueIdClaim { get; private set; } = null!;
@@ -252,6 +269,12 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The configuration for the SAML assertion.
+        /// </summary>
+        [Input("assertionConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2AssertionConfigurationArgs>? AssertionConfiguration { get; set; }
+
+        /// <summary>
         /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         /// </summary>
         [Input("buttonImageUrl")]
@@ -306,6 +329,12 @@ namespace theogravity.Fusionauth
         public Input<string>? IdpId { get; set; }
 
         /// <summary>
+        /// The configuration for the IdP initiated login.
+        /// </summary>
+        [Input("idpInitiatedConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs>? IdpInitiatedConfiguration { get; set; }
+
+        /// <summary>
         /// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         /// </summary>
         [Input("keyId", required: true)]
@@ -322,6 +351,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("linkingStrategy")]
         public Input<string>? LinkingStrategy { get; set; }
+
+        /// <summary>
+        /// The configuration for the login hint.
+        /// </summary>
+        [Input("loginHintConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2LoginHintConfigurationArgs>? LoginHintConfiguration { get; set; }
 
         /// <summary>
         /// The name of this OpenID Connect identity provider. This is only used for display purposes.
@@ -342,7 +377,7 @@ namespace theogravity.Fusionauth
         public Input<bool>? PostRequest { get; set; }
 
         /// <summary>
-        /// TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        /// The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         /// </summary>
         [Input("requestSigningKey")]
         public Input<string>? RequestSigningKey { get; set; }
@@ -366,8 +401,7 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        /// the emailClaim will be used when linking user.
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         /// </summary>
         [Input("uniqueIdClaim")]
         public Input<string>? UniqueIdClaim { get; set; }
@@ -409,6 +443,12 @@ namespace theogravity.Fusionauth
             get => _applicationConfigurations ?? (_applicationConfigurations = new InputList<Inputs.FusionAuthIdpSamlv2ApplicationConfigurationGetArgs>());
             set => _applicationConfigurations = value;
         }
+
+        /// <summary>
+        /// The configuration for the SAML assertion.
+        /// </summary>
+        [Input("assertionConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2AssertionConfigurationGetArgs>? AssertionConfiguration { get; set; }
 
         /// <summary>
         /// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
@@ -465,6 +505,12 @@ namespace theogravity.Fusionauth
         public Input<string>? IdpId { get; set; }
 
         /// <summary>
+        /// The configuration for the IdP initiated login.
+        /// </summary>
+        [Input("idpInitiatedConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2IdpInitiatedConfigurationGetArgs>? IdpInitiatedConfiguration { get; set; }
+
+        /// <summary>
         /// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         /// </summary>
         [Input("keyId")]
@@ -481,6 +527,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("linkingStrategy")]
         public Input<string>? LinkingStrategy { get; set; }
+
+        /// <summary>
+        /// The configuration for the login hint.
+        /// </summary>
+        [Input("loginHintConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlv2LoginHintConfigurationGetArgs>? LoginHintConfiguration { get; set; }
 
         /// <summary>
         /// The name of this OpenID Connect identity provider. This is only used for display purposes.
@@ -501,7 +553,7 @@ namespace theogravity.Fusionauth
         public Input<bool>? PostRequest { get; set; }
 
         /// <summary>
-        /// TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        /// The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         /// </summary>
         [Input("requestSigningKey")]
         public Input<string>? RequestSigningKey { get; set; }
@@ -525,8 +577,7 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        /// the emailClaim will be used when linking user.
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         /// </summary>
         [Input("uniqueIdClaim")]
         public Input<string>? UniqueIdClaim { get; set; }

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,6 +28,7 @@ class FusionAuthUserArgs:
                  email: Optional[pulumi.Input[str]] = None,
                  encryption_scheme: Optional[pulumi.Input[str]] = None,
                  expiry: Optional[pulumi.Input[int]] = None,
+                 factor: Optional[pulumi.Input[int]] = None,
                  first_name: Optional[pulumi.Input[str]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  image_url: Optional[pulumi.Input[str]] = None,
@@ -47,10 +53,13 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
-        :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[bool] disable_domain_block: A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
+        :param pulumi.Input[int] factor: The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+               Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+               PasswordEncryptor implementation.
         :param pulumi.Input[str] first_name: The first name of the User.
         :param pulumi.Input[str] full_name: The User’s full name as a separate field that is not calculated from firstName and lastName.
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
@@ -58,7 +67,7 @@ class FusionAuthUserArgs:
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -84,6 +93,8 @@ class FusionAuthUserArgs:
             pulumi.set(__self__, "encryption_scheme", encryption_scheme)
         if expiry is not None:
             pulumi.set(__self__, "expiry", expiry)
+        if factor is not None:
+            pulumi.set(__self__, "factor", factor)
         if first_name is not None:
             pulumi.set(__self__, "first_name", first_name)
         if full_name is not None:
@@ -163,7 +174,7 @@ class FusionAuthUserArgs:
     @pulumi.getter(name="disableDomainBlock")
     def disable_domain_block(self) -> Optional[pulumi.Input[bool]]:
         """
-        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         """
         return pulumi.get(self, "disable_domain_block")
 
@@ -206,6 +217,20 @@ class FusionAuthUserArgs:
     @expiry.setter
     def expiry(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "expiry", value)
+
+    @property
+    @pulumi.getter
+    def factor(self) -> Optional[pulumi.Input[int]]:
+        """
+        The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        PasswordEncryptor implementation.
+        """
+        return pulumi.get(self, "factor")
+
+    @factor.setter
+    def factor(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "factor", value)
 
     @property
     @pulumi.getter(name="firstName")
@@ -295,7 +320,7 @@ class FusionAuthUserArgs:
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 
@@ -443,6 +468,7 @@ class _FusionAuthUserState:
                  email: Optional[pulumi.Input[str]] = None,
                  encryption_scheme: Optional[pulumi.Input[str]] = None,
                  expiry: Optional[pulumi.Input[int]] = None,
+                 factor: Optional[pulumi.Input[int]] = None,
                  first_name: Optional[pulumi.Input[str]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  image_url: Optional[pulumi.Input[str]] = None,
@@ -467,10 +493,13 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
-        :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[bool] disable_domain_block: A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
+        :param pulumi.Input[int] factor: The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+               Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+               PasswordEncryptor implementation.
         :param pulumi.Input[str] first_name: The first name of the User.
         :param pulumi.Input[str] full_name: The User’s full name as a separate field that is not calculated from firstName and lastName.
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
@@ -478,7 +507,7 @@ class _FusionAuthUserState:
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -504,6 +533,8 @@ class _FusionAuthUserState:
             pulumi.set(__self__, "encryption_scheme", encryption_scheme)
         if expiry is not None:
             pulumi.set(__self__, "expiry", expiry)
+        if factor is not None:
+            pulumi.set(__self__, "factor", factor)
         if first_name is not None:
             pulumi.set(__self__, "first_name", first_name)
         if full_name is not None:
@@ -583,7 +614,7 @@ class _FusionAuthUserState:
     @pulumi.getter(name="disableDomainBlock")
     def disable_domain_block(self) -> Optional[pulumi.Input[bool]]:
         """
-        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         """
         return pulumi.get(self, "disable_domain_block")
 
@@ -626,6 +657,20 @@ class _FusionAuthUserState:
     @expiry.setter
     def expiry(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "expiry", value)
+
+    @property
+    @pulumi.getter
+    def factor(self) -> Optional[pulumi.Input[int]]:
+        """
+        The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        PasswordEncryptor implementation.
+        """
+        return pulumi.get(self, "factor")
+
+    @factor.setter
+    def factor(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "factor", value)
 
     @property
     @pulumi.getter(name="firstName")
@@ -715,7 +760,7 @@ class _FusionAuthUserState:
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 
@@ -865,6 +910,7 @@ class FusionAuthUser(pulumi.CustomResource):
                  email: Optional[pulumi.Input[str]] = None,
                  encryption_scheme: Optional[pulumi.Input[str]] = None,
                  expiry: Optional[pulumi.Input[int]] = None,
+                 factor: Optional[pulumi.Input[int]] = None,
                  first_name: Optional[pulumi.Input[str]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  image_url: Optional[pulumi.Input[str]] = None,
@@ -879,7 +925,7 @@ class FusionAuthUser(pulumi.CustomResource):
                  skip_verification: Optional[pulumi.Input[bool]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
-                 two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthUserTwoFactorMethodArgs']]]]] = None,
+                 two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthUserTwoFactorMethodArgs', 'FusionAuthUserTwoFactorMethodArgsDict']]]]] = None,
                  two_factor_recovery_codes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_id: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
@@ -931,10 +977,13 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
-        :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[bool] disable_domain_block: A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
+        :param pulumi.Input[int] factor: The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+               Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+               PasswordEncryptor implementation.
         :param pulumi.Input[str] first_name: The first name of the User.
         :param pulumi.Input[str] full_name: The User’s full name as a separate field that is not calculated from firstName and lastName.
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
@@ -942,7 +991,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -1023,6 +1072,7 @@ class FusionAuthUser(pulumi.CustomResource):
                  email: Optional[pulumi.Input[str]] = None,
                  encryption_scheme: Optional[pulumi.Input[str]] = None,
                  expiry: Optional[pulumi.Input[int]] = None,
+                 factor: Optional[pulumi.Input[int]] = None,
                  first_name: Optional[pulumi.Input[str]] = None,
                  full_name: Optional[pulumi.Input[str]] = None,
                  image_url: Optional[pulumi.Input[str]] = None,
@@ -1037,7 +1087,7 @@ class FusionAuthUser(pulumi.CustomResource):
                  skip_verification: Optional[pulumi.Input[bool]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None,
                  timezone: Optional[pulumi.Input[str]] = None,
-                 two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthUserTwoFactorMethodArgs']]]]] = None,
+                 two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthUserTwoFactorMethodArgs', 'FusionAuthUserTwoFactorMethodArgsDict']]]]] = None,
                  two_factor_recovery_codes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_id: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
@@ -1058,6 +1108,7 @@ class FusionAuthUser(pulumi.CustomResource):
             __props__.__dict__["email"] = email
             __props__.__dict__["encryption_scheme"] = encryption_scheme
             __props__.__dict__["expiry"] = expiry
+            __props__.__dict__["factor"] = factor
             __props__.__dict__["first_name"] = first_name
             __props__.__dict__["full_name"] = full_name
             __props__.__dict__["image_url"] = image_url
@@ -1096,6 +1147,7 @@ class FusionAuthUser(pulumi.CustomResource):
             email: Optional[pulumi.Input[str]] = None,
             encryption_scheme: Optional[pulumi.Input[str]] = None,
             expiry: Optional[pulumi.Input[int]] = None,
+            factor: Optional[pulumi.Input[int]] = None,
             first_name: Optional[pulumi.Input[str]] = None,
             full_name: Optional[pulumi.Input[str]] = None,
             image_url: Optional[pulumi.Input[str]] = None,
@@ -1110,7 +1162,7 @@ class FusionAuthUser(pulumi.CustomResource):
             skip_verification: Optional[pulumi.Input[bool]] = None,
             tenant_id: Optional[pulumi.Input[str]] = None,
             timezone: Optional[pulumi.Input[str]] = None,
-            two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthUserTwoFactorMethodArgs']]]]] = None,
+            two_factor_methods: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthUserTwoFactorMethodArgs', 'FusionAuthUserTwoFactorMethodArgsDict']]]]] = None,
             two_factor_recovery_codes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             user_id: Optional[pulumi.Input[str]] = None,
             username: Optional[pulumi.Input[str]] = None,
@@ -1125,10 +1177,13 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] application_id: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
         :param pulumi.Input[str] birth_date: An ISO-8601 formatted date of the User’s birthdate such as YYYY-MM-DD.
         :param pulumi.Input[str] data: An object that can hold any information about a User that should be persisted. Must be a JSON serialised string.
-        :param pulumi.Input[bool] disable_domain_block: An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        :param pulumi.Input[bool] disable_domain_block: A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         :param pulumi.Input[str] email: The User’s email address. An email address is a unique in FusionAuth and stored in lower case.
         :param pulumi.Input[str] encryption_scheme: The method for encrypting the User’s password.
         :param pulumi.Input[int] expiry: The expiration instant of the User’s account. An expired user is not permitted to login.
+        :param pulumi.Input[int] factor: The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+               Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+               PasswordEncryptor implementation.
         :param pulumi.Input[str] first_name: The first name of the User.
         :param pulumi.Input[str] full_name: The User’s full name as a separate field that is not calculated from firstName and lastName.
         :param pulumi.Input[str] image_url: The URL that points to an image file that is the User’s profile image.
@@ -1136,7 +1191,7 @@ class FusionAuthUser(pulumi.CustomResource):
         :param pulumi.Input[str] middle_name: The User’s middle name.
         :param pulumi.Input[str] mobile_phone: The User’s mobile phone number. This is useful is you will be sending push notifications or SMS messages to the User.
         :param pulumi.Input[str] parent_email: The email address of the user’s parent or guardian. This field is used to allow a child user to identify their parent so FusionAuth can make a request to the parent to confirm the parent relationship.
-        :param pulumi.Input[str] password: The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        :param pulumi.Input[str] password: The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         :param pulumi.Input[bool] password_change_required: Indicates that the User’s password needs to be changed during their next login attempt.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] preferred_languages: An array of locale strings that give, in order, the User’s preferred languages. These are important for email templates and other localizable text.
         :param pulumi.Input[bool] send_set_password_email: Indicates to FusionAuth to send the User an email asking them to set their password. The Email Template that is used is configured in the System Configuration setting for Set Password Email Template.
@@ -1159,6 +1214,7 @@ class FusionAuthUser(pulumi.CustomResource):
         __props__.__dict__["email"] = email
         __props__.__dict__["encryption_scheme"] = encryption_scheme
         __props__.__dict__["expiry"] = expiry
+        __props__.__dict__["factor"] = factor
         __props__.__dict__["first_name"] = first_name
         __props__.__dict__["full_name"] = full_name
         __props__.__dict__["image_url"] = image_url
@@ -1208,7 +1264,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter(name="disableDomainBlock")
     def disable_domain_block(self) -> pulumi.Output[Optional[bool]]:
         """
-        An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         """
         return pulumi.get(self, "disable_domain_block")
 
@@ -1235,6 +1291,16 @@ class FusionAuthUser(pulumi.CustomResource):
         The expiration instant of the User’s account. An expired user is not permitted to login.
         """
         return pulumi.get(self, "expiry")
+
+    @property
+    @pulumi.getter
+    def factor(self) -> pulumi.Output[int]:
+        """
+        The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        PasswordEncryptor implementation.
+        """
+        return pulumi.get(self, "factor")
 
     @property
     @pulumi.getter(name="firstName")
@@ -1296,7 +1362,7 @@ class FusionAuthUser(pulumi.CustomResource):
     @pulumi.getter
     def password(self) -> pulumi.Output[Optional[str]]:
         """
-        The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         """
         return pulumi.get(self, "password")
 

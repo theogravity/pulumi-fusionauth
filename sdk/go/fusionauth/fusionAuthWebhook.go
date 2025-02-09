@@ -44,15 +44,19 @@ import (
 //					UserDelete: pulumi.Bool(false),
 //				},
 //				Global: pulumi.Bool(false),
-//				Headers: pulumi.Map{
-//					"foo": pulumi.Any("bar"),
-//					"bar": pulumi.Any("baz"),
+//				Headers: pulumi.StringMap{
+//					"foo": pulumi.String("bar"),
+//					"bar": pulumi.String("baz"),
 //				},
 //				HttpAuthenticationPassword: pulumi.String("password"),
 //				HttpAuthenticationUsername: pulumi.String("username"),
 //				ReadTimeout:                pulumi.Int(2000),
 //				SslCertificate:             pulumi.String("  -----BEGIN CERTIFICATE-----\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\n-----END CERTIFICATE-----\n"),
 //				Url:                        pulumi.String("http://mygameserver.local:7001/fusionauth-webhook"),
+//				SignatureConfiguration: &fusionauth.FusionAuthWebhookSignatureConfigurationArgs{
+//					Enabled:      pulumi.Bool(true),
+//					SigningKeyId: pulumi.Any(fusionauth_key.Webhook_key.Id),
+//				},
 //			})
 //			if err != nil {
 //				return err
@@ -67,6 +71,8 @@ type FusionAuthWebhook struct {
 
 	// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ConnectTimeout pulumi.IntOutput `pulumi:"connectTimeout"`
+	// An object that can hold any information about the Webhook that should be persisted.
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// A description of the Webhook. This is used for display purposes only.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// A mapping for the events that are enabled for this Webhook.
@@ -74,19 +80,25 @@ type FusionAuthWebhook struct {
 	// Whether or not this Webhook is used for all events or just for specific Applications.
 	Global pulumi.BoolPtrOutput `pulumi:"global"`
 	// An object that contains headers that are sent as part of the HTTP request for the events.
-	Headers pulumi.MapOutput `pulumi:"headers"`
+	Headers pulumi.StringMapOutput `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrOutput `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrOutput `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntOutput `pulumi:"readTimeout"`
+	// Configuration for webhook signing
+	SignatureConfiguration FusionAuthWebhookSignatureConfigurationPtrOutput `pulumi:"signatureConfiguration"`
 	// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 	SslCertificate pulumi.StringPtrOutput `pulumi:"sslCertificate"`
+	// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+	SslCertificateKeyId pulumi.StringPtrOutput `pulumi:"sslCertificateKeyId"`
 	// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
 	TenantIds pulumi.StringArrayOutput `pulumi:"tenantIds"`
 	// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 	Url pulumi.StringOutput `pulumi:"url"`
+	// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+	WebhookId pulumi.StringOutput `pulumi:"webhookId"`
 }
 
 // NewFusionAuthWebhook registers a new resource with the given unique name, arguments, and options.
@@ -141,6 +153,8 @@ func GetFusionAuthWebhook(ctx *pulumi.Context,
 type fusionAuthWebhookState struct {
 	// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ConnectTimeout *int `pulumi:"connectTimeout"`
+	// An object that can hold any information about the Webhook that should be persisted.
+	Data map[string]string `pulumi:"data"`
 	// A description of the Webhook. This is used for display purposes only.
 	Description *string `pulumi:"description"`
 	// A mapping for the events that are enabled for this Webhook.
@@ -148,24 +162,32 @@ type fusionAuthWebhookState struct {
 	// Whether or not this Webhook is used for all events or just for specific Applications.
 	Global *bool `pulumi:"global"`
 	// An object that contains headers that are sent as part of the HTTP request for the events.
-	Headers map[string]interface{} `pulumi:"headers"`
+	Headers map[string]string `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout *int `pulumi:"readTimeout"`
+	// Configuration for webhook signing
+	SignatureConfiguration *FusionAuthWebhookSignatureConfiguration `pulumi:"signatureConfiguration"`
 	// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 	SslCertificate *string `pulumi:"sslCertificate"`
+	// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+	SslCertificateKeyId *string `pulumi:"sslCertificateKeyId"`
 	// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
 	TenantIds []string `pulumi:"tenantIds"`
 	// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 	Url *string `pulumi:"url"`
+	// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+	WebhookId *string `pulumi:"webhookId"`
 }
 
 type FusionAuthWebhookState struct {
 	// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ConnectTimeout pulumi.IntPtrInput
+	// An object that can hold any information about the Webhook that should be persisted.
+	Data pulumi.StringMapInput
 	// A description of the Webhook. This is used for display purposes only.
 	Description pulumi.StringPtrInput
 	// A mapping for the events that are enabled for this Webhook.
@@ -173,19 +195,25 @@ type FusionAuthWebhookState struct {
 	// Whether or not this Webhook is used for all events or just for specific Applications.
 	Global pulumi.BoolPtrInput
 	// An object that contains headers that are sent as part of the HTTP request for the events.
-	Headers pulumi.MapInput
+	Headers pulumi.StringMapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntPtrInput
+	// Configuration for webhook signing
+	SignatureConfiguration FusionAuthWebhookSignatureConfigurationPtrInput
 	// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 	SslCertificate pulumi.StringPtrInput
+	// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+	SslCertificateKeyId pulumi.StringPtrInput
 	// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
 	TenantIds pulumi.StringArrayInput
 	// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 	Url pulumi.StringPtrInput
+	// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+	WebhookId pulumi.StringPtrInput
 }
 
 func (FusionAuthWebhookState) ElementType() reflect.Type {
@@ -195,6 +223,8 @@ func (FusionAuthWebhookState) ElementType() reflect.Type {
 type fusionAuthWebhookArgs struct {
 	// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ConnectTimeout int `pulumi:"connectTimeout"`
+	// An object that can hold any information about the Webhook that should be persisted.
+	Data map[string]string `pulumi:"data"`
 	// A description of the Webhook. This is used for display purposes only.
 	Description *string `pulumi:"description"`
 	// A mapping for the events that are enabled for this Webhook.
@@ -202,25 +232,33 @@ type fusionAuthWebhookArgs struct {
 	// Whether or not this Webhook is used for all events or just for specific Applications.
 	Global *bool `pulumi:"global"`
 	// An object that contains headers that are sent as part of the HTTP request for the events.
-	Headers map[string]interface{} `pulumi:"headers"`
+	Headers map[string]string `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername *string `pulumi:"httpAuthenticationUsername"`
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout int `pulumi:"readTimeout"`
+	// Configuration for webhook signing
+	SignatureConfiguration *FusionAuthWebhookSignatureConfiguration `pulumi:"signatureConfiguration"`
 	// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 	SslCertificate *string `pulumi:"sslCertificate"`
+	// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+	SslCertificateKeyId *string `pulumi:"sslCertificateKeyId"`
 	// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
 	TenantIds []string `pulumi:"tenantIds"`
 	// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 	Url string `pulumi:"url"`
+	// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+	WebhookId *string `pulumi:"webhookId"`
 }
 
 // The set of arguments for constructing a FusionAuthWebhook resource.
 type FusionAuthWebhookArgs struct {
 	// The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ConnectTimeout pulumi.IntInput
+	// An object that can hold any information about the Webhook that should be persisted.
+	Data pulumi.StringMapInput
 	// A description of the Webhook. This is used for display purposes only.
 	Description pulumi.StringPtrInput
 	// A mapping for the events that are enabled for this Webhook.
@@ -228,19 +266,25 @@ type FusionAuthWebhookArgs struct {
 	// Whether or not this Webhook is used for all events or just for specific Applications.
 	Global pulumi.BoolPtrInput
 	// An object that contains headers that are sent as part of the HTTP request for the events.
-	Headers pulumi.MapInput
+	Headers pulumi.StringMapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
 	HttpAuthenticationUsername pulumi.StringPtrInput
 	// The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
 	ReadTimeout pulumi.IntInput
+	// Configuration for webhook signing
+	SignatureConfiguration FusionAuthWebhookSignatureConfigurationPtrInput
 	// An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 	SslCertificate pulumi.StringPtrInput
+	// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+	SslCertificateKeyId pulumi.StringPtrInput
 	// The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
 	TenantIds pulumi.StringArrayInput
 	// The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 	Url pulumi.StringInput
+	// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+	WebhookId pulumi.StringPtrInput
 }
 
 func (FusionAuthWebhookArgs) ElementType() reflect.Type {
@@ -335,6 +379,11 @@ func (o FusionAuthWebhookOutput) ConnectTimeout() pulumi.IntOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.IntOutput { return v.ConnectTimeout }).(pulumi.IntOutput)
 }
 
+// An object that can hold any information about the Webhook that should be persisted.
+func (o FusionAuthWebhookOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
+}
+
 // A description of the Webhook. This is used for display purposes only.
 func (o FusionAuthWebhookOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
@@ -351,8 +400,8 @@ func (o FusionAuthWebhookOutput) Global() pulumi.BoolPtrOutput {
 }
 
 // An object that contains headers that are sent as part of the HTTP request for the events.
-func (o FusionAuthWebhookOutput) Headers() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.MapOutput { return v.Headers }).(pulumi.MapOutput)
+func (o FusionAuthWebhookOutput) Headers() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringMapOutput { return v.Headers }).(pulumi.StringMapOutput)
 }
 
 // The HTTP basic authentication password that is sent as part of the HTTP request for the events.
@@ -370,9 +419,21 @@ func (o FusionAuthWebhookOutput) ReadTimeout() pulumi.IntOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.IntOutput { return v.ReadTimeout }).(pulumi.IntOutput)
 }
 
+// Configuration for webhook signing
+func (o FusionAuthWebhookOutput) SignatureConfiguration() FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhook) FusionAuthWebhookSignatureConfigurationPtrOutput {
+		return v.SignatureConfiguration
+	}).(FusionAuthWebhookSignatureConfigurationPtrOutput)
+}
+
 // An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
 func (o FusionAuthWebhookOutput) SslCertificate() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringPtrOutput { return v.SslCertificate }).(pulumi.StringPtrOutput)
+}
+
+// The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+func (o FusionAuthWebhookOutput) SslCertificateKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringPtrOutput { return v.SslCertificateKeyId }).(pulumi.StringPtrOutput)
 }
 
 // The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
@@ -383,6 +444,11 @@ func (o FusionAuthWebhookOutput) TenantIds() pulumi.StringArrayOutput {
 // The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
 func (o FusionAuthWebhookOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
+}
+
+// The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+func (o FusionAuthWebhookOutput) WebhookId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthWebhook) pulumi.StringOutput { return v.WebhookId }).(pulumi.StringOutput)
 }
 
 type FusionAuthWebhookArrayOutput struct{ *pulumi.OutputState }

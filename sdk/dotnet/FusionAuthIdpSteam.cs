@@ -55,6 +55,12 @@ namespace theogravity.Fusionauth
     public partial class FusionAuthIdpSteam : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        /// </summary>
+        [Output("apiMode")]
+        public Output<string?> ApiMode { get; private set; } = null!;
+
+        /// <summary>
         /// The configuration for each Application that the identity provider is enabled for.
         /// </summary>
         [Output("applicationConfigurations")]
@@ -167,6 +173,12 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthIdpSteamArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        /// </summary>
+        [Input("apiMode")]
+        public Input<string>? ApiMode { get; set; }
+
         [Input("applicationConfigurations")]
         private InputList<Inputs.FusionAuthIdpSteamApplicationConfigurationArgs>? _applicationConfigurations;
 
@@ -253,6 +265,12 @@ namespace theogravity.Fusionauth
 
     public sealed class FusionAuthIdpSteamState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        /// </summary>
+        [Input("apiMode")]
+        public Input<string>? ApiMode { get; set; }
+
         [Input("applicationConfigurations")]
         private InputList<Inputs.FusionAuthIdpSteamApplicationConfigurationGetArgs>? _applicationConfigurations;
 

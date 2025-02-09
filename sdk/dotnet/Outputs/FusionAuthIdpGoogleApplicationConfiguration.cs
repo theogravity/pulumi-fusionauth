@@ -39,6 +39,10 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
+        /// This is an optional Application specific override for the top level properties.
+        /// </summary>
+        public readonly Outputs.FusionAuthIdpGoogleApplicationConfigurationProperties? Properties;
+        /// <summary>
         /// This is an optional Application specific override for for the top level scope.
         /// </summary>
         public readonly string? Scope;
@@ -57,6 +61,8 @@ namespace theogravity.Fusionauth.Outputs
 
             bool? enabled,
 
+            Outputs.FusionAuthIdpGoogleApplicationConfigurationProperties? properties,
+
             string? scope)
         {
             ApplicationId = applicationId;
@@ -65,6 +71,7 @@ namespace theogravity.Fusionauth.Outputs
             ClientSecret = clientSecret;
             CreateRegistration = createRegistration;
             Enabled = enabled;
+            Properties = properties;
             Scope = scope;
         }
     }

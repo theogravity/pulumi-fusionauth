@@ -75,6 +75,38 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetTenantResult> Invoke(GetTenantInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Tenant Resource
+        /// 
+        /// A FusionAuth Tenant is a named object that represents a discrete namespace for Users, Applications and Groups. A user is unique by email address or username within a tenant.
+        /// 
+        /// Tenants may be useful to support a multi-tenant application where you wish to use a single instance of FusionAuth but require the ability to have duplicate users across the tenants in your own application. In this scenario a user may exist multiple times with the same email address and different passwords across tenants.
+        /// 
+        /// Tenants may also be useful in a test or staging environment to allow multiple users to call APIs and create and modify users without possibility of collision.
+        /// 
+        /// [Tenants API](https://fusionauth.io/docs/v1/tech/apis/tenants)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var @default = Fusionauth.GetTenant.Invoke(new()
+        ///     {
+        ///         Name = "Default",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetTenantResult> Invoke(GetTenantInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetTenantResult>("fusionauth:index/getTenant:getTenant", args ?? new GetTenantInvokeArgs(), options.WithDefaults());
     }
 
 

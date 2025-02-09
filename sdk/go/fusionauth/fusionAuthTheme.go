@@ -112,6 +112,8 @@ type FusionAuthTheme struct {
 	AccountWebauthnIndex pulumi.StringOutput `pulumi:"accountWebauthnIndex"`
 	// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
 	ConfirmationRequired pulumi.StringOutput `pulumi:"confirmationRequired"`
+	// An object that can hold any information about the Theme that should be persisted.
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 	//
 	// > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -136,7 +138,7 @@ type FusionAuthTheme struct {
 	// A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
 	Index pulumi.StringOutput `pulumi:"index"`
 	// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-	LocalizedMessages pulumi.MapOutput `pulumi:"localizedMessages"`
+	LocalizedMessages pulumi.StringMapOutput `pulumi:"localizedMessages"`
 	// A unique name for the Theme.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
@@ -207,10 +209,13 @@ type FusionAuthTheme struct {
 	RegistrationVerify pulumi.StringOutput `pulumi:"registrationVerify"`
 	// A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
 	Samlv2Logout pulumi.StringOutput `pulumi:"samlv2Logout"`
-	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+	// and stylesheet from the source Theme will be copied to the new Theme.
 	SourceThemeId pulumi.StringPtrOutput `pulumi:"sourceThemeId"`
 	// A CSS stylesheet used to style the templates.
 	Stylesheet pulumi.StringOutput `pulumi:"stylesheet"`
+	// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+	ThemeId pulumi.StringOutput `pulumi:"themeId"`
 	// An optional FreeMarker template that contains the unauthorized page.
 	Unauthorized pulumi.StringOutput `pulumi:"unauthorized"`
 }
@@ -263,6 +268,8 @@ type fusionAuthThemeState struct {
 	AccountWebauthnIndex *string `pulumi:"accountWebauthnIndex"`
 	// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
 	ConfirmationRequired *string `pulumi:"confirmationRequired"`
+	// An object that can hold any information about the Theme that should be persisted.
+	Data map[string]string `pulumi:"data"`
 	// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 	//
 	// > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -287,7 +294,7 @@ type fusionAuthThemeState struct {
 	// A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
 	Index *string `pulumi:"index"`
 	// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-	LocalizedMessages map[string]interface{} `pulumi:"localizedMessages"`
+	LocalizedMessages map[string]string `pulumi:"localizedMessages"`
 	// A unique name for the Theme.
 	Name *string `pulumi:"name"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
@@ -358,10 +365,13 @@ type fusionAuthThemeState struct {
 	RegistrationVerify *string `pulumi:"registrationVerify"`
 	// A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
 	Samlv2Logout *string `pulumi:"samlv2Logout"`
-	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+	// and stylesheet from the source Theme will be copied to the new Theme.
 	SourceThemeId *string `pulumi:"sourceThemeId"`
 	// A CSS stylesheet used to style the templates.
 	Stylesheet *string `pulumi:"stylesheet"`
+	// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+	ThemeId *string `pulumi:"themeId"`
 	// An optional FreeMarker template that contains the unauthorized page.
 	Unauthorized *string `pulumi:"unauthorized"`
 }
@@ -385,6 +395,8 @@ type FusionAuthThemeState struct {
 	AccountWebauthnIndex pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
 	ConfirmationRequired pulumi.StringPtrInput
+	// An object that can hold any information about the Theme that should be persisted.
+	Data pulumi.StringMapInput
 	// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 	//
 	// > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -409,7 +421,7 @@ type FusionAuthThemeState struct {
 	// A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
 	Index pulumi.StringPtrInput
 	// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-	LocalizedMessages pulumi.MapInput
+	LocalizedMessages pulumi.StringMapInput
 	// A unique name for the Theme.
 	Name pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
@@ -480,10 +492,13 @@ type FusionAuthThemeState struct {
 	RegistrationVerify pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
 	Samlv2Logout pulumi.StringPtrInput
-	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+	// and stylesheet from the source Theme will be copied to the new Theme.
 	SourceThemeId pulumi.StringPtrInput
 	// A CSS stylesheet used to style the templates.
 	Stylesheet pulumi.StringPtrInput
+	// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+	ThemeId pulumi.StringPtrInput
 	// An optional FreeMarker template that contains the unauthorized page.
 	Unauthorized pulumi.StringPtrInput
 }
@@ -511,6 +526,8 @@ type fusionAuthThemeArgs struct {
 	AccountWebauthnIndex *string `pulumi:"accountWebauthnIndex"`
 	// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
 	ConfirmationRequired *string `pulumi:"confirmationRequired"`
+	// An object that can hold any information about the Theme that should be persisted.
+	Data map[string]string `pulumi:"data"`
 	// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 	//
 	// > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -535,7 +552,7 @@ type fusionAuthThemeArgs struct {
 	// A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
 	Index *string `pulumi:"index"`
 	// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-	LocalizedMessages map[string]interface{} `pulumi:"localizedMessages"`
+	LocalizedMessages map[string]string `pulumi:"localizedMessages"`
 	// A unique name for the Theme.
 	Name *string `pulumi:"name"`
 	// A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
@@ -606,10 +623,13 @@ type fusionAuthThemeArgs struct {
 	RegistrationVerify *string `pulumi:"registrationVerify"`
 	// A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
 	Samlv2Logout *string `pulumi:"samlv2Logout"`
-	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+	// and stylesheet from the source Theme will be copied to the new Theme.
 	SourceThemeId *string `pulumi:"sourceThemeId"`
 	// A CSS stylesheet used to style the templates.
 	Stylesheet *string `pulumi:"stylesheet"`
+	// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+	ThemeId *string `pulumi:"themeId"`
 	// An optional FreeMarker template that contains the unauthorized page.
 	Unauthorized *string `pulumi:"unauthorized"`
 }
@@ -634,6 +654,8 @@ type FusionAuthThemeArgs struct {
 	AccountWebauthnIndex pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /confirmation-required path. This page is displayed when a user attempts to complete an email based workflow that did not begin in the same browser. For example, if the user starts a forgot password workflow, and then opens the link in a separate browser the user will be shown this panel.
 	ConfirmationRequired pulumi.StringPtrInput
+	// An object that can hold any information about the Theme that should be persisted.
+	Data pulumi.StringMapInput
 	// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 	//
 	// > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -658,7 +680,7 @@ type FusionAuthThemeArgs struct {
 	// A FreeMarker template that is rendered when the user requests the / path. This is the root landing page. This page is available to unauthenticated users and will be displayed whenever someone navigates to the FusionAuth host’s root page. Prior to version 1.27.0, navigating to this URL would redirect to /admin and would subsequently render the FusionAuth admin login page.
 	Index pulumi.StringPtrInput
 	// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-	LocalizedMessages pulumi.MapInput
+	LocalizedMessages pulumi.StringMapInput
 	// A unique name for the Theme.
 	Name pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /oauth2/authorize path. This is the main login page for FusionAuth and is used for all interactive OAuth2 and OpenID Connect workflows.
@@ -729,10 +751,13 @@ type FusionAuthThemeArgs struct {
 	RegistrationVerify pulumi.StringPtrInput
 	// A FreeMarker template that is rendered when the user requests the /samlv2/logout path. This page is used if the user initiates a SAML logout. This page causes the user to be logged out of all associated applications via a front-channel mechanism before being redirected.
 	Samlv2Logout pulumi.StringPtrInput
-	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+	// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+	// and stylesheet from the source Theme will be copied to the new Theme.
 	SourceThemeId pulumi.StringPtrInput
 	// A CSS stylesheet used to style the templates.
 	Stylesheet pulumi.StringPtrInput
+	// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+	ThemeId pulumi.StringPtrInput
 	// An optional FreeMarker template that contains the unauthorized page.
 	Unauthorized pulumi.StringPtrInput
 }
@@ -869,6 +894,11 @@ func (o FusionAuthThemeOutput) ConfirmationRequired() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.ConfirmationRequired }).(pulumi.StringOutput)
 }
 
+// An object that can hold any information about the Theme that should be persisted.
+func (o FusionAuthThemeOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
+}
+
 // A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
 //
 // > **Note:** `defaultMessages` Is Required if not copying an existing Theme.
@@ -917,8 +947,8 @@ func (o FusionAuthThemeOutput) Index() pulumi.StringOutput {
 }
 
 // A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
-func (o FusionAuthThemeOutput) LocalizedMessages() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthTheme) pulumi.MapOutput { return v.LocalizedMessages }).(pulumi.MapOutput)
+func (o FusionAuthThemeOutput) LocalizedMessages() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringMapOutput { return v.LocalizedMessages }).(pulumi.StringMapOutput)
 }
 
 // A unique name for the Theme.
@@ -1087,7 +1117,8 @@ func (o FusionAuthThemeOutput) Samlv2Logout() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.Samlv2Logout }).(pulumi.StringOutput)
 }
 
-// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+// and stylesheet from the source Theme will be copied to the new Theme.
 func (o FusionAuthThemeOutput) SourceThemeId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringPtrOutput { return v.SourceThemeId }).(pulumi.StringPtrOutput)
 }
@@ -1095,6 +1126,11 @@ func (o FusionAuthThemeOutput) SourceThemeId() pulumi.StringPtrOutput {
 // A CSS stylesheet used to style the templates.
 func (o FusionAuthThemeOutput) Stylesheet() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.Stylesheet }).(pulumi.StringOutput)
+}
+
+// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+func (o FusionAuthThemeOutput) ThemeId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthTheme) pulumi.StringOutput { return v.ThemeId }).(pulumi.StringOutput)
 }
 
 // An optional FreeMarker template that contains the unauthorized page.

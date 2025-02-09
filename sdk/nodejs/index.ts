@@ -15,6 +15,11 @@ export type FusionAuthApplication = import("./fusionAuthApplication").FusionAuth
 export const FusionAuthApplication: typeof import("./fusionAuthApplication").FusionAuthApplication = null as any;
 utilities.lazyLoad(exports, ["FusionAuthApplication"], () => require("./fusionAuthApplication"));
 
+export { FusionAuthApplicationOAuthScopeArgs, FusionAuthApplicationOAuthScopeState } from "./fusionAuthApplicationOAuthScope";
+export type FusionAuthApplicationOAuthScope = import("./fusionAuthApplicationOAuthScope").FusionAuthApplicationOAuthScope;
+export const FusionAuthApplicationOAuthScope: typeof import("./fusionAuthApplicationOAuthScope").FusionAuthApplicationOAuthScope = null as any;
+utilities.lazyLoad(exports, ["FusionAuthApplicationOAuthScope"], () => require("./fusionAuthApplicationOAuthScope"));
+
 export { FusionAuthApplicationRoleArgs, FusionAuthApplicationRoleState } from "./fusionAuthApplicationRole";
 export type FusionAuthApplicationRole = import("./fusionAuthApplicationRole").FusionAuthApplicationRole;
 export const FusionAuthApplicationRole: typeof import("./fusionAuthApplicationRole").FusionAuthApplicationRole = null as any;
@@ -175,6 +180,11 @@ export type FusionAuthUserAction = import("./fusionAuthUserAction").FusionAuthUs
 export const FusionAuthUserAction: typeof import("./fusionAuthUserAction").FusionAuthUserAction = null as any;
 utilities.lazyLoad(exports, ["FusionAuthUserAction"], () => require("./fusionAuthUserAction"));
 
+export { FusionAuthUserGroupMembershipArgs, FusionAuthUserGroupMembershipState } from "./fusionAuthUserGroupMembership";
+export type FusionAuthUserGroupMembership = import("./fusionAuthUserGroupMembership").FusionAuthUserGroupMembership;
+export const FusionAuthUserGroupMembership: typeof import("./fusionAuthUserGroupMembership").FusionAuthUserGroupMembership = null as any;
+utilities.lazyLoad(exports, ["FusionAuthUserGroupMembership"], () => require("./fusionAuthUserGroupMembership"));
+
 export { FusionAuthWebhookArgs, FusionAuthWebhookState } from "./fusionAuthWebhook";
 export type FusionAuthWebhook = import("./fusionAuthWebhook").FusionAuthWebhook;
 export const FusionAuthWebhook: typeof import("./fusionAuthWebhook").FusionAuthWebhook = null as any;
@@ -184,6 +194,11 @@ export { GetApplicationArgs, GetApplicationResult, GetApplicationOutputArgs } fr
 export const getApplication: typeof import("./getApplication").getApplication = null as any;
 export const getApplicationOutput: typeof import("./getApplication").getApplicationOutput = null as any;
 utilities.lazyLoad(exports, ["getApplication","getApplicationOutput"], () => require("./getApplication"));
+
+export { GetApplicationOAuthScopeArgs, GetApplicationOAuthScopeResult, GetApplicationOAuthScopeOutputArgs } from "./getApplicationOAuthScope";
+export const getApplicationOAuthScope: typeof import("./getApplicationOAuthScope").getApplicationOAuthScope = null as any;
+export const getApplicationOAuthScopeOutput: typeof import("./getApplicationOAuthScope").getApplicationOAuthScopeOutput = null as any;
+utilities.lazyLoad(exports, ["getApplicationOAuthScope","getApplicationOAuthScopeOutput"], () => require("./getApplicationOAuthScope"));
 
 export { GetApplicationRoleArgs, GetApplicationRoleResult, GetApplicationRoleOutputArgs } from "./getApplicationRole";
 export const getApplicationRole: typeof import("./getApplicationRole").getApplicationRole = null as any;
@@ -225,6 +240,11 @@ export const getUser: typeof import("./getUser").getUser = null as any;
 export const getUserOutput: typeof import("./getUser").getUserOutput = null as any;
 utilities.lazyLoad(exports, ["getUser","getUserOutput"], () => require("./getUser"));
 
+export { GetUserGroupMembershipArgs, GetUserGroupMembershipResult, GetUserGroupMembershipOutputArgs } from "./getUserGroupMembership";
+export const getUserGroupMembership: typeof import("./getUserGroupMembership").getUserGroupMembership = null as any;
+export const getUserGroupMembershipOutput: typeof import("./getUserGroupMembership").getUserGroupMembershipOutput = null as any;
+utilities.lazyLoad(exports, ["getUserGroupMembership","getUserGroupMembershipOutput"], () => require("./getUserGroupMembership"));
+
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
@@ -248,6 +268,8 @@ const _module = {
                 return new FusionAuthApiKey(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthApplication:FusionAuthApplication":
                 return new FusionAuthApplication(name, <any>undefined, { urn })
+            case "fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope":
+                return new FusionAuthApplicationOAuthScope(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole":
                 return new FusionAuthApplicationRole(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthEMail:FusionAuthEMail":
@@ -312,6 +334,8 @@ const _module = {
                 return new FusionAuthUser(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthUserAction:FusionAuthUserAction":
                 return new FusionAuthUserAction(name, <any>undefined, { urn })
+            case "fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership":
+                return new FusionAuthUserGroupMembership(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook":
                 return new FusionAuthWebhook(name, <any>undefined, { urn })
             default:
@@ -321,6 +345,7 @@ const _module = {
 };
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApiKey", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApplication", _module)
+pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApplicationOAuthScope", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApplicationRole", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthEMail", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthEntity", _module)
@@ -353,6 +378,7 @@ pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthTenant", _m
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthTheme", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUser", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUserAction", _module)
+pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUserGroupMembership", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthWebhook", _module)
 pulumi.runtime.registerResourcePackage("fusionauth", {
     version: utilities.getVersion(),

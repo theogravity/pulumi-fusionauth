@@ -79,6 +79,8 @@ type FusionAuthIdpGoogle struct {
 	LinkingStrategy pulumi.StringOutput `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	LoginMethod pulumi.StringPtrOutput `pulumi:"loginMethod"`
+	// An object to hold configuration parameters for the Google Identity Services API.
+	Properties FusionAuthIdpGooglePropertiesPtrOutput `pulumi:"properties"`
 	// The top-level scope that you are requesting from Google.
 	Scope pulumi.StringPtrOutput `pulumi:"scope"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -146,6 +148,8 @@ type fusionAuthIdpGoogleState struct {
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	LoginMethod *string `pulumi:"loginMethod"`
+	// An object to hold configuration parameters for the Google Identity Services API.
+	Properties *FusionAuthIdpGoogleProperties `pulumi:"properties"`
 	// The top-level scope that you are requesting from Google.
 	Scope *string `pulumi:"scope"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -171,6 +175,8 @@ type FusionAuthIdpGoogleState struct {
 	LinkingStrategy pulumi.StringPtrInput
 	// The login method to use for this Identity Provider.
 	LoginMethod pulumi.StringPtrInput
+	// An object to hold configuration parameters for the Google Identity Services API.
+	Properties FusionAuthIdpGooglePropertiesPtrInput
 	// The top-level scope that you are requesting from Google.
 	Scope pulumi.StringPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -200,6 +206,8 @@ type fusionAuthIdpGoogleArgs struct {
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	LoginMethod *string `pulumi:"loginMethod"`
+	// An object to hold configuration parameters for the Google Identity Services API.
+	Properties *FusionAuthIdpGoogleProperties `pulumi:"properties"`
 	// The top-level scope that you are requesting from Google.
 	Scope *string `pulumi:"scope"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -226,6 +234,8 @@ type FusionAuthIdpGoogleArgs struct {
 	LinkingStrategy pulumi.StringPtrInput
 	// The login method to use for this Identity Provider.
 	LoginMethod pulumi.StringPtrInput
+	// An object to hold configuration parameters for the Google Identity Services API.
+	Properties FusionAuthIdpGooglePropertiesPtrInput
 	// The top-level scope that you are requesting from Google.
 	Scope pulumi.StringPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -364,6 +374,11 @@ func (o FusionAuthIdpGoogleOutput) LinkingStrategy() pulumi.StringOutput {
 // The login method to use for this Identity Provider.
 func (o FusionAuthIdpGoogleOutput) LoginMethod() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpGoogle) pulumi.StringPtrOutput { return v.LoginMethod }).(pulumi.StringPtrOutput)
+}
+
+// An object to hold configuration parameters for the Google Identity Services API.
+func (o FusionAuthIdpGoogleOutput) Properties() FusionAuthIdpGooglePropertiesPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogle) FusionAuthIdpGooglePropertiesPtrOutput { return v.Properties }).(FusionAuthIdpGooglePropertiesPtrOutput)
 }
 
 // The top-level scope that you are requesting from Google.

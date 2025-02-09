@@ -67,6 +67,34 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetEMailResult> Invoke(GetEMailInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetEMailResult>("fusionauth:index/getEMail:getEMail", args ?? new GetEMailInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Email Resource
+        /// 
+        /// This data source is used to fetch information about a specific Email Template.
+        /// 
+        /// [Emails API](https://fusionauth.io/docs/v1/tech/apis/emails)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var defaultBreachedPassword = Fusionauth.GetEMail.Invoke(new()
+        ///     {
+        ///         Name = "[FusionAuth Default] Breached Password Notification",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetEMailResult> Invoke(GetEMailInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetEMailResult>("fusionauth:index/getEMail:getEMail", args ?? new GetEMailInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -141,19 +169,19 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The From Name used when sending emails to users who speak other languages.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> LocalizedFromNames;
+        public readonly ImmutableDictionary<string, string> LocalizedFromNames;
         /// <summary>
         /// The HTML Email Template used when sending emails to users who speak other languages.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> LocalizedHtmlTemplates;
+        public readonly ImmutableDictionary<string, string> LocalizedHtmlTemplates;
         /// <summary>
         /// The Subject used when sending emails to users who speak other languages.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> LocalizedSubjects;
+        public readonly ImmutableDictionary<string, string> LocalizedSubjects;
         /// <summary>
         /// The Text Email Template used when sending emails to users who speak other languages.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> LocalizedTextTemplates;
+        public readonly ImmutableDictionary<string, string> LocalizedTextTemplates;
         public readonly string Name;
 
         [OutputConstructor]
@@ -170,13 +198,13 @@ namespace theogravity.Fusionauth
 
             string id,
 
-            ImmutableDictionary<string, object> localizedFromNames,
+            ImmutableDictionary<string, string> localizedFromNames,
 
-            ImmutableDictionary<string, object> localizedHtmlTemplates,
+            ImmutableDictionary<string, string> localizedHtmlTemplates,
 
-            ImmutableDictionary<string, object> localizedSubjects,
+            ImmutableDictionary<string, string> localizedSubjects,
 
-            ImmutableDictionary<string, object> localizedTextTemplates,
+            ImmutableDictionary<string, string> localizedTextTemplates,
 
             string name)
         {

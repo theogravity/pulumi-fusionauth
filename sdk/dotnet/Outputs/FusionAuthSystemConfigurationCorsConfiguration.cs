@@ -31,6 +31,10 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly ImmutableArray<string> AllowedOrigins;
         /// <summary>
+        /// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+        /// </summary>
+        public readonly bool? Debug;
+        /// <summary>
         /// Whether the FusionAuth CORS filter will process requests made to FusionAuth.
         /// </summary>
         public readonly bool? Enabled;
@@ -53,6 +57,8 @@ namespace theogravity.Fusionauth.Outputs
 
             ImmutableArray<string> allowedOrigins,
 
+            bool? debug,
+
             bool? enabled,
 
             ImmutableArray<string> exposedHeaders,
@@ -63,6 +69,7 @@ namespace theogravity.Fusionauth.Outputs
             AllowedHeaders = allowedHeaders;
             AllowedMethods = allowedMethods;
             AllowedOrigins = allowedOrigins;
+            Debug = debug;
             Enabled = enabled;
             ExposedHeaders = exposedHeaders;
             PreflightMaxAgeInSeconds = preflightMaxAgeInSeconds;

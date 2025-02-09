@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -30,7 +35,7 @@ class FusionAuthIdpAppleArgs:
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleTenantConfigurationArgs']]]] = None):
         """
         The set of arguments for constructing a FusionAuthIdpApple resource.
-        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        :param pulumi.Input[str] bundle_id: The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] key_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
         :param pulumi.Input[str] services_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
@@ -67,7 +72,7 @@ class FusionAuthIdpAppleArgs:
     @pulumi.getter(name="bundleId")
     def bundle_id(self) -> pulumi.Input[str]:
         """
-        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         """
         return pulumi.get(self, "bundle_id")
 
@@ -226,7 +231,7 @@ class _FusionAuthIdpAppleState:
         """
         Input properties used for looking up and filtering FusionAuthIdpApple resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpAppleApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        :param pulumi.Input[str] bundle_id: The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -279,7 +284,7 @@ class _FusionAuthIdpAppleState:
     @pulumi.getter(name="bundleId")
     def bundle_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         """
         return pulumi.get(self, "bundle_id")
 
@@ -413,7 +418,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleApplicationConfigurationArgs', 'FusionAuthIdpAppleApplicationConfigurationArgsDict']]]]] = None,
                  bundle_id: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -424,12 +429,12 @@ class FusionAuthIdpApple(pulumi.CustomResource):
                  scope: Optional[pulumi.Input[str]] = None,
                  services_id: Optional[pulumi.Input[str]] = None,
                  team_id: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleTenantConfigurationArgs', 'FusionAuthIdpAppleTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         """
         ## # Apple Identity Provider Resource
 
-        The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apples’s /auth/token API to load additional details about the user and store them in FusionAuth.
+        The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apple’s /auth/token API to load additional details about the user and store them in FusionAuth.
 
         FusionAuth will also store the Apple refresh_token that is returned from the /auth/token endpoint in the UserRegistration object inside the tokens Map. This Map stores the tokens from the various identity providers so that you can use them in your application to call their APIs.
 
@@ -442,11 +447,11 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         apple = fusionauth.FusionAuthIdpApple("apple",
-            application_configurations=[fusionauth.FusionAuthIdpAppleApplicationConfigurationArgs(
-                application_id="1c212e59-0d0e-6b1a-ad48-f4f92793be32",
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": "1c212e59-0d0e-6b1a-ad48-f4f92793be32",
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Sign in with Apple",
             debug=False,
             enabled=True,
@@ -458,8 +463,8 @@ class FusionAuthIdpApple(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleApplicationConfigurationArgs', 'FusionAuthIdpAppleApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -469,7 +474,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         :param pulumi.Input[str] scope: The top-level space separated scope that you are requesting from Apple.
         :param pulumi.Input[str] services_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
         :param pulumi.Input[str] team_id: The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleTenantConfigurationArgs', 'FusionAuthIdpAppleTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
     @overload
@@ -480,7 +485,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         """
         ## # Apple Identity Provider Resource
 
-        The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apples’s /auth/token API to load additional details about the user and store them in FusionAuth.
+        The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apple’s /auth/token API to load additional details about the user and store them in FusionAuth.
 
         FusionAuth will also store the Apple refresh_token that is returned from the /auth/token endpoint in the UserRegistration object inside the tokens Map. This Map stores the tokens from the various identity providers so that you can use them in your application to call their APIs.
 
@@ -493,11 +498,11 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         apple = fusionauth.FusionAuthIdpApple("apple",
-            application_configurations=[fusionauth.FusionAuthIdpAppleApplicationConfigurationArgs(
-                application_id="1c212e59-0d0e-6b1a-ad48-f4f92793be32",
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": "1c212e59-0d0e-6b1a-ad48-f4f92793be32",
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Sign in with Apple",
             debug=False,
             enabled=True,
@@ -522,7 +527,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleApplicationConfigurationArgs', 'FusionAuthIdpAppleApplicationConfigurationArgsDict']]]]] = None,
                  bundle_id: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -533,7 +538,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
                  scope: Optional[pulumi.Input[str]] = None,
                  services_id: Optional[pulumi.Input[str]] = None,
                  team_id: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleTenantConfigurationArgs', 'FusionAuthIdpAppleTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -575,7 +580,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleApplicationConfigurationArgs', 'FusionAuthIdpAppleApplicationConfigurationArgsDict']]]]] = None,
             bundle_id: Optional[pulumi.Input[str]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
@@ -586,7 +591,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
             scope: Optional[pulumi.Input[str]] = None,
             services_id: Optional[pulumi.Input[str]] = None,
             team_id: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpApple':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleTenantConfigurationArgs', 'FusionAuthIdpAppleTenantConfigurationArgsDict']]]]] = None) -> 'FusionAuthIdpApple':
         """
         Get an existing FusionAuthIdpApple resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -594,8 +599,8 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[str] bundle_id: The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleApplicationConfigurationArgs', 'FusionAuthIdpAppleApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] bundle_id: The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -605,7 +610,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
         :param pulumi.Input[str] scope: The top-level space separated scope that you are requesting from Apple.
         :param pulumi.Input[str] services_id: The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
         :param pulumi.Input[str] team_id: The Apple App ID Prefix, or Team ID found in your Apple Developer Account which has been configured for Sign in with Apple.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpAppleTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpAppleTenantConfigurationArgs', 'FusionAuthIdpAppleTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -637,7 +642,7 @@ class FusionAuthIdpApple(pulumi.CustomResource):
     @pulumi.getter(name="bundleId")
     def bundle_id(self) -> pulumi.Output[str]:
         """
-        The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         """
         return pulumi.get(self, "bundle_id")
 

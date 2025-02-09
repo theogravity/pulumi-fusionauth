@@ -60,7 +60,7 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the User for this registration that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
         /// <summary>
         /// Determines if FusionAuth should generate an Authentication Token for this registration.
@@ -73,6 +73,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("preferredLanguages")]
         public Output<ImmutableArray<string>> PreferredLanguages { get; private set; } = null!;
+
+        /// <summary>
+        /// The Id of this registration. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Output("registrationId")]
+        public Output<string> RegistrationId { get; private set; } = null!;
 
         /// <summary>
         /// The list of roles that the User has for this registration.
@@ -178,14 +184,14 @@ namespace theogravity.Fusionauth
         }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the User for this registration that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -206,6 +212,12 @@ namespace theogravity.Fusionauth
             get => _preferredLanguages ?? (_preferredLanguages = new InputList<string>());
             set => _preferredLanguages = value;
         }
+
+        /// <summary>
+        /// The Id of this registration. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("registrationId")]
+        public Input<string>? RegistrationId { get; set; }
 
         [Input("roles")]
         private InputList<string>? _roles;
@@ -274,14 +286,14 @@ namespace theogravity.Fusionauth
         }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the User for this registration that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -302,6 +314,12 @@ namespace theogravity.Fusionauth
             get => _preferredLanguages ?? (_preferredLanguages = new InputList<string>());
             set => _preferredLanguages = value;
         }
+
+        /// <summary>
+        /// The Id of this registration. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("registrationId")]
+        public Input<string>? RegistrationId { get; set; }
 
         [Input("roles")]
         private InputList<string>? _roles;
