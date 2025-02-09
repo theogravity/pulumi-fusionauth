@@ -31,7 +31,7 @@ jobs:
         node-version: ${{matrix.nodeversion}}
         registry-url: https://registry.npmjs.org
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{matrix.pythonversion}}
     - name: Update pulumi-terraform-bridge
@@ -82,7 +82,7 @@ jobs:
         nodeversion:
         - 18.x
         pythonversion:
-        - "3.7"
+        - "3.8.18"
 name: Update pulumi-terraform-bridge
 on:
   workflow_dispatch:

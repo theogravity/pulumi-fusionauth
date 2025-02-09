@@ -49,7 +49,7 @@ jobs:
       with:
         dotnet-version: ${{matrix.dotnetversion}}
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{matrix.pythonversion}}
     - name: Download provider + tfgen binaries
@@ -94,7 +94,7 @@ jobs:
         nodeversion:
         - 18.x
         pythonversion:
-        - "3.7"
+        - "3.8.18"
   lint:
     container: golangci/golangci-lint:v1.59.1
     name: lint
@@ -203,7 +203,7 @@ jobs:
         nodeversion:
         - 18.x
         pythonversion:
-        - "3.7"
+        - "3.8.18"
   test:
     name: test
     needs: build_sdk
@@ -239,7 +239,7 @@ jobs:
       with:
         dotnet-version: ${{matrix.dotnetversion}}
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{matrix.pythonversion}}
     - name: Download provider + tfgen binaries
@@ -294,7 +294,7 @@ jobs:
         nodeversion:
         - 18.x
         pythonversion:
-        - "3.7"
+        - "3.8.18"
 name: main
 on:
   push:
