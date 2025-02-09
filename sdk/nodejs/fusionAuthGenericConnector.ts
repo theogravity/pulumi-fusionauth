@@ -74,7 +74,7 @@ export class FusionAuthGenericConnector extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Connector that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
      */
@@ -82,7 +82,7 @@ export class FusionAuthGenericConnector extends pulumi.CustomResource {
     /**
      * An object that can hold HTTPHeader key and value pairs.
      */
-    public readonly headers!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly headers!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */
@@ -171,7 +171,7 @@ export interface FusionAuthGenericConnectorState {
     /**
      * An object that can hold any information about the Connector that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
      */
@@ -179,7 +179,7 @@ export interface FusionAuthGenericConnectorState {
     /**
      * An object that can hold HTTPHeader key and value pairs.
      */
-    headers?: pulumi.Input<{[key: string]: any}>;
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */
@@ -217,7 +217,7 @@ export interface FusionAuthGenericConnectorArgs {
     /**
      * An object that can hold any information about the Connector that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
      */
@@ -225,7 +225,7 @@ export interface FusionAuthGenericConnectorArgs {
     /**
      * An object that can hold HTTPHeader key and value pairs.
      */
-    headers?: pulumi.Input<{[key: string]: any}>;
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTTP basic authentication password that is sent as part of the HTTP request for the events.
      */

@@ -20,6 +20,12 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration>> ApplicationConfigurations { get; private set; } = null!;
 
         /// <summary>
+        /// The assertion configuration for the SAML v2 identity provider.
+        /// </summary>
+        [Output("assertionConfiguration")]
+        public Output<Outputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration?> AssertionConfiguration { get; private set; } = null!;
+
+        /// <summary>
         /// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
         /// an Event Log will be created.
         /// </summary>
@@ -85,11 +91,26 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration>> TenantConfigurations { get; private set; } = null!;
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the `email_claim` will be used when linking user.
+        /// </summary>
+        [Output("uniqueIdClaim")]
+        public Output<string?> UniqueIdClaim { get; private set; } = null!;
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
         /// processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Output("useNameForEmail")]
         public Output<bool?> UseNameForEmail { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        /// value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        /// LinkByUsernameForExistingUser
+        /// </summary>
+        [Output("usernameClaim")]
+        public Output<string?> UsernameClaim { get; private set; } = null!;
 
 
         /// <summary>
@@ -149,6 +170,12 @@ namespace theogravity.Fusionauth
             get => _applicationConfigurations ?? (_applicationConfigurations = new InputList<Inputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs>());
             set => _applicationConfigurations = value;
         }
+
+        /// <summary>
+        /// The assertion configuration for the SAML v2 identity provider.
+        /// </summary>
+        [Input("assertionConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs>? AssertionConfiguration { get; set; }
 
         /// <summary>
         /// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
@@ -222,11 +249,26 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the `email_claim` will be used when linking user.
+        /// </summary>
+        [Input("uniqueIdClaim")]
+        public Input<string>? UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
         /// processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Input("useNameForEmail")]
         public Input<bool>? UseNameForEmail { get; set; }
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        /// value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        /// LinkByUsernameForExistingUser
+        /// </summary>
+        [Input("usernameClaim")]
+        public Input<string>? UsernameClaim { get; set; }
 
         public FusionAuthIdpSamlV2IdpInitiatedArgs()
         {
@@ -247,6 +289,12 @@ namespace theogravity.Fusionauth
             get => _applicationConfigurations ?? (_applicationConfigurations = new InputList<Inputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationGetArgs>());
             set => _applicationConfigurations = value;
         }
+
+        /// <summary>
+        /// The assertion configuration for the SAML v2 identity provider.
+        /// </summary>
+        [Input("assertionConfiguration")]
+        public Input<Inputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationGetArgs>? AssertionConfiguration { get; set; }
 
         /// <summary>
         /// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
@@ -320,11 +368,26 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
+        /// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        /// the `email_claim` will be used when linking user.
+        /// </summary>
+        [Input("uniqueIdClaim")]
+        public Input<string>? UniqueIdClaim { get; set; }
+
+        /// <summary>
         /// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
         /// processing. If this is false, then the `email_claim` property must be set.
         /// </summary>
         [Input("useNameForEmail")]
         public Input<bool>? UseNameForEmail { get; set; }
+
+        /// <summary>
+        /// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        /// value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        /// LinkByUsernameForExistingUser
+        /// </summary>
+        [Input("usernameClaim")]
+        public Input<string>? UsernameClaim { get; set; }
 
         public FusionAuthIdpSamlV2IdpInitiatedState()
         {

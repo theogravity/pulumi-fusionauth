@@ -105,6 +105,8 @@ type FusionAuthIdpOpenIdConnect struct {
 	Oauth2ClientSecret pulumi.StringPtrOutput `pulumi:"oauth2ClientSecret"`
 	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 	Oauth2EmailClaim pulumi.StringPtrOutput `pulumi:"oauth2EmailClaim"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+	Oauth2EmailVerifiedClaim pulumi.StringPtrOutput `pulumi:"oauth2EmailVerifiedClaim"`
 	// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
 	Oauth2Issuer pulumi.StringPtrOutput `pulumi:"oauth2Issuer"`
 	// The top-level scope that you are requesting from the OpenID Connect identity provider.
@@ -196,6 +198,8 @@ type fusionAuthIdpOpenIdConnectState struct {
 	Oauth2ClientSecret *string `pulumi:"oauth2ClientSecret"`
 	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 	Oauth2EmailClaim *string `pulumi:"oauth2EmailClaim"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+	Oauth2EmailVerifiedClaim *string `pulumi:"oauth2EmailVerifiedClaim"`
 	// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
 	Oauth2Issuer *string `pulumi:"oauth2Issuer"`
 	// The top-level scope that you are requesting from the OpenID Connect identity provider.
@@ -245,6 +249,8 @@ type FusionAuthIdpOpenIdConnectState struct {
 	Oauth2ClientSecret pulumi.StringPtrInput
 	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 	Oauth2EmailClaim pulumi.StringPtrInput
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+	Oauth2EmailVerifiedClaim pulumi.StringPtrInput
 	// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
 	Oauth2Issuer pulumi.StringPtrInput
 	// The top-level scope that you are requesting from the OpenID Connect identity provider.
@@ -298,6 +304,8 @@ type fusionAuthIdpOpenIdConnectArgs struct {
 	Oauth2ClientSecret *string `pulumi:"oauth2ClientSecret"`
 	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 	Oauth2EmailClaim *string `pulumi:"oauth2EmailClaim"`
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+	Oauth2EmailVerifiedClaim *string `pulumi:"oauth2EmailVerifiedClaim"`
 	// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
 	Oauth2Issuer *string `pulumi:"oauth2Issuer"`
 	// The top-level scope that you are requesting from the OpenID Connect identity provider.
@@ -348,6 +356,8 @@ type FusionAuthIdpOpenIdConnectArgs struct {
 	Oauth2ClientSecret pulumi.StringPtrInput
 	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 	Oauth2EmailClaim pulumi.StringPtrInput
+	// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+	Oauth2EmailVerifiedClaim pulumi.StringPtrInput
 	// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
 	Oauth2Issuer pulumi.StringPtrInput
 	// The top-level scope that you are requesting from the OpenID Connect identity provider.
@@ -528,6 +538,11 @@ func (o FusionAuthIdpOpenIdConnectOutput) Oauth2ClientSecret() pulumi.StringPtrO
 // An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
 func (o FusionAuthIdpOpenIdConnectOutput) Oauth2EmailClaim() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2EmailClaim }).(pulumi.StringPtrOutput)
+}
+
+// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+func (o FusionAuthIdpOpenIdConnectOutput) Oauth2EmailVerifiedClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpOpenIdConnect) pulumi.StringPtrOutput { return v.Oauth2EmailVerifiedClaim }).(pulumi.StringPtrOutput)
 }
 
 // The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.

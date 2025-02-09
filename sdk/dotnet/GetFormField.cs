@@ -67,6 +67,34 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetFormFieldResult> Invoke(GetFormFieldInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetFormFieldResult>("fusionauth:index/getFormField:getFormField", args ?? new GetFormFieldInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Form Field Resource
+        /// 
+        /// A FusionAuth Form Field is an object that can be customized to receive input within a FusionAuth [Form](https://fusionauth.io/docs/v1/tech/apis/forms).
+        /// 
+        /// [Form Field API](https://fusionauth.io/docs/v1/tech/apis/form-fields)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var @default = Fusionauth.GetFormField.Invoke(new()
+        ///     {
+        ///         Name = "Email",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetFormFieldResult> Invoke(GetFormFieldInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetFormFieldResult>("fusionauth:index/getFormField:getFormField", args ?? new GetFormFieldInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -87,16 +115,16 @@ namespace theogravity.Fusionauth
         public string? Control { get; set; }
 
         [Input("data")]
-        private Dictionary<string, object>? _data;
+        private Dictionary<string, string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// - description
         /// - key
         /// </summary>
-        public Dictionary<string, object> Data
+        public Dictionary<string, string> Data
         {
-            get => _data ?? (_data = new Dictionary<string, object>());
+            get => _data ?? (_data = new Dictionary<string, string>());
             set => _data = value;
         }
 
@@ -168,16 +196,16 @@ namespace theogravity.Fusionauth
         public Input<string>? Control { get; set; }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form Field that should be persisted.
         /// - description
         /// - key
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -249,7 +277,7 @@ namespace theogravity.Fusionauth
         /// - description
         /// - key
         /// </summary>
-        public readonly ImmutableDictionary<string, object>? Data;
+        public readonly ImmutableDictionary<string, string>? Data;
         public readonly string? Description;
         public readonly string FormFieldId;
         /// <summary>
@@ -283,7 +311,7 @@ namespace theogravity.Fusionauth
 
             string control,
 
-            ImmutableDictionary<string, object>? data,
+            ImmutableDictionary<string, string>? data,
 
             string? description,
 

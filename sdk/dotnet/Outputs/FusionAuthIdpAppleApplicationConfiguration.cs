@@ -19,7 +19,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? ApplicationId;
         /// <summary>
-        /// This is an optional Application specific override for for the top level bundleId.
+        /// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         /// </summary>
         public readonly string? BundleId;
         /// <summary>

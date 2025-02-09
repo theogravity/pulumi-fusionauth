@@ -24,7 +24,6 @@ import * as utilities from "./utilities";
  */
 export function getUser(args?: GetUserArgs, opts?: pulumi.InvokeOptions): Promise<GetUserResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getUser:getUser", {
         "tenantId": args.tenantId,
@@ -145,8 +144,14 @@ export interface GetUserResult {
  * });
  * ```
  */
-export function getUserOutput(args?: GetUserOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetUserResult> {
-    return pulumi.output(args).apply((a: any) => getUser(a, opts))
+export function getUserOutput(args?: GetUserOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetUserResult> {
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getUser:getUser", {
+        "tenantId": args.tenantId,
+        "userId": args.userId,
+        "username": args.username,
+    }, opts);
 }
 
 /**

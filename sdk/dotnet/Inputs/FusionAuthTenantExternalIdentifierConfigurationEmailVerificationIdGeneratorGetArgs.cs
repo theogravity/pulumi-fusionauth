@@ -14,16 +14,16 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The length of the secure generator used for generating the change password Id.
+        /// The length of the secure generator used for generating the change password Id. Defaults to 32.
         /// </summary>
-        [Input("length", required: true)]
-        public Input<int> Length { get; set; } = null!;
+        [Input("length")]
+        public Input<int>? Length { get; set; }
 
         /// <summary>
-        /// The type of the secure generator used for generating the change password Id.
+        /// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
         /// </summary>
-        [Input("type", required: true)]
-        public Input<string> Type { get; set; } = null!;
+        [Input("type")]
+        public Input<string>? Type { get; set; }
 
         public FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorGetArgs()
         {

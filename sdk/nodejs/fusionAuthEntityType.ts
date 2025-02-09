@@ -60,13 +60,11 @@ export class FusionAuthEntityType extends pulumi.CustomResource {
     }
 
     /**
-     * An object that can hold any information about the Entity Type that should be persisted. Must be a
-     * JSON string.
+     * An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
      */
     public readonly data!: pulumi.Output<string | undefined>;
     /**
-     * The ID to use for the new Entity Type. If not specified a secure random UUID will be
-     * generated.
+     * The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
      */
     public readonly entityTypeId!: pulumi.Output<string>;
     /**
@@ -112,13 +110,11 @@ export class FusionAuthEntityType extends pulumi.CustomResource {
  */
 export interface FusionAuthEntityTypeState {
     /**
-     * An object that can hold any information about the Entity Type that should be persisted. Must be a
-     * JSON string.
+     * An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
      */
     data?: pulumi.Input<string>;
     /**
-     * The ID to use for the new Entity Type. If not specified a secure random UUID will be
-     * generated.
+     * The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
      */
     entityTypeId?: pulumi.Input<string>;
     /**
@@ -136,13 +132,11 @@ export interface FusionAuthEntityTypeState {
  */
 export interface FusionAuthEntityTypeArgs {
     /**
-     * An object that can hold any information about the Entity Type that should be persisted. Must be a
-     * JSON string.
+     * An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
      */
     data?: pulumi.Input<string>;
     /**
-     * The ID to use for the new Entity Type. If not specified a secure random UUID will be
-     * generated.
+     * The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
      */
     entityTypeId?: pulumi.Input<string>;
     /**

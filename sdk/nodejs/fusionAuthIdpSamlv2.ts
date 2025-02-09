@@ -74,6 +74,10 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      */
     public readonly applicationConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlv2ApplicationConfiguration[] | undefined>;
     /**
+     * The configuration for the SAML assertion.
+     */
+    public readonly assertionConfiguration!: pulumi.Output<outputs.FusionAuthIdpSamlv2AssertionConfiguration | undefined>;
+    /**
      * The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
      */
     public readonly buttonImageUrl!: pulumi.Output<string | undefined>;
@@ -106,6 +110,10 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      */
     public readonly idpId!: pulumi.Output<string | undefined>;
     /**
+     * The configuration for the IdP initiated login.
+     */
+    public readonly idpInitiatedConfiguration!: pulumi.Output<outputs.FusionAuthIdpSamlv2IdpInitiatedConfiguration | undefined>;
+    /**
      * The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
      */
     public readonly keyId!: pulumi.Output<string>;
@@ -117,6 +125,10 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      * The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
      */
     public readonly linkingStrategy!: pulumi.Output<string>;
+    /**
+     * The configuration for the login hint.
+     */
+    public readonly loginHintConfiguration!: pulumi.Output<outputs.FusionAuthIdpSamlv2LoginHintConfiguration | undefined>;
     /**
      * The name of this OpenID Connect identity provider. This is only used for display purposes.
      */
@@ -130,7 +142,7 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      */
     public readonly postRequest!: pulumi.Output<boolean | undefined>;
     /**
-     * TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+     * The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
      */
     public readonly requestSigningKey!: pulumi.Output<string | undefined>;
     /**
@@ -142,8 +154,7 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
      */
     public readonly tenantConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlv2TenantConfiguration[] | undefined>;
     /**
-     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-     * the emailClaim will be used when linking user.
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
      */
     public readonly uniqueIdClaim!: pulumi.Output<string | undefined>;
     /**
@@ -173,6 +184,7 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as FusionAuthIdpSamlv2State | undefined;
             resourceInputs["applicationConfigurations"] = state ? state.applicationConfigurations : undefined;
+            resourceInputs["assertionConfiguration"] = state ? state.assertionConfiguration : undefined;
             resourceInputs["buttonImageUrl"] = state ? state.buttonImageUrl : undefined;
             resourceInputs["buttonText"] = state ? state.buttonText : undefined;
             resourceInputs["debug"] = state ? state.debug : undefined;
@@ -181,9 +193,11 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
             resourceInputs["enabled"] = state ? state.enabled : undefined;
             resourceInputs["idpEndpoint"] = state ? state.idpEndpoint : undefined;
             resourceInputs["idpId"] = state ? state.idpId : undefined;
+            resourceInputs["idpInitiatedConfiguration"] = state ? state.idpInitiatedConfiguration : undefined;
             resourceInputs["keyId"] = state ? state.keyId : undefined;
             resourceInputs["lambdaReconcileId"] = state ? state.lambdaReconcileId : undefined;
             resourceInputs["linkingStrategy"] = state ? state.linkingStrategy : undefined;
+            resourceInputs["loginHintConfiguration"] = state ? state.loginHintConfiguration : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["nameIdFormat"] = state ? state.nameIdFormat : undefined;
             resourceInputs["postRequest"] = state ? state.postRequest : undefined;
@@ -203,6 +217,7 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
                 throw new Error("Missing required property 'keyId'");
             }
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
+            resourceInputs["assertionConfiguration"] = args ? args.assertionConfiguration : undefined;
             resourceInputs["buttonImageUrl"] = args ? args.buttonImageUrl : undefined;
             resourceInputs["buttonText"] = args ? args.buttonText : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
@@ -211,9 +226,11 @@ export class FusionAuthIdpSamlv2 extends pulumi.CustomResource {
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["idpEndpoint"] = args ? args.idpEndpoint : undefined;
             resourceInputs["idpId"] = args ? args.idpId : undefined;
+            resourceInputs["idpInitiatedConfiguration"] = args ? args.idpInitiatedConfiguration : undefined;
             resourceInputs["keyId"] = args ? args.keyId : undefined;
             resourceInputs["lambdaReconcileId"] = args ? args.lambdaReconcileId : undefined;
             resourceInputs["linkingStrategy"] = args ? args.linkingStrategy : undefined;
+            resourceInputs["loginHintConfiguration"] = args ? args.loginHintConfiguration : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["nameIdFormat"] = args ? args.nameIdFormat : undefined;
             resourceInputs["postRequest"] = args ? args.postRequest : undefined;
@@ -238,6 +255,10 @@ export interface FusionAuthIdpSamlv2State {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2ApplicationConfiguration>[]>;
+    /**
+     * The configuration for the SAML assertion.
+     */
+    assertionConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2AssertionConfiguration>;
     /**
      * The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
      */
@@ -271,6 +292,10 @@ export interface FusionAuthIdpSamlv2State {
      */
     idpId?: pulumi.Input<string>;
     /**
+     * The configuration for the IdP initiated login.
+     */
+    idpInitiatedConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2IdpInitiatedConfiguration>;
+    /**
      * The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
      */
     keyId?: pulumi.Input<string>;
@@ -282,6 +307,10 @@ export interface FusionAuthIdpSamlv2State {
      * The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
      */
     linkingStrategy?: pulumi.Input<string>;
+    /**
+     * The configuration for the login hint.
+     */
+    loginHintConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2LoginHintConfiguration>;
     /**
      * The name of this OpenID Connect identity provider. This is only used for display purposes.
      */
@@ -295,7 +324,7 @@ export interface FusionAuthIdpSamlv2State {
      */
     postRequest?: pulumi.Input<boolean>;
     /**
-     * TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+     * The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
      */
     requestSigningKey?: pulumi.Input<string>;
     /**
@@ -307,8 +336,7 @@ export interface FusionAuthIdpSamlv2State {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2TenantConfiguration>[]>;
     /**
-     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-     * the emailClaim will be used when linking user.
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
      */
     uniqueIdClaim?: pulumi.Input<string>;
     /**
@@ -333,6 +361,10 @@ export interface FusionAuthIdpSamlv2Args {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2ApplicationConfiguration>[]>;
+    /**
+     * The configuration for the SAML assertion.
+     */
+    assertionConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2AssertionConfiguration>;
     /**
      * The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
      */
@@ -366,6 +398,10 @@ export interface FusionAuthIdpSamlv2Args {
      */
     idpId?: pulumi.Input<string>;
     /**
+     * The configuration for the IdP initiated login.
+     */
+    idpInitiatedConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2IdpInitiatedConfiguration>;
+    /**
      * The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
      */
     keyId: pulumi.Input<string>;
@@ -377,6 +413,10 @@ export interface FusionAuthIdpSamlv2Args {
      * The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
      */
     linkingStrategy?: pulumi.Input<string>;
+    /**
+     * The configuration for the login hint.
+     */
+    loginHintConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlv2LoginHintConfiguration>;
     /**
      * The name of this OpenID Connect identity provider. This is only used for display purposes.
      */
@@ -390,7 +430,7 @@ export interface FusionAuthIdpSamlv2Args {
      */
     postRequest?: pulumi.Input<boolean>;
     /**
-     * TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+     * The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
      */
     requestSigningKey?: pulumi.Input<string>;
     /**
@@ -402,8 +442,7 @@ export interface FusionAuthIdpSamlv2Args {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlv2TenantConfiguration>[]>;
     /**
-     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-     * the emailClaim will be used when linking user.
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
      */
     uniqueIdClaim?: pulumi.Input<string>;
     /**

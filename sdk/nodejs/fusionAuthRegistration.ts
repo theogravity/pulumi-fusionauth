@@ -64,7 +64,7 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the User for this registration that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Determines if FusionAuth should generate an Authentication Token for this registration.
      */
@@ -73,6 +73,10 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
      * An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
      */
     public readonly preferredLanguages!: pulumi.Output<string[] | undefined>;
+    /**
+     * The Id of this registration. If not specified a secure random UUID will be generated.
+     */
+    public readonly registrationId!: pulumi.Output<string>;
     /**
      * The list of roles that the User has for this registration.
      */
@@ -112,6 +116,7 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
             resourceInputs["data"] = state ? state.data : undefined;
             resourceInputs["generateAuthenticationToken"] = state ? state.generateAuthenticationToken : undefined;
             resourceInputs["preferredLanguages"] = state ? state.preferredLanguages : undefined;
+            resourceInputs["registrationId"] = state ? state.registrationId : undefined;
             resourceInputs["roles"] = state ? state.roles : undefined;
             resourceInputs["skipRegistrationValidation"] = state ? state.skipRegistrationValidation : undefined;
             resourceInputs["timezone"] = state ? state.timezone : undefined;
@@ -130,6 +135,7 @@ export class FusionAuthRegistration extends pulumi.CustomResource {
             resourceInputs["data"] = args ? args.data : undefined;
             resourceInputs["generateAuthenticationToken"] = args ? args.generateAuthenticationToken : undefined;
             resourceInputs["preferredLanguages"] = args ? args.preferredLanguages : undefined;
+            resourceInputs["registrationId"] = args ? args.registrationId : undefined;
             resourceInputs["roles"] = args ? args.roles : undefined;
             resourceInputs["skipRegistrationValidation"] = args ? args.skipRegistrationValidation : undefined;
             resourceInputs["timezone"] = args ? args.timezone : undefined;
@@ -158,7 +164,7 @@ export interface FusionAuthRegistrationState {
     /**
      * An object that can hold any information about the User for this registration that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if FusionAuth should generate an Authentication Token for this registration.
      */
@@ -167,6 +173,10 @@ export interface FusionAuthRegistrationState {
      * An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
      */
     preferredLanguages?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The Id of this registration. If not specified a secure random UUID will be generated.
+     */
+    registrationId?: pulumi.Input<string>;
     /**
      * The list of roles that the User has for this registration.
      */
@@ -204,7 +214,7 @@ export interface FusionAuthRegistrationArgs {
     /**
      * An object that can hold any information about the User for this registration that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Determines if FusionAuth should generate an Authentication Token for this registration.
      */
@@ -213,6 +223,10 @@ export interface FusionAuthRegistrationArgs {
      * An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
      */
     preferredLanguages?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The Id of this registration. If not specified a secure random UUID will be generated.
+     */
+    registrationId?: pulumi.Input<string>;
     /**
      * The list of roles that the User has for this registration.
      */

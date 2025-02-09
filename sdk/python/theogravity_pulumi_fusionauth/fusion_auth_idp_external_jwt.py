@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -17,10 +22,10 @@ __all__ = ['FusionAuthIdpExternalJwtArgs', 'FusionAuthIdpExternalJwt']
 class FusionAuthIdpExternalJwtArgs:
     def __init__(__self__, *,
                  header_key_parameter: pulumi.Input[str],
-                 unique_identity_claim: pulumi.Input[str],
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]] = None,
-                 claim_map: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 claim_map: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
+                 default_key_id: Optional[pulumi.Input[str]] = None,
                  domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  idp_id: Optional[pulumi.Input[str]] = None,
@@ -28,16 +33,20 @@ class FusionAuthIdpExternalJwtArgs:
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorization_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]] = None):
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]] = None,
+                 unique_identity_claim: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthIdpExternalJwt resource.
         :param pulumi.Input[str] header_key_parameter: The name header claim that identifies the public key used to verify the signature. In most cases this be kid or x5t.
-        :param pulumi.Input[str] unique_identity_claim: The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[Mapping[str, Any]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-               from the configured identity provider.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
+        :param pulumi.Input[str] default_key_id: When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] domains: An array of domains that are managed by this Identity Provider.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] idp_id: The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
@@ -45,17 +54,23 @@ class FusionAuthIdpExternalJwtArgs:
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of the Identity Provider.
         :param pulumi.Input[str] oauth2_authorization_endpoint: The authorization endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to perform the browser redirect to the OAuth2 authorize endpoint.
-        :param pulumi.Input[str] oauth2_token_endpoint: TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_email_claim: The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        :param pulumi.Input[str] oauth2_email_verified_claim: The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        :param pulumi.Input[str] oauth2_token_endpoint: The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_unique_id_claim: The name of the claim that contains the user's unique user Id.
+        :param pulumi.Input[str] oauth2_username_claim: The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_identity_claim: (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         pulumi.set(__self__, "header_key_parameter", header_key_parameter)
-        pulumi.set(__self__, "unique_identity_claim", unique_identity_claim)
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
         if claim_map is not None:
             pulumi.set(__self__, "claim_map", claim_map)
         if debug is not None:
             pulumi.set(__self__, "debug", debug)
+        if default_key_id is not None:
+            pulumi.set(__self__, "default_key_id", default_key_id)
         if domains is not None:
             pulumi.set(__self__, "domains", domains)
         if enabled is not None:
@@ -70,10 +85,23 @@ class FusionAuthIdpExternalJwtArgs:
             pulumi.set(__self__, "name", name)
         if oauth2_authorization_endpoint is not None:
             pulumi.set(__self__, "oauth2_authorization_endpoint", oauth2_authorization_endpoint)
+        if oauth2_email_claim is not None:
+            pulumi.set(__self__, "oauth2_email_claim", oauth2_email_claim)
+        if oauth2_email_verified_claim is not None:
+            pulumi.set(__self__, "oauth2_email_verified_claim", oauth2_email_verified_claim)
         if oauth2_token_endpoint is not None:
             pulumi.set(__self__, "oauth2_token_endpoint", oauth2_token_endpoint)
+        if oauth2_unique_id_claim is not None:
+            pulumi.set(__self__, "oauth2_unique_id_claim", oauth2_unique_id_claim)
+        if oauth2_username_claim is not None:
+            pulumi.set(__self__, "oauth2_username_claim", oauth2_username_claim)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_identity_claim is not None:
+            warnings.warn("""This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""", DeprecationWarning)
+            pulumi.log.warn("""unique_identity_claim is deprecated: This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""")
+        if unique_identity_claim is not None:
+            pulumi.set(__self__, "unique_identity_claim", unique_identity_claim)
 
     @property
     @pulumi.getter(name="headerKeyParameter")
@@ -86,18 +114,6 @@ class FusionAuthIdpExternalJwtArgs:
     @header_key_parameter.setter
     def header_key_parameter(self, value: pulumi.Input[str]):
         pulumi.set(self, "header_key_parameter", value)
-
-    @property
-    @pulumi.getter(name="uniqueIdentityClaim")
-    def unique_identity_claim(self) -> pulumi.Input[str]:
-        """
-        The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
-        """
-        return pulumi.get(self, "unique_identity_claim")
-
-    @unique_identity_claim.setter
-    def unique_identity_claim(self, value: pulumi.Input[str]):
-        pulumi.set(self, "unique_identity_claim", value)
 
     @property
     @pulumi.getter(name="applicationConfigurations")
@@ -113,15 +129,14 @@ class FusionAuthIdpExternalJwtArgs:
 
     @property
     @pulumi.getter(name="claimMap")
-    def claim_map(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def claim_map(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
-        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        from the configured identity provider.
+        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         """
         return pulumi.get(self, "claim_map")
 
     @claim_map.setter
-    def claim_map(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def claim_map(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "claim_map", value)
 
     @property
@@ -135,6 +150,18 @@ class FusionAuthIdpExternalJwtArgs:
     @debug.setter
     def debug(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "debug", value)
+
+    @property
+    @pulumi.getter(name="defaultKeyId")
+    def default_key_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        """
+        return pulumi.get(self, "default_key_id")
+
+    @default_key_id.setter
+    def default_key_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "default_key_id", value)
 
     @property
     @pulumi.getter
@@ -221,16 +248,64 @@ class FusionAuthIdpExternalJwtArgs:
         pulumi.set(self, "oauth2_authorization_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2EmailClaim")
+    def oauth2_email_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_email_claim")
+
+    @oauth2_email_claim.setter
+    def oauth2_email_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_claim", value)
+
+    @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
+
+    @oauth2_email_verified_claim.setter
+    def oauth2_email_verified_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_verified_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2TokenEndpoint")
     def oauth2_token_endpoint(self) -> Optional[pulumi.Input[str]]:
         """
-        TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         """
         return pulumi.get(self, "oauth2_token_endpoint")
 
     @oauth2_token_endpoint.setter
     def oauth2_token_endpoint(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_token_endpoint", value)
+
+    @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's unique user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @oauth2_unique_id_claim.setter
+    def oauth2_unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_unique_id_claim", value)
+
+    @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
+
+    @oauth2_username_claim.setter
+    def oauth2_username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_username_claim", value)
 
     @property
     @pulumi.getter(name="tenantConfigurations")
@@ -244,13 +319,27 @@ class FusionAuthIdpExternalJwtArgs:
     def tenant_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]]):
         pulumi.set(self, "tenant_configurations", value)
 
+    @property
+    @pulumi.getter(name="uniqueIdentityClaim")
+    @_utilities.deprecated("""This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""")
+    def unique_identity_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        """
+        return pulumi.get(self, "unique_identity_claim")
+
+    @unique_identity_claim.setter
+    def unique_identity_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unique_identity_claim", value)
+
 
 @pulumi.input_type
 class _FusionAuthIdpExternalJwtState:
     def __init__(__self__, *,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]] = None,
-                 claim_map: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 claim_map: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
+                 default_key_id: Optional[pulumi.Input[str]] = None,
                  domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  header_key_parameter: Optional[pulumi.Input[str]] = None,
@@ -259,15 +348,19 @@ class _FusionAuthIdpExternalJwtState:
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorization_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]] = None,
                  unique_identity_claim: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthIdpExternalJwt resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[Mapping[str, Any]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-               from the configured identity provider.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
+        :param pulumi.Input[str] default_key_id: When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] domains: An array of domains that are managed by this Identity Provider.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] header_key_parameter: The name header claim that identifies the public key used to verify the signature. In most cases this be kid or x5t.
@@ -276,9 +369,13 @@ class _FusionAuthIdpExternalJwtState:
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of the Identity Provider.
         :param pulumi.Input[str] oauth2_authorization_endpoint: The authorization endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to perform the browser redirect to the OAuth2 authorize endpoint.
-        :param pulumi.Input[str] oauth2_token_endpoint: TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_email_claim: The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        :param pulumi.Input[str] oauth2_email_verified_claim: The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        :param pulumi.Input[str] oauth2_token_endpoint: The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_unique_id_claim: The name of the claim that contains the user's unique user Id.
+        :param pulumi.Input[str] oauth2_username_claim: The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpExternalJwtTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_identity_claim: The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        :param pulumi.Input[str] unique_identity_claim: (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
@@ -286,6 +383,8 @@ class _FusionAuthIdpExternalJwtState:
             pulumi.set(__self__, "claim_map", claim_map)
         if debug is not None:
             pulumi.set(__self__, "debug", debug)
+        if default_key_id is not None:
+            pulumi.set(__self__, "default_key_id", default_key_id)
         if domains is not None:
             pulumi.set(__self__, "domains", domains)
         if enabled is not None:
@@ -302,10 +401,21 @@ class _FusionAuthIdpExternalJwtState:
             pulumi.set(__self__, "name", name)
         if oauth2_authorization_endpoint is not None:
             pulumi.set(__self__, "oauth2_authorization_endpoint", oauth2_authorization_endpoint)
+        if oauth2_email_claim is not None:
+            pulumi.set(__self__, "oauth2_email_claim", oauth2_email_claim)
+        if oauth2_email_verified_claim is not None:
+            pulumi.set(__self__, "oauth2_email_verified_claim", oauth2_email_verified_claim)
         if oauth2_token_endpoint is not None:
             pulumi.set(__self__, "oauth2_token_endpoint", oauth2_token_endpoint)
+        if oauth2_unique_id_claim is not None:
+            pulumi.set(__self__, "oauth2_unique_id_claim", oauth2_unique_id_claim)
+        if oauth2_username_claim is not None:
+            pulumi.set(__self__, "oauth2_username_claim", oauth2_username_claim)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_identity_claim is not None:
+            warnings.warn("""This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""", DeprecationWarning)
+            pulumi.log.warn("""unique_identity_claim is deprecated: This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""")
         if unique_identity_claim is not None:
             pulumi.set(__self__, "unique_identity_claim", unique_identity_claim)
 
@@ -323,15 +433,14 @@ class _FusionAuthIdpExternalJwtState:
 
     @property
     @pulumi.getter(name="claimMap")
-    def claim_map(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def claim_map(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
-        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        from the configured identity provider.
+        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         """
         return pulumi.get(self, "claim_map")
 
     @claim_map.setter
-    def claim_map(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def claim_map(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "claim_map", value)
 
     @property
@@ -345,6 +454,18 @@ class _FusionAuthIdpExternalJwtState:
     @debug.setter
     def debug(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "debug", value)
+
+    @property
+    @pulumi.getter(name="defaultKeyId")
+    def default_key_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        """
+        return pulumi.get(self, "default_key_id")
+
+    @default_key_id.setter
+    def default_key_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "default_key_id", value)
 
     @property
     @pulumi.getter
@@ -443,16 +564,64 @@ class _FusionAuthIdpExternalJwtState:
         pulumi.set(self, "oauth2_authorization_endpoint", value)
 
     @property
+    @pulumi.getter(name="oauth2EmailClaim")
+    def oauth2_email_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_email_claim")
+
+    @oauth2_email_claim.setter
+    def oauth2_email_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_claim", value)
+
+    @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
+
+    @oauth2_email_verified_claim.setter
+    def oauth2_email_verified_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_email_verified_claim", value)
+
+    @property
     @pulumi.getter(name="oauth2TokenEndpoint")
     def oauth2_token_endpoint(self) -> Optional[pulumi.Input[str]]:
         """
-        TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         """
         return pulumi.get(self, "oauth2_token_endpoint")
 
     @oauth2_token_endpoint.setter
     def oauth2_token_endpoint(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "oauth2_token_endpoint", value)
+
+    @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's unique user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @oauth2_unique_id_claim.setter
+    def oauth2_unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_unique_id_claim", value)
+
+    @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
+
+    @oauth2_username_claim.setter
+    def oauth2_username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oauth2_username_claim", value)
 
     @property
     @pulumi.getter(name="tenantConfigurations")
@@ -468,9 +637,10 @@ class _FusionAuthIdpExternalJwtState:
 
     @property
     @pulumi.getter(name="uniqueIdentityClaim")
+    @_utilities.deprecated("""This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""")
     def unique_identity_claim(self) -> Optional[pulumi.Input[str]]:
         """
-        The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         return pulumi.get(self, "unique_identity_claim")
 
@@ -484,9 +654,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]]] = None,
-                 claim_map: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtApplicationConfigurationArgs', 'FusionAuthIdpExternalJwtApplicationConfigurationArgsDict']]]]] = None,
+                 claim_map: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
+                 default_key_id: Optional[pulumi.Input[str]] = None,
                  domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  header_key_parameter: Optional[pulumi.Input[str]] = None,
@@ -495,8 +666,12 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorization_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtTenantConfigurationArgs', 'FusionAuthIdpExternalJwtTenantConfigurationArgsDict']]]]] = None,
                  unique_identity_claim: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -530,10 +705,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[Mapping[str, Any]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-               from the configured identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtApplicationConfigurationArgs', 'FusionAuthIdpExternalJwtApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
+        :param pulumi.Input[str] default_key_id: When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] domains: An array of domains that are managed by this Identity Provider.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] header_key_parameter: The name header claim that identifies the public key used to verify the signature. In most cases this be kid or x5t.
@@ -542,9 +717,13 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of the Identity Provider.
         :param pulumi.Input[str] oauth2_authorization_endpoint: The authorization endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to perform the browser redirect to the OAuth2 authorize endpoint.
-        :param pulumi.Input[str] oauth2_token_endpoint: TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_identity_claim: The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        :param pulumi.Input[str] oauth2_email_claim: The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        :param pulumi.Input[str] oauth2_email_verified_claim: The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        :param pulumi.Input[str] oauth2_token_endpoint: The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_unique_id_claim: The name of the claim that contains the user's unique user Id.
+        :param pulumi.Input[str] oauth2_username_claim: The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtTenantConfigurationArgs', 'FusionAuthIdpExternalJwtTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_identity_claim: (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         ...
     @overload
@@ -596,9 +775,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]]] = None,
-                 claim_map: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtApplicationConfigurationArgs', 'FusionAuthIdpExternalJwtApplicationConfigurationArgsDict']]]]] = None,
+                 claim_map: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
+                 default_key_id: Optional[pulumi.Input[str]] = None,
                  domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  header_key_parameter: Optional[pulumi.Input[str]] = None,
@@ -607,8 +787,12 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  oauth2_authorization_endpoint: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
                  oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]]] = None,
+                 oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 oauth2_username_claim: Optional[pulumi.Input[str]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtTenantConfigurationArgs', 'FusionAuthIdpExternalJwtTenantConfigurationArgsDict']]]]] = None,
                  unique_identity_claim: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -622,6 +806,7 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
             __props__.__dict__["application_configurations"] = application_configurations
             __props__.__dict__["claim_map"] = claim_map
             __props__.__dict__["debug"] = debug
+            __props__.__dict__["default_key_id"] = default_key_id
             __props__.__dict__["domains"] = domains
             __props__.__dict__["enabled"] = enabled
             if header_key_parameter is None and not opts.urn:
@@ -632,10 +817,12 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
             __props__.__dict__["linking_strategy"] = linking_strategy
             __props__.__dict__["name"] = name
             __props__.__dict__["oauth2_authorization_endpoint"] = oauth2_authorization_endpoint
+            __props__.__dict__["oauth2_email_claim"] = oauth2_email_claim
+            __props__.__dict__["oauth2_email_verified_claim"] = oauth2_email_verified_claim
             __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
+            __props__.__dict__["oauth2_unique_id_claim"] = oauth2_unique_id_claim
+            __props__.__dict__["oauth2_username_claim"] = oauth2_username_claim
             __props__.__dict__["tenant_configurations"] = tenant_configurations
-            if unique_identity_claim is None and not opts.urn:
-                raise TypeError("Missing required property 'unique_identity_claim'")
             __props__.__dict__["unique_identity_claim"] = unique_identity_claim
         super(FusionAuthIdpExternalJwt, __self__).__init__(
             'fusionauth:index/fusionAuthIdpExternalJwt:FusionAuthIdpExternalJwt',
@@ -647,9 +834,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]]] = None,
-            claim_map: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtApplicationConfigurationArgs', 'FusionAuthIdpExternalJwtApplicationConfigurationArgsDict']]]]] = None,
+            claim_map: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
+            default_key_id: Optional[pulumi.Input[str]] = None,
             domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             enabled: Optional[pulumi.Input[bool]] = None,
             header_key_parameter: Optional[pulumi.Input[str]] = None,
@@ -658,8 +846,12 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
             linking_strategy: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
             oauth2_authorization_endpoint: Optional[pulumi.Input[str]] = None,
+            oauth2_email_claim: Optional[pulumi.Input[str]] = None,
+            oauth2_email_verified_claim: Optional[pulumi.Input[str]] = None,
             oauth2_token_endpoint: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]]] = None,
+            oauth2_unique_id_claim: Optional[pulumi.Input[str]] = None,
+            oauth2_username_claim: Optional[pulumi.Input[str]] = None,
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtTenantConfigurationArgs', 'FusionAuthIdpExternalJwtTenantConfigurationArgsDict']]]]] = None,
             unique_identity_claim: Optional[pulumi.Input[str]] = None) -> 'FusionAuthIdpExternalJwt':
         """
         Get an existing FusionAuthIdpExternalJwt resource's state with the given name, id, and optional extra
@@ -668,10 +860,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
-        :param pulumi.Input[Mapping[str, Any]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-               from the configured identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtApplicationConfigurationArgs', 'FusionAuthIdpExternalJwtApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] claim_map: A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
+        :param pulumi.Input[str] default_key_id: When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] domains: An array of domains that are managed by this Identity Provider.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] header_key_parameter: The name header claim that identifies the public key used to verify the signature. In most cases this be kid or x5t.
@@ -680,9 +872,13 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of the Identity Provider.
         :param pulumi.Input[str] oauth2_authorization_endpoint: The authorization endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to perform the browser redirect to the OAuth2 authorize endpoint.
-        :param pulumi.Input[str] oauth2_token_endpoint: TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpExternalJwtTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_identity_claim: The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        :param pulumi.Input[str] oauth2_email_claim: The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        :param pulumi.Input[str] oauth2_email_verified_claim: The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        :param pulumi.Input[str] oauth2_token_endpoint: The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        :param pulumi.Input[str] oauth2_unique_id_claim: The name of the claim that contains the user's unique user Id.
+        :param pulumi.Input[str] oauth2_username_claim: The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpExternalJwtTenantConfigurationArgs', 'FusionAuthIdpExternalJwtTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_identity_claim: (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -691,6 +887,7 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         __props__.__dict__["application_configurations"] = application_configurations
         __props__.__dict__["claim_map"] = claim_map
         __props__.__dict__["debug"] = debug
+        __props__.__dict__["default_key_id"] = default_key_id
         __props__.__dict__["domains"] = domains
         __props__.__dict__["enabled"] = enabled
         __props__.__dict__["header_key_parameter"] = header_key_parameter
@@ -699,7 +896,11 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         __props__.__dict__["linking_strategy"] = linking_strategy
         __props__.__dict__["name"] = name
         __props__.__dict__["oauth2_authorization_endpoint"] = oauth2_authorization_endpoint
+        __props__.__dict__["oauth2_email_claim"] = oauth2_email_claim
+        __props__.__dict__["oauth2_email_verified_claim"] = oauth2_email_verified_claim
         __props__.__dict__["oauth2_token_endpoint"] = oauth2_token_endpoint
+        __props__.__dict__["oauth2_unique_id_claim"] = oauth2_unique_id_claim
+        __props__.__dict__["oauth2_username_claim"] = oauth2_username_claim
         __props__.__dict__["tenant_configurations"] = tenant_configurations
         __props__.__dict__["unique_identity_claim"] = unique_identity_claim
         return FusionAuthIdpExternalJwt(resource_name, opts=opts, __props__=__props__)
@@ -714,10 +915,9 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="claimMap")
-    def claim_map(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def claim_map(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
-        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        from the configured identity provider.
+        A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         """
         return pulumi.get(self, "claim_map")
 
@@ -728,6 +928,14 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         """
         return pulumi.get(self, "debug")
+
+    @property
+    @pulumi.getter(name="defaultKeyId")
+    def default_key_id(self) -> pulumi.Output[Optional[str]]:
+        """
+        When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        """
+        return pulumi.get(self, "default_key_id")
 
     @property
     @pulumi.getter
@@ -794,12 +1002,44 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
         return pulumi.get(self, "oauth2_authorization_endpoint")
 
     @property
+    @pulumi.getter(name="oauth2EmailClaim")
+    def oauth2_email_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_email_claim")
+
+    @property
+    @pulumi.getter(name="oauth2EmailVerifiedClaim")
+    def oauth2_email_verified_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        """
+        return pulumi.get(self, "oauth2_email_verified_claim")
+
+    @property
     @pulumi.getter(name="oauth2TokenEndpoint")
     def oauth2_token_endpoint(self) -> pulumi.Output[Optional[str]]:
         """
-        TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         """
         return pulumi.get(self, "oauth2_token_endpoint")
+
+    @property
+    @pulumi.getter(name="oauth2UniqueIdClaim")
+    def oauth2_unique_id_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim that contains the user's unique user Id.
+        """
+        return pulumi.get(self, "oauth2_unique_id_claim")
+
+    @property
+    @pulumi.getter(name="oauth2UsernameClaim")
+    def oauth2_username_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        """
+        return pulumi.get(self, "oauth2_username_claim")
 
     @property
     @pulumi.getter(name="tenantConfigurations")
@@ -811,9 +1051,10 @@ class FusionAuthIdpExternalJwt(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="uniqueIdentityClaim")
-    def unique_identity_claim(self) -> pulumi.Output[str]:
+    @_utilities.deprecated("""This field is deprecated and will be removed in a future release. Prefer the use of oauth2_unique_id_claim.""")
+    def unique_identity_claim(self) -> pulumi.Output[Optional[str]]:
         """
-        The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         """
         return pulumi.get(self, "unique_identity_claim")
 

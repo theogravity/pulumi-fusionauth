@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -86,7 +91,7 @@ class GetFormFieldResult:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[Mapping[str, Any]]:
+    def data(self) -> Optional[Mapping[str, str]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         - description
@@ -179,7 +184,7 @@ class AwaitableGetFormFieldResult(GetFormFieldResult):
 def get_form_field(confirm: Optional[bool] = None,
                    consent_id: Optional[str] = None,
                    control: Optional[str] = None,
-                   data: Optional[Mapping[str, Any]] = None,
+                   data: Optional[Mapping[str, str]] = None,
                    description: Optional[str] = None,
                    form_field_id: Optional[str] = None,
                    key: Optional[str] = None,
@@ -187,7 +192,7 @@ def get_form_field(confirm: Optional[bool] = None,
                    options: Optional[Sequence[str]] = None,
                    required: Optional[bool] = None,
                    type: Optional[str] = None,
-                   validator: Optional[pulumi.InputType['GetFormFieldValidatorArgs']] = None,
+                   validator: Optional[Union['GetFormFieldValidatorArgs', 'GetFormFieldValidatorArgsDict']] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetFormFieldResult:
     """
     ## # Form Field Resource
@@ -209,7 +214,7 @@ def get_form_field(confirm: Optional[bool] = None,
     :param bool confirm: Determines if the user input should be confirmed by requiring the value to be entered twice.
            - consent_id
            - control
-    :param Mapping[str, Any] data: An object that can hold any information about the Form Field that should be persisted.
+    :param Mapping[str, str] data: An object that can hold any information about the Form Field that should be persisted.
            - description
            - key
     :param str form_field_id: The unique id of the Form Field. Either `form_field_id` or `name` must be specified.
@@ -248,13 +253,10 @@ def get_form_field(confirm: Optional[bool] = None,
         required=pulumi.get(__ret__, 'required'),
         type=pulumi.get(__ret__, 'type'),
         validator=pulumi.get(__ret__, 'validator'))
-
-
-@_utilities.lift_output_func(get_form_field)
 def get_form_field_output(confirm: Optional[pulumi.Input[Optional[bool]]] = None,
                           consent_id: Optional[pulumi.Input[Optional[str]]] = None,
                           control: Optional[pulumi.Input[Optional[str]]] = None,
-                          data: Optional[pulumi.Input[Optional[Mapping[str, Any]]]] = None,
+                          data: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
                           description: Optional[pulumi.Input[Optional[str]]] = None,
                           form_field_id: Optional[pulumi.Input[Optional[str]]] = None,
                           key: Optional[pulumi.Input[Optional[str]]] = None,
@@ -262,8 +264,8 @@ def get_form_field_output(confirm: Optional[pulumi.Input[Optional[bool]]] = None
                           options: Optional[pulumi.Input[Optional[Sequence[str]]]] = None,
                           required: Optional[pulumi.Input[Optional[bool]]] = None,
                           type: Optional[pulumi.Input[Optional[str]]] = None,
-                          validator: Optional[pulumi.Input[Optional[pulumi.InputType['GetFormFieldValidatorArgs']]]] = None,
-                          opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetFormFieldResult]:
+                          validator: Optional[pulumi.Input[Optional[Union['GetFormFieldValidatorArgs', 'GetFormFieldValidatorArgsDict']]]] = None,
+                          opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetFormFieldResult]:
     """
     ## # Form Field Resource
 
@@ -284,7 +286,7 @@ def get_form_field_output(confirm: Optional[pulumi.Input[Optional[bool]]] = None
     :param bool confirm: Determines if the user input should be confirmed by requiring the value to be entered twice.
            - consent_id
            - control
-    :param Mapping[str, Any] data: An object that can hold any information about the Form Field that should be persisted.
+    :param Mapping[str, str] data: An object that can hold any information about the Form Field that should be persisted.
            - description
            - key
     :param str form_field_id: The unique id of the Form Field. Either `form_field_id` or `name` must be specified.
@@ -293,4 +295,32 @@ def get_form_field_output(confirm: Optional[pulumi.Input[Optional[bool]]] = None
     :param bool required: Determines if a value is required to complete the form.
     :param str type: The form field type. The possible values are:
     """
-    ...
+    __args__ = dict()
+    __args__['confirm'] = confirm
+    __args__['consentId'] = consent_id
+    __args__['control'] = control
+    __args__['data'] = data
+    __args__['description'] = description
+    __args__['formFieldId'] = form_field_id
+    __args__['key'] = key
+    __args__['name'] = name
+    __args__['options'] = options
+    __args__['required'] = required
+    __args__['type'] = type
+    __args__['validator'] = validator
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getFormField:getFormField', __args__, opts=opts, typ=GetFormFieldResult)
+    return __ret__.apply(lambda __response__: GetFormFieldResult(
+        confirm=pulumi.get(__response__, 'confirm'),
+        consent_id=pulumi.get(__response__, 'consent_id'),
+        control=pulumi.get(__response__, 'control'),
+        data=pulumi.get(__response__, 'data'),
+        description=pulumi.get(__response__, 'description'),
+        form_field_id=pulumi.get(__response__, 'form_field_id'),
+        id=pulumi.get(__response__, 'id'),
+        key=pulumi.get(__response__, 'key'),
+        name=pulumi.get(__response__, 'name'),
+        options=pulumi.get(__response__, 'options'),
+        required=pulumi.get(__response__, 'required'),
+        type=pulumi.get(__response__, 'type'),
+        validator=pulumi.get(__response__, 'validator')))

@@ -41,18 +41,24 @@ namespace theogravity.Fusionauth
     {
         /// <summary>
         /// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-        /// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-        /// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-        /// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-        /// - `RS256` - RSA using SHA-256 hash algorithm
-        /// - `RS384` - RSA using SHA-384 hash algorithm
-        /// - `RS512` - RSA using SHA-512 hash algorithm
-        /// - `HS256` - HMAC using SHA-256 hash algorithm
-        /// - `HS384` - HMAC using SHA-384 hash algorithm
-        /// - `HS512` - HMAC using SHA-512 hash algorithm
+        /// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        /// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        /// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        /// * `RS256` - RSA using SHA-256 hash algorithm
+        /// * `RS384` - RSA using SHA-384 hash algorithm
+        /// * `RS512` - RSA using SHA-512 hash algorithm
+        /// * `HS256` - HMAC using SHA-256 hash algorithm
+        /// * `HS384` - HMAC using SHA-384 hash algorithm
+        /// * `HS512` - HMAC using SHA-512 hash algorithm
         /// </summary>
         [Output("algorithm")]
         public Output<string> Algorithm { get; private set; } = null!;
+
+        /// <summary>
+        /// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+        /// </summary>
+        [Output("issuer")]
+        public Output<string> Issuer { get; private set; } = null!;
 
         /// <summary>
         /// The Id to use for the new key. If not specified a secure random UUID will be generated.
@@ -127,18 +133,24 @@ namespace theogravity.Fusionauth
     {
         /// <summary>
         /// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-        /// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-        /// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-        /// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-        /// - `RS256` - RSA using SHA-256 hash algorithm
-        /// - `RS384` - RSA using SHA-384 hash algorithm
-        /// - `RS512` - RSA using SHA-512 hash algorithm
-        /// - `HS256` - HMAC using SHA-256 hash algorithm
-        /// - `HS384` - HMAC using SHA-384 hash algorithm
-        /// - `HS512` - HMAC using SHA-512 hash algorithm
+        /// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        /// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        /// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        /// * `RS256` - RSA using SHA-256 hash algorithm
+        /// * `RS384` - RSA using SHA-384 hash algorithm
+        /// * `RS512` - RSA using SHA-512 hash algorithm
+        /// * `HS256` - HMAC using SHA-256 hash algorithm
+        /// * `HS384` - HMAC using SHA-384 hash algorithm
+        /// * `HS512` - HMAC using SHA-512 hash algorithm
         /// </summary>
         [Input("algorithm", required: true)]
         public Input<string> Algorithm { get; set; } = null!;
+
+        /// <summary>
+        /// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+        /// </summary>
+        [Input("issuer")]
+        public Input<string>? Issuer { get; set; }
 
         /// <summary>
         /// The Id to use for the new key. If not specified a secure random UUID will be generated.
@@ -168,18 +180,24 @@ namespace theogravity.Fusionauth
     {
         /// <summary>
         /// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-        /// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-        /// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-        /// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-        /// - `RS256` - RSA using SHA-256 hash algorithm
-        /// - `RS384` - RSA using SHA-384 hash algorithm
-        /// - `RS512` - RSA using SHA-512 hash algorithm
-        /// - `HS256` - HMAC using SHA-256 hash algorithm
-        /// - `HS384` - HMAC using SHA-384 hash algorithm
-        /// - `HS512` - HMAC using SHA-512 hash algorithm
+        /// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+        /// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+        /// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+        /// * `RS256` - RSA using SHA-256 hash algorithm
+        /// * `RS384` - RSA using SHA-384 hash algorithm
+        /// * `RS512` - RSA using SHA-512 hash algorithm
+        /// * `HS256` - HMAC using SHA-256 hash algorithm
+        /// * `HS384` - HMAC using SHA-384 hash algorithm
+        /// * `HS512` - HMAC using SHA-512 hash algorithm
         /// </summary>
         [Input("algorithm")]
         public Input<string>? Algorithm { get; set; }
+
+        /// <summary>
+        /// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+        /// </summary>
+        [Input("issuer")]
+        public Input<string>? Issuer { get; set; }
 
         /// <summary>
         /// The Id to use for the new key. If not specified a secure random UUID will be generated.

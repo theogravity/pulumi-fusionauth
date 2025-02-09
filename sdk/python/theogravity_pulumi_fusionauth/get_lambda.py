@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -108,26 +113,32 @@ def get_lambda(id: Optional[str] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
-           - `JWTPopulate`
-           - `OpenIDReconcile`
-           - `SAMLv2Reconcile`
-           - `SAMLv2Populate`
-           - `AppleReconcile`
-           - `ExternalJWTReconcile`
-           - `FacebookReconcile`
-           - `GoogleReconcile`
-           - `HYPRReconcile`
-           - `TwitterReconcile`
-           - `LDAPConnectorReconcile`
-           - `LinkedInReconcile`
-           - `EpicGamesReconcile`
-           - `NintendoReconcile`
-           - `SonyPSNReconcile`
-           - `SteamReconcile`
-           - `TwitchReconcile`
-           - `XboxReconcile`
-           - `SelfServiceRegistrationValidation`
-           - `ClientCredentialsJWTPopulate`
+           * `AppleReconcile`
+           * `ClientCredentialsJWTPopulate`
+           * `EpicGamesReconcile`
+           * `ExternalJWTReconcile`
+           * `FacebookReconcile`
+           * `GoogleReconcile`
+           * `HYPRReconcile`
+           * `JWTPopulate`
+           * `LDAPConnectorReconcile`
+           * `LinkedInReconcile`
+           * `LoginValidation`
+           * `NintendoReconcile`
+           * `OpenIDReconcile`
+           * `SAMLv2Populate`
+           * `SAMLv2Reconcile`
+           * `SCIMServerGroupRequestConverter`
+           * `SCIMServerGroupResponseConverter`
+           * `SCIMServerUserRequestConverter`
+           * `SCIMServerUserResponseConverter`
+           * `SelfServiceRegistrationValidation`
+           * `SonyPSNReconcile`
+           * `SteamReconcile`
+           * `TwitchReconcile`
+           * `TwitterReconcile`
+           * `UserInfoPopulate`
+           * `XboxReconcile`
     """
     __args__ = dict()
     __args__['id'] = id
@@ -142,13 +153,10 @@ def get_lambda(id: Optional[str] = None,
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'),
         type=pulumi.get(__ret__, 'type'))
-
-
-@_utilities.lift_output_func(get_lambda)
 def get_lambda_output(id: Optional[pulumi.Input[Optional[str]]] = None,
                       name: Optional[pulumi.Input[Optional[str]]] = None,
                       type: Optional[pulumi.Input[str]] = None,
-                      opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetLambdaResult]:
+                      opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetLambdaResult]:
     """
     ## # Lambda Resource
 
@@ -170,25 +178,42 @@ def get_lambda_output(id: Optional[pulumi.Input[Optional[str]]] = None,
     :param str id: The ID of the Lambda. At least one of `id` or `name` must be specified.
     :param str name: The name of the Lambda. At least one of `id` or `name` must be specified.
     :param str type: The Lambda type. The possible values are:
-           - `JWTPopulate`
-           - `OpenIDReconcile`
-           - `SAMLv2Reconcile`
-           - `SAMLv2Populate`
-           - `AppleReconcile`
-           - `ExternalJWTReconcile`
-           - `FacebookReconcile`
-           - `GoogleReconcile`
-           - `HYPRReconcile`
-           - `TwitterReconcile`
-           - `LDAPConnectorReconcile`
-           - `LinkedInReconcile`
-           - `EpicGamesReconcile`
-           - `NintendoReconcile`
-           - `SonyPSNReconcile`
-           - `SteamReconcile`
-           - `TwitchReconcile`
-           - `XboxReconcile`
-           - `SelfServiceRegistrationValidation`
-           - `ClientCredentialsJWTPopulate`
+           * `AppleReconcile`
+           * `ClientCredentialsJWTPopulate`
+           * `EpicGamesReconcile`
+           * `ExternalJWTReconcile`
+           * `FacebookReconcile`
+           * `GoogleReconcile`
+           * `HYPRReconcile`
+           * `JWTPopulate`
+           * `LDAPConnectorReconcile`
+           * `LinkedInReconcile`
+           * `LoginValidation`
+           * `NintendoReconcile`
+           * `OpenIDReconcile`
+           * `SAMLv2Populate`
+           * `SAMLv2Reconcile`
+           * `SCIMServerGroupRequestConverter`
+           * `SCIMServerGroupResponseConverter`
+           * `SCIMServerUserRequestConverter`
+           * `SCIMServerUserResponseConverter`
+           * `SelfServiceRegistrationValidation`
+           * `SonyPSNReconcile`
+           * `SteamReconcile`
+           * `TwitchReconcile`
+           * `TwitterReconcile`
+           * `UserInfoPopulate`
+           * `XboxReconcile`
     """
-    ...
+    __args__ = dict()
+    __args__['id'] = id
+    __args__['name'] = name
+    __args__['type'] = type
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getLambda:getLambda', __args__, opts=opts, typ=GetLambdaResult)
+    return __ret__.apply(lambda __response__: GetLambdaResult(
+        body=pulumi.get(__response__, 'body'),
+        debug=pulumi.get(__response__, 'debug'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        type=pulumi.get(__response__, 'type')))

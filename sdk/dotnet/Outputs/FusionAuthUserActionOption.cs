@@ -17,7 +17,7 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
         /// </summary>
-        public readonly ImmutableDictionary<string, object>? LocalizedNames;
+        public readonly ImmutableDictionary<string, string>? LocalizedNames;
         /// <summary>
         /// The name of this User Action Option.
         /// </summary>
@@ -25,7 +25,7 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthUserActionOption(
-            ImmutableDictionary<string, object>? localizedNames,
+            ImmutableDictionary<string, string>? localizedNames,
 
             string name)
         {

@@ -69,6 +69,35 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetLambdaResult> Invoke(GetLambdaInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetLambdaResult>("fusionauth:index/getLambda:getLambda", args ?? new GetLambdaInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Lambda Resource
+        /// 
+        /// Lambdas are user defined JavaScript functions that may be executed at runtime to perform various functions. Lambdas may be used to customize the claims returned in a JWT, reconcile a SAML v2 response or an OpenID Connect response when using these external identity providers.
+        /// 
+        /// [Lambdas API](https://fusionauth.io/docs/v1/tech/apis/lambdas)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var defaultGoogleReconcile = Fusionauth.GetLambda.Invoke(new()
+        ///     {
+        ///         Name = "Default Google Reconcile provided by FusionAuth",
+        ///         Type = "GoogleReconcile",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetLambdaResult> Invoke(GetLambdaInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetLambdaResult>("fusionauth:index/getLambda:getLambda", args ?? new GetLambdaInvokeArgs(), options.WithDefaults());
     }
 
 
@@ -88,26 +117,32 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The Lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `SelfServiceRegistrationValidation`
-        /// - `ClientCredentialsJWTPopulate`
+        /// * `AppleReconcile`
+        /// * `ClientCredentialsJWTPopulate`
+        /// * `EpicGamesReconcile`
+        /// * `ExternalJWTReconcile`
+        /// * `FacebookReconcile`
+        /// * `GoogleReconcile`
+        /// * `HYPRReconcile`
+        /// * `JWTPopulate`
+        /// * `LDAPConnectorReconcile`
+        /// * `LinkedInReconcile`
+        /// * `LoginValidation`
+        /// * `NintendoReconcile`
+        /// * `OpenIDReconcile`
+        /// * `SAMLv2Populate`
+        /// * `SAMLv2Reconcile`
+        /// * `SCIMServerGroupRequestConverter`
+        /// * `SCIMServerGroupResponseConverter`
+        /// * `SCIMServerUserRequestConverter`
+        /// * `SCIMServerUserResponseConverter`
+        /// * `SelfServiceRegistrationValidation`
+        /// * `SonyPSNReconcile`
+        /// * `SteamReconcile`
+        /// * `TwitchReconcile`
+        /// * `TwitterReconcile`
+        /// * `UserInfoPopulate`
+        /// * `XboxReconcile`
         /// </summary>
         [Input("type", required: true)]
         public string Type { get; set; } = null!;
@@ -134,26 +169,32 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The Lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `SelfServiceRegistrationValidation`
-        /// - `ClientCredentialsJWTPopulate`
+        /// * `AppleReconcile`
+        /// * `ClientCredentialsJWTPopulate`
+        /// * `EpicGamesReconcile`
+        /// * `ExternalJWTReconcile`
+        /// * `FacebookReconcile`
+        /// * `GoogleReconcile`
+        /// * `HYPRReconcile`
+        /// * `JWTPopulate`
+        /// * `LDAPConnectorReconcile`
+        /// * `LinkedInReconcile`
+        /// * `LoginValidation`
+        /// * `NintendoReconcile`
+        /// * `OpenIDReconcile`
+        /// * `SAMLv2Populate`
+        /// * `SAMLv2Reconcile`
+        /// * `SCIMServerGroupRequestConverter`
+        /// * `SCIMServerGroupResponseConverter`
+        /// * `SCIMServerUserRequestConverter`
+        /// * `SCIMServerUserResponseConverter`
+        /// * `SelfServiceRegistrationValidation`
+        /// * `SonyPSNReconcile`
+        /// * `SteamReconcile`
+        /// * `TwitchReconcile`
+        /// * `TwitterReconcile`
+        /// * `UserInfoPopulate`
+        /// * `XboxReconcile`
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

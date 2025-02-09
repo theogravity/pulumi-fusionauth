@@ -67,20 +67,48 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetFormResult> Invoke(GetFormInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetFormResult>("fusionauth:index/getForm:getForm", args ?? new GetFormInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Form Resource
+        /// 
+        /// A FusionAuth Form is a customizable object that contains one-to-many ordered steps. Each step is comprised of one or more Form Fields.
+        /// 
+        /// [Forms API](https://fusionauth.io/docs/v1/tech/apis/forms)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var @default = Fusionauth.GetForm.Invoke(new()
+        ///     {
+        ///         Name = "Default User Self Service provided by FusionAuth",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetFormResult> Invoke(GetFormInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetFormResult>("fusionauth:index/getForm:getForm", args ?? new GetFormInvokeArgs(), options.WithDefaults());
     }
 
 
     public sealed class GetFormArgs : global::Pulumi.InvokeArgs
     {
         [Input("data")]
-        private Dictionary<string, object>? _data;
+        private Dictionary<string, string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form that should be persisted.
         /// </summary>
-        public Dictionary<string, object> Data
+        public Dictionary<string, string> Data
         {
-            get => _data ?? (_data = new Dictionary<string, object>());
+            get => _data ?? (_data = new Dictionary<string, string>());
             set => _data = value;
         }
 
@@ -110,6 +138,8 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The form type. The possible values are:
+        /// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+        /// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
         /// </summary>
         [Input("type")]
         public string? Type { get; set; }
@@ -123,14 +153,14 @@ namespace theogravity.Fusionauth
     public sealed class GetFormInvokeArgs : global::Pulumi.InvokeArgs
     {
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Form that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
@@ -160,6 +190,8 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The form type. The possible values are:
+        /// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+        /// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
@@ -177,7 +209,7 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// An object that can hold any information about the Form that should be persisted.
         /// </summary>
-        public readonly ImmutableDictionary<string, object>? Data;
+        public readonly ImmutableDictionary<string, string>? Data;
         public readonly string FormId;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
@@ -193,12 +225,14 @@ namespace theogravity.Fusionauth
         public readonly ImmutableArray<Outputs.GetFormStepResult> Steps;
         /// <summary>
         /// The form type. The possible values are:
+        /// * `adminRegistration` - This form be used to customize the add and edit User Registration form in the FusionAuth UI.
+        /// * `adminUser` - This form can be used to customize the add and edit User form in the FusionAuth UI.
         /// </summary>
         public readonly string? Type;
 
         [OutputConstructor]
         private GetFormResult(
-            ImmutableDictionary<string, object>? data,
+            ImmutableDictionary<string, string>? data,
 
             string formId,
 

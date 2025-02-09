@@ -56,7 +56,7 @@ export class FusionAuthGroup extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Group that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The Id to use for the new Group. If not specified a secure random UUID will be generated.
      */
@@ -115,7 +115,7 @@ export interface FusionAuthGroupState {
     /**
      * An object that can hold any information about the Group that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id to use for the new Group. If not specified a secure random UUID will be generated.
      */
@@ -141,7 +141,7 @@ export interface FusionAuthGroupArgs {
     /**
      * An object that can hold any information about the Group that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id to use for the new Group. If not specified a secure random UUID will be generated.
      */

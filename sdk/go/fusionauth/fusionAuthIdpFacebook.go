@@ -86,17 +86,17 @@ type FusionAuthIdpFacebook struct {
 	LambdaReconcileId pulumi.StringOutput `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 	// The valid values are:
-	// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-	// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-	// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-	// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-	// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-	// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+	// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+	// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+	// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+	// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+	// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+	// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 	LinkingStrategy pulumi.StringOutput `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	// The valid values are:
-	// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-	// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+	// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+	// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 	LoginMethod pulumi.StringPtrOutput `pulumi:"loginMethod"`
 	// The top-level permissions that your application is asking of the user’s Facebook account.
 	// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
@@ -170,17 +170,17 @@ type fusionAuthIdpFacebookState struct {
 	LambdaReconcileId *string `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 	// The valid values are:
-	// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-	// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-	// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-	// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-	// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-	// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+	// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+	// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+	// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+	// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+	// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+	// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	// The valid values are:
-	// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-	// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+	// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+	// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 	LoginMethod *string `pulumi:"loginMethod"`
 	// The top-level permissions that your application is asking of the user’s Facebook account.
 	// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
@@ -209,17 +209,17 @@ type FusionAuthIdpFacebookState struct {
 	LambdaReconcileId pulumi.StringPtrInput
 	// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 	// The valid values are:
-	// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-	// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-	// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-	// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-	// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-	// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+	// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+	// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+	// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+	// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+	// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+	// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 	LinkingStrategy pulumi.StringPtrInput
 	// The login method to use for this Identity Provider.
 	// The valid values are:
-	// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-	// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+	// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+	// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 	LoginMethod pulumi.StringPtrInput
 	// The top-level permissions that your application is asking of the user’s Facebook account.
 	// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
@@ -252,17 +252,17 @@ type fusionAuthIdpFacebookArgs struct {
 	LambdaReconcileId *string `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 	// The valid values are:
-	// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-	// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-	// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-	// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-	// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-	// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+	// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+	// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+	// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+	// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+	// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+	// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
 	// The login method to use for this Identity Provider.
 	// The valid values are:
-	// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-	// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+	// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+	// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 	LoginMethod *string `pulumi:"loginMethod"`
 	// The top-level permissions that your application is asking of the user’s Facebook account.
 	// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
@@ -292,17 +292,17 @@ type FusionAuthIdpFacebookArgs struct {
 	LambdaReconcileId pulumi.StringPtrInput
 	// The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 	// The valid values are:
-	// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-	// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-	// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-	// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-	// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-	// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+	// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+	// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+	// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+	// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+	// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+	// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 	LinkingStrategy pulumi.StringPtrInput
 	// The login method to use for this Identity Provider.
 	// The valid values are:
-	// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-	// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+	// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+	// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 	LoginMethod pulumi.StringPtrInput
 	// The top-level permissions that your application is asking of the user’s Facebook account.
 	// Permission values are documented at [Facebook Login API](https://developers.facebook.com/docs/permissions/reference)
@@ -443,20 +443,20 @@ func (o FusionAuthIdpFacebookOutput) LambdaReconcileId() pulumi.StringOutput {
 
 // The linking strategy to use when creating the link between the Facebook Identity Provider and the user.
 // The valid values are:
-// - `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
-// - `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
-// - `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
-// - `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
-// - `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
-// - `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
+// * `CreatePendingLink` - Do not automatically link, instead return a pending link identifier that can be used to link to an existing user.
+// * `LinkAnonymously` - Always create a link based upon the unique Id returned by the identity provider. A username or email is not required and will not be used to link the user. A reconcile lambda will not be used in this configuration.
+// * `LinkByEmail` - Link to an existing user based upon email. A user will be created with the email returned by the identity provider if one does not already exist.
+// * `LinkByEmailForExistingUser` - Only link to an existing user based upon email. A user will not be created if one does not already exist with email returned by the identity provider.
+// * `LinkByUsername` - Link to an existing user based upon username. A user will be created with the username returned by the identity provider if one does not already exist.
+// * `LinkByUsernameForExistingUser` - Only link to an existing user based upon username. A user will not be created if one does not already exist with username returned by the identity provider.
 func (o FusionAuthIdpFacebookOutput) LinkingStrategy() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthIdpFacebook) pulumi.StringOutput { return v.LinkingStrategy }).(pulumi.StringOutput)
 }
 
 // The login method to use for this Identity Provider.
 // The valid values are:
-// - `UsePopup` - When logging in use a popup window and the Facebook javascript library.
-// - `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
+// * `UsePopup` - When logging in use a popup window and the Facebook javascript library.
+// * `UseRedirect` - When logging in use the Facebook OAuth redirect login flow.
 func (o FusionAuthIdpFacebookOutput) LoginMethod() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpFacebook) pulumi.StringPtrOutput { return v.LoginMethod }).(pulumi.StringPtrOutput)
 }

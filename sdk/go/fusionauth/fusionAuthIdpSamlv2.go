@@ -67,6 +67,8 @@ type FusionAuthIdpSamlv2 struct {
 
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlv2ApplicationConfigurationArrayOutput `pulumi:"applicationConfigurations"`
+	// The configuration for the SAML assertion.
+	AssertionConfiguration FusionAuthIdpSamlv2AssertionConfigurationPtrOutput `pulumi:"assertionConfiguration"`
 	// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 	ButtonImageUrl pulumi.StringPtrOutput `pulumi:"buttonImageUrl"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -83,26 +85,29 @@ type FusionAuthIdpSamlv2 struct {
 	IdpEndpoint pulumi.StringPtrOutput `pulumi:"idpEndpoint"`
 	// The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
 	IdpId pulumi.StringPtrOutput `pulumi:"idpId"`
+	// The configuration for the IdP initiated login.
+	IdpInitiatedConfiguration FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput `pulumi:"idpInitiatedConfiguration"`
 	// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 	KeyId pulumi.StringOutput `pulumi:"keyId"`
 	// The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
 	LambdaReconcileId pulumi.StringPtrOutput `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 	LinkingStrategy pulumi.StringOutput `pulumi:"linkingStrategy"`
+	// The configuration for the login hint.
+	LoginHintConfiguration FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput `pulumi:"loginHintConfiguration"`
 	// The name of this OpenID Connect identity provider. This is only used for display purposes.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
 	NameIdFormat pulumi.StringOutput `pulumi:"nameIdFormat"`
 	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrOutput `pulumi:"postRequest"`
-	// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+	// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 	RequestSigningKey pulumi.StringPtrOutput `pulumi:"requestSigningKey"`
 	// When true authentication requests sent to the identity provider will be signed.
 	SignRequest pulumi.BoolPtrOutput `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayOutput `pulumi:"tenantConfigurations"`
-	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-	// the emailClaim will be used when linking user.
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 	UniqueIdClaim pulumi.StringPtrOutput `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrOutput `pulumi:"useNameForEmail"`
@@ -150,6 +155,8 @@ func GetFusionAuthIdpSamlv2(ctx *pulumi.Context,
 type fusionAuthIdpSamlv2State struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSamlv2ApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The configuration for the SAML assertion.
+	AssertionConfiguration *FusionAuthIdpSamlv2AssertionConfiguration `pulumi:"assertionConfiguration"`
 	// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 	ButtonImageUrl *string `pulumi:"buttonImageUrl"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -166,26 +173,29 @@ type fusionAuthIdpSamlv2State struct {
 	IdpEndpoint *string `pulumi:"idpEndpoint"`
 	// The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
 	IdpId *string `pulumi:"idpId"`
+	// The configuration for the IdP initiated login.
+	IdpInitiatedConfiguration *FusionAuthIdpSamlv2IdpInitiatedConfiguration `pulumi:"idpInitiatedConfiguration"`
 	// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 	KeyId *string `pulumi:"keyId"`
 	// The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
 	LambdaReconcileId *string `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
+	// The configuration for the login hint.
+	LoginHintConfiguration *FusionAuthIdpSamlv2LoginHintConfiguration `pulumi:"loginHintConfiguration"`
 	// The name of this OpenID Connect identity provider. This is only used for display purposes.
 	Name *string `pulumi:"name"`
 	// Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
 	NameIdFormat *string `pulumi:"nameIdFormat"`
 	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest *bool `pulumi:"postRequest"`
-	// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+	// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 	RequestSigningKey *string `pulumi:"requestSigningKey"`
 	// When true authentication requests sent to the identity provider will be signed.
 	SignRequest *bool `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlv2TenantConfiguration `pulumi:"tenantConfigurations"`
-	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-	// the emailClaim will be used when linking user.
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
@@ -198,6 +208,8 @@ type fusionAuthIdpSamlv2State struct {
 type FusionAuthIdpSamlv2State struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlv2ApplicationConfigurationArrayInput
+	// The configuration for the SAML assertion.
+	AssertionConfiguration FusionAuthIdpSamlv2AssertionConfigurationPtrInput
 	// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 	ButtonImageUrl pulumi.StringPtrInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -214,26 +226,29 @@ type FusionAuthIdpSamlv2State struct {
 	IdpEndpoint pulumi.StringPtrInput
 	// The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
 	IdpId pulumi.StringPtrInput
+	// The configuration for the IdP initiated login.
+	IdpInitiatedConfiguration FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput
 	// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 	KeyId pulumi.StringPtrInput
 	// The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
 	LambdaReconcileId pulumi.StringPtrInput
 	// The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 	LinkingStrategy pulumi.StringPtrInput
+	// The configuration for the login hint.
+	LoginHintConfiguration FusionAuthIdpSamlv2LoginHintConfigurationPtrInput
 	// The name of this OpenID Connect identity provider. This is only used for display purposes.
 	Name pulumi.StringPtrInput
 	// Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
 	NameIdFormat pulumi.StringPtrInput
 	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrInput
-	// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+	// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 	RequestSigningKey pulumi.StringPtrInput
 	// When true authentication requests sent to the identity provider will be signed.
 	SignRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayInput
-	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-	// the emailClaim will be used when linking user.
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
@@ -250,6 +265,8 @@ func (FusionAuthIdpSamlv2State) ElementType() reflect.Type {
 type fusionAuthIdpSamlv2Args struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSamlv2ApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The configuration for the SAML assertion.
+	AssertionConfiguration *FusionAuthIdpSamlv2AssertionConfiguration `pulumi:"assertionConfiguration"`
 	// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 	ButtonImageUrl *string `pulumi:"buttonImageUrl"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -266,26 +283,29 @@ type fusionAuthIdpSamlv2Args struct {
 	IdpEndpoint *string `pulumi:"idpEndpoint"`
 	// The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
 	IdpId *string `pulumi:"idpId"`
+	// The configuration for the IdP initiated login.
+	IdpInitiatedConfiguration *FusionAuthIdpSamlv2IdpInitiatedConfiguration `pulumi:"idpInitiatedConfiguration"`
 	// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 	KeyId string `pulumi:"keyId"`
 	// The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
 	LambdaReconcileId *string `pulumi:"lambdaReconcileId"`
 	// The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 	LinkingStrategy *string `pulumi:"linkingStrategy"`
+	// The configuration for the login hint.
+	LoginHintConfiguration *FusionAuthIdpSamlv2LoginHintConfiguration `pulumi:"loginHintConfiguration"`
 	// The name of this OpenID Connect identity provider. This is only used for display purposes.
 	Name *string `pulumi:"name"`
 	// Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
 	NameIdFormat *string `pulumi:"nameIdFormat"`
 	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest *bool `pulumi:"postRequest"`
-	// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+	// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 	RequestSigningKey *string `pulumi:"requestSigningKey"`
 	// When true authentication requests sent to the identity provider will be signed.
 	SignRequest *bool `pulumi:"signRequest"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlv2TenantConfiguration `pulumi:"tenantConfigurations"`
-	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-	// the emailClaim will be used when linking user.
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
@@ -299,6 +319,8 @@ type fusionAuthIdpSamlv2Args struct {
 type FusionAuthIdpSamlv2Args struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlv2ApplicationConfigurationArrayInput
+	// The configuration for the SAML assertion.
+	AssertionConfiguration FusionAuthIdpSamlv2AssertionConfigurationPtrInput
 	// The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 	ButtonImageUrl pulumi.StringPtrInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -315,26 +337,29 @@ type FusionAuthIdpSamlv2Args struct {
 	IdpEndpoint pulumi.StringPtrInput
 	// The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
 	IdpId pulumi.StringPtrInput
+	// The configuration for the IdP initiated login.
+	IdpInitiatedConfiguration FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput
 	// The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 	KeyId pulumi.StringInput
 	// The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
 	LambdaReconcileId pulumi.StringPtrInput
 	// The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 	LinkingStrategy pulumi.StringPtrInput
+	// The configuration for the login hint.
+	LoginHintConfiguration FusionAuthIdpSamlv2LoginHintConfigurationPtrInput
 	// The name of this OpenID Connect identity provider. This is only used for display purposes.
 	Name pulumi.StringPtrInput
 	// Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
 	NameIdFormat pulumi.StringPtrInput
 	// Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
 	PostRequest pulumi.BoolPtrInput
-	// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+	// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 	RequestSigningKey pulumi.StringPtrInput
 	// When true authentication requests sent to the identity provider will be signed.
 	SignRequest pulumi.BoolPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlv2TenantConfigurationArrayInput
-	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-	// the emailClaim will be used when linking user.
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
@@ -438,6 +463,13 @@ func (o FusionAuthIdpSamlv2Output) ApplicationConfigurations() FusionAuthIdpSaml
 	}).(FusionAuthIdpSamlv2ApplicationConfigurationArrayOutput)
 }
 
+// The configuration for the SAML assertion.
+func (o FusionAuthIdpSamlv2Output) AssertionConfiguration() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+		return v.AssertionConfiguration
+	}).(FusionAuthIdpSamlv2AssertionConfigurationPtrOutput)
+}
+
 // The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
 func (o FusionAuthIdpSamlv2Output) ButtonImageUrl() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.ButtonImageUrl }).(pulumi.StringPtrOutput)
@@ -478,6 +510,13 @@ func (o FusionAuthIdpSamlv2Output) IdpId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.IdpId }).(pulumi.StringPtrOutput)
 }
 
+// The configuration for the IdP initiated login.
+func (o FusionAuthIdpSamlv2Output) IdpInitiatedConfiguration() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+		return v.IdpInitiatedConfiguration
+	}).(FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput)
+}
+
 // The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
 func (o FusionAuthIdpSamlv2Output) KeyId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringOutput { return v.KeyId }).(pulumi.StringOutput)
@@ -491,6 +530,13 @@ func (o FusionAuthIdpSamlv2Output) LambdaReconcileId() pulumi.StringPtrOutput {
 // The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
 func (o FusionAuthIdpSamlv2Output) LinkingStrategy() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringOutput { return v.LinkingStrategy }).(pulumi.StringOutput)
+}
+
+// The configuration for the login hint.
+func (o FusionAuthIdpSamlv2Output) LoginHintConfiguration() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+		return v.LoginHintConfiguration
+	}).(FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput)
 }
 
 // The name of this OpenID Connect identity provider. This is only used for display purposes.
@@ -508,7 +554,7 @@ func (o FusionAuthIdpSamlv2Output) PostRequest() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.BoolPtrOutput { return v.PostRequest }).(pulumi.BoolPtrOutput)
 }
 
-// TThe key pair Id to use to sign the SAML request. Required when `signRequest` is true.
+// The key pair Id to use to sign the SAML request. Required when `signRequest` is true.
 func (o FusionAuthIdpSamlv2Output) RequestSigningKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.RequestSigningKey }).(pulumi.StringPtrOutput)
 }
@@ -525,8 +571,7 @@ func (o FusionAuthIdpSamlv2Output) TenantConfigurations() FusionAuthIdpSamlv2Ten
 	}).(FusionAuthIdpSamlv2TenantConfigurationArrayOutput)
 }
 
-// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-// the emailClaim will be used when linking user.
+// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the emailClaim` will be used when linking user.
 func (o FusionAuthIdpSamlv2Output) UniqueIdClaim() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlv2) pulumi.StringPtrOutput { return v.UniqueIdClaim }).(pulumi.StringPtrOutput)
 }

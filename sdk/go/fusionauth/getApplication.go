@@ -59,20 +59,18 @@ type GetApplicationArgs struct {
 // A collection of values returned by getApplication.
 type GetApplicationResult struct {
 	// The provider-assigned unique ID for this managed resource.
-	Id   string `pulumi:"id"`
-	Name string `pulumi:"name"`
+	Id                     string                                `pulumi:"id"`
+	Name                   string                                `pulumi:"name"`
+	TenantId               string                                `pulumi:"tenantId"`
+	WebauthnConfigurations []GetApplicationWebauthnConfiguration `pulumi:"webauthnConfigurations"`
 }
 
 func GetApplicationOutput(ctx *pulumi.Context, args GetApplicationOutputArgs, opts ...pulumi.InvokeOption) GetApplicationResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetApplicationResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetApplicationResultOutput, error) {
 			args := v.(GetApplicationArgs)
-			r, err := GetApplication(ctx, &args, opts...)
-			var s GetApplicationResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getApplication:getApplication", args, GetApplicationResultOutput{}, options).(GetApplicationResultOutput), nil
 		}).(GetApplicationResultOutput)
 }
 
@@ -108,6 +106,14 @@ func (o GetApplicationResultOutput) Id() pulumi.StringOutput {
 
 func (o GetApplicationResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetApplicationResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o GetApplicationResultOutput) TenantId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetApplicationResult) string { return v.TenantId }).(pulumi.StringOutput)
+}
+
+func (o GetApplicationResultOutput) WebauthnConfigurations() GetApplicationWebauthnConfigurationArrayOutput {
+	return o.ApplyT(func(v GetApplicationResult) []GetApplicationWebauthnConfiguration { return v.WebauthnConfigurations }).(GetApplicationWebauthnConfigurationArrayOutput)
 }
 
 func init() {

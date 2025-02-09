@@ -151,11 +151,15 @@ type FusionAuthApplication struct {
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrOutput                               `pulumi:"authenticationTokenConfigurationEnabled"`
 	CleanSpeakConfiguration                 FusionAuthApplicationCleanSpeakConfigurationOutput `pulumi:"cleanSpeakConfiguration"`
 	// An object that can hold any information about the Application that should be persisted.
-	Data                     pulumi.MapOutput                                    `pulumi:"data"`
-	EmailConfiguration       FusionAuthApplicationEmailConfigurationOutput       `pulumi:"emailConfiguration"`
-	FormConfiguration        FusionAuthApplicationFormConfigurationOutput        `pulumi:"formConfiguration"`
-	JwtConfiguration         FusionAuthApplicationJwtConfigurationOutput         `pulumi:"jwtConfiguration"`
-	LambdaConfiguration      FusionAuthApplicationLambdaConfigurationOutput      `pulumi:"lambdaConfiguration"`
+	Data               pulumi.StringMapOutput                          `pulumi:"data"`
+	EmailConfiguration FusionAuthApplicationEmailConfigurationOutput   `pulumi:"emailConfiguration"`
+	FormConfiguration  FusionAuthApplicationFormConfigurationPtrOutput `pulumi:"formConfiguration"`
+	// The instant that the Application was added to the FusionAuth database.
+	InsertInstant       pulumi.IntOutput                               `pulumi:"insertInstant"`
+	JwtConfiguration    FusionAuthApplicationJwtConfigurationPtrOutput `pulumi:"jwtConfiguration"`
+	LambdaConfiguration FusionAuthApplicationLambdaConfigurationOutput `pulumi:"lambdaConfiguration"`
+	// The instant that the Application was last updated in the FusionAuth database.
+	LastUpdateInstant        pulumi.IntOutput                                    `pulumi:"lastUpdateInstant"`
 	LoginConfiguration       FusionAuthApplicationLoginConfigurationOutput       `pulumi:"loginConfiguration"`
 	MultiFactorConfiguration FusionAuthApplicationMultiFactorConfigurationOutput `pulumi:"multiFactorConfiguration"`
 	// The name of the Application.
@@ -166,7 +170,8 @@ type FusionAuthApplication struct {
 	RegistrationConfiguration        FusionAuthApplicationRegistrationConfigurationOutput `pulumi:"registrationConfiguration"`
 	RegistrationDeletePolicy         FusionAuthApplicationRegistrationDeletePolicyOutput  `pulumi:"registrationDeletePolicy"`
 	Samlv2Configuration              FusionAuthApplicationSamlv2ConfigurationOutput       `pulumi:"samlv2Configuration"`
-	TenantId                         pulumi.StringOutput                                  `pulumi:"tenantId"`
+	// The Id of the Tenant that this Application belongs to.
+	TenantId pulumi.StringOutput `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId pulumi.StringPtrOutput `pulumi:"themeId"`
 	// The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
@@ -174,7 +179,8 @@ type FusionAuthApplication struct {
 	// The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
 	VerificationStrategy pulumi.StringPtrOutput `pulumi:"verificationStrategy"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-	VerifyRegistration pulumi.BoolPtrOutput `pulumi:"verifyRegistration"`
+	VerifyRegistration    pulumi.BoolPtrOutput                                `pulumi:"verifyRegistration"`
+	WebauthnConfiguration FusionAuthApplicationWebauthnConfigurationPtrOutput `pulumi:"webauthnConfiguration"`
 }
 
 // NewFusionAuthApplication registers a new resource with the given unique name, arguments, and options.
@@ -217,11 +223,15 @@ type fusionAuthApplicationState struct {
 	AuthenticationTokenConfigurationEnabled *bool                                         `pulumi:"authenticationTokenConfigurationEnabled"`
 	CleanSpeakConfiguration                 *FusionAuthApplicationCleanSpeakConfiguration `pulumi:"cleanSpeakConfiguration"`
 	// An object that can hold any information about the Application that should be persisted.
-	Data                     map[string]interface{}                         `pulumi:"data"`
-	EmailConfiguration       *FusionAuthApplicationEmailConfiguration       `pulumi:"emailConfiguration"`
-	FormConfiguration        *FusionAuthApplicationFormConfiguration        `pulumi:"formConfiguration"`
-	JwtConfiguration         *FusionAuthApplicationJwtConfiguration         `pulumi:"jwtConfiguration"`
-	LambdaConfiguration      *FusionAuthApplicationLambdaConfiguration      `pulumi:"lambdaConfiguration"`
+	Data               map[string]string                        `pulumi:"data"`
+	EmailConfiguration *FusionAuthApplicationEmailConfiguration `pulumi:"emailConfiguration"`
+	FormConfiguration  *FusionAuthApplicationFormConfiguration  `pulumi:"formConfiguration"`
+	// The instant that the Application was added to the FusionAuth database.
+	InsertInstant       *int                                      `pulumi:"insertInstant"`
+	JwtConfiguration    *FusionAuthApplicationJwtConfiguration    `pulumi:"jwtConfiguration"`
+	LambdaConfiguration *FusionAuthApplicationLambdaConfiguration `pulumi:"lambdaConfiguration"`
+	// The instant that the Application was last updated in the FusionAuth database.
+	LastUpdateInstant        *int                                           `pulumi:"lastUpdateInstant"`
 	LoginConfiguration       *FusionAuthApplicationLoginConfiguration       `pulumi:"loginConfiguration"`
 	MultiFactorConfiguration *FusionAuthApplicationMultiFactorConfiguration `pulumi:"multiFactorConfiguration"`
 	// The name of the Application.
@@ -232,7 +242,8 @@ type fusionAuthApplicationState struct {
 	RegistrationConfiguration        *FusionAuthApplicationRegistrationConfiguration `pulumi:"registrationConfiguration"`
 	RegistrationDeletePolicy         *FusionAuthApplicationRegistrationDeletePolicy  `pulumi:"registrationDeletePolicy"`
 	Samlv2Configuration              *FusionAuthApplicationSamlv2Configuration       `pulumi:"samlv2Configuration"`
-	TenantId                         *string                                         `pulumi:"tenantId"`
+	// The Id of the Tenant that this Application belongs to.
+	TenantId *string `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId *string `pulumi:"themeId"`
 	// The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
@@ -240,7 +251,8 @@ type fusionAuthApplicationState struct {
 	// The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
 	VerificationStrategy *string `pulumi:"verificationStrategy"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-	VerifyRegistration *bool `pulumi:"verifyRegistration"`
+	VerifyRegistration    *bool                                       `pulumi:"verifyRegistration"`
+	WebauthnConfiguration *FusionAuthApplicationWebauthnConfiguration `pulumi:"webauthnConfiguration"`
 }
 
 type FusionAuthApplicationState struct {
@@ -251,11 +263,15 @@ type FusionAuthApplicationState struct {
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrInput
 	CleanSpeakConfiguration                 FusionAuthApplicationCleanSpeakConfigurationPtrInput
 	// An object that can hold any information about the Application that should be persisted.
-	Data                     pulumi.MapInput
-	EmailConfiguration       FusionAuthApplicationEmailConfigurationPtrInput
-	FormConfiguration        FusionAuthApplicationFormConfigurationPtrInput
-	JwtConfiguration         FusionAuthApplicationJwtConfigurationPtrInput
-	LambdaConfiguration      FusionAuthApplicationLambdaConfigurationPtrInput
+	Data               pulumi.StringMapInput
+	EmailConfiguration FusionAuthApplicationEmailConfigurationPtrInput
+	FormConfiguration  FusionAuthApplicationFormConfigurationPtrInput
+	// The instant that the Application was added to the FusionAuth database.
+	InsertInstant       pulumi.IntPtrInput
+	JwtConfiguration    FusionAuthApplicationJwtConfigurationPtrInput
+	LambdaConfiguration FusionAuthApplicationLambdaConfigurationPtrInput
+	// The instant that the Application was last updated in the FusionAuth database.
+	LastUpdateInstant        pulumi.IntPtrInput
 	LoginConfiguration       FusionAuthApplicationLoginConfigurationPtrInput
 	MultiFactorConfiguration FusionAuthApplicationMultiFactorConfigurationPtrInput
 	// The name of the Application.
@@ -266,7 +282,8 @@ type FusionAuthApplicationState struct {
 	RegistrationConfiguration        FusionAuthApplicationRegistrationConfigurationPtrInput
 	RegistrationDeletePolicy         FusionAuthApplicationRegistrationDeletePolicyPtrInput
 	Samlv2Configuration              FusionAuthApplicationSamlv2ConfigurationPtrInput
-	TenantId                         pulumi.StringPtrInput
+	// The Id of the Tenant that this Application belongs to.
+	TenantId pulumi.StringPtrInput
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId pulumi.StringPtrInput
 	// The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
@@ -274,7 +291,8 @@ type FusionAuthApplicationState struct {
 	// The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
 	VerificationStrategy pulumi.StringPtrInput
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-	VerifyRegistration pulumi.BoolPtrInput
+	VerifyRegistration    pulumi.BoolPtrInput
+	WebauthnConfiguration FusionAuthApplicationWebauthnConfigurationPtrInput
 }
 
 func (FusionAuthApplicationState) ElementType() reflect.Type {
@@ -289,7 +307,7 @@ type fusionAuthApplicationArgs struct {
 	AuthenticationTokenConfigurationEnabled *bool                                         `pulumi:"authenticationTokenConfigurationEnabled"`
 	CleanSpeakConfiguration                 *FusionAuthApplicationCleanSpeakConfiguration `pulumi:"cleanSpeakConfiguration"`
 	// An object that can hold any information about the Application that should be persisted.
-	Data                     map[string]interface{}                         `pulumi:"data"`
+	Data                     map[string]string                              `pulumi:"data"`
 	EmailConfiguration       *FusionAuthApplicationEmailConfiguration       `pulumi:"emailConfiguration"`
 	FormConfiguration        *FusionAuthApplicationFormConfiguration        `pulumi:"formConfiguration"`
 	JwtConfiguration         *FusionAuthApplicationJwtConfiguration         `pulumi:"jwtConfiguration"`
@@ -304,7 +322,8 @@ type fusionAuthApplicationArgs struct {
 	RegistrationConfiguration        *FusionAuthApplicationRegistrationConfiguration `pulumi:"registrationConfiguration"`
 	RegistrationDeletePolicy         *FusionAuthApplicationRegistrationDeletePolicy  `pulumi:"registrationDeletePolicy"`
 	Samlv2Configuration              *FusionAuthApplicationSamlv2Configuration       `pulumi:"samlv2Configuration"`
-	TenantId                         string                                          `pulumi:"tenantId"`
+	// The Id of the Tenant that this Application belongs to.
+	TenantId string `pulumi:"tenantId"`
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId *string `pulumi:"themeId"`
 	// The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
@@ -312,7 +331,8 @@ type fusionAuthApplicationArgs struct {
 	// The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
 	VerificationStrategy *string `pulumi:"verificationStrategy"`
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-	VerifyRegistration *bool `pulumi:"verifyRegistration"`
+	VerifyRegistration    *bool                                       `pulumi:"verifyRegistration"`
+	WebauthnConfiguration *FusionAuthApplicationWebauthnConfiguration `pulumi:"webauthnConfiguration"`
 }
 
 // The set of arguments for constructing a FusionAuthApplication resource.
@@ -324,7 +344,7 @@ type FusionAuthApplicationArgs struct {
 	AuthenticationTokenConfigurationEnabled pulumi.BoolPtrInput
 	CleanSpeakConfiguration                 FusionAuthApplicationCleanSpeakConfigurationPtrInput
 	// An object that can hold any information about the Application that should be persisted.
-	Data                     pulumi.MapInput
+	Data                     pulumi.StringMapInput
 	EmailConfiguration       FusionAuthApplicationEmailConfigurationPtrInput
 	FormConfiguration        FusionAuthApplicationFormConfigurationPtrInput
 	JwtConfiguration         FusionAuthApplicationJwtConfigurationPtrInput
@@ -339,7 +359,8 @@ type FusionAuthApplicationArgs struct {
 	RegistrationConfiguration        FusionAuthApplicationRegistrationConfigurationPtrInput
 	RegistrationDeletePolicy         FusionAuthApplicationRegistrationDeletePolicyPtrInput
 	Samlv2Configuration              FusionAuthApplicationSamlv2ConfigurationPtrInput
-	TenantId                         pulumi.StringInput
+	// The Id of the Tenant that this Application belongs to.
+	TenantId pulumi.StringInput
 	// The unique Id of the theme to be used to style the login page and other end user templates.
 	ThemeId pulumi.StringPtrInput
 	// The Id of the Email Template that is used to send the Registration Verification emails to users. If the verifyRegistration field is true this field is required.
@@ -347,7 +368,8 @@ type FusionAuthApplicationArgs struct {
 	// The process by which the user will verify their email address. Possible values are `ClickableLink` or `FormField`
 	VerificationStrategy pulumi.StringPtrInput
 	// Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
-	VerifyRegistration pulumi.BoolPtrInput
+	VerifyRegistration    pulumi.BoolPtrInput
+	WebauthnConfiguration FusionAuthApplicationWebauthnConfigurationPtrInput
 }
 
 func (FusionAuthApplicationArgs) ElementType() reflect.Type {
@@ -460,8 +482,8 @@ func (o FusionAuthApplicationOutput) CleanSpeakConfiguration() FusionAuthApplica
 }
 
 // An object that can hold any information about the Application that should be persisted.
-func (o FusionAuthApplicationOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthApplication) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthApplicationOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
 func (o FusionAuthApplicationOutput) EmailConfiguration() FusionAuthApplicationEmailConfigurationOutput {
@@ -470,20 +492,32 @@ func (o FusionAuthApplicationOutput) EmailConfiguration() FusionAuthApplicationE
 	}).(FusionAuthApplicationEmailConfigurationOutput)
 }
 
-func (o FusionAuthApplicationOutput) FormConfiguration() FusionAuthApplicationFormConfigurationOutput {
-	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationFormConfigurationOutput {
+func (o FusionAuthApplicationOutput) FormConfiguration() FusionAuthApplicationFormConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationFormConfigurationPtrOutput {
 		return v.FormConfiguration
-	}).(FusionAuthApplicationFormConfigurationOutput)
+	}).(FusionAuthApplicationFormConfigurationPtrOutput)
 }
 
-func (o FusionAuthApplicationOutput) JwtConfiguration() FusionAuthApplicationJwtConfigurationOutput {
-	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationJwtConfigurationOutput { return v.JwtConfiguration }).(FusionAuthApplicationJwtConfigurationOutput)
+// The instant that the Application was added to the FusionAuth database.
+func (o FusionAuthApplicationOutput) InsertInstant() pulumi.IntOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) pulumi.IntOutput { return v.InsertInstant }).(pulumi.IntOutput)
+}
+
+func (o FusionAuthApplicationOutput) JwtConfiguration() FusionAuthApplicationJwtConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationJwtConfigurationPtrOutput {
+		return v.JwtConfiguration
+	}).(FusionAuthApplicationJwtConfigurationPtrOutput)
 }
 
 func (o FusionAuthApplicationOutput) LambdaConfiguration() FusionAuthApplicationLambdaConfigurationOutput {
 	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationLambdaConfigurationOutput {
 		return v.LambdaConfiguration
 	}).(FusionAuthApplicationLambdaConfigurationOutput)
+}
+
+// The instant that the Application was last updated in the FusionAuth database.
+func (o FusionAuthApplicationOutput) LastUpdateInstant() pulumi.IntOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) pulumi.IntOutput { return v.LastUpdateInstant }).(pulumi.IntOutput)
 }
 
 func (o FusionAuthApplicationOutput) LoginConfiguration() FusionAuthApplicationLoginConfigurationOutput {
@@ -532,6 +566,7 @@ func (o FusionAuthApplicationOutput) Samlv2Configuration() FusionAuthApplication
 	}).(FusionAuthApplicationSamlv2ConfigurationOutput)
 }
 
+// The Id of the Tenant that this Application belongs to.
 func (o FusionAuthApplicationOutput) TenantId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthApplication) pulumi.StringOutput { return v.TenantId }).(pulumi.StringOutput)
 }
@@ -554,6 +589,12 @@ func (o FusionAuthApplicationOutput) VerificationStrategy() pulumi.StringPtrOutp
 // Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
 func (o FusionAuthApplicationOutput) VerifyRegistration() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplication) pulumi.BoolPtrOutput { return v.VerifyRegistration }).(pulumi.BoolPtrOutput)
+}
+
+func (o FusionAuthApplicationOutput) WebauthnConfiguration() FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplication) FusionAuthApplicationWebauthnConfigurationPtrOutput {
+		return v.WebauthnConfiguration
+	}).(FusionAuthApplicationWebauthnConfigurationPtrOutput)
 }
 
 type FusionAuthApplicationArrayOutput struct{ *pulumi.OutputState }

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -19,6 +24,7 @@ class FusionAuthIdpSteamArgs:
                  button_text: pulumi.Input[str],
                  client_id: pulumi.Input[str],
                  web_api_key: pulumi.Input[str],
+                 api_mode: Optional[pulumi.Input[str]] = None,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSteamApplicationConfigurationArgs']]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -32,6 +38,7 @@ class FusionAuthIdpSteamArgs:
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         :param pulumi.Input[str] web_api_key: The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
+        :param pulumi.Input[str] api_mode: Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSteamApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -44,6 +51,8 @@ class FusionAuthIdpSteamArgs:
         pulumi.set(__self__, "button_text", button_text)
         pulumi.set(__self__, "client_id", client_id)
         pulumi.set(__self__, "web_api_key", web_api_key)
+        if api_mode is not None:
+            pulumi.set(__self__, "api_mode", api_mode)
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
         if debug is not None:
@@ -96,6 +105,18 @@ class FusionAuthIdpSteamArgs:
     @web_api_key.setter
     def web_api_key(self, value: pulumi.Input[str]):
         pulumi.set(self, "web_api_key", value)
+
+    @property
+    @pulumi.getter(name="apiMode")
+    def api_mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        """
+        return pulumi.get(self, "api_mode")
+
+    @api_mode.setter
+    def api_mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_mode", value)
 
     @property
     @pulumi.getter(name="applicationConfigurations")
@@ -197,6 +218,7 @@ class FusionAuthIdpSteamArgs:
 @pulumi.input_type
 class _FusionAuthIdpSteamState:
     def __init__(__self__, *,
+                 api_mode: Optional[pulumi.Input[str]] = None,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSteamApplicationConfigurationArgs']]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
@@ -210,6 +232,7 @@ class _FusionAuthIdpSteamState:
                  web_api_key: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthIdpSteam resources.
+        :param pulumi.Input[str] api_mode: Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSteamApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
@@ -222,6 +245,8 @@ class _FusionAuthIdpSteamState:
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSteamTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         :param pulumi.Input[str] web_api_key: The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         """
+        if api_mode is not None:
+            pulumi.set(__self__, "api_mode", api_mode)
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
         if button_text is not None:
@@ -244,6 +269,18 @@ class _FusionAuthIdpSteamState:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
         if web_api_key is not None:
             pulumi.set(__self__, "web_api_key", web_api_key)
+
+    @property
+    @pulumi.getter(name="apiMode")
+    def api_mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        """
+        return pulumi.get(self, "api_mode")
+
+    @api_mode.setter
+    def api_mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "api_mode", value)
 
     @property
     @pulumi.getter(name="applicationConfigurations")
@@ -383,7 +420,8 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamApplicationConfigurationArgs']]]]] = None,
+                 api_mode: Optional[pulumi.Input[str]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamApplicationConfigurationArgs', 'FusionAuthIdpSteamApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -392,7 +430,7 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamTenantConfigurationArgs', 'FusionAuthIdpSteamTenantConfigurationArgsDict']]]]] = None,
                  web_api_key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -413,11 +451,11 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         steam = fusionauth.FusionAuthIdpSteam("steam",
-            application_configurations=[fusionauth.FusionAuthIdpSteamApplicationConfigurationArgs(
-                application_id=fusionauth_application["GPS_Insight"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["GPS_Insight"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Steam",
             client_id="0eb1ce3c-2fb1-4ae9-b361-d49fc6e764cc",
             scope="Xboxlive.signin Xboxlive.offline_access",
@@ -426,7 +464,8 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] api_mode: Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamApplicationConfigurationArgs', 'FusionAuthIdpSteamApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -435,7 +474,7 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Steam.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamTenantConfigurationArgs', 'FusionAuthIdpSteamTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         :param pulumi.Input[str] web_api_key: The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         """
         ...
@@ -462,11 +501,11 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         steam = fusionauth.FusionAuthIdpSteam("steam",
-            application_configurations=[fusionauth.FusionAuthIdpSteamApplicationConfigurationArgs(
-                application_id=fusionauth_application["GPS_Insight"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["GPS_Insight"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Steam",
             client_id="0eb1ce3c-2fb1-4ae9-b361-d49fc6e764cc",
             scope="Xboxlive.signin Xboxlive.offline_access",
@@ -488,7 +527,8 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamApplicationConfigurationArgs']]]]] = None,
+                 api_mode: Optional[pulumi.Input[str]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamApplicationConfigurationArgs', 'FusionAuthIdpSteamApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -497,7 +537,7 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamTenantConfigurationArgs', 'FusionAuthIdpSteamTenantConfigurationArgsDict']]]]] = None,
                  web_api_key: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -508,6 +548,7 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = FusionAuthIdpSteamArgs.__new__(FusionAuthIdpSteamArgs)
 
+            __props__.__dict__["api_mode"] = api_mode
             __props__.__dict__["application_configurations"] = application_configurations
             if button_text is None and not opts.urn:
                 raise TypeError("Missing required property 'button_text'")
@@ -535,7 +576,8 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamApplicationConfigurationArgs']]]]] = None,
+            api_mode: Optional[pulumi.Input[str]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamApplicationConfigurationArgs', 'FusionAuthIdpSteamApplicationConfigurationArgsDict']]]]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             client_id: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
@@ -544,7 +586,7 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
             lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
             linking_strategy: Optional[pulumi.Input[str]] = None,
             scope: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamTenantConfigurationArgs']]]]] = None,
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamTenantConfigurationArgs', 'FusionAuthIdpSteamTenantConfigurationArgsDict']]]]] = None,
             web_api_key: Optional[pulumi.Input[str]] = None) -> 'FusionAuthIdpSteam':
         """
         Get an existing FusionAuthIdpSteam resource's state with the given name, id, and optional extra
@@ -553,7 +595,8 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[str] api_mode: Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamApplicationConfigurationArgs', 'FusionAuthIdpSteamApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Steam client id for your Application. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -562,13 +605,14 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Steam.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSteamTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSteamTenantConfigurationArgs', 'FusionAuthIdpSteamTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         :param pulumi.Input[str] web_api_key: The top-level web API key to use with the Steam Identity Provider when retrieving the player summary info. This value is retrieved from the Steam developer website when you setup your Steam developer account.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _FusionAuthIdpSteamState.__new__(_FusionAuthIdpSteamState)
 
+        __props__.__dict__["api_mode"] = api_mode
         __props__.__dict__["application_configurations"] = application_configurations
         __props__.__dict__["button_text"] = button_text
         __props__.__dict__["client_id"] = client_id
@@ -581,6 +625,14 @@ class FusionAuthIdpSteam(pulumi.CustomResource):
         __props__.__dict__["tenant_configurations"] = tenant_configurations
         __props__.__dict__["web_api_key"] = web_api_key
         return FusionAuthIdpSteam(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="apiMode")
+    def api_mode(self) -> pulumi.Output[Optional[str]]:
+        """
+        Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+        """
+        return pulumi.get(self, "api_mode")
 
     @property
     @pulumi.getter(name="applicationConfigurations")

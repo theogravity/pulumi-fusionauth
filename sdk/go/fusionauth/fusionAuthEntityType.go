@@ -59,11 +59,9 @@ import (
 type FusionAuthEntityType struct {
 	pulumi.CustomResourceState
 
-	// An object that can hold any information about the Entity Type that should be persisted. Must be a
-	// JSON string.
+	// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 	Data pulumi.StringPtrOutput `pulumi:"data"`
-	// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-	// generated.
+	// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 	EntityTypeId pulumi.StringOutput `pulumi:"entityTypeId"`
 	// A block to configure JSON Web Token (JWT) options.
 	JwtConfiguration FusionAuthEntityTypeJwtConfigurationOutput `pulumi:"jwtConfiguration"`
@@ -101,11 +99,9 @@ func GetFusionAuthEntityType(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering FusionAuthEntityType resources.
 type fusionAuthEntityTypeState struct {
-	// An object that can hold any information about the Entity Type that should be persisted. Must be a
-	// JSON string.
+	// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 	Data *string `pulumi:"data"`
-	// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-	// generated.
+	// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 	EntityTypeId *string `pulumi:"entityTypeId"`
 	// A block to configure JSON Web Token (JWT) options.
 	JwtConfiguration *FusionAuthEntityTypeJwtConfiguration `pulumi:"jwtConfiguration"`
@@ -114,11 +110,9 @@ type fusionAuthEntityTypeState struct {
 }
 
 type FusionAuthEntityTypeState struct {
-	// An object that can hold any information about the Entity Type that should be persisted. Must be a
-	// JSON string.
+	// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 	Data pulumi.StringPtrInput
-	// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-	// generated.
+	// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 	EntityTypeId pulumi.StringPtrInput
 	// A block to configure JSON Web Token (JWT) options.
 	JwtConfiguration FusionAuthEntityTypeJwtConfigurationPtrInput
@@ -131,11 +125,9 @@ func (FusionAuthEntityTypeState) ElementType() reflect.Type {
 }
 
 type fusionAuthEntityTypeArgs struct {
-	// An object that can hold any information about the Entity Type that should be persisted. Must be a
-	// JSON string.
+	// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 	Data *string `pulumi:"data"`
-	// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-	// generated.
+	// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 	EntityTypeId *string `pulumi:"entityTypeId"`
 	// A block to configure JSON Web Token (JWT) options.
 	JwtConfiguration *FusionAuthEntityTypeJwtConfiguration `pulumi:"jwtConfiguration"`
@@ -145,11 +137,9 @@ type fusionAuthEntityTypeArgs struct {
 
 // The set of arguments for constructing a FusionAuthEntityType resource.
 type FusionAuthEntityTypeArgs struct {
-	// An object that can hold any information about the Entity Type that should be persisted. Must be a
-	// JSON string.
+	// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 	Data pulumi.StringPtrInput
-	// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-	// generated.
+	// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 	EntityTypeId pulumi.StringPtrInput
 	// A block to configure JSON Web Token (JWT) options.
 	JwtConfiguration FusionAuthEntityTypeJwtConfigurationPtrInput
@@ -244,14 +234,12 @@ func (o FusionAuthEntityTypeOutput) ToFusionAuthEntityTypeOutputWithContext(ctx 
 	return o
 }
 
-// An object that can hold any information about the Entity Type that should be persisted. Must be a
-// JSON string.
+// An object that can hold any information about the Entity Type that should be persisted. Must be aJSON string.
 func (o FusionAuthEntityTypeOutput) Data() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthEntityType) pulumi.StringPtrOutput { return v.Data }).(pulumi.StringPtrOutput)
 }
 
-// The ID to use for the new Entity Type. If not specified a secure random UUID will be
-// generated.
+// The ID to use for the new Entity Type. If not specified a secure random UUID will be generated.
 func (o FusionAuthEntityTypeOutput) EntityTypeId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthEntityType) pulumi.StringOutput { return v.EntityTypeId }).(pulumi.StringOutput)
 }

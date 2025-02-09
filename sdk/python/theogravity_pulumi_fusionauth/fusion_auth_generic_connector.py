@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthGenericConnectorArgs', 'FusionAuthGenericConnector']
@@ -17,9 +22,9 @@ class FusionAuthGenericConnectorArgs:
                  authentication_url: pulumi.Input[str],
                  connect_timeout: pulumi.Input[int],
                  read_timeout: pulumi.Input[int],
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -29,9 +34,9 @@ class FusionAuthGenericConnectorArgs:
         :param pulumi.Input[str] authentication_url: The fully qualified URL used to send an HTTP request to authenticate the user.
         :param pulumi.Input[int] connect_timeout: The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Connector that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Connector that should be persisted.
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
@@ -93,14 +98,14 @@ class FusionAuthGenericConnectorArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Connector that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -117,14 +122,14 @@ class FusionAuthGenericConnectorArgs:
 
     @property
     @pulumi.getter
-    def headers(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold HTTPHeader key and value pairs.
         """
         return pulumi.get(self, "headers")
 
     @headers.setter
-    def headers(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "headers", value)
 
     @property
@@ -181,9 +186,9 @@ class _FusionAuthGenericConnectorState:
     def __init__(__self__, *,
                  authentication_url: Optional[pulumi.Input[str]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -193,9 +198,9 @@ class _FusionAuthGenericConnectorState:
         Input properties used for looking up and filtering FusionAuthGenericConnector resources.
         :param pulumi.Input[str] authentication_url: The fully qualified URL used to send an HTTP request to authenticate the user.
         :param pulumi.Input[int] connect_timeout: The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Connector that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Connector that should be persisted.
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
@@ -249,14 +254,14 @@ class _FusionAuthGenericConnectorState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Connector that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -273,14 +278,14 @@ class _FusionAuthGenericConnectorState:
 
     @property
     @pulumi.getter
-    def headers(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold HTTPHeader key and value pairs.
         """
         return pulumi.get(self, "headers")
 
     @headers.setter
-    def headers(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "headers", value)
 
     @property
@@ -351,9 +356,9 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  authentication_url: Optional[pulumi.Input[str]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -394,9 +399,9 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] authentication_url: The fully qualified URL used to send an HTTP request to authenticate the user.
         :param pulumi.Input[int] connect_timeout: The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Connector that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Connector that should be persisted.
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
@@ -456,9 +461,9 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  authentication_url: Optional[pulumi.Input[str]] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -503,9 +508,9 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             authentication_url: Optional[pulumi.Input[str]] = None,
             connect_timeout: Optional[pulumi.Input[int]] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
-            headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             http_authentication_password: Optional[pulumi.Input[str]] = None,
             http_authentication_username: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
@@ -520,9 +525,9 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] authentication_url: The fully qualified URL used to send an HTTP request to authenticate the user.
         :param pulumi.Input[int] connect_timeout: The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Connector that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Connector that should be persisted.
         :param pulumi.Input[bool] debug: Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that can hold HTTPHeader key and value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that can hold HTTPHeader key and value pairs.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] name: The unique Connector name.
@@ -563,7 +568,7 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the Connector that should be persisted.
         """
@@ -579,7 +584,7 @@ class FusionAuthGenericConnector(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def headers(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def headers(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold HTTPHeader key and value pairs.
         """

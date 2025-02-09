@@ -13,7 +13,7 @@ namespace theogravity.Fusionauth
     /// <summary>
     /// ## # Apple Identity Provider Resource
     /// 
-    /// The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apples’s /auth/token API to load additional details about the user and store them in FusionAuth.
+    /// The Apple identity provider type will use the Sign in with Apple APIs and will provide a Sign with Apple button on FusionAuth’s login page that will either redirect to an Apple sign in page or leverage native controls when using Safari on macOS or iOS. Additionally, this identity provider will call Apple’s /auth/token API to load additional details about the user and store them in FusionAuth.
     /// 
     /// FusionAuth will also store the Apple refresh_token that is returned from the /auth/token endpoint in the UserRegistration object inside the tokens Map. This Map stores the tokens from the various identity providers so that you can use them in your application to call their APIs.
     /// 
@@ -62,7 +62,7 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpAppleApplicationConfiguration>> ApplicationConfigurations { get; private set; } = null!;
 
         /// <summary>
-        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         /// </summary>
         [Output("bundleId")]
         public Output<string> BundleId { get; private set; } = null!;
@@ -187,7 +187,7 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         /// </summary>
         [Input("bundleId", required: true)]
         public Input<string> BundleId { get; set; } = null!;
@@ -279,7 +279,7 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The Apple Bundle Id you have configured in your Apple developer account to uniquely identify your native app
+        /// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundle_id` or `services_id` . If `services_id` is omitted, this field is required.
         /// </summary>
         [Input("bundleId")]
         public Input<string>? BundleId { get; set; }

@@ -15,6 +15,10 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthIdpSteamApplicationConfiguration
     {
         /// <summary>
+        /// This is an optional Application specific override for the top level apiMode.
+        /// </summary>
+        public readonly string? ApiMode;
+        /// <summary>
         /// ID of the Application to apply this configuration to.
         /// </summary>
         public readonly string? ApplicationId;
@@ -45,6 +49,8 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthIdpSteamApplicationConfiguration(
+            string? apiMode,
+
             string? applicationId,
 
             string? buttonText,
@@ -59,6 +65,7 @@ namespace theogravity.Fusionauth.Outputs
 
             string? webApiKey)
         {
+            ApiMode = apiMode;
             ApplicationId = applicationId;
             ButtonText = buttonText;
             ClientId = clientId;

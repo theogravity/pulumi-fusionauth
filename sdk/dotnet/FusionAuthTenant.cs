@@ -583,16 +583,19 @@ namespace theogravity.Fusionauth
         /// An object that can hold any information about the Tenant that should be persisted.
         /// </summary>
         [Output("data")]
-        public Output<ImmutableDictionary<string, object>?> Data { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
 
+        /// <summary>
+        /// The email configuration for the tenant.
+        /// </summary>
         [Output("emailConfiguration")]
-        public Output<Outputs.FusionAuthTenantEmailConfiguration> EmailConfiguration { get; private set; } = null!;
+        public Output<Outputs.FusionAuthTenantEmailConfiguration?> EmailConfiguration { get; private set; } = null!;
 
         [Output("eventConfigurations")]
         public Output<ImmutableArray<Outputs.FusionAuthTenantEventConfiguration>> EventConfigurations { get; private set; } = null!;
 
         [Output("externalIdentifierConfiguration")]
-        public Output<Outputs.FusionAuthTenantExternalIdentifierConfiguration> ExternalIdentifierConfiguration { get; private set; } = null!;
+        public Output<Outputs.FusionAuthTenantExternalIdentifierConfiguration?> ExternalIdentifierConfiguration { get; private set; } = null!;
 
         [Output("failedAuthenticationConfiguration")]
         public Output<Outputs.FusionAuthTenantFailedAuthenticationConfiguration> FailedAuthenticationConfiguration { get; private set; } = null!;
@@ -615,8 +618,17 @@ namespace theogravity.Fusionauth
         [Output("issuer")]
         public Output<string> Issuer { get; private set; } = null!;
 
+        /// <summary>
+        /// The JWT configuration for the tenant.
+        /// </summary>
         [Output("jwtConfigurations")]
         public Output<ImmutableArray<Outputs.FusionAuthTenantJwtConfiguration>> JwtConfigurations { get; private set; } = null!;
+
+        /// <summary>
+        /// Lamnda configuration for this tenant.
+        /// </summary>
+        [Output("lambdaConfiguration")]
+        public Output<Outputs.FusionAuthTenantLambdaConfiguration?> LambdaConfiguration { get; private set; } = null!;
 
         [Output("loginConfiguration")]
         public Output<Outputs.FusionAuthTenantLoginConfiguration?> LoginConfiguration { get; private set; } = null!;
@@ -634,7 +646,7 @@ namespace theogravity.Fusionauth
         public Output<Outputs.FusionAuthTenantMinimumPasswordAge> MinimumPasswordAge { get; private set; } = null!;
 
         [Output("multiFactorConfiguration")]
-        public Output<Outputs.FusionAuthTenantMultiFactorConfiguration> MultiFactorConfiguration { get; private set; } = null!;
+        public Output<Outputs.FusionAuthTenantMultiFactorConfiguration?> MultiFactorConfiguration { get; private set; } = null!;
 
         /// <summary>
         /// The unique name of the Tenant.
@@ -657,11 +669,17 @@ namespace theogravity.Fusionauth
         [Output("registrationConfiguration")]
         public Output<Outputs.FusionAuthTenantRegistrationConfiguration> RegistrationConfiguration { get; private set; } = null!;
 
+        [Output("scimServerConfiguration")]
+        public Output<Outputs.FusionAuthTenantScimServerConfiguration?> ScimServerConfiguration { get; private set; } = null!;
+
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         /// </summary>
         [Output("sourceTenantId")]
         public Output<string?> SourceTenantId { get; private set; } = null!;
+
+        [Output("ssoConfiguration")]
+        public Output<Outputs.FusionAuthTenantSsoConfiguration?> SsoConfiguration { get; private set; } = null!;
 
         /// <summary>
         /// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -682,6 +700,12 @@ namespace theogravity.Fusionauth
         public Output<Outputs.FusionAuthTenantUsernameConfiguration> UsernameConfiguration { get; private set; } = null!;
 
         /// <summary>
+        /// The WebAuthn configuration for this tenant.
+        /// </summary>
+        [Output("webauthnConfiguration")]
+        public Output<Outputs.FusionAuthTenantWebauthnConfiguration?> WebauthnConfiguration { get; private set; } = null!;
+
+        /// <summary>
         /// An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
         /// </summary>
         [Output("webhookIds")]
@@ -695,7 +719,7 @@ namespace theogravity.Fusionauth
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public FusionAuthTenant(string name, FusionAuthTenantArgs args, CustomResourceOptions? options = null)
+        public FusionAuthTenant(string name, FusionAuthTenantArgs? args = null, CustomResourceOptions? options = null)
             : base("fusionauth:index/fusionAuthTenant:FusionAuthTenant", name, args ?? new FusionAuthTenantArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -753,19 +777,22 @@ namespace theogravity.Fusionauth
         }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Tenant that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
-        [Input("emailConfiguration", required: true)]
-        public Input<Inputs.FusionAuthTenantEmailConfigurationArgs> EmailConfiguration { get; set; } = null!;
+        /// <summary>
+        /// The email configuration for the tenant.
+        /// </summary>
+        [Input("emailConfiguration")]
+        public Input<Inputs.FusionAuthTenantEmailConfigurationArgs>? EmailConfiguration { get; set; }
 
         [Input("eventConfigurations")]
         private InputList<Inputs.FusionAuthTenantEventConfigurationArgs>? _eventConfigurations;
@@ -775,8 +802,8 @@ namespace theogravity.Fusionauth
             set => _eventConfigurations = value;
         }
 
-        [Input("externalIdentifierConfiguration", required: true)]
-        public Input<Inputs.FusionAuthTenantExternalIdentifierConfigurationArgs> ExternalIdentifierConfiguration { get; set; } = null!;
+        [Input("externalIdentifierConfiguration")]
+        public Input<Inputs.FusionAuthTenantExternalIdentifierConfigurationArgs>? ExternalIdentifierConfiguration { get; set; }
 
         [Input("failedAuthenticationConfiguration")]
         public Input<Inputs.FusionAuthTenantFailedAuthenticationConfigurationArgs>? FailedAuthenticationConfiguration { get; set; }
@@ -796,16 +823,26 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The named issuer used to sign tokens, this is generally your public fully qualified domain.
         /// </summary>
-        [Input("issuer", required: true)]
-        public Input<string> Issuer { get; set; } = null!;
+        [Input("issuer")]
+        public Input<string>? Issuer { get; set; }
 
-        [Input("jwtConfigurations", required: true)]
+        [Input("jwtConfigurations")]
         private InputList<Inputs.FusionAuthTenantJwtConfigurationArgs>? _jwtConfigurations;
+
+        /// <summary>
+        /// The JWT configuration for the tenant.
+        /// </summary>
         public InputList<Inputs.FusionAuthTenantJwtConfigurationArgs> JwtConfigurations
         {
             get => _jwtConfigurations ?? (_jwtConfigurations = new InputList<Inputs.FusionAuthTenantJwtConfigurationArgs>());
             set => _jwtConfigurations = value;
         }
+
+        /// <summary>
+        /// Lamnda configuration for this tenant.
+        /// </summary>
+        [Input("lambdaConfiguration")]
+        public Input<Inputs.FusionAuthTenantLambdaConfigurationArgs>? LambdaConfiguration { get; set; }
 
         [Input("loginConfiguration")]
         public Input<Inputs.FusionAuthTenantLoginConfigurationArgs>? LoginConfiguration { get; set; }
@@ -856,11 +893,17 @@ namespace theogravity.Fusionauth
         [Input("registrationConfiguration")]
         public Input<Inputs.FusionAuthTenantRegistrationConfigurationArgs>? RegistrationConfiguration { get; set; }
 
+        [Input("scimServerConfiguration")]
+        public Input<Inputs.FusionAuthTenantScimServerConfigurationArgs>? ScimServerConfiguration { get; set; }
+
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         /// </summary>
         [Input("sourceTenantId")]
         public Input<string>? SourceTenantId { get; set; }
+
+        [Input("ssoConfiguration")]
+        public Input<Inputs.FusionAuthTenantSsoConfigurationArgs>? SsoConfiguration { get; set; }
 
         /// <summary>
         /// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -871,14 +914,20 @@ namespace theogravity.Fusionauth
         /// <summary>
         /// The unique Id of the theme to be used to style the login page and other end user templates.
         /// </summary>
-        [Input("themeId", required: true)]
-        public Input<string> ThemeId { get; set; } = null!;
+        [Input("themeId")]
+        public Input<string>? ThemeId { get; set; }
 
         [Input("userDeletePolicy")]
         public Input<Inputs.FusionAuthTenantUserDeletePolicyArgs>? UserDeletePolicy { get; set; }
 
         [Input("usernameConfiguration")]
         public Input<Inputs.FusionAuthTenantUsernameConfigurationArgs>? UsernameConfiguration { get; set; }
+
+        /// <summary>
+        /// The WebAuthn configuration for this tenant.
+        /// </summary>
+        [Input("webauthnConfiguration")]
+        public Input<Inputs.FusionAuthTenantWebauthnConfigurationArgs>? WebauthnConfiguration { get; set; }
 
         [Input("webhookIds")]
         private InputList<string>? _webhookIds;
@@ -919,17 +968,20 @@ namespace theogravity.Fusionauth
         }
 
         [Input("data")]
-        private InputMap<object>? _data;
+        private InputMap<string>? _data;
 
         /// <summary>
         /// An object that can hold any information about the Tenant that should be persisted.
         /// </summary>
-        public InputMap<object> Data
+        public InputMap<string> Data
         {
-            get => _data ?? (_data = new InputMap<object>());
+            get => _data ?? (_data = new InputMap<string>());
             set => _data = value;
         }
 
+        /// <summary>
+        /// The email configuration for the tenant.
+        /// </summary>
         [Input("emailConfiguration")]
         public Input<Inputs.FusionAuthTenantEmailConfigurationGetArgs>? EmailConfiguration { get; set; }
 
@@ -967,11 +1019,21 @@ namespace theogravity.Fusionauth
 
         [Input("jwtConfigurations")]
         private InputList<Inputs.FusionAuthTenantJwtConfigurationGetArgs>? _jwtConfigurations;
+
+        /// <summary>
+        /// The JWT configuration for the tenant.
+        /// </summary>
         public InputList<Inputs.FusionAuthTenantJwtConfigurationGetArgs> JwtConfigurations
         {
             get => _jwtConfigurations ?? (_jwtConfigurations = new InputList<Inputs.FusionAuthTenantJwtConfigurationGetArgs>());
             set => _jwtConfigurations = value;
         }
+
+        /// <summary>
+        /// Lamnda configuration for this tenant.
+        /// </summary>
+        [Input("lambdaConfiguration")]
+        public Input<Inputs.FusionAuthTenantLambdaConfigurationGetArgs>? LambdaConfiguration { get; set; }
 
         [Input("loginConfiguration")]
         public Input<Inputs.FusionAuthTenantLoginConfigurationGetArgs>? LoginConfiguration { get; set; }
@@ -1022,11 +1084,17 @@ namespace theogravity.Fusionauth
         [Input("registrationConfiguration")]
         public Input<Inputs.FusionAuthTenantRegistrationConfigurationGetArgs>? RegistrationConfiguration { get; set; }
 
+        [Input("scimServerConfiguration")]
+        public Input<Inputs.FusionAuthTenantScimServerConfigurationGetArgs>? ScimServerConfiguration { get; set; }
+
         /// <summary>
         /// The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
         /// </summary>
         [Input("sourceTenantId")]
         public Input<string>? SourceTenantId { get; set; }
+
+        [Input("ssoConfiguration")]
+        public Input<Inputs.FusionAuthTenantSsoConfigurationGetArgs>? SsoConfiguration { get; set; }
 
         /// <summary>
         /// The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
@@ -1045,6 +1113,12 @@ namespace theogravity.Fusionauth
 
         [Input("usernameConfiguration")]
         public Input<Inputs.FusionAuthTenantUsernameConfigurationGetArgs>? UsernameConfiguration { get; set; }
+
+        /// <summary>
+        /// The WebAuthn configuration for this tenant.
+        /// </summary>
+        [Input("webauthnConfiguration")]
+        public Input<Inputs.FusionAuthTenantWebauthnConfigurationGetArgs>? WebauthnConfiguration { get; set; }
 
         [Input("webhookIds")]
         private InputList<string>? _webhookIds;

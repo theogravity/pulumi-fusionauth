@@ -26,7 +26,6 @@ import * as utilities from "./utilities";
  */
 export function getFormField(args?: GetFormFieldArgs, opts?: pulumi.InvokeOptions): Promise<GetFormFieldResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getFormField:getFormField", {
         "confirm": args.confirm,
@@ -61,7 +60,7 @@ export interface GetFormFieldArgs {
      * - description
      * - key
      */
-    data?: {[key: string]: any};
+    data?: {[key: string]: string};
     description?: string;
     /**
      * The unique id of the Form Field. Either `formFieldId` or `name` must be specified.
@@ -104,7 +103,7 @@ export interface GetFormFieldResult {
      * - description
      * - key
      */
-    readonly data?: {[key: string]: any};
+    readonly data?: {[key: string]: string};
     readonly description?: string;
     readonly formFieldId: string;
     /**
@@ -148,8 +147,23 @@ export interface GetFormFieldResult {
  * });
  * ```
  */
-export function getFormFieldOutput(args?: GetFormFieldOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetFormFieldResult> {
-    return pulumi.output(args).apply((a: any) => getFormField(a, opts))
+export function getFormFieldOutput(args?: GetFormFieldOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetFormFieldResult> {
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getFormField:getFormField", {
+        "confirm": args.confirm,
+        "consentId": args.consentId,
+        "control": args.control,
+        "data": args.data,
+        "description": args.description,
+        "formFieldId": args.formFieldId,
+        "key": args.key,
+        "name": args.name,
+        "options": args.options,
+        "required": args.required,
+        "type": args.type,
+        "validator": args.validator,
+    }, opts);
 }
 
 /**
@@ -169,7 +183,7 @@ export interface GetFormFieldOutputArgs {
      * - description
      * - key
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     description?: pulumi.Input<string>;
     /**
      * The unique id of the Form Field. Either `formFieldId` or `name` must be specified.

@@ -39,6 +39,10 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
      */
     public readonly applicationConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration[] | undefined>;
     /**
+     * The assertion configuration for the SAML v2 identity provider.
+     */
+    public readonly assertionConfiguration!: pulumi.Output<outputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration | undefined>;
+    /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
      * an Event Log will be created.
      */
@@ -84,10 +88,21 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
      */
     public readonly tenantConfigurations!: pulumi.Output<outputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration[] | undefined>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the `emailClaim` will be used when linking user.
+     */
+    public readonly uniqueIdClaim!: pulumi.Output<string | undefined>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
      * processing. If this is false, then the `emailClaim` property must be set.
      */
     public readonly useNameForEmail!: pulumi.Output<boolean | undefined>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+     * value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+     * LinkByUsernameForExistingUser
+     */
+    public readonly usernameClaim!: pulumi.Output<string | undefined>;
 
     /**
      * Create a FusionAuthIdpSamlV2IdpInitiated resource with the given unique name, arguments, and options.
@@ -103,6 +118,7 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as FusionAuthIdpSamlV2IdpInitiatedState | undefined;
             resourceInputs["applicationConfigurations"] = state ? state.applicationConfigurations : undefined;
+            resourceInputs["assertionConfiguration"] = state ? state.assertionConfiguration : undefined;
             resourceInputs["debug"] = state ? state.debug : undefined;
             resourceInputs["emailClaim"] = state ? state.emailClaim : undefined;
             resourceInputs["enabled"] = state ? state.enabled : undefined;
@@ -113,7 +129,9 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
             resourceInputs["linkingStrategy"] = state ? state.linkingStrategy : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["tenantConfigurations"] = state ? state.tenantConfigurations : undefined;
+            resourceInputs["uniqueIdClaim"] = state ? state.uniqueIdClaim : undefined;
             resourceInputs["useNameForEmail"] = state ? state.useNameForEmail : undefined;
+            resourceInputs["usernameClaim"] = state ? state.usernameClaim : undefined;
         } else {
             const args = argsOrState as FusionAuthIdpSamlV2IdpInitiatedArgs | undefined;
             if ((!args || args.issuer === undefined) && !opts.urn) {
@@ -123,6 +141,7 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
                 throw new Error("Missing required property 'keyId'");
             }
             resourceInputs["applicationConfigurations"] = args ? args.applicationConfigurations : undefined;
+            resourceInputs["assertionConfiguration"] = args ? args.assertionConfiguration : undefined;
             resourceInputs["debug"] = args ? args.debug : undefined;
             resourceInputs["emailClaim"] = args ? args.emailClaim : undefined;
             resourceInputs["enabled"] = args ? args.enabled : undefined;
@@ -133,7 +152,9 @@ export class FusionAuthIdpSamlV2IdpInitiated extends pulumi.CustomResource {
             resourceInputs["linkingStrategy"] = args ? args.linkingStrategy : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["tenantConfigurations"] = args ? args.tenantConfigurations : undefined;
+            resourceInputs["uniqueIdClaim"] = args ? args.uniqueIdClaim : undefined;
             resourceInputs["useNameForEmail"] = args ? args.useNameForEmail : undefined;
+            resourceInputs["usernameClaim"] = args ? args.usernameClaim : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FusionAuthIdpSamlV2IdpInitiated.__pulumiType, name, resourceInputs, opts);
@@ -148,6 +169,10 @@ export interface FusionAuthIdpSamlV2IdpInitiatedState {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration>[]>;
+    /**
+     * The assertion configuration for the SAML v2 identity provider.
+     */
+    assertionConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration>;
     /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
      * an Event Log will be created.
@@ -194,10 +219,21 @@ export interface FusionAuthIdpSamlV2IdpInitiatedState {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration>[]>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the `emailClaim` will be used when linking user.
+     */
+    uniqueIdClaim?: pulumi.Input<string>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
      * processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+     * value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+     * LinkByUsernameForExistingUser
+     */
+    usernameClaim?: pulumi.Input<string>;
 }
 
 /**
@@ -208,6 +244,10 @@ export interface FusionAuthIdpSamlV2IdpInitiatedArgs {
      * The configuration for each Application that the identity provider is enabled for.
      */
     applicationConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration>[]>;
+    /**
+     * The assertion configuration for the SAML v2 identity provider.
+     */
+    assertionConfiguration?: pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration>;
     /**
      * Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
      * an Event Log will be created.
@@ -254,8 +294,19 @@ export interface FusionAuthIdpSamlV2IdpInitiatedArgs {
      */
     tenantConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration>[]>;
     /**
+     * The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+     * the `emailClaim` will be used when linking user.
+     */
+    uniqueIdClaim?: pulumi.Input<string>;
+    /**
      * Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
      * processing. If this is false, then the `emailClaim` property must be set.
      */
     useNameForEmail?: pulumi.Input<boolean>;
+    /**
+     * The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+     * value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+     * LinkByUsernameForExistingUser
+     */
+    usernameClaim?: pulumi.Input<string>;
 }

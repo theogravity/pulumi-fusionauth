@@ -59,13 +59,15 @@ type FusionAuthApiKey struct {
 
 	// Description of the key.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+	ExpirationInstant pulumi.IntPtrOutput `pulumi:"expirationInstant"`
 	// The Id of the IP Access Control List limiting access to this API key.
 	IpAccessControlListId pulumi.StringPtrOutput `pulumi:"ipAccessControlListId"`
 	// API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
 	Key pulumi.StringOutput `pulumi:"key"`
 	// The Id to use for the new Form. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrOutput `pulumi:"keyId"`
-	// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+	// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 	PermissionsEndpoints FusionAuthApiKeyPermissionsEndpointArrayOutput `pulumi:"permissionsEndpoints"`
 	// The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
 	TenantId pulumi.StringPtrOutput `pulumi:"tenantId"`
@@ -110,13 +112,15 @@ func GetFusionAuthApiKey(ctx *pulumi.Context,
 type fusionAuthApiKeyState struct {
 	// Description of the key.
 	Description *string `pulumi:"description"`
+	// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+	ExpirationInstant *int `pulumi:"expirationInstant"`
 	// The Id of the IP Access Control List limiting access to this API key.
 	IpAccessControlListId *string `pulumi:"ipAccessControlListId"`
 	// API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
 	Key *string `pulumi:"key"`
 	// The Id to use for the new Form. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
-	// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+	// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 	PermissionsEndpoints []FusionAuthApiKeyPermissionsEndpoint `pulumi:"permissionsEndpoints"`
 	// The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
 	TenantId *string `pulumi:"tenantId"`
@@ -125,13 +129,15 @@ type fusionAuthApiKeyState struct {
 type FusionAuthApiKeyState struct {
 	// Description of the key.
 	Description pulumi.StringPtrInput
+	// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+	ExpirationInstant pulumi.IntPtrInput
 	// The Id of the IP Access Control List limiting access to this API key.
 	IpAccessControlListId pulumi.StringPtrInput
 	// API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
 	Key pulumi.StringPtrInput
 	// The Id to use for the new Form. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
-	// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+	// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 	PermissionsEndpoints FusionAuthApiKeyPermissionsEndpointArrayInput
 	// The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
 	TenantId pulumi.StringPtrInput
@@ -144,13 +150,15 @@ func (FusionAuthApiKeyState) ElementType() reflect.Type {
 type fusionAuthApiKeyArgs struct {
 	// Description of the key.
 	Description *string `pulumi:"description"`
+	// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+	ExpirationInstant *int `pulumi:"expirationInstant"`
 	// The Id of the IP Access Control List limiting access to this API key.
 	IpAccessControlListId *string `pulumi:"ipAccessControlListId"`
 	// API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
 	Key *string `pulumi:"key"`
 	// The Id to use for the new Form. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
-	// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+	// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 	PermissionsEndpoints []FusionAuthApiKeyPermissionsEndpoint `pulumi:"permissionsEndpoints"`
 	// The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
 	TenantId *string `pulumi:"tenantId"`
@@ -160,13 +168,15 @@ type fusionAuthApiKeyArgs struct {
 type FusionAuthApiKeyArgs struct {
 	// Description of the key.
 	Description pulumi.StringPtrInput
+	// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+	ExpirationInstant pulumi.IntPtrInput
 	// The Id of the IP Access Control List limiting access to this API key.
 	IpAccessControlListId pulumi.StringPtrInput
 	// API key string. When you create an API key the key is defaulted to a secure random value but the API key is simply a string, so you may call it super-secret-key if you’d like. However a long and random value makes a good API key in that it is unique and difficult to guess.
 	Key pulumi.StringPtrInput
 	// The Id to use for the new Form. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
-	// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+	// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 	PermissionsEndpoints FusionAuthApiKeyPermissionsEndpointArrayInput
 	// The unique Id of the Tenant. This value is required if the key is meant to be tenant scoped. Tenant scoped keys can only be used to access users and other tenant scoped objects for the specified tenant. This value is read-only once the key is created.
 	TenantId pulumi.StringPtrInput
@@ -264,6 +274,11 @@ func (o FusionAuthApiKeyOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApiKey) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+func (o FusionAuthApiKeyOutput) ExpirationInstant() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApiKey) pulumi.IntPtrOutput { return v.ExpirationInstant }).(pulumi.IntPtrOutput)
+}
+
 // The Id of the IP Access Control List limiting access to this API key.
 func (o FusionAuthApiKeyOutput) IpAccessControlListId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApiKey) pulumi.StringPtrOutput { return v.IpAccessControlListId }).(pulumi.StringPtrOutput)
@@ -279,7 +294,7 @@ func (o FusionAuthApiKeyOutput) KeyId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApiKey) pulumi.StringPtrOutput { return v.KeyId }).(pulumi.StringPtrOutput)
 }
 
-// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
 func (o FusionAuthApiKeyOutput) PermissionsEndpoints() FusionAuthApiKeyPermissionsEndpointArrayOutput {
 	return o.ApplyT(func(v *FusionAuthApiKey) FusionAuthApiKeyPermissionsEndpointArrayOutput {
 		return v.PermissionsEndpoints

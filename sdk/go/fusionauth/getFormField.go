@@ -63,8 +63,8 @@ type GetFormFieldArgs struct {
 	// An object that can hold any information about the Form Field that should be persisted.
 	// - description
 	// - key
-	Data        map[string]interface{} `pulumi:"data"`
-	Description *string                `pulumi:"description"`
+	Data        map[string]string `pulumi:"data"`
+	Description *string           `pulumi:"description"`
 	// The unique id of the Form Field. Either `formFieldId` or `name` must be specified.
 	FormFieldId *string `pulumi:"formFieldId"`
 	Key         *string `pulumi:"key"`
@@ -90,9 +90,9 @@ type GetFormFieldResult struct {
 	// An object that can hold any information about the Form Field that should be persisted.
 	// - description
 	// - key
-	Data        map[string]interface{} `pulumi:"data"`
-	Description *string                `pulumi:"description"`
-	FormFieldId string                 `pulumi:"formFieldId"`
+	Data        map[string]string `pulumi:"data"`
+	Description *string           `pulumi:"description"`
+	FormFieldId string            `pulumi:"formFieldId"`
 	// The provider-assigned unique ID for this managed resource.
 	Id  string  `pulumi:"id"`
 	Key *string `pulumi:"key"`
@@ -108,15 +108,11 @@ type GetFormFieldResult struct {
 }
 
 func GetFormFieldOutput(ctx *pulumi.Context, args GetFormFieldOutputArgs, opts ...pulumi.InvokeOption) GetFormFieldResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetFormFieldResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetFormFieldResultOutput, error) {
 			args := v.(GetFormFieldArgs)
-			r, err := GetFormField(ctx, &args, opts...)
-			var s GetFormFieldResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getFormField:getFormField", args, GetFormFieldResultOutput{}, options).(GetFormFieldResultOutput), nil
 		}).(GetFormFieldResultOutput)
 }
 
@@ -131,7 +127,7 @@ type GetFormFieldOutputArgs struct {
 	// An object that can hold any information about the Form Field that should be persisted.
 	// - description
 	// - key
-	Data        pulumi.MapInput       `pulumi:"data"`
+	Data        pulumi.StringMapInput `pulumi:"data"`
 	Description pulumi.StringPtrInput `pulumi:"description"`
 	// The unique id of the Form Field. Either `formFieldId` or `name` must be specified.
 	FormFieldId pulumi.StringPtrInput `pulumi:"formFieldId"`
@@ -184,8 +180,8 @@ func (o GetFormFieldResultOutput) Control() pulumi.StringOutput {
 // An object that can hold any information about the Form Field that should be persisted.
 // - description
 // - key
-func (o GetFormFieldResultOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v GetFormFieldResult) map[string]interface{} { return v.Data }).(pulumi.MapOutput)
+func (o GetFormFieldResultOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetFormFieldResult) map[string]string { return v.Data }).(pulumi.StringMapOutput)
 }
 
 func (o GetFormFieldResultOutput) Description() pulumi.StringPtrOutput {

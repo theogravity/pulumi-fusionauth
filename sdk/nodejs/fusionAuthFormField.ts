@@ -73,7 +73,7 @@ export class FusionAuthFormField extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * A description of the Form Field.
      */
@@ -171,7 +171,7 @@ export interface FusionAuthFormFieldState {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A description of the Form Field.
      */
@@ -222,7 +222,7 @@ export interface FusionAuthFormFieldArgs {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A description of the Form Field.
      */

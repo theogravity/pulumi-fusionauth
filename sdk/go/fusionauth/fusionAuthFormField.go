@@ -34,8 +34,8 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := fusionauth.NewFusionAuthFormField(ctx, "field", &fusionauth.FusionAuthFormFieldArgs{
 //				Confirm: pulumi.Bool(true),
-//				Data: pulumi.Map{
-//					"leftAddOn": pulumi.Any("send"),
+//				Data: pulumi.StringMap{
+//					"leftAddOn": pulumi.String("send"),
 //				},
 //				Description: pulumi.String("Information about this custom field"),
 //				Key:         pulumi.String("user.firstName"),
@@ -59,7 +59,7 @@ type FusionAuthFormField struct {
 	// The Form Field control
 	Control pulumi.StringOutput `pulumi:"control"`
 	// An object that can hold any information about the Form Field that should be persisted.
-	Data pulumi.MapOutput `pulumi:"data"`
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// A description of the Form Field.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
@@ -117,7 +117,7 @@ type fusionAuthFormFieldState struct {
 	// The Form Field control
 	Control *string `pulumi:"control"`
 	// An object that can hold any information about the Form Field that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// A description of the Form Field.
 	Description *string `pulumi:"description"`
 	// The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
@@ -143,7 +143,7 @@ type FusionAuthFormFieldState struct {
 	// The Form Field control
 	Control pulumi.StringPtrInput
 	// An object that can hold any information about the Form Field that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// A description of the Form Field.
 	Description pulumi.StringPtrInput
 	// The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
@@ -173,7 +173,7 @@ type fusionAuthFormFieldArgs struct {
 	// The Form Field control
 	Control *string `pulumi:"control"`
 	// An object that can hold any information about the Form Field that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// A description of the Form Field.
 	Description *string `pulumi:"description"`
 	// The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
@@ -200,7 +200,7 @@ type FusionAuthFormFieldArgs struct {
 	// The Form Field control
 	Control pulumi.StringPtrInput
 	// An object that can hold any information about the Form Field that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// A description of the Form Field.
 	Description pulumi.StringPtrInput
 	// The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
@@ -321,8 +321,8 @@ func (o FusionAuthFormFieldOutput) Control() pulumi.StringOutput {
 }
 
 // An object that can hold any information about the Form Field that should be persisted.
-func (o FusionAuthFormFieldOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthFormField) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthFormFieldOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthFormField) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
 // A description of the Form Field.

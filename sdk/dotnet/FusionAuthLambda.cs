@@ -27,7 +27,7 @@ namespace theogravity.Fusionauth
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
-    ///     var preferred_Username = new Fusionauth.FusionAuthLambda("preferred Username", new()
+    ///     var preferredUsername = new Fusionauth.FusionAuthLambda("preferredUsername", new()
     ///     {
     ///         Body = @"// Using the user and registration parameters add additional values to the jwt object.
     /// function populate(jwt, user, registration) {
@@ -83,26 +83,32 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `SelfServiceRegistrationValidation`
-        /// - `ClientCredentialsJWTPopulate`
+        /// * `AppleReconcile`
+        /// * `ClientCredentialsJWTPopulate`
+        /// * `EpicGamesReconcile`
+        /// * `ExternalJWTReconcile`
+        /// * `FacebookReconcile`
+        /// * `GoogleReconcile`
+        /// * `HYPRReconcile`
+        /// * `JWTPopulate`
+        /// * `LDAPConnectorReconcile`
+        /// * `LinkedInReconcile`
+        /// * `LoginValidation`
+        /// * `NintendoReconcile`
+        /// * `OpenIDReconcile`
+        /// * `SAMLv2Populate`
+        /// * `SAMLv2Reconcile`
+        /// * `SCIMServerGroupRequestConverter`
+        /// * `SCIMServerGroupResponseConverter`
+        /// * `SCIMServerUserRequestConverter`
+        /// * `SCIMServerUserResponseConverter`
+        /// * `SelfServiceRegistrationValidation`
+        /// * `SonyPSNReconcile`
+        /// * `SteamReconcile`
+        /// * `TwitchReconcile`
+        /// * `TwitterReconcile`
+        /// * `UserInfoPopulate`
+        /// * `XboxReconcile`
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -192,26 +198,32 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `SelfServiceRegistrationValidation`
-        /// - `ClientCredentialsJWTPopulate`
+        /// * `AppleReconcile`
+        /// * `ClientCredentialsJWTPopulate`
+        /// * `EpicGamesReconcile`
+        /// * `ExternalJWTReconcile`
+        /// * `FacebookReconcile`
+        /// * `GoogleReconcile`
+        /// * `HYPRReconcile`
+        /// * `JWTPopulate`
+        /// * `LDAPConnectorReconcile`
+        /// * `LinkedInReconcile`
+        /// * `LoginValidation`
+        /// * `NintendoReconcile`
+        /// * `OpenIDReconcile`
+        /// * `SAMLv2Populate`
+        /// * `SAMLv2Reconcile`
+        /// * `SCIMServerGroupRequestConverter`
+        /// * `SCIMServerGroupResponseConverter`
+        /// * `SCIMServerUserRequestConverter`
+        /// * `SCIMServerUserResponseConverter`
+        /// * `SelfServiceRegistrationValidation`
+        /// * `SonyPSNReconcile`
+        /// * `SteamReconcile`
+        /// * `TwitchReconcile`
+        /// * `TwitterReconcile`
+        /// * `UserInfoPopulate`
+        /// * `XboxReconcile`
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
@@ -262,26 +274,32 @@ namespace theogravity.Fusionauth
 
         /// <summary>
         /// The lambda type. The possible values are:
-        /// - `JWTPopulate`
-        /// - `OpenIDReconcile`
-        /// - `SAMLv2Reconcile`
-        /// - `SAMLv2Populate`
-        /// - `AppleReconcile`
-        /// - `ExternalJWTReconcile`
-        /// - `FacebookReconcile`
-        /// - `GoogleReconcile`
-        /// - `HYPRReconcile`
-        /// - `TwitterReconcile`
-        /// - `LDAPConnectorReconcile`
-        /// - `LinkedInReconcile`
-        /// - `EpicGamesReconcile`
-        /// - `NintendoReconcile`
-        /// - `SonyPSNReconcile`
-        /// - `SteamReconcile`
-        /// - `TwitchReconcile`
-        /// - `XboxReconcile`
-        /// - `SelfServiceRegistrationValidation`
-        /// - `ClientCredentialsJWTPopulate`
+        /// * `AppleReconcile`
+        /// * `ClientCredentialsJWTPopulate`
+        /// * `EpicGamesReconcile`
+        /// * `ExternalJWTReconcile`
+        /// * `FacebookReconcile`
+        /// * `GoogleReconcile`
+        /// * `HYPRReconcile`
+        /// * `JWTPopulate`
+        /// * `LDAPConnectorReconcile`
+        /// * `LinkedInReconcile`
+        /// * `LoginValidation`
+        /// * `NintendoReconcile`
+        /// * `OpenIDReconcile`
+        /// * `SAMLv2Populate`
+        /// * `SAMLv2Reconcile`
+        /// * `SCIMServerGroupRequestConverter`
+        /// * `SCIMServerGroupResponseConverter`
+        /// * `SCIMServerUserRequestConverter`
+        /// * `SCIMServerUserResponseConverter`
+        /// * `SelfServiceRegistrationValidation`
+        /// * `SonyPSNReconcile`
+        /// * `SteamReconcile`
+        /// * `TwitchReconcile`
+        /// * `TwitterReconcile`
+        /// * `UserInfoPopulate`
+        /// * `XboxReconcile`
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

@@ -82,19 +82,19 @@ export class FusionAuthEMail extends pulumi.CustomResource {
     /**
      * The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
      */
-    public readonly localizedFromNames!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedFromNames!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
      */
-    public readonly localizedHtmlTemplates!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedHtmlTemplates!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
      */
-    public readonly localizedSubjects!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedSubjects!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
      */
-    public readonly localizedTextTemplates!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly localizedTextTemplates!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * A descriptive name for the email template (i.e. "April 2016 Coupon Email")
      */
@@ -183,19 +183,19 @@ export interface FusionAuthEMailState {
     /**
      * The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
      */
-    localizedFromNames?: pulumi.Input<{[key: string]: any}>;
+    localizedFromNames?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
      */
-    localizedHtmlTemplates?: pulumi.Input<{[key: string]: any}>;
+    localizedHtmlTemplates?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
      */
-    localizedSubjects?: pulumi.Input<{[key: string]: any}>;
+    localizedSubjects?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
      */
-    localizedTextTemplates?: pulumi.Input<{[key: string]: any}>;
+    localizedTextTemplates?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A descriptive name for the email template (i.e. "April 2016 Coupon Email")
      */
@@ -233,19 +233,19 @@ export interface FusionAuthEMailArgs {
     /**
      * The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
      */
-    localizedFromNames?: pulumi.Input<{[key: string]: any}>;
+    localizedFromNames?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
      */
-    localizedHtmlTemplates?: pulumi.Input<{[key: string]: any}>;
+    localizedHtmlTemplates?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
      */
-    localizedSubjects?: pulumi.Input<{[key: string]: any}>;
+    localizedSubjects?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
      */
-    localizedTextTemplates?: pulumi.Input<{[key: string]: any}>;
+    localizedTextTemplates?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A descriptive name for the email template (i.e. "April 2016 Coupon Email")
      */

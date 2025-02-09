@@ -65,6 +65,33 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetIdpResult> Invoke(GetIdpInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Application Resource
+        /// 
+        /// [Identity Providers API](https://fusionauth.io/docs/v1/tech/apis/identity-providers/)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var fusionAuth = Fusionauth.GetIdp.Invoke(new()
+        ///     {
+        ///         Name = "Apple",
+        ///         Type = "Apple",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetIdpResult> Invoke(GetIdpInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetIdpResult>("fusionauth:index/getIdp:getIdp", args ?? new GetIdpInvokeArgs(), options.WithDefaults());
     }
 
 

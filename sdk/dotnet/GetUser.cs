@@ -67,6 +67,34 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetUserResult> Invoke(GetUserInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetUserResult>("fusionauth:index/getUser:getUser", args ?? new GetUserInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # User Data Source
+        /// 
+        /// This data source can be used to fetch information about a specific user.
+        /// 
+        /// [Users API](https://fusionauth.io/docs/v1/tech/apis/users)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var example = Fusionauth.GetUser.Invoke(new()
+        ///     {
+        ///         Username = "foo@example.com",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetUserResult> Invoke(GetUserInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetUserResult>("fusionauth:index/getUser:getUser", args ?? new GetUserInvokeArgs(), options.WithDefaults());
     }
 
 

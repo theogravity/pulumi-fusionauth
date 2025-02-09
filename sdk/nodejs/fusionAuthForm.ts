@@ -68,7 +68,7 @@ export class FusionAuthForm extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The Id to use for the new Form. If not specified a secure random UUID will be generated.
      */
@@ -127,7 +127,7 @@ export interface FusionAuthFormState {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id to use for the new Form. If not specified a secure random UUID will be generated.
      */
@@ -153,7 +153,7 @@ export interface FusionAuthFormArgs {
     /**
      * An object that can hold any information about the Form Field that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The Id to use for the new Form. If not specified a secure random UUID will be generated.
      */

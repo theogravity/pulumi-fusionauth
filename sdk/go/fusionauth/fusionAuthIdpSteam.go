@@ -60,6 +60,8 @@ import (
 type FusionAuthIdpSteam struct {
 	pulumi.CustomResourceState
 
+	// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+	ApiMode pulumi.StringPtrOutput `pulumi:"apiMode"`
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSteamApplicationConfigurationArrayOutput `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -123,6 +125,8 @@ func GetFusionAuthIdpSteam(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering FusionAuthIdpSteam resources.
 type fusionAuthIdpSteamState struct {
+	// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+	ApiMode *string `pulumi:"apiMode"`
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSteamApplicationConfiguration `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -148,6 +152,8 @@ type fusionAuthIdpSteamState struct {
 }
 
 type FusionAuthIdpSteamState struct {
+	// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+	ApiMode pulumi.StringPtrInput
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSteamApplicationConfigurationArrayInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -177,6 +183,8 @@ func (FusionAuthIdpSteamState) ElementType() reflect.Type {
 }
 
 type fusionAuthIdpSteamArgs struct {
+	// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+	ApiMode *string `pulumi:"apiMode"`
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSteamApplicationConfiguration `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -203,6 +211,8 @@ type fusionAuthIdpSteamArgs struct {
 
 // The set of arguments for constructing a FusionAuthIdpSteam resource.
 type FusionAuthIdpSteamArgs struct {
+	// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+	ApiMode pulumi.StringPtrInput
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSteamApplicationConfigurationArrayInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
@@ -312,6 +322,11 @@ func (o FusionAuthIdpSteamOutput) ToFusionAuthIdpSteamOutput() FusionAuthIdpStea
 
 func (o FusionAuthIdpSteamOutput) ToFusionAuthIdpSteamOutputWithContext(ctx context.Context) FusionAuthIdpSteamOutput {
 	return o
+}
+
+// Determines which Steam API to utilize. The possible values are: `Partner` and `Public`
+func (o FusionAuthIdpSteamOutput) ApiMode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSteam) pulumi.StringPtrOutput { return v.ApiMode }).(pulumi.StringPtrOutput)
 }
 
 // The configuration for each Application that the identity provider is enabled for.

@@ -29,7 +29,7 @@ namespace theogravity.Fusionauth.Inputs
         private Input<string>? _clientId;
 
         /// <summary>
-        /// The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+        /// This is an optional Application specific override for the top level `client_id`.
         /// </summary>
         public Input<string>? ClientId
         {
@@ -70,7 +70,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The top-level scope that you are requesting from LinkedIn.
+        /// This is an optional Application specific override for the top level `scope`.
         /// </summary>
         [Input("scope")]
         public Input<string>? Scope { get; set; }

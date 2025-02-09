@@ -138,6 +138,10 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
      */
     public readonly oauth2EmailClaim!: pulumi.Output<string | undefined>;
     /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+     */
+    public readonly oauth2EmailVerifiedClaim!: pulumi.Output<string | undefined>;
+    /**
      * The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
      */
     public readonly oauth2Issuer!: pulumi.Output<string | undefined>;
@@ -198,6 +202,7 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["oauth2ClientId"] = state ? state.oauth2ClientId : undefined;
             resourceInputs["oauth2ClientSecret"] = state ? state.oauth2ClientSecret : undefined;
             resourceInputs["oauth2EmailClaim"] = state ? state.oauth2EmailClaim : undefined;
+            resourceInputs["oauth2EmailVerifiedClaim"] = state ? state.oauth2EmailVerifiedClaim : undefined;
             resourceInputs["oauth2Issuer"] = state ? state.oauth2Issuer : undefined;
             resourceInputs["oauth2Scope"] = state ? state.oauth2Scope : undefined;
             resourceInputs["oauth2TokenEndpoint"] = state ? state.oauth2TokenEndpoint : undefined;
@@ -229,6 +234,7 @@ export class FusionAuthIdpOpenIdConnect extends pulumi.CustomResource {
             resourceInputs["oauth2ClientId"] = args ? args.oauth2ClientId : undefined;
             resourceInputs["oauth2ClientSecret"] = args?.oauth2ClientSecret ? pulumi.secret(args.oauth2ClientSecret) : undefined;
             resourceInputs["oauth2EmailClaim"] = args ? args.oauth2EmailClaim : undefined;
+            resourceInputs["oauth2EmailVerifiedClaim"] = args ? args.oauth2EmailVerifiedClaim : undefined;
             resourceInputs["oauth2Issuer"] = args ? args.oauth2Issuer : undefined;
             resourceInputs["oauth2Scope"] = args ? args.oauth2Scope : undefined;
             resourceInputs["oauth2TokenEndpoint"] = args ? args.oauth2TokenEndpoint : undefined;
@@ -309,6 +315,10 @@ export interface FusionAuthIdpOpenIdConnectState {
      * An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
      */
     oauth2EmailClaim?: pulumi.Input<string>;
+    /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+     */
+    oauth2EmailVerifiedClaim?: pulumi.Input<string>;
     /**
      * The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
      */
@@ -407,6 +417,10 @@ export interface FusionAuthIdpOpenIdConnectArgs {
      * An optional configuration to modify the expected name of the claim returned by the IdP that contains the email address.
      */
     oauth2EmailClaim?: pulumi.Input<string>;
+    /**
+     * An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+     */
+    oauth2EmailVerifiedClaim?: pulumi.Input<string>;
     /**
      * The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
      */

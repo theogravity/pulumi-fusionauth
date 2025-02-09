@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -106,7 +111,7 @@ class GetEMailResult:
 
     @property
     @pulumi.getter(name="localizedFromNames")
-    def localized_from_names(self) -> Mapping[str, Any]:
+    def localized_from_names(self) -> Mapping[str, str]:
         """
         The From Name used when sending emails to users who speak other languages.
         """
@@ -114,7 +119,7 @@ class GetEMailResult:
 
     @property
     @pulumi.getter(name="localizedHtmlTemplates")
-    def localized_html_templates(self) -> Mapping[str, Any]:
+    def localized_html_templates(self) -> Mapping[str, str]:
         """
         The HTML Email Template used when sending emails to users who speak other languages.
         """
@@ -122,7 +127,7 @@ class GetEMailResult:
 
     @property
     @pulumi.getter(name="localizedSubjects")
-    def localized_subjects(self) -> Mapping[str, Any]:
+    def localized_subjects(self) -> Mapping[str, str]:
         """
         The Subject used when sending emails to users who speak other languages.
         """
@@ -130,7 +135,7 @@ class GetEMailResult:
 
     @property
     @pulumi.getter(name="localizedTextTemplates")
-    def localized_text_templates(self) -> Mapping[str, Any]:
+    def localized_text_templates(self) -> Mapping[str, str]:
         """
         The Text Email Template used when sending emails to users who speak other languages.
         """
@@ -202,12 +207,9 @@ def get_e_mail(from_email: Optional[str] = None,
         localized_subjects=pulumi.get(__ret__, 'localized_subjects'),
         localized_text_templates=pulumi.get(__ret__, 'localized_text_templates'),
         name=pulumi.get(__ret__, 'name'))
-
-
-@_utilities.lift_output_func(get_e_mail)
 def get_e_mail_output(from_email: Optional[pulumi.Input[Optional[str]]] = None,
                       name: Optional[pulumi.Input[str]] = None,
-                      opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetEMailResult]:
+                      opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetEMailResult]:
     """
     ## # Email Resource
 
@@ -228,4 +230,20 @@ def get_e_mail_output(from_email: Optional[pulumi.Input[Optional[str]]] = None,
     :param str from_email: The email address that this email will be sent from.
     :param str name: The name of the Email Template.
     """
-    ...
+    __args__ = dict()
+    __args__['fromEmail'] = from_email
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getEMail:getEMail', __args__, opts=opts, typ=GetEMailResult)
+    return __ret__.apply(lambda __response__: GetEMailResult(
+        default_from_name=pulumi.get(__response__, 'default_from_name'),
+        default_html_template=pulumi.get(__response__, 'default_html_template'),
+        default_subject=pulumi.get(__response__, 'default_subject'),
+        default_text_template=pulumi.get(__response__, 'default_text_template'),
+        from_email=pulumi.get(__response__, 'from_email'),
+        id=pulumi.get(__response__, 'id'),
+        localized_from_names=pulumi.get(__response__, 'localized_from_names'),
+        localized_html_templates=pulumi.get(__response__, 'localized_html_templates'),
+        localized_subjects=pulumi.get(__response__, 'localized_subjects'),
+        localized_text_templates=pulumi.get(__response__, 'localized_text_templates'),
+        name=pulumi.get(__response__, 'name')))

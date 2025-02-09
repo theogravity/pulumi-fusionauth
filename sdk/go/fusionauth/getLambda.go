@@ -60,26 +60,32 @@ type GetLambdaArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name *string `pulumi:"name"`
 	// The Lambda type. The possible values are:
-	// - `JWTPopulate`
-	// - `OpenIDReconcile`
-	// - `SAMLv2Reconcile`
-	// - `SAMLv2Populate`
-	// - `AppleReconcile`
-	// - `ExternalJWTReconcile`
-	// - `FacebookReconcile`
-	// - `GoogleReconcile`
-	// - `HYPRReconcile`
-	// - `TwitterReconcile`
-	// - `LDAPConnectorReconcile`
-	// - `LinkedInReconcile`
-	// - `EpicGamesReconcile`
-	// - `NintendoReconcile`
-	// - `SonyPSNReconcile`
-	// - `SteamReconcile`
-	// - `TwitchReconcile`
-	// - `XboxReconcile`
-	// - `SelfServiceRegistrationValidation`
-	// - `ClientCredentialsJWTPopulate`
+	// * `AppleReconcile`
+	// * `ClientCredentialsJWTPopulate`
+	// * `EpicGamesReconcile`
+	// * `ExternalJWTReconcile`
+	// * `FacebookReconcile`
+	// * `GoogleReconcile`
+	// * `HYPRReconcile`
+	// * `JWTPopulate`
+	// * `LDAPConnectorReconcile`
+	// * `LinkedInReconcile`
+	// * `LoginValidation`
+	// * `NintendoReconcile`
+	// * `OpenIDReconcile`
+	// * `SAMLv2Populate`
+	// * `SAMLv2Reconcile`
+	// * `SCIMServerGroupRequestConverter`
+	// * `SCIMServerGroupResponseConverter`
+	// * `SCIMServerUserRequestConverter`
+	// * `SCIMServerUserResponseConverter`
+	// * `SelfServiceRegistrationValidation`
+	// * `SonyPSNReconcile`
+	// * `SteamReconcile`
+	// * `TwitchReconcile`
+	// * `TwitterReconcile`
+	// * `UserInfoPopulate`
+	// * `XboxReconcile`
 	Type string `pulumi:"type"`
 }
 
@@ -95,15 +101,11 @@ type GetLambdaResult struct {
 }
 
 func GetLambdaOutput(ctx *pulumi.Context, args GetLambdaOutputArgs, opts ...pulumi.InvokeOption) GetLambdaResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetLambdaResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetLambdaResultOutput, error) {
 			args := v.(GetLambdaArgs)
-			r, err := GetLambda(ctx, &args, opts...)
-			var s GetLambdaResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getLambda:getLambda", args, GetLambdaResultOutput{}, options).(GetLambdaResultOutput), nil
 		}).(GetLambdaResultOutput)
 }
 
@@ -114,26 +116,32 @@ type GetLambdaOutputArgs struct {
 	// The name of the Lambda. At least one of `id` or `name` must be specified.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// The Lambda type. The possible values are:
-	// - `JWTPopulate`
-	// - `OpenIDReconcile`
-	// - `SAMLv2Reconcile`
-	// - `SAMLv2Populate`
-	// - `AppleReconcile`
-	// - `ExternalJWTReconcile`
-	// - `FacebookReconcile`
-	// - `GoogleReconcile`
-	// - `HYPRReconcile`
-	// - `TwitterReconcile`
-	// - `LDAPConnectorReconcile`
-	// - `LinkedInReconcile`
-	// - `EpicGamesReconcile`
-	// - `NintendoReconcile`
-	// - `SonyPSNReconcile`
-	// - `SteamReconcile`
-	// - `TwitchReconcile`
-	// - `XboxReconcile`
-	// - `SelfServiceRegistrationValidation`
-	// - `ClientCredentialsJWTPopulate`
+	// * `AppleReconcile`
+	// * `ClientCredentialsJWTPopulate`
+	// * `EpicGamesReconcile`
+	// * `ExternalJWTReconcile`
+	// * `FacebookReconcile`
+	// * `GoogleReconcile`
+	// * `HYPRReconcile`
+	// * `JWTPopulate`
+	// * `LDAPConnectorReconcile`
+	// * `LinkedInReconcile`
+	// * `LoginValidation`
+	// * `NintendoReconcile`
+	// * `OpenIDReconcile`
+	// * `SAMLv2Populate`
+	// * `SAMLv2Reconcile`
+	// * `SCIMServerGroupRequestConverter`
+	// * `SCIMServerGroupResponseConverter`
+	// * `SCIMServerUserRequestConverter`
+	// * `SCIMServerUserResponseConverter`
+	// * `SelfServiceRegistrationValidation`
+	// * `SonyPSNReconcile`
+	// * `SteamReconcile`
+	// * `TwitchReconcile`
+	// * `TwitterReconcile`
+	// * `UserInfoPopulate`
+	// * `XboxReconcile`
 	Type pulumi.StringInput `pulumi:"type"`
 }
 

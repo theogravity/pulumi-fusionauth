@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -20,7 +25,7 @@ class FusionAuthFormFieldArgs:
                  confirm: Optional[pulumi.Input[bool]] = None,
                  consent_id: Optional[pulumi.Input[str]] = None,
                  control: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  form_field_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -34,7 +39,7 @@ class FusionAuthFormFieldArgs:
         :param pulumi.Input[bool] confirm: Determines if the user input should be confirmed by requiring the value to be entered twice. If true, a confirmation field is included.
         :param pulumi.Input[str] consent_id: The Id of an existing Consent. This field will be required when the type is set to consent.
         :param pulumi.Input[str] control: The Form Field control
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] description: A description of the Form Field.
         :param pulumi.Input[str] form_field_id: The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The unique name of the Form Field.
@@ -116,14 +121,14 @@ class FusionAuthFormFieldArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -214,7 +219,7 @@ class _FusionAuthFormFieldState:
                  confirm: Optional[pulumi.Input[bool]] = None,
                  consent_id: Optional[pulumi.Input[str]] = None,
                  control: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  form_field_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
@@ -228,7 +233,7 @@ class _FusionAuthFormFieldState:
         :param pulumi.Input[bool] confirm: Determines if the user input should be confirmed by requiring the value to be entered twice. If true, a confirmation field is included.
         :param pulumi.Input[str] consent_id: The Id of an existing Consent. This field will be required when the type is set to consent.
         :param pulumi.Input[str] control: The Form Field control
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] description: A description of the Form Field.
         :param pulumi.Input[str] form_field_id: The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] key: The key is the path to the value in the user or registration object.
@@ -300,14 +305,14 @@ class _FusionAuthFormFieldState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -412,7 +417,7 @@ class FusionAuthFormField(pulumi.CustomResource):
                  confirm: Optional[pulumi.Input[bool]] = None,
                  consent_id: Optional[pulumi.Input[str]] = None,
                  control: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  form_field_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
@@ -420,7 +425,7 @@ class FusionAuthFormField(pulumi.CustomResource):
                  options: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  required: Optional[pulumi.Input[bool]] = None,
                  type: Optional[pulumi.Input[str]] = None,
-                 validator: Optional[pulumi.Input[pulumi.InputType['FusionAuthFormFieldValidatorArgs']]] = None,
+                 validator: Optional[pulumi.Input[Union['FusionAuthFormFieldValidatorArgs', 'FusionAuthFormFieldValidatorArgsDict']]] = None,
                  __props__=None):
         """
         ## # Form Field Resource
@@ -450,7 +455,7 @@ class FusionAuthFormField(pulumi.CustomResource):
         :param pulumi.Input[bool] confirm: Determines if the user input should be confirmed by requiring the value to be entered twice. If true, a confirmation field is included.
         :param pulumi.Input[str] consent_id: The Id of an existing Consent. This field will be required when the type is set to consent.
         :param pulumi.Input[str] control: The Form Field control
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] description: A description of the Form Field.
         :param pulumi.Input[str] form_field_id: The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] key: The key is the path to the value in the user or registration object.
@@ -506,7 +511,7 @@ class FusionAuthFormField(pulumi.CustomResource):
                  confirm: Optional[pulumi.Input[bool]] = None,
                  consent_id: Optional[pulumi.Input[str]] = None,
                  control: Optional[pulumi.Input[str]] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  form_field_id: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
@@ -514,7 +519,7 @@ class FusionAuthFormField(pulumi.CustomResource):
                  options: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  required: Optional[pulumi.Input[bool]] = None,
                  type: Optional[pulumi.Input[str]] = None,
-                 validator: Optional[pulumi.Input[pulumi.InputType['FusionAuthFormFieldValidatorArgs']]] = None,
+                 validator: Optional[pulumi.Input[Union['FusionAuthFormFieldValidatorArgs', 'FusionAuthFormFieldValidatorArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -551,7 +556,7 @@ class FusionAuthFormField(pulumi.CustomResource):
             confirm: Optional[pulumi.Input[bool]] = None,
             consent_id: Optional[pulumi.Input[str]] = None,
             control: Optional[pulumi.Input[str]] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             description: Optional[pulumi.Input[str]] = None,
             form_field_id: Optional[pulumi.Input[str]] = None,
             key: Optional[pulumi.Input[str]] = None,
@@ -559,7 +564,7 @@ class FusionAuthFormField(pulumi.CustomResource):
             options: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             required: Optional[pulumi.Input[bool]] = None,
             type: Optional[pulumi.Input[str]] = None,
-            validator: Optional[pulumi.Input[pulumi.InputType['FusionAuthFormFieldValidatorArgs']]] = None) -> 'FusionAuthFormField':
+            validator: Optional[pulumi.Input[Union['FusionAuthFormFieldValidatorArgs', 'FusionAuthFormFieldValidatorArgsDict']]] = None) -> 'FusionAuthFormField':
         """
         Get an existing FusionAuthFormField resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -570,7 +575,7 @@ class FusionAuthFormField(pulumi.CustomResource):
         :param pulumi.Input[bool] confirm: Determines if the user input should be confirmed by requiring the value to be entered twice. If true, a confirmation field is included.
         :param pulumi.Input[str] consent_id: The Id of an existing Consent. This field will be required when the type is set to consent.
         :param pulumi.Input[str] control: The Form Field control
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Form Field that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Form Field that should be persisted.
         :param pulumi.Input[str] description: A description of the Form Field.
         :param pulumi.Input[str] form_field_id: The Id to use for the new Form Field. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] key: The key is the path to the value in the user or registration object.
@@ -623,7 +628,7 @@ class FusionAuthFormField(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the Form Field that should be persisted.
         """

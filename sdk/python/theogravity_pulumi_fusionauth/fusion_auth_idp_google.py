@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -25,6 +30,7 @@ class FusionAuthIdpGoogleArgs:
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
+                 properties: Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']] = None,
                  scope: Optional[pulumi.Input[str]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpGoogleTenantConfigurationArgs']]]] = None):
         """
@@ -38,6 +44,7 @@ class FusionAuthIdpGoogleArgs:
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
+        :param pulumi.Input['FusionAuthIdpGooglePropertiesArgs'] properties: An object to hold configuration parameters for the Google Identity Services API.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Google.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpGoogleTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
@@ -57,6 +64,8 @@ class FusionAuthIdpGoogleArgs:
             pulumi.set(__self__, "linking_strategy", linking_strategy)
         if login_method is not None:
             pulumi.set(__self__, "login_method", login_method)
+        if properties is not None:
+            pulumi.set(__self__, "properties", properties)
         if scope is not None:
             pulumi.set(__self__, "scope", scope)
         if tenant_configurations is not None:
@@ -172,6 +181,18 @@ class FusionAuthIdpGoogleArgs:
 
     @property
     @pulumi.getter
+    def properties(self) -> Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']]:
+        """
+        An object to hold configuration parameters for the Google Identity Services API.
+        """
+        return pulumi.get(self, "properties")
+
+    @properties.setter
+    def properties(self, value: Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']]):
+        pulumi.set(self, "properties", value)
+
+    @property
+    @pulumi.getter
     def scope(self) -> Optional[pulumi.Input[str]]:
         """
         The top-level scope that you are requesting from Google.
@@ -207,6 +228,7 @@ class _FusionAuthIdpGoogleState:
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
+                 properties: Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']] = None,
                  scope: Optional[pulumi.Input[str]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpGoogleTenantConfigurationArgs']]]] = None):
         """
@@ -220,6 +242,7 @@ class _FusionAuthIdpGoogleState:
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
+        :param pulumi.Input['FusionAuthIdpGooglePropertiesArgs'] properties: An object to hold configuration parameters for the Google Identity Services API.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Google.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpGoogleTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
@@ -241,6 +264,8 @@ class _FusionAuthIdpGoogleState:
             pulumi.set(__self__, "linking_strategy", linking_strategy)
         if login_method is not None:
             pulumi.set(__self__, "login_method", login_method)
+        if properties is not None:
+            pulumi.set(__self__, "properties", properties)
         if scope is not None:
             pulumi.set(__self__, "scope", scope)
         if tenant_configurations is not None:
@@ -356,6 +381,18 @@ class _FusionAuthIdpGoogleState:
 
     @property
     @pulumi.getter
+    def properties(self) -> Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']]:
+        """
+        An object to hold configuration parameters for the Google Identity Services API.
+        """
+        return pulumi.get(self, "properties")
+
+    @properties.setter
+    def properties(self, value: Optional[pulumi.Input['FusionAuthIdpGooglePropertiesArgs']]):
+        pulumi.set(self, "properties", value)
+
+    @property
+    @pulumi.getter
     def scope(self) -> Optional[pulumi.Input[str]]:
         """
         The top-level scope that you are requesting from Google.
@@ -384,7 +421,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleApplicationConfigurationArgs', 'FusionAuthIdpGoogleApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
@@ -393,8 +430,9 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
+                 properties: Optional[pulumi.Input[Union['FusionAuthIdpGooglePropertiesArgs', 'FusionAuthIdpGooglePropertiesArgsDict']]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleTenantConfigurationArgs', 'FusionAuthIdpGoogleTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         """
         ## # Google Identity Provider Resource
@@ -414,11 +452,11 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         google = fusionauth.FusionAuthIdpGoogle("google",
-            application_configurations=[fusionauth.FusionAuthIdpGoogleApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Google",
             debug=False,
             client_id="254311943570-8e2i2hds0qdnee4124socceeh2q2mtjl.apps.googleusercontent.com",
@@ -428,7 +466,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleApplicationConfigurationArgs', 'FusionAuthIdpGoogleApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Google client id for your Application. This value is retrieved from the Google developer website when you setup your Google developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Google Identity Provider when retrieving the long-lived token. This value is retrieved from the Google developer website when you setup your Google developer account.
@@ -437,8 +475,9 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
+        :param pulumi.Input[Union['FusionAuthIdpGooglePropertiesArgs', 'FusionAuthIdpGooglePropertiesArgsDict']] properties: An object to hold configuration parameters for the Google Identity Services API.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Google.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleTenantConfigurationArgs', 'FusionAuthIdpGoogleTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
     @overload
@@ -464,11 +503,11 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         google = fusionauth.FusionAuthIdpGoogle("google",
-            application_configurations=[fusionauth.FusionAuthIdpGoogleApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Google",
             debug=False,
             client_id="254311943570-8e2i2hds0qdnee4124socceeh2q2mtjl.apps.googleusercontent.com",
@@ -491,7 +530,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleApplicationConfigurationArgs', 'FusionAuthIdpGoogleApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
@@ -500,8 +539,9 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  login_method: Optional[pulumi.Input[str]] = None,
+                 properties: Optional[pulumi.Input[Union['FusionAuthIdpGooglePropertiesArgs', 'FusionAuthIdpGooglePropertiesArgsDict']]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleTenantConfigurationArgs', 'FusionAuthIdpGoogleTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -524,6 +564,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
             __props__.__dict__["lambda_reconcile_id"] = lambda_reconcile_id
             __props__.__dict__["linking_strategy"] = linking_strategy
             __props__.__dict__["login_method"] = login_method
+            __props__.__dict__["properties"] = properties
             __props__.__dict__["scope"] = scope
             __props__.__dict__["tenant_configurations"] = tenant_configurations
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["clientSecret"])
@@ -538,7 +579,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleApplicationConfigurationArgs', 'FusionAuthIdpGoogleApplicationConfigurationArgsDict']]]]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             client_id: Optional[pulumi.Input[str]] = None,
             client_secret: Optional[pulumi.Input[str]] = None,
@@ -547,8 +588,9 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
             lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
             linking_strategy: Optional[pulumi.Input[str]] = None,
             login_method: Optional[pulumi.Input[str]] = None,
+            properties: Optional[pulumi.Input[Union['FusionAuthIdpGooglePropertiesArgs', 'FusionAuthIdpGooglePropertiesArgsDict']]] = None,
             scope: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpGoogle':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleTenantConfigurationArgs', 'FusionAuthIdpGoogleTenantConfigurationArgsDict']]]]] = None) -> 'FusionAuthIdpGoogle':
         """
         Get an existing FusionAuthIdpGoogle resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -556,7 +598,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleApplicationConfigurationArgs', 'FusionAuthIdpGoogleApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] client_id: The top-level Google client id for your Application. This value is retrieved from the Google developer website when you setup your Google developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Google Identity Provider when retrieving the long-lived token. This value is retrieved from the Google developer website when you setup your Google developer account.
@@ -565,8 +607,9 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] login_method: The login method to use for this Identity Provider.
+        :param pulumi.Input[Union['FusionAuthIdpGooglePropertiesArgs', 'FusionAuthIdpGooglePropertiesArgsDict']] properties: An object to hold configuration parameters for the Google Identity Services API.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Google.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpGoogleTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpGoogleTenantConfigurationArgs', 'FusionAuthIdpGoogleTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -581,6 +624,7 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         __props__.__dict__["lambda_reconcile_id"] = lambda_reconcile_id
         __props__.__dict__["linking_strategy"] = linking_strategy
         __props__.__dict__["login_method"] = login_method
+        __props__.__dict__["properties"] = properties
         __props__.__dict__["scope"] = scope
         __props__.__dict__["tenant_configurations"] = tenant_configurations
         return FusionAuthIdpGoogle(resource_name, opts=opts, __props__=__props__)
@@ -656,6 +700,14 @@ class FusionAuthIdpGoogle(pulumi.CustomResource):
         The login method to use for this Identity Provider.
         """
         return pulumi.get(self, "login_method")
+
+    @property
+    @pulumi.getter
+    def properties(self) -> pulumi.Output[Optional['outputs.FusionAuthIdpGoogleProperties']]:
+        """
+        An object to hold configuration parameters for the Google Identity Services API.
+        """
+        return pulumi.get(self, "properties")
 
     @property
     @pulumi.getter

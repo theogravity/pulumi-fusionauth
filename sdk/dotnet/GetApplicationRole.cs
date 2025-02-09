@@ -69,6 +69,35 @@ namespace theogravity.Fusionauth
         /// </summary>
         public static Output<GetApplicationRoleResult> Invoke(GetApplicationRoleInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// ## # Application Role Resource
+        /// 
+        /// This Resource is used to create a role for an Application.
+        /// 
+        /// [Application Roles API](https://fusionauth.io/docs/v1/tech/apis/applications)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Fusionauth = Pulumi.Fusionauth;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var admin = Fusionauth.GetApplicationRole.Invoke(new()
+        ///     {
+        ///         ApplicationId = data.Fusionauth_application.FusionAuth.Id,
+        ///         Name = "admin",
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetApplicationRoleResult> Invoke(GetApplicationRoleInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationRoleResult>("fusionauth:index/getApplicationRole:getApplicationRole", args ?? new GetApplicationRoleInvokeArgs(), options.WithDefaults());
     }
 
 

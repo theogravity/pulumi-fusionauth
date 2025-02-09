@@ -24,7 +24,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getLambda(args: GetLambdaArgs, opts?: pulumi.InvokeOptions): Promise<GetLambdaResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getLambda:getLambda", {
         "id": args.id,
@@ -47,26 +46,32 @@ export interface GetLambdaArgs {
     name?: string;
     /**
      * The Lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `SelfServiceRegistrationValidation`
-     * - `ClientCredentialsJWTPopulate`
+     * * `AppleReconcile`
+     * * `ClientCredentialsJWTPopulate`
+     * * `EpicGamesReconcile`
+     * * `ExternalJWTReconcile`
+     * * `FacebookReconcile`
+     * * `GoogleReconcile`
+     * * `HYPRReconcile`
+     * * `JWTPopulate`
+     * * `LDAPConnectorReconcile`
+     * * `LinkedInReconcile`
+     * * `LoginValidation`
+     * * `NintendoReconcile`
+     * * `OpenIDReconcile`
+     * * `SAMLv2Populate`
+     * * `SAMLv2Reconcile`
+     * * `SCIMServerGroupRequestConverter`
+     * * `SCIMServerGroupResponseConverter`
+     * * `SCIMServerUserRequestConverter`
+     * * `SCIMServerUserResponseConverter`
+     * * `SelfServiceRegistrationValidation`
+     * * `SonyPSNReconcile`
+     * * `SteamReconcile`
+     * * `TwitchReconcile`
+     * * `TwitterReconcile`
+     * * `UserInfoPopulate`
+     * * `XboxReconcile`
      */
     type: string;
 }
@@ -106,8 +111,13 @@ export interface GetLambdaResult {
  * });
  * ```
  */
-export function getLambdaOutput(args: GetLambdaOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetLambdaResult> {
-    return pulumi.output(args).apply((a: any) => getLambda(a, opts))
+export function getLambdaOutput(args: GetLambdaOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetLambdaResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getLambda:getLambda", {
+        "id": args.id,
+        "name": args.name,
+        "type": args.type,
+    }, opts);
 }
 
 /**
@@ -124,26 +134,32 @@ export interface GetLambdaOutputArgs {
     name?: pulumi.Input<string>;
     /**
      * The Lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `SelfServiceRegistrationValidation`
-     * - `ClientCredentialsJWTPopulate`
+     * * `AppleReconcile`
+     * * `ClientCredentialsJWTPopulate`
+     * * `EpicGamesReconcile`
+     * * `ExternalJWTReconcile`
+     * * `FacebookReconcile`
+     * * `GoogleReconcile`
+     * * `HYPRReconcile`
+     * * `JWTPopulate`
+     * * `LDAPConnectorReconcile`
+     * * `LinkedInReconcile`
+     * * `LoginValidation`
+     * * `NintendoReconcile`
+     * * `OpenIDReconcile`
+     * * `SAMLv2Populate`
+     * * `SAMLv2Reconcile`
+     * * `SCIMServerGroupRequestConverter`
+     * * `SCIMServerGroupResponseConverter`
+     * * `SCIMServerUserRequestConverter`
+     * * `SCIMServerUserResponseConverter`
+     * * `SelfServiceRegistrationValidation`
+     * * `SonyPSNReconcile`
+     * * `SteamReconcile`
+     * * `TwitchReconcile`
+     * * `TwitterReconcile`
+     * * `UserInfoPopulate`
+     * * `XboxReconcile`
      */
     type: pulumi.Input<string>;
 }

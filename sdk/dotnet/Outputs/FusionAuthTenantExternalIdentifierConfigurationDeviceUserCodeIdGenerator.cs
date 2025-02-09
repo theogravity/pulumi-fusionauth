@@ -15,19 +15,19 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator
     {
         /// <summary>
-        /// The length of the secure generator used for generating the change password Id.
+        /// The length of the secure generator used for generating the change password Id. Defaults to 6.
         /// </summary>
-        public readonly int Length;
+        public readonly int? Length;
         /// <summary>
-        /// The type of the secure generator used for generating the change password Id.
+        /// The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
         /// </summary>
-        public readonly string Type;
+        public readonly string? Type;
 
         [OutputConstructor]
         private FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator(
-            int length,
+            int? length,
 
-            string type)
+            string? type)
         {
             Length = length;
             Type = type;

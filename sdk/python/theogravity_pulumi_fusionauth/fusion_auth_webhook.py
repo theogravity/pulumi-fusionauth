@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -19,31 +24,41 @@ class FusionAuthWebhookArgs:
                  connect_timeout: pulumi.Input[int],
                  read_timeout: pulumi.Input[int],
                  url: pulumi.Input[str],
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input['FusionAuthWebhookEventsEnabledArgs']] = None,
                  global_: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
+                 signature_configuration: Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
-                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
+                 ssl_certificate_key_id: Optional[pulumi.Input[str]] = None,
+                 tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 webhook_id: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthWebhook resource.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Webhook that should be persisted.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input['FusionAuthWebhookEventsEnabledArgs'] events_enabled: A mapping for the events that are enabled for this Webhook.
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
+        :param pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs'] signature_configuration: Configuration for webhook signing
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
+        :param pulumi.Input[str] webhook_id: The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
         """
         pulumi.set(__self__, "connect_timeout", connect_timeout)
         pulumi.set(__self__, "read_timeout", read_timeout)
         pulumi.set(__self__, "url", url)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if events_enabled is not None:
@@ -56,10 +71,16 @@ class FusionAuthWebhookArgs:
             pulumi.set(__self__, "http_authentication_password", http_authentication_password)
         if http_authentication_username is not None:
             pulumi.set(__self__, "http_authentication_username", http_authentication_username)
+        if signature_configuration is not None:
+            pulumi.set(__self__, "signature_configuration", signature_configuration)
         if ssl_certificate is not None:
             pulumi.set(__self__, "ssl_certificate", ssl_certificate)
+        if ssl_certificate_key_id is not None:
+            pulumi.set(__self__, "ssl_certificate_key_id", ssl_certificate_key_id)
         if tenant_ids is not None:
             pulumi.set(__self__, "tenant_ids", tenant_ids)
+        if webhook_id is not None:
+            pulumi.set(__self__, "webhook_id", webhook_id)
 
     @property
     @pulumi.getter(name="connectTimeout")
@@ -99,6 +120,18 @@ class FusionAuthWebhookArgs:
 
     @property
     @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the Webhook that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
+
+    @property
+    @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
         """
         A description of the Webhook. This is used for display purposes only.
@@ -135,14 +168,14 @@ class FusionAuthWebhookArgs:
 
     @property
     @pulumi.getter
-    def headers(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that contains headers that are sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "headers")
 
     @headers.setter
-    def headers(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "headers", value)
 
     @property
@@ -170,6 +203,18 @@ class FusionAuthWebhookArgs:
         pulumi.set(self, "http_authentication_username", value)
 
     @property
+    @pulumi.getter(name="signatureConfiguration")
+    def signature_configuration(self) -> Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']]:
+        """
+        Configuration for webhook signing
+        """
+        return pulumi.get(self, "signature_configuration")
+
+    @signature_configuration.setter
+    def signature_configuration(self, value: Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']]):
+        pulumi.set(self, "signature_configuration", value)
+
+    @property
     @pulumi.getter(name="sslCertificate")
     def ssl_certificate(self) -> Optional[pulumi.Input[str]]:
         """
@@ -180,6 +225,18 @@ class FusionAuthWebhookArgs:
     @ssl_certificate.setter
     def ssl_certificate(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "ssl_certificate", value)
+
+    @property
+    @pulumi.getter(name="sslCertificateKeyId")
+    def ssl_certificate_key_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        """
+        return pulumi.get(self, "ssl_certificate_key_id")
+
+    @ssl_certificate_key_id.setter
+    def ssl_certificate_key_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ssl_certificate_key_id", value)
 
     @property
     @pulumi.getter(name="tenantIds")
@@ -193,37 +250,59 @@ class FusionAuthWebhookArgs:
     def tenant_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "tenant_ids", value)
 
+    @property
+    @pulumi.getter(name="webhookId")
+    def webhook_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "webhook_id")
+
+    @webhook_id.setter
+    def webhook_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "webhook_id", value)
+
 
 @pulumi.input_type
 class _FusionAuthWebhookState:
     def __init__(__self__, *,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  events_enabled: Optional[pulumi.Input['FusionAuthWebhookEventsEnabledArgs']] = None,
                  global_: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
+                 signature_configuration: Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 ssl_certificate_key_id: Optional[pulumi.Input[str]] = None,
                  tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 url: Optional[pulumi.Input[str]] = None):
+                 url: Optional[pulumi.Input[str]] = None,
+                 webhook_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthWebhook resources.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Webhook that should be persisted.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
         :param pulumi.Input['FusionAuthWebhookEventsEnabledArgs'] events_enabled: A mapping for the events that are enabled for this Webhook.
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs'] signature_configuration: Configuration for webhook signing
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
+        :param pulumi.Input[str] webhook_id: The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
         """
         if connect_timeout is not None:
             pulumi.set(__self__, "connect_timeout", connect_timeout)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if events_enabled is not None:
@@ -238,12 +317,18 @@ class _FusionAuthWebhookState:
             pulumi.set(__self__, "http_authentication_username", http_authentication_username)
         if read_timeout is not None:
             pulumi.set(__self__, "read_timeout", read_timeout)
+        if signature_configuration is not None:
+            pulumi.set(__self__, "signature_configuration", signature_configuration)
         if ssl_certificate is not None:
             pulumi.set(__self__, "ssl_certificate", ssl_certificate)
+        if ssl_certificate_key_id is not None:
+            pulumi.set(__self__, "ssl_certificate_key_id", ssl_certificate_key_id)
         if tenant_ids is not None:
             pulumi.set(__self__, "tenant_ids", tenant_ids)
         if url is not None:
             pulumi.set(__self__, "url", url)
+        if webhook_id is not None:
+            pulumi.set(__self__, "webhook_id", webhook_id)
 
     @property
     @pulumi.getter(name="connectTimeout")
@@ -256,6 +341,18 @@ class _FusionAuthWebhookState:
     @connect_timeout.setter
     def connect_timeout(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "connect_timeout", value)
+
+    @property
+    @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the Webhook that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
 
     @property
     @pulumi.getter
@@ -295,14 +392,14 @@ class _FusionAuthWebhookState:
 
     @property
     @pulumi.getter
-    def headers(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that contains headers that are sent as part of the HTTP request for the events.
         """
         return pulumi.get(self, "headers")
 
     @headers.setter
-    def headers(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "headers", value)
 
     @property
@@ -342,6 +439,18 @@ class _FusionAuthWebhookState:
         pulumi.set(self, "read_timeout", value)
 
     @property
+    @pulumi.getter(name="signatureConfiguration")
+    def signature_configuration(self) -> Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']]:
+        """
+        Configuration for webhook signing
+        """
+        return pulumi.get(self, "signature_configuration")
+
+    @signature_configuration.setter
+    def signature_configuration(self, value: Optional[pulumi.Input['FusionAuthWebhookSignatureConfigurationArgs']]):
+        pulumi.set(self, "signature_configuration", value)
+
+    @property
     @pulumi.getter(name="sslCertificate")
     def ssl_certificate(self) -> Optional[pulumi.Input[str]]:
         """
@@ -352,6 +461,18 @@ class _FusionAuthWebhookState:
     @ssl_certificate.setter
     def ssl_certificate(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "ssl_certificate", value)
+
+    @property
+    @pulumi.getter(name="sslCertificateKeyId")
+    def ssl_certificate_key_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        """
+        return pulumi.get(self, "ssl_certificate_key_id")
+
+    @ssl_certificate_key_id.setter
+    def ssl_certificate_key_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "ssl_certificate_key_id", value)
 
     @property
     @pulumi.getter(name="tenantIds")
@@ -377,6 +498,18 @@ class _FusionAuthWebhookState:
     def url(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "url", value)
 
+    @property
+    @pulumi.getter(name="webhookId")
+    def webhook_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "webhook_id")
+
+    @webhook_id.setter
+    def webhook_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "webhook_id", value)
+
 
 class FusionAuthWebhook(pulumi.CustomResource):
     @overload
@@ -384,16 +517,20 @@ class FusionAuthWebhook(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
+                 events_enabled: Optional[pulumi.Input[Union['FusionAuthWebhookEventsEnabledArgs', 'FusionAuthWebhookEventsEnabledArgsDict']]] = None,
                  global_: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
+                 signature_configuration: Optional[pulumi.Input[Union['FusionAuthWebhookSignatureConfigurationArgs', 'FusionAuthWebhookSignatureConfigurationArgsDict']]] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 ssl_certificate_key_id: Optional[pulumi.Input[str]] = None,
                  tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  url: Optional[pulumi.Input[str]] = None,
+                 webhook_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         ## # Webhook Resource
@@ -415,10 +552,10 @@ class FusionAuthWebhook(pulumi.CustomResource):
             ],
             connect_timeout=1000,
             description="The standard game Webhook",
-            events_enabled=fusionauth.FusionAuthWebhookEventsEnabledArgs(
-                user_create=True,
-                user_delete=False,
-            ),
+            events_enabled={
+                "user_create": True,
+                "user_delete": False,
+            },
             global_=False,
             headers={
                 "foo": "bar",
@@ -428,22 +565,30 @@ class FusionAuthWebhook(pulumi.CustomResource):
             http_authentication_username="username",
             read_timeout=2000,
             ssl_certificate="  -----BEGIN CERTIFICATE-----\\\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\\\n-----END CERTIFICATE-----\\n",
-            url="http://mygameserver.local:7001/fusionauth-webhook")
+            url="http://mygameserver.local:7001/fusionauth-webhook",
+            signature_configuration={
+                "enabled": True,
+                "signing_key_id": fusionauth_key["webhook_key"]["id"],
+            })
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Webhook that should be persisted.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
-        :param pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']] events_enabled: A mapping for the events that are enabled for this Webhook.
+        :param pulumi.Input[Union['FusionAuthWebhookEventsEnabledArgs', 'FusionAuthWebhookEventsEnabledArgsDict']] events_enabled: A mapping for the events that are enabled for this Webhook.
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input[Union['FusionAuthWebhookSignatureConfigurationArgs', 'FusionAuthWebhookSignatureConfigurationArgsDict']] signature_configuration: Configuration for webhook signing
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
+        :param pulumi.Input[str] webhook_id: The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
         """
         ...
     @overload
@@ -471,10 +616,10 @@ class FusionAuthWebhook(pulumi.CustomResource):
             ],
             connect_timeout=1000,
             description="The standard game Webhook",
-            events_enabled=fusionauth.FusionAuthWebhookEventsEnabledArgs(
-                user_create=True,
-                user_delete=False,
-            ),
+            events_enabled={
+                "user_create": True,
+                "user_delete": False,
+            },
             global_=False,
             headers={
                 "foo": "bar",
@@ -484,7 +629,11 @@ class FusionAuthWebhook(pulumi.CustomResource):
             http_authentication_username="username",
             read_timeout=2000,
             ssl_certificate="  -----BEGIN CERTIFICATE-----\\\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\\\n-----END CERTIFICATE-----\\n",
-            url="http://mygameserver.local:7001/fusionauth-webhook")
+            url="http://mygameserver.local:7001/fusionauth-webhook",
+            signature_configuration={
+                "enabled": True,
+                "signing_key_id": fusionauth_key["webhook_key"]["id"],
+            })
         ```
 
         :param str resource_name: The name of the resource.
@@ -503,16 +652,20 @@ class FusionAuthWebhook(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  connect_timeout: Optional[pulumi.Input[int]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
+                 events_enabled: Optional[pulumi.Input[Union['FusionAuthWebhookEventsEnabledArgs', 'FusionAuthWebhookEventsEnabledArgsDict']]] = None,
                  global_: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  http_authentication_password: Optional[pulumi.Input[str]] = None,
                  http_authentication_username: Optional[pulumi.Input[str]] = None,
                  read_timeout: Optional[pulumi.Input[int]] = None,
+                 signature_configuration: Optional[pulumi.Input[Union['FusionAuthWebhookSignatureConfigurationArgs', 'FusionAuthWebhookSignatureConfigurationArgsDict']]] = None,
                  ssl_certificate: Optional[pulumi.Input[str]] = None,
+                 ssl_certificate_key_id: Optional[pulumi.Input[str]] = None,
                  tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  url: Optional[pulumi.Input[str]] = None,
+                 webhook_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -525,6 +678,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
             if connect_timeout is None and not opts.urn:
                 raise TypeError("Missing required property 'connect_timeout'")
             __props__.__dict__["connect_timeout"] = connect_timeout
+            __props__.__dict__["data"] = data
             __props__.__dict__["description"] = description
             __props__.__dict__["events_enabled"] = events_enabled
             __props__.__dict__["global_"] = global_
@@ -534,11 +688,14 @@ class FusionAuthWebhook(pulumi.CustomResource):
             if read_timeout is None and not opts.urn:
                 raise TypeError("Missing required property 'read_timeout'")
             __props__.__dict__["read_timeout"] = read_timeout
+            __props__.__dict__["signature_configuration"] = signature_configuration
             __props__.__dict__["ssl_certificate"] = ssl_certificate
+            __props__.__dict__["ssl_certificate_key_id"] = ssl_certificate_key_id
             __props__.__dict__["tenant_ids"] = tenant_ids
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
+            __props__.__dict__["webhook_id"] = webhook_id
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["httpAuthenticationPassword", "httpAuthenticationUsername"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(FusionAuthWebhook, __self__).__init__(
@@ -552,16 +709,20 @@ class FusionAuthWebhook(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             connect_timeout: Optional[pulumi.Input[int]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            events_enabled: Optional[pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']]] = None,
+            events_enabled: Optional[pulumi.Input[Union['FusionAuthWebhookEventsEnabledArgs', 'FusionAuthWebhookEventsEnabledArgsDict']]] = None,
             global_: Optional[pulumi.Input[bool]] = None,
-            headers: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             http_authentication_password: Optional[pulumi.Input[str]] = None,
             http_authentication_username: Optional[pulumi.Input[str]] = None,
             read_timeout: Optional[pulumi.Input[int]] = None,
+            signature_configuration: Optional[pulumi.Input[Union['FusionAuthWebhookSignatureConfigurationArgs', 'FusionAuthWebhookSignatureConfigurationArgsDict']]] = None,
             ssl_certificate: Optional[pulumi.Input[str]] = None,
+            ssl_certificate_key_id: Optional[pulumi.Input[str]] = None,
             tenant_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-            url: Optional[pulumi.Input[str]] = None) -> 'FusionAuthWebhook':
+            url: Optional[pulumi.Input[str]] = None,
+            webhook_id: Optional[pulumi.Input[str]] = None) -> 'FusionAuthWebhook':
         """
         Get an existing FusionAuthWebhook resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -570,22 +731,27 @@ class FusionAuthWebhook(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[int] connect_timeout: The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Webhook that should be persisted.
         :param pulumi.Input[str] description: A description of the Webhook. This is used for display purposes only.
-        :param pulumi.Input[pulumi.InputType['FusionAuthWebhookEventsEnabledArgs']] events_enabled: A mapping for the events that are enabled for this Webhook.
+        :param pulumi.Input[Union['FusionAuthWebhookEventsEnabledArgs', 'FusionAuthWebhookEventsEnabledArgsDict']] events_enabled: A mapping for the events that are enabled for this Webhook.
         :param pulumi.Input[bool] global_: Whether or not this Webhook is used for all events or just for specific Applications.
-        :param pulumi.Input[Mapping[str, Any]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] headers: An object that contains headers that are sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_password: The HTTP basic authentication password that is sent as part of the HTTP request for the events.
         :param pulumi.Input[str] http_authentication_username: The HTTP basic authentication username that is sent as part of the HTTP request for the events.
         :param pulumi.Input[int] read_timeout: The read timeout in milliseconds used when FusionAuth sends events to the Webhook.
+        :param pulumi.Input[Union['FusionAuthWebhookSignatureConfigurationArgs', 'FusionAuthWebhookSignatureConfigurationArgsDict']] signature_configuration: Configuration for webhook signing
         :param pulumi.Input[str] ssl_certificate: An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
+        :param pulumi.Input[str] ssl_certificate_key_id: The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tenant_ids: The Ids of the tenants that this Webhook should be associated with. If no Ids are specified and the global field is false, this Webhook will not be used.
         :param pulumi.Input[str] url: The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
+        :param pulumi.Input[str] webhook_id: The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _FusionAuthWebhookState.__new__(_FusionAuthWebhookState)
 
         __props__.__dict__["connect_timeout"] = connect_timeout
+        __props__.__dict__["data"] = data
         __props__.__dict__["description"] = description
         __props__.__dict__["events_enabled"] = events_enabled
         __props__.__dict__["global_"] = global_
@@ -593,9 +759,12 @@ class FusionAuthWebhook(pulumi.CustomResource):
         __props__.__dict__["http_authentication_password"] = http_authentication_password
         __props__.__dict__["http_authentication_username"] = http_authentication_username
         __props__.__dict__["read_timeout"] = read_timeout
+        __props__.__dict__["signature_configuration"] = signature_configuration
         __props__.__dict__["ssl_certificate"] = ssl_certificate
+        __props__.__dict__["ssl_certificate_key_id"] = ssl_certificate_key_id
         __props__.__dict__["tenant_ids"] = tenant_ids
         __props__.__dict__["url"] = url
+        __props__.__dict__["webhook_id"] = webhook_id
         return FusionAuthWebhook(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -605,6 +774,14 @@ class FusionAuthWebhook(pulumi.CustomResource):
         The connection timeout in milliseconds used when FusionAuth sends events to the Webhook.
         """
         return pulumi.get(self, "connect_timeout")
+
+    @property
+    @pulumi.getter
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        An object that can hold any information about the Webhook that should be persisted.
+        """
+        return pulumi.get(self, "data")
 
     @property
     @pulumi.getter
@@ -632,7 +809,7 @@ class FusionAuthWebhook(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def headers(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def headers(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that contains headers that are sent as part of the HTTP request for the events.
         """
@@ -663,12 +840,28 @@ class FusionAuthWebhook(pulumi.CustomResource):
         return pulumi.get(self, "read_timeout")
 
     @property
+    @pulumi.getter(name="signatureConfiguration")
+    def signature_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthWebhookSignatureConfiguration']]:
+        """
+        Configuration for webhook signing
+        """
+        return pulumi.get(self, "signature_configuration")
+
+    @property
     @pulumi.getter(name="sslCertificate")
     def ssl_certificate(self) -> pulumi.Output[Optional[str]]:
         """
         An SSL certificate in PEM format that is used to establish the a SSL (TLS specifically) connection to the Webhook.
         """
         return pulumi.get(self, "ssl_certificate")
+
+    @property
+    @pulumi.getter(name="sslCertificateKeyId")
+    def ssl_certificate_key_id(self) -> pulumi.Output[Optional[str]]:
+        """
+        The Id of an existing Key. The X.509 certificate is used for client certificate authentication in requests to the Webhook.
+        """
+        return pulumi.get(self, "ssl_certificate_key_id")
 
     @property
     @pulumi.getter(name="tenantIds")
@@ -685,4 +878,12 @@ class FusionAuthWebhook(pulumi.CustomResource):
         The fully qualified URL of the Webhook’s endpoint that will accept the event requests from FusionAuth.
         """
         return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="webhookId")
+    def webhook_id(self) -> pulumi.Output[str]:
+        """
+        The Id to use for the new Webhook. If not specified a secure random UUID will be generated.
+        """
+        return pulumi.get(self, "webhook_id")
 

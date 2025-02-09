@@ -17,6 +17,8 @@ type FusionAuthIdpSamlV2IdpInitiated struct {
 
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayOutput `pulumi:"applicationConfigurations"`
+	// The assertion configuration for the SAML v2 identity provider.
+	AssertionConfiguration FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput `pulumi:"assertionConfiguration"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrOutput `pulumi:"debug"`
@@ -42,9 +44,16 @@ type FusionAuthIdpSamlV2IdpInitiated struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayOutput `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the `emailClaim` will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrOutput `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrOutput `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+	// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+	// LinkByUsernameForExistingUser
+	UsernameClaim pulumi.StringPtrOutput `pulumi:"usernameClaim"`
 }
 
 // NewFusionAuthIdpSamlV2IdpInitiated registers a new resource with the given unique name, arguments, and options.
@@ -85,6 +94,8 @@ func GetFusionAuthIdpSamlV2IdpInitiated(ctx *pulumi.Context,
 type fusionAuthIdpSamlV2IdpInitiatedState struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The assertion configuration for the SAML v2 identity provider.
+	AssertionConfiguration *FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration `pulumi:"assertionConfiguration"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 	// an Event Log will be created.
 	Debug *bool `pulumi:"debug"`
@@ -110,14 +121,23 @@ type fusionAuthIdpSamlV2IdpInitiatedState struct {
 	Name *string `pulumi:"name"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the `emailClaim` will be used when linking user.
+	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+	// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+	// LinkByUsernameForExistingUser
+	UsernameClaim *string `pulumi:"usernameClaim"`
 }
 
 type FusionAuthIdpSamlV2IdpInitiatedState struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayInput
+	// The assertion configuration for the SAML v2 identity provider.
+	AssertionConfiguration FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrInput
@@ -143,9 +163,16 @@ type FusionAuthIdpSamlV2IdpInitiatedState struct {
 	Name pulumi.StringPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayInput
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the `emailClaim` will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
+	// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+	// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+	// LinkByUsernameForExistingUser
+	UsernameClaim pulumi.StringPtrInput
 }
 
 func (FusionAuthIdpSamlV2IdpInitiatedState) ElementType() reflect.Type {
@@ -155,6 +182,8 @@ func (FusionAuthIdpSamlV2IdpInitiatedState) ElementType() reflect.Type {
 type fusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations []FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration `pulumi:"applicationConfigurations"`
+	// The assertion configuration for the SAML v2 identity provider.
+	AssertionConfiguration *FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration `pulumi:"assertionConfiguration"`
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 	// an Event Log will be created.
 	Debug *bool `pulumi:"debug"`
@@ -180,15 +209,24 @@ type fusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	Name *string `pulumi:"name"`
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations []FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration `pulumi:"tenantConfigurations"`
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the `emailClaim` will be used when linking user.
+	UniqueIdClaim *string `pulumi:"uniqueIdClaim"`
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail *bool `pulumi:"useNameForEmail"`
+	// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+	// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+	// LinkByUsernameForExistingUser
+	UsernameClaim *string `pulumi:"usernameClaim"`
 }
 
 // The set of arguments for constructing a FusionAuthIdpSamlV2IdpInitiated resource.
 type FusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	// The configuration for each Application that the identity provider is enabled for.
 	ApplicationConfigurations FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayInput
+	// The assertion configuration for the SAML v2 identity provider.
+	AssertionConfiguration FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput
 	// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 	// an Event Log will be created.
 	Debug pulumi.BoolPtrInput
@@ -214,9 +252,16 @@ type FusionAuthIdpSamlV2IdpInitiatedArgs struct {
 	Name pulumi.StringPtrInput
 	// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
 	TenantConfigurations FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayInput
+	// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+	// the `emailClaim` will be used when linking user.
+	UniqueIdClaim pulumi.StringPtrInput
 	// Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 	// processing. If this is false, then the `emailClaim` property must be set.
 	UseNameForEmail pulumi.BoolPtrInput
+	// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+	// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+	// LinkByUsernameForExistingUser
+	UsernameClaim pulumi.StringPtrInput
 }
 
 func (FusionAuthIdpSamlV2IdpInitiatedArgs) ElementType() reflect.Type {
@@ -313,6 +358,13 @@ func (o FusionAuthIdpSamlV2IdpInitiatedOutput) ApplicationConfigurations() Fusio
 	}).(FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayOutput)
 }
 
+// The assertion configuration for the SAML v2 identity provider.
+func (o FusionAuthIdpSamlV2IdpInitiatedOutput) AssertionConfiguration() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+		return v.AssertionConfiguration
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput)
+}
+
 // Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
 // an Event Log will be created.
 func (o FusionAuthIdpSamlV2IdpInitiatedOutput) Debug() pulumi.BoolPtrOutput {
@@ -370,10 +422,23 @@ func (o FusionAuthIdpSamlV2IdpInitiatedOutput) TenantConfigurations() FusionAuth
 	}).(FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayOutput)
 }
 
+// The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+// the `emailClaim` will be used when linking user.
+func (o FusionAuthIdpSamlV2IdpInitiatedOutput) UniqueIdClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) pulumi.StringPtrOutput { return v.UniqueIdClaim }).(pulumi.StringPtrOutput)
+}
+
 // Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
 // processing. If this is false, then the `emailClaim` property must be set.
 func (o FusionAuthIdpSamlV2IdpInitiatedOutput) UseNameForEmail() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) pulumi.BoolPtrOutput { return v.UseNameForEmail }).(pulumi.BoolPtrOutput)
+}
+
+// The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+// value will be used to link a user. This property is required when `linkingStategy` is set to LinkByUsername or
+// LinkByUsernameForExistingUser
+func (o FusionAuthIdpSamlV2IdpInitiatedOutput) UsernameClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiated) pulumi.StringPtrOutput { return v.UsernameClaim }).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthIdpSamlV2IdpInitiatedArrayOutput struct{ *pulumi.OutputState }

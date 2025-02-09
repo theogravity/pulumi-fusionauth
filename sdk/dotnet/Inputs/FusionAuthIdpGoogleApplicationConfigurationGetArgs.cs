@@ -60,6 +60,12 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
+        /// This is an optional Application specific override for the top level properties.
+        /// </summary>
+        [Input("properties")]
+        public Input<Inputs.FusionAuthIdpGoogleApplicationConfigurationPropertiesGetArgs>? Properties { get; set; }
+
+        /// <summary>
         /// This is an optional Application specific override for for the top level scope.
         /// </summary>
         [Input("scope")]

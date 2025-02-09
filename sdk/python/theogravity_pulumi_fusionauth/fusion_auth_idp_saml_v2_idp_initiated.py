@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -19,6 +24,7 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
                  issuer: pulumi.Input[str],
                  key_id: pulumi.Input[str],
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]] = None,
+                 assertion_configuration: Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  email_claim: Optional[pulumi.Input[str]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -27,7 +33,9 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]] = None,
-                 use_name_for_email: Optional[pulumi.Input[bool]] = None):
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a FusionAuthIdpSamlV2IdpInitiated resource.
         :param pulumi.Input[str] issuer: The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Prior to 1.27.1
@@ -36,6 +44,7 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
                identity provider. This key must be a verification only key or certificate (meaning that it only has a public key
                component).
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs'] assertion_configuration: The assertion configuration for the SAML v2 identity provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
                an Event Log will be created.
         :param pulumi.Input[str] email_claim: The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
@@ -46,13 +55,20 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of this SAML v2 identity provider. This is only used for display purposes.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the `email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
                processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+               value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+               LinkByUsernameForExistingUser
         """
         pulumi.set(__self__, "issuer", issuer)
         pulumi.set(__self__, "key_id", key_id)
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
+        if assertion_configuration is not None:
+            pulumi.set(__self__, "assertion_configuration", assertion_configuration)
         if debug is not None:
             pulumi.set(__self__, "debug", debug)
         if email_claim is not None:
@@ -69,8 +85,12 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
             pulumi.set(__self__, "name", name)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_id_claim is not None:
+            pulumi.set(__self__, "unique_id_claim", unique_id_claim)
         if use_name_for_email is not None:
             pulumi.set(__self__, "use_name_for_email", use_name_for_email)
+        if username_claim is not None:
+            pulumi.set(__self__, "username_claim", username_claim)
 
     @property
     @pulumi.getter
@@ -110,6 +130,18 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
     @application_configurations.setter
     def application_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]]):
         pulumi.set(self, "application_configurations", value)
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']]:
+        """
+        The assertion configuration for the SAML v2 identity provider.
+        """
+        return pulumi.get(self, "assertion_configuration")
+
+    @assertion_configuration.setter
+    def assertion_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']]):
+        pulumi.set(self, "assertion_configuration", value)
 
     @property
     @pulumi.getter
@@ -210,6 +242,19 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
         pulumi.set(self, "tenant_configurations", value)
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the `email_claim` will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @unique_id_claim.setter
+    def unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -222,11 +267,26 @@ class FusionAuthIdpSamlV2IdpInitiatedArgs:
     def use_name_for_email(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "use_name_for_email", value)
 
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        LinkByUsernameForExistingUser
+        """
+        return pulumi.get(self, "username_claim")
+
+    @username_claim.setter
+    def username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "username_claim", value)
+
 
 @pulumi.input_type
 class _FusionAuthIdpSamlV2IdpInitiatedState:
     def __init__(__self__, *,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]] = None,
+                 assertion_configuration: Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  email_claim: Optional[pulumi.Input[str]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -237,10 +297,13 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]] = None,
-                 use_name_for_email: Optional[pulumi.Input[bool]] = None):
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
+                 use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthIdpSamlV2IdpInitiated resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs'] assertion_configuration: The assertion configuration for the SAML v2 identity provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
                an Event Log will be created.
         :param pulumi.Input[str] email_claim: The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
@@ -256,11 +319,18 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of this SAML v2 identity provider. This is only used for display purposes.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the `email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
                processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+               value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+               LinkByUsernameForExistingUser
         """
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
+        if assertion_configuration is not None:
+            pulumi.set(__self__, "assertion_configuration", assertion_configuration)
         if debug is not None:
             pulumi.set(__self__, "debug", debug)
         if email_claim is not None:
@@ -281,8 +351,12 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
             pulumi.set(__self__, "name", name)
         if tenant_configurations is not None:
             pulumi.set(__self__, "tenant_configurations", tenant_configurations)
+        if unique_id_claim is not None:
+            pulumi.set(__self__, "unique_id_claim", unique_id_claim)
         if use_name_for_email is not None:
             pulumi.set(__self__, "use_name_for_email", use_name_for_email)
+        if username_claim is not None:
+            pulumi.set(__self__, "username_claim", username_claim)
 
     @property
     @pulumi.getter(name="applicationConfigurations")
@@ -295,6 +369,18 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
     @application_configurations.setter
     def application_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]]):
         pulumi.set(self, "application_configurations", value)
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']]:
+        """
+        The assertion configuration for the SAML v2 identity provider.
+        """
+        return pulumi.get(self, "assertion_configuration")
+
+    @assertion_configuration.setter
+    def assertion_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs']]):
+        pulumi.set(self, "assertion_configuration", value)
 
     @property
     @pulumi.getter
@@ -422,6 +508,19 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
         pulumi.set(self, "tenant_configurations", value)
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the `email_claim` will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @unique_id_claim.setter
+    def unique_id_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "unique_id_claim", value)
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -434,13 +533,28 @@ class _FusionAuthIdpSamlV2IdpInitiatedState:
     def use_name_for_email(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "use_name_for_email", value)
 
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        LinkByUsernameForExistingUser
+        """
+        return pulumi.get(self, "username_claim")
+
+    @username_claim.setter
+    def username_claim(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "username_claim", value)
+
 
 class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgsDict']]]]] = None,
+                 assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgsDict']]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  email_claim: Optional[pulumi.Input[str]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -450,14 +564,17 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgsDict']]]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
         Create a FusionAuthIdpSamlV2IdpInitiated resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgsDict']] assertion_configuration: The assertion configuration for the SAML v2 identity provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
                an Event Log will be created.
         :param pulumi.Input[str] email_claim: The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
@@ -472,9 +589,14 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The id of a SAML reconcile lambda that is applied when the identity provider sends back a successful SAML response.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of this SAML v2 identity provider. This is only used for display purposes.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the `email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
                processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+               value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+               LinkByUsernameForExistingUser
         """
         ...
     @overload
@@ -499,7 +621,8 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgsDict']]]]] = None,
+                 assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgsDict']]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  email_claim: Optional[pulumi.Input[str]] = None,
                  enabled: Optional[pulumi.Input[bool]] = None,
@@ -509,8 +632,10 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgsDict']]]]] = None,
+                 unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
+                 username_claim: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -521,6 +646,7 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
             __props__ = FusionAuthIdpSamlV2IdpInitiatedArgs.__new__(FusionAuthIdpSamlV2IdpInitiatedArgs)
 
             __props__.__dict__["application_configurations"] = application_configurations
+            __props__.__dict__["assertion_configuration"] = assertion_configuration
             __props__.__dict__["debug"] = debug
             __props__.__dict__["email_claim"] = email_claim
             __props__.__dict__["enabled"] = enabled
@@ -535,7 +661,9 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
             __props__.__dict__["linking_strategy"] = linking_strategy
             __props__.__dict__["name"] = name
             __props__.__dict__["tenant_configurations"] = tenant_configurations
+            __props__.__dict__["unique_id_claim"] = unique_id_claim
             __props__.__dict__["use_name_for_email"] = use_name_for_email
+            __props__.__dict__["username_claim"] = username_claim
         super(FusionAuthIdpSamlV2IdpInitiated, __self__).__init__(
             'fusionauth:index/fusionAuthIdpSamlV2IdpInitiated:FusionAuthIdpSamlV2IdpInitiated',
             resource_name,
@@ -546,7 +674,8 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgsDict']]]]] = None,
+            assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgsDict']]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
             email_claim: Optional[pulumi.Input[str]] = None,
             enabled: Optional[pulumi.Input[bool]] = None,
@@ -556,8 +685,10 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
             lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
             linking_strategy: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]]] = None,
-            use_name_for_email: Optional[pulumi.Input[bool]] = None) -> 'FusionAuthIdpSamlV2IdpInitiated':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgsDict']]]]] = None,
+            unique_id_claim: Optional[pulumi.Input[str]] = None,
+            use_name_for_email: Optional[pulumi.Input[bool]] = None,
+            username_claim: Optional[pulumi.Input[str]] = None) -> 'FusionAuthIdpSamlV2IdpInitiated':
         """
         Get an existing FusionAuthIdpSamlV2IdpInitiated resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -565,7 +696,8 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgsDict']] assertion_configuration: The assertion configuration for the SAML v2 identity provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login
                an Event Log will be created.
         :param pulumi.Input[str] email_claim: The name of the email claim (Attribute in the Assertion element) in the SAML response that FusionAuth uses to uniquely
@@ -580,15 +712,21 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The id of a SAML reconcile lambda that is applied when the identity provider sends back a successful SAML response.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] name: The name of this SAML v2 identity provider. This is only used for display purposes.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs', 'FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+               the `email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation
                processing. If this is false, then the `email_claim` property must be set.
+        :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+               value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+               LinkByUsernameForExistingUser
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _FusionAuthIdpSamlV2IdpInitiatedState.__new__(_FusionAuthIdpSamlV2IdpInitiatedState)
 
         __props__.__dict__["application_configurations"] = application_configurations
+        __props__.__dict__["assertion_configuration"] = assertion_configuration
         __props__.__dict__["debug"] = debug
         __props__.__dict__["email_claim"] = email_claim
         __props__.__dict__["enabled"] = enabled
@@ -599,7 +737,9 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         __props__.__dict__["linking_strategy"] = linking_strategy
         __props__.__dict__["name"] = name
         __props__.__dict__["tenant_configurations"] = tenant_configurations
+        __props__.__dict__["unique_id_claim"] = unique_id_claim
         __props__.__dict__["use_name_for_email"] = use_name_for_email
+        __props__.__dict__["username_claim"] = username_claim
         return FusionAuthIdpSamlV2IdpInitiated(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -609,6 +749,14 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         The configuration for each Application that the identity provider is enabled for.
         """
         return pulumi.get(self, "application_configurations")
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration']]:
+        """
+        The assertion configuration for the SAML v2 identity provider.
+        """
+        return pulumi.get(self, "assertion_configuration")
 
     @property
     @pulumi.getter
@@ -696,6 +844,15 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         return pulumi.get(self, "tenant_configurations")
 
     @property
+    @pulumi.getter(name="uniqueIdClaim")
+    def unique_id_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
+        the `email_claim` will be used when linking user.
+        """
+        return pulumi.get(self, "unique_id_claim")
+
+    @property
     @pulumi.getter(name="useNameForEmail")
     def use_name_for_email(self) -> pulumi.Output[Optional[bool]]:
         """
@@ -703,4 +860,14 @@ class FusionAuthIdpSamlV2IdpInitiated(pulumi.CustomResource):
         processing. If this is false, then the `email_claim` property must be set.
         """
         return pulumi.get(self, "use_name_for_email")
+
+    @property
+    @pulumi.getter(name="usernameClaim")
+    def username_claim(self) -> pulumi.Output[Optional[str]]:
+        """
+        The name of the claim in the SAML response that FusionAuth uses to identity the username. If this is not set, the NameID
+        value will be used to link a user. This property is required when `linking_stategy` is set to LinkByUsername or
+        LinkByUsernameForExistingUser
+        """
+        return pulumi.get(self, "username_claim")
 

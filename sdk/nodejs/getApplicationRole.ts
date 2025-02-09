@@ -24,7 +24,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getApplicationRole(args: GetApplicationRoleArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationRoleResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getApplicationRole:getApplicationRole", {
         "applicationId": args.applicationId,
@@ -76,8 +75,12 @@ export interface GetApplicationRoleResult {
  * });
  * ```
  */
-export function getApplicationRoleOutput(args: GetApplicationRoleOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetApplicationRoleResult> {
-    return pulumi.output(args).apply((a: any) => getApplicationRole(a, opts))
+export function getApplicationRoleOutput(args: GetApplicationRoleOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetApplicationRoleResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getApplicationRole:getApplicationRole", {
+        "applicationId": args.applicationId,
+        "name": args.name,
+    }, opts);
 }
 
 /**

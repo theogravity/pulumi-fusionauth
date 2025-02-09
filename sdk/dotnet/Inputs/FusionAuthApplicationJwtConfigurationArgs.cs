@@ -32,7 +32,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<string>? IdTokenKeyId { get; set; }
 
         /// <summary>
-        /// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_time_to_live_in_minutes` is reached.
+        /// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_ttl_in_minutes` is reached.
         /// </summary>
         [Input("refreshTokenExpirationPolicy")]
         public Input<string>? RefreshTokenExpirationPolicy { get; set; }
@@ -40,8 +40,8 @@ namespace theogravity.Fusionauth.Inputs
         /// <summary>
         /// The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
         /// </summary>
-        [Input("refreshTokenSlidingWindowMaximumTimeToLiveInMinutes")]
-        public Input<int>? RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes { get; set; }
+        [Input("refreshTokenSlidingWindowMaximumTtlInMinutes")]
+        public Input<int>? RefreshTokenSlidingWindowMaximumTtlInMinutes { get; set; }
 
         /// <summary>
         /// The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.

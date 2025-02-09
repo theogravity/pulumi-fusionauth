@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -30,7 +35,7 @@ class FusionAuthIdpTwitchArgs:
         """
         The set of arguments for constructing a FusionAuthIdpTwitch resource.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param pulumi.Input[str] client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param pulumi.Input[str] client_id: The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpTwitchApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -77,7 +82,7 @@ class FusionAuthIdpTwitchArgs:
     @pulumi.getter(name="clientId")
     def client_id(self) -> pulumi.Input[str]:
         """
-        TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         """
         return pulumi.get(self, "client_id")
 
@@ -212,7 +217,7 @@ class _FusionAuthIdpTwitchState:
         Input properties used for looking up and filtering FusionAuthIdpTwitch resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpTwitchApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param pulumi.Input[str] client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param pulumi.Input[str] client_id: The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -273,7 +278,7 @@ class _FusionAuthIdpTwitchState:
     @pulumi.getter(name="clientId")
     def client_id(self) -> Optional[pulumi.Input[str]]:
         """
-        TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         """
         return pulumi.get(self, "client_id")
 
@@ -383,7 +388,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchApplicationConfigurationArgs', 'FusionAuthIdpTwitchApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
@@ -393,7 +398,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchTenantConfigurationArgs', 'FusionAuthIdpTwitchTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         """
         ## # Twitch Identity Provider Resource
@@ -413,11 +418,11 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         twitch = fusionauth.FusionAuthIdpTwitch("twitch",
-            application_configurations=[fusionauth.FusionAuthIdpTwitchApplicationConfigurationArgs(
-                application_id=fusionauth_application["my_app"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["my_app"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Twitch",
             client_id="0eb1ce3c-2fb1-4ae9-b361-d49fc6e764cc",
             client_secret="693s000cbn66k0mxtqzr_c_NfLy3~6_SEA",
@@ -426,9 +431,9 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchApplicationConfigurationArgs', 'FusionAuthIdpTwitchApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param pulumi.Input[str] client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param pulumi.Input[str] client_id: The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -436,7 +441,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Xbox.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchTenantConfigurationArgs', 'FusionAuthIdpTwitchTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         ...
     @overload
@@ -462,11 +467,11 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         twitch = fusionauth.FusionAuthIdpTwitch("twitch",
-            application_configurations=[fusionauth.FusionAuthIdpTwitchApplicationConfigurationArgs(
-                application_id=fusionauth_application["my_app"]["id"],
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["my_app"]["id"],
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with Twitch",
             client_id="0eb1ce3c-2fb1-4ae9-b361-d49fc6e764cc",
             client_secret="693s000cbn66k0mxtqzr_c_NfLy3~6_SEA",
@@ -488,7 +493,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchApplicationConfigurationArgs', 'FusionAuthIdpTwitchApplicationConfigurationArgsDict']]]]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  client_id: Optional[pulumi.Input[str]] = None,
                  client_secret: Optional[pulumi.Input[str]] = None,
@@ -498,7 +503,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
                  scope: Optional[pulumi.Input[str]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchTenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchTenantConfigurationArgs', 'FusionAuthIdpTwitchTenantConfigurationArgsDict']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -535,7 +540,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchApplicationConfigurationArgs', 'FusionAuthIdpTwitchApplicationConfigurationArgsDict']]]]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             client_id: Optional[pulumi.Input[str]] = None,
             client_secret: Optional[pulumi.Input[str]] = None,
@@ -545,7 +550,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
             lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
             linking_strategy: Optional[pulumi.Input[str]] = None,
             scope: Optional[pulumi.Input[str]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchTenantConfigurationArgs']]]]] = None) -> 'FusionAuthIdpTwitch':
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchTenantConfigurationArgs', 'FusionAuthIdpTwitchTenantConfigurationArgsDict']]]]] = None) -> 'FusionAuthIdpTwitch':
         """
         Get an existing FusionAuthIdpTwitch resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -553,9 +558,9 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchApplicationConfigurationArgs', 'FusionAuthIdpTwitchApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
-        :param pulumi.Input[str] client_id: TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        :param pulumi.Input[str] client_id: The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[str] client_secret: The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
@@ -563,7 +568,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         :param pulumi.Input[str] scope: The top-level scope that you are requesting from Xbox.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpTwitchTenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpTwitchTenantConfigurationArgs', 'FusionAuthIdpTwitchTenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -602,7 +607,7 @@ class FusionAuthIdpTwitch(pulumi.CustomResource):
     @pulumi.getter(name="clientId")
     def client_id(self) -> pulumi.Output[str]:
         """
-        TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+        The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
         """
         return pulumi.get(self, "client_id")
 

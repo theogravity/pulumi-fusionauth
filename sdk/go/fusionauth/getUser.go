@@ -104,15 +104,11 @@ type GetUserResult struct {
 }
 
 func GetUserOutput(ctx *pulumi.Context, args GetUserOutputArgs, opts ...pulumi.InvokeOption) GetUserResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetUserResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetUserResultOutput, error) {
 			args := v.(GetUserArgs)
-			r, err := GetUser(ctx, &args, opts...)
-			var s GetUserResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getUser:getUser", args, GetUserResultOutput{}, options).(GetUserResultOutput), nil
 		}).(GetUserResultOutput)
 }
 

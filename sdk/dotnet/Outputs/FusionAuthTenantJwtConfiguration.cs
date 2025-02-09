@@ -27,9 +27,21 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? RefreshTokenExpirationPolicy;
         /// <summary>
+        /// The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+        /// </summary>
+        public readonly int? RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds;
+        /// <summary>
         /// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
         /// </summary>
         public readonly bool? RefreshTokenRevocationPolicyOnLoginPrevented;
+        /// <summary>
+        /// When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+        /// </summary>
+        public readonly bool? RefreshTokenRevocationPolicyOnMultiFactorEnable;
+        /// <summary>
+        /// When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+        /// </summary>
+        public readonly bool? RefreshTokenRevocationPolicyOnOneTimeTokenReuse;
         /// <summary>
         /// When enabled, the refresh token will be revoked when a user changes their password."
         /// </summary>
@@ -41,7 +53,7 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
-        public readonly int RefreshTokenTimeToLiveInMinutes;
+        public readonly int? RefreshTokenTimeToLiveInMinutes;
         /// <summary>
         /// The refresh token usage policy.
         /// </summary>
@@ -49,7 +61,7 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
         /// </summary>
-        public readonly int TimeToLiveInSeconds;
+        public readonly int? TimeToLiveInSeconds;
 
         [OutputConstructor]
         private FusionAuthTenantJwtConfiguration(
@@ -59,22 +71,31 @@ namespace theogravity.Fusionauth.Outputs
 
             string? refreshTokenExpirationPolicy,
 
+            int? refreshTokenOneTimeUseConfigurationGracePeriodInSeconds,
+
             bool? refreshTokenRevocationPolicyOnLoginPrevented,
+
+            bool? refreshTokenRevocationPolicyOnMultiFactorEnable,
+
+            bool? refreshTokenRevocationPolicyOnOneTimeTokenReuse,
 
             bool? refreshTokenRevocationPolicyOnPasswordChange,
 
             int? refreshTokenSlidingWindowMaximumTimeToLiveInMinutes,
 
-            int refreshTokenTimeToLiveInMinutes,
+            int? refreshTokenTimeToLiveInMinutes,
 
             string? refreshTokenUsagePolicy,
 
-            int timeToLiveInSeconds)
+            int? timeToLiveInSeconds)
         {
             AccessTokenKeyId = accessTokenKeyId;
             IdTokenKeyId = idTokenKeyId;
             RefreshTokenExpirationPolicy = refreshTokenExpirationPolicy;
+            RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds = refreshTokenOneTimeUseConfigurationGracePeriodInSeconds;
             RefreshTokenRevocationPolicyOnLoginPrevented = refreshTokenRevocationPolicyOnLoginPrevented;
+            RefreshTokenRevocationPolicyOnMultiFactorEnable = refreshTokenRevocationPolicyOnMultiFactorEnable;
+            RefreshTokenRevocationPolicyOnOneTimeTokenReuse = refreshTokenRevocationPolicyOnOneTimeTokenReuse;
             RefreshTokenRevocationPolicyOnPasswordChange = refreshTokenRevocationPolicyOnPasswordChange;
             RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes = refreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
             RefreshTokenTimeToLiveInMinutes = refreshTokenTimeToLiveInMinutes;

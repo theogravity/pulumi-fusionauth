@@ -23,7 +23,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getEMail(args: GetEMailArgs, opts?: pulumi.InvokeOptions): Promise<GetEMailResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getEMail:getEMail", {
         "fromEmail": args.fromEmail,
@@ -76,19 +75,19 @@ export interface GetEMailResult {
     /**
      * The From Name used when sending emails to users who speak other languages.
      */
-    readonly localizedFromNames: {[key: string]: any};
+    readonly localizedFromNames: {[key: string]: string};
     /**
      * The HTML Email Template used when sending emails to users who speak other languages.
      */
-    readonly localizedHtmlTemplates: {[key: string]: any};
+    readonly localizedHtmlTemplates: {[key: string]: string};
     /**
      * The Subject used when sending emails to users who speak other languages.
      */
-    readonly localizedSubjects: {[key: string]: any};
+    readonly localizedSubjects: {[key: string]: string};
     /**
      * The Text Email Template used when sending emails to users who speak other languages.
      */
-    readonly localizedTextTemplates: {[key: string]: any};
+    readonly localizedTextTemplates: {[key: string]: string};
     readonly name: string;
 }
 /**
@@ -109,8 +108,12 @@ export interface GetEMailResult {
  * });
  * ```
  */
-export function getEMailOutput(args: GetEMailOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetEMailResult> {
-    return pulumi.output(args).apply((a: any) => getEMail(a, opts))
+export function getEMailOutput(args: GetEMailOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetEMailResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getEMail:getEMail", {
+        "fromEmail": args.fromEmail,
+        "name": args.name,
+    }, opts);
 }
 
 /**

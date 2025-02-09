@@ -73,7 +73,7 @@ export class FusionAuthIdpXBox extends pulumi.CustomResource {
      */
     public readonly buttonText!: pulumi.Output<string>;
     /**
-     * TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
      */
     public readonly clientId!: pulumi.Output<string>;
     /**
@@ -174,7 +174,7 @@ export interface FusionAuthIdpXBoxState {
      */
     buttonText?: pulumi.Input<string>;
     /**
-     * TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
      */
     clientId?: pulumi.Input<string>;
     /**
@@ -224,7 +224,7 @@ export interface FusionAuthIdpXBoxArgs {
      */
     buttonText: pulumi.Input<string>;
     /**
-     * TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+     * The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
      */
     clientId: pulumi.Input<string>;
     /**

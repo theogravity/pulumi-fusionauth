@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -19,6 +24,7 @@ class FusionAuthIdpSamlv2Args:
                  button_text: pulumi.Input[str],
                  key_id: pulumi.Input[str],
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]] = None,
+                 assertion_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  domains: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -26,8 +32,10 @@ class FusionAuthIdpSamlv2Args:
                  enabled: Optional[pulumi.Input[bool]] = None,
                  idp_endpoint: Optional[pulumi.Input[str]] = None,
                  idp_id: Optional[pulumi.Input[str]] = None,
+                 idp_initiated_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']] = None,
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
+                 login_hint_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  name_id_format: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
@@ -43,6 +51,7 @@ class FusionAuthIdpSamlv2Args:
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] key_id: The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs'] assertion_configuration: The configuration for the SAML assertion.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] domains: This is an optional list of domains that this OpenID Connect provider should be used for. This converts the FusionAuth login form to a domain-based login form. This type of form first asks the user for their email. FusionAuth then uses their email to determine if an OpenID Connect identity provider should be used. If an OpenID Connect provider should be used, the browser is redirected to the authorization endpoint of that identity provider. Otherwise, the password field is revealed on the form so that the user can login using FusionAuth.
@@ -50,16 +59,17 @@ class FusionAuthIdpSamlv2Args:
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] idp_endpoint: The SAML v2 login page of the identity provider.
         :param pulumi.Input[str] idp_id: The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
+        :param pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs'] idp_initiated_configuration: The configuration for the IdP initiated login.
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
+        :param pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs'] login_hint_configuration: The configuration for the login hint.
         :param pulumi.Input[str] name: The name of this OpenID Connect identity provider. This is only used for display purposes.
         :param pulumi.Input[str] name_id_format: Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        :param pulumi.Input[str] request_signing_key: The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-               the emailClaim will be used when linking user.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
@@ -68,6 +78,8 @@ class FusionAuthIdpSamlv2Args:
         pulumi.set(__self__, "key_id", key_id)
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
+        if assertion_configuration is not None:
+            pulumi.set(__self__, "assertion_configuration", assertion_configuration)
         if button_image_url is not None:
             pulumi.set(__self__, "button_image_url", button_image_url)
         if debug is not None:
@@ -82,10 +94,14 @@ class FusionAuthIdpSamlv2Args:
             pulumi.set(__self__, "idp_endpoint", idp_endpoint)
         if idp_id is not None:
             pulumi.set(__self__, "idp_id", idp_id)
+        if idp_initiated_configuration is not None:
+            pulumi.set(__self__, "idp_initiated_configuration", idp_initiated_configuration)
         if lambda_reconcile_id is not None:
             pulumi.set(__self__, "lambda_reconcile_id", lambda_reconcile_id)
         if linking_strategy is not None:
             pulumi.set(__self__, "linking_strategy", linking_strategy)
+        if login_hint_configuration is not None:
+            pulumi.set(__self__, "login_hint_configuration", login_hint_configuration)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if name_id_format is not None:
@@ -142,6 +158,18 @@ class FusionAuthIdpSamlv2Args:
     @application_configurations.setter
     def application_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]]):
         pulumi.set(self, "application_configurations", value)
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']]:
+        """
+        The configuration for the SAML assertion.
+        """
+        return pulumi.get(self, "assertion_configuration")
+
+    @assertion_configuration.setter
+    def assertion_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']]):
+        pulumi.set(self, "assertion_configuration", value)
 
     @property
     @pulumi.getter(name="buttonImageUrl")
@@ -228,6 +256,18 @@ class FusionAuthIdpSamlv2Args:
         pulumi.set(self, "idp_id", value)
 
     @property
+    @pulumi.getter(name="idpInitiatedConfiguration")
+    def idp_initiated_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']]:
+        """
+        The configuration for the IdP initiated login.
+        """
+        return pulumi.get(self, "idp_initiated_configuration")
+
+    @idp_initiated_configuration.setter
+    def idp_initiated_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']]):
+        pulumi.set(self, "idp_initiated_configuration", value)
+
+    @property
     @pulumi.getter(name="lambdaReconcileId")
     def lambda_reconcile_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -250,6 +290,18 @@ class FusionAuthIdpSamlv2Args:
     @linking_strategy.setter
     def linking_strategy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "linking_strategy", value)
+
+    @property
+    @pulumi.getter(name="loginHintConfiguration")
+    def login_hint_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']]:
+        """
+        The configuration for the login hint.
+        """
+        return pulumi.get(self, "login_hint_configuration")
+
+    @login_hint_configuration.setter
+    def login_hint_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']]):
+        pulumi.set(self, "login_hint_configuration", value)
 
     @property
     @pulumi.getter
@@ -291,7 +343,7 @@ class FusionAuthIdpSamlv2Args:
     @pulumi.getter(name="requestSigningKey")
     def request_signing_key(self) -> Optional[pulumi.Input[str]]:
         """
-        TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         """
         return pulumi.get(self, "request_signing_key")
 
@@ -327,8 +379,7 @@ class FusionAuthIdpSamlv2Args:
     @pulumi.getter(name="uniqueIdClaim")
     def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
         """
-        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        the emailClaim will be used when linking user.
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         """
         return pulumi.get(self, "unique_id_claim")
 
@@ -377,6 +428,7 @@ class FusionAuthIdpSamlv2Args:
 class _FusionAuthIdpSamlv2State:
     def __init__(__self__, *,
                  application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]] = None,
+                 assertion_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -385,9 +437,11 @@ class _FusionAuthIdpSamlv2State:
                  enabled: Optional[pulumi.Input[bool]] = None,
                  idp_endpoint: Optional[pulumi.Input[str]] = None,
                  idp_id: Optional[pulumi.Input[str]] = None,
+                 idp_initiated_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
+                 login_hint_configuration: Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  name_id_format: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
@@ -401,6 +455,7 @@ class _FusionAuthIdpSamlv2State:
         """
         Input properties used for looking up and filtering FusionAuthIdpSamlv2 resources.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs'] assertion_configuration: The configuration for the SAML assertion.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -409,23 +464,26 @@ class _FusionAuthIdpSamlv2State:
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] idp_endpoint: The SAML v2 login page of the identity provider.
         :param pulumi.Input[str] idp_id: The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
+        :param pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs'] idp_initiated_configuration: The configuration for the IdP initiated login.
         :param pulumi.Input[str] key_id: The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
+        :param pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs'] login_hint_configuration: The configuration for the login hint.
         :param pulumi.Input[str] name: The name of this OpenID Connect identity provider. This is only used for display purposes.
         :param pulumi.Input[str] name_id_format: Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        :param pulumi.Input[str] request_signing_key: The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
         :param pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2TenantConfigurationArgs']]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-               the emailClaim will be used when linking user.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
         """
         if application_configurations is not None:
             pulumi.set(__self__, "application_configurations", application_configurations)
+        if assertion_configuration is not None:
+            pulumi.set(__self__, "assertion_configuration", assertion_configuration)
         if button_image_url is not None:
             pulumi.set(__self__, "button_image_url", button_image_url)
         if button_text is not None:
@@ -442,12 +500,16 @@ class _FusionAuthIdpSamlv2State:
             pulumi.set(__self__, "idp_endpoint", idp_endpoint)
         if idp_id is not None:
             pulumi.set(__self__, "idp_id", idp_id)
+        if idp_initiated_configuration is not None:
+            pulumi.set(__self__, "idp_initiated_configuration", idp_initiated_configuration)
         if key_id is not None:
             pulumi.set(__self__, "key_id", key_id)
         if lambda_reconcile_id is not None:
             pulumi.set(__self__, "lambda_reconcile_id", lambda_reconcile_id)
         if linking_strategy is not None:
             pulumi.set(__self__, "linking_strategy", linking_strategy)
+        if login_hint_configuration is not None:
+            pulumi.set(__self__, "login_hint_configuration", login_hint_configuration)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if name_id_format is not None:
@@ -480,6 +542,18 @@ class _FusionAuthIdpSamlv2State:
     @application_configurations.setter
     def application_configurations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]]):
         pulumi.set(self, "application_configurations", value)
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']]:
+        """
+        The configuration for the SAML assertion.
+        """
+        return pulumi.get(self, "assertion_configuration")
+
+    @assertion_configuration.setter
+    def assertion_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2AssertionConfigurationArgs']]):
+        pulumi.set(self, "assertion_configuration", value)
 
     @property
     @pulumi.getter(name="buttonImageUrl")
@@ -578,6 +652,18 @@ class _FusionAuthIdpSamlv2State:
         pulumi.set(self, "idp_id", value)
 
     @property
+    @pulumi.getter(name="idpInitiatedConfiguration")
+    def idp_initiated_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']]:
+        """
+        The configuration for the IdP initiated login.
+        """
+        return pulumi.get(self, "idp_initiated_configuration")
+
+    @idp_initiated_configuration.setter
+    def idp_initiated_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs']]):
+        pulumi.set(self, "idp_initiated_configuration", value)
+
+    @property
     @pulumi.getter(name="keyId")
     def key_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -612,6 +698,18 @@ class _FusionAuthIdpSamlv2State:
     @linking_strategy.setter
     def linking_strategy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "linking_strategy", value)
+
+    @property
+    @pulumi.getter(name="loginHintConfiguration")
+    def login_hint_configuration(self) -> Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']]:
+        """
+        The configuration for the login hint.
+        """
+        return pulumi.get(self, "login_hint_configuration")
+
+    @login_hint_configuration.setter
+    def login_hint_configuration(self, value: Optional[pulumi.Input['FusionAuthIdpSamlv2LoginHintConfigurationArgs']]):
+        pulumi.set(self, "login_hint_configuration", value)
 
     @property
     @pulumi.getter
@@ -653,7 +751,7 @@ class _FusionAuthIdpSamlv2State:
     @pulumi.getter(name="requestSigningKey")
     def request_signing_key(self) -> Optional[pulumi.Input[str]]:
         """
-        TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         """
         return pulumi.get(self, "request_signing_key")
 
@@ -689,8 +787,7 @@ class _FusionAuthIdpSamlv2State:
     @pulumi.getter(name="uniqueIdClaim")
     def unique_id_claim(self) -> Optional[pulumi.Input[str]]:
         """
-        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        the emailClaim will be used when linking user.
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         """
         return pulumi.get(self, "unique_id_claim")
 
@@ -740,7 +837,8 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2ApplicationConfigurationArgs', 'FusionAuthIdpSamlv2ApplicationConfigurationArgsDict']]]]] = None,
+                 assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2AssertionConfigurationArgs', 'FusionAuthIdpSamlv2AssertionConfigurationArgsDict']]] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -749,15 +847,17 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
                  enabled: Optional[pulumi.Input[bool]] = None,
                  idp_endpoint: Optional[pulumi.Input[str]] = None,
                  idp_id: Optional[pulumi.Input[str]] = None,
+                 idp_initiated_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs', 'FusionAuthIdpSamlv2IdpInitiatedConfigurationArgsDict']]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
+                 login_hint_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2LoginHintConfigurationArgs', 'FusionAuthIdpSamlv2LoginHintConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  name_id_format: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2TenantConfigurationArgs', 'FusionAuthIdpSamlv2TenantConfigurationArgsDict']]]]] = None,
                  unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
                  username_claim: Optional[pulumi.Input[str]] = None,
@@ -781,12 +881,12 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         saml = fusionauth.FusionAuthIdpSamlv2("saml",
-            application_configurations=[fusionauth.FusionAuthIdpSamlv2ApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                button_text="Login with SAML (app text)",
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "button_text": "Login with SAML (app text)",
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with SAML",
             debug=False,
             email_claim="email",
@@ -799,7 +899,8 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2ApplicationConfigurationArgs', 'FusionAuthIdpSamlv2ApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2AssertionConfigurationArgs', 'FusionAuthIdpSamlv2AssertionConfigurationArgsDict']] assertion_configuration: The configuration for the SAML assertion.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -808,17 +909,18 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] idp_endpoint: The SAML v2 login page of the identity provider.
         :param pulumi.Input[str] idp_id: The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs', 'FusionAuthIdpSamlv2IdpInitiatedConfigurationArgsDict']] idp_initiated_configuration: The configuration for the IdP initiated login.
         :param pulumi.Input[str] key_id: The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2LoginHintConfigurationArgs', 'FusionAuthIdpSamlv2LoginHintConfigurationArgsDict']] login_hint_configuration: The configuration for the login hint.
         :param pulumi.Input[str] name: The name of this OpenID Connect identity provider. This is only used for display purposes.
         :param pulumi.Input[str] name_id_format: Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        :param pulumi.Input[str] request_signing_key: The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-               the emailClaim will be used when linking user.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2TenantConfigurationArgs', 'FusionAuthIdpSamlv2TenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
@@ -847,12 +949,12 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         saml = fusionauth.FusionAuthIdpSamlv2("saml",
-            application_configurations=[fusionauth.FusionAuthIdpSamlv2ApplicationConfigurationArgs(
-                application_id=fusionauth_application["myapp"]["id"],
-                button_text="Login with SAML (app text)",
-                create_registration=True,
-                enabled=True,
-            )],
+            application_configurations=[{
+                "application_id": fusionauth_application["myapp"]["id"],
+                "button_text": "Login with SAML (app text)",
+                "create_registration": True,
+                "enabled": True,
+            }],
             button_text="Login with SAML",
             debug=False,
             email_claim="email",
@@ -878,7 +980,8 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]]] = None,
+                 application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2ApplicationConfigurationArgs', 'FusionAuthIdpSamlv2ApplicationConfigurationArgsDict']]]]] = None,
+                 assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2AssertionConfigurationArgs', 'FusionAuthIdpSamlv2AssertionConfigurationArgsDict']]] = None,
                  button_image_url: Optional[pulumi.Input[str]] = None,
                  button_text: Optional[pulumi.Input[str]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
@@ -887,15 +990,17 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
                  enabled: Optional[pulumi.Input[bool]] = None,
                  idp_endpoint: Optional[pulumi.Input[str]] = None,
                  idp_id: Optional[pulumi.Input[str]] = None,
+                 idp_initiated_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs', 'FusionAuthIdpSamlv2IdpInitiatedConfigurationArgsDict']]] = None,
                  key_id: Optional[pulumi.Input[str]] = None,
                  lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
                  linking_strategy: Optional[pulumi.Input[str]] = None,
+                 login_hint_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2LoginHintConfigurationArgs', 'FusionAuthIdpSamlv2LoginHintConfigurationArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  name_id_format: Optional[pulumi.Input[str]] = None,
                  post_request: Optional[pulumi.Input[bool]] = None,
                  request_signing_key: Optional[pulumi.Input[str]] = None,
                  sign_request: Optional[pulumi.Input[bool]] = None,
-                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+                 tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2TenantConfigurationArgs', 'FusionAuthIdpSamlv2TenantConfigurationArgsDict']]]]] = None,
                  unique_id_claim: Optional[pulumi.Input[str]] = None,
                  use_name_for_email: Optional[pulumi.Input[bool]] = None,
                  username_claim: Optional[pulumi.Input[str]] = None,
@@ -910,6 +1015,7 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
             __props__ = FusionAuthIdpSamlv2Args.__new__(FusionAuthIdpSamlv2Args)
 
             __props__.__dict__["application_configurations"] = application_configurations
+            __props__.__dict__["assertion_configuration"] = assertion_configuration
             __props__.__dict__["button_image_url"] = button_image_url
             if button_text is None and not opts.urn:
                 raise TypeError("Missing required property 'button_text'")
@@ -920,11 +1026,13 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
             __props__.__dict__["enabled"] = enabled
             __props__.__dict__["idp_endpoint"] = idp_endpoint
             __props__.__dict__["idp_id"] = idp_id
+            __props__.__dict__["idp_initiated_configuration"] = idp_initiated_configuration
             if key_id is None and not opts.urn:
                 raise TypeError("Missing required property 'key_id'")
             __props__.__dict__["key_id"] = key_id
             __props__.__dict__["lambda_reconcile_id"] = lambda_reconcile_id
             __props__.__dict__["linking_strategy"] = linking_strategy
+            __props__.__dict__["login_hint_configuration"] = login_hint_configuration
             __props__.__dict__["name"] = name
             __props__.__dict__["name_id_format"] = name_id_format
             __props__.__dict__["post_request"] = post_request
@@ -945,7 +1053,8 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]]] = None,
+            application_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2ApplicationConfigurationArgs', 'FusionAuthIdpSamlv2ApplicationConfigurationArgsDict']]]]] = None,
+            assertion_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2AssertionConfigurationArgs', 'FusionAuthIdpSamlv2AssertionConfigurationArgsDict']]] = None,
             button_image_url: Optional[pulumi.Input[str]] = None,
             button_text: Optional[pulumi.Input[str]] = None,
             debug: Optional[pulumi.Input[bool]] = None,
@@ -954,15 +1063,17 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
             enabled: Optional[pulumi.Input[bool]] = None,
             idp_endpoint: Optional[pulumi.Input[str]] = None,
             idp_id: Optional[pulumi.Input[str]] = None,
+            idp_initiated_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs', 'FusionAuthIdpSamlv2IdpInitiatedConfigurationArgsDict']]] = None,
             key_id: Optional[pulumi.Input[str]] = None,
             lambda_reconcile_id: Optional[pulumi.Input[str]] = None,
             linking_strategy: Optional[pulumi.Input[str]] = None,
+            login_hint_configuration: Optional[pulumi.Input[Union['FusionAuthIdpSamlv2LoginHintConfigurationArgs', 'FusionAuthIdpSamlv2LoginHintConfigurationArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
             name_id_format: Optional[pulumi.Input[str]] = None,
             post_request: Optional[pulumi.Input[bool]] = None,
             request_signing_key: Optional[pulumi.Input[str]] = None,
             sign_request: Optional[pulumi.Input[bool]] = None,
-            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]]] = None,
+            tenant_configurations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2TenantConfigurationArgs', 'FusionAuthIdpSamlv2TenantConfigurationArgsDict']]]]] = None,
             unique_id_claim: Optional[pulumi.Input[str]] = None,
             use_name_for_email: Optional[pulumi.Input[bool]] = None,
             username_claim: Optional[pulumi.Input[str]] = None,
@@ -974,7 +1085,8 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2ApplicationConfigurationArgs']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2ApplicationConfigurationArgs', 'FusionAuthIdpSamlv2ApplicationConfigurationArgsDict']]]] application_configurations: The configuration for each Application that the identity provider is enabled for.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2AssertionConfigurationArgs', 'FusionAuthIdpSamlv2AssertionConfigurationArgsDict']] assertion_configuration: The configuration for the SAML assertion.
         :param pulumi.Input[str] button_image_url: The top-level button image (URL) to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[str] button_text: The top-level button text to use on the FusionAuth login page for this Identity Provider.
         :param pulumi.Input[bool] debug: Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
@@ -983,17 +1095,18 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         :param pulumi.Input[bool] enabled: Determines if this provider is enabled. If it is false then it will be disabled globally.
         :param pulumi.Input[str] idp_endpoint: The SAML v2 login page of the identity provider.
         :param pulumi.Input[str] idp_id: The ID to use for the new identity provider. If not specified a secure random UUID will be generated.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs', 'FusionAuthIdpSamlv2IdpInitiatedConfigurationArgsDict']] idp_initiated_configuration: The configuration for the IdP initiated login.
         :param pulumi.Input[str] key_id: The id of the key stored in Key Master that is used to verify the SAML response sent back to FusionAuth from the identity provider. This key must be a verification only key or certificate (meaning that it only has a public key component).
         :param pulumi.Input[str] lambda_reconcile_id: The unique Id of the lambda to used during the user reconcile process to map custom claims from the external identity provider to the FusionAuth user.
         :param pulumi.Input[str] linking_strategy: The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
+        :param pulumi.Input[Union['FusionAuthIdpSamlv2LoginHintConfigurationArgs', 'FusionAuthIdpSamlv2LoginHintConfigurationArgsDict']] login_hint_configuration: The configuration for the login hint.
         :param pulumi.Input[str] name: The name of this OpenID Connect identity provider. This is only used for display purposes.
         :param pulumi.Input[str] name_id_format: Either urn:oasis:names:tc:SAML:2.0:nameid-format:persistent or urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress depending on which NameId format you wish to use.
         :param pulumi.Input[bool] post_request: Set this value equal to true if you wish to use POST bindings with this OpenID Connect identity provider. The default value of false means that a redirect binding which uses a GET request will be used.
-        :param pulumi.Input[str] request_signing_key: TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        :param pulumi.Input[str] request_signing_key: The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         :param pulumi.Input[bool] sign_request: When true authentication requests sent to the identity provider will be signed.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['FusionAuthIdpSamlv2TenantConfigurationArgs']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
-        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-               the emailClaim will be used when linking user.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['FusionAuthIdpSamlv2TenantConfigurationArgs', 'FusionAuthIdpSamlv2TenantConfigurationArgsDict']]]] tenant_configurations: The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
+        :param pulumi.Input[str] unique_id_claim: The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         :param pulumi.Input[bool] use_name_for_email: Whether or not FusionAuth will use the NameID element value as the email address of the user for reconciliation processing. If this is false, then the `email_claim` property must be set.
         :param pulumi.Input[str] username_claim: The name of the claim in the SAML response that FusionAuth uses to identify the username. If this is not set, the NameId value will be used to link a user. This property is required when linkingStrategy is set to LinkByUsername or LinkByUsernameForExistingUser.
         :param pulumi.Input[str] xml_signature_canonicalization_method: The XML signature canonicalization method used when digesting and signing the SAML request.
@@ -1003,6 +1116,7 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         __props__ = _FusionAuthIdpSamlv2State.__new__(_FusionAuthIdpSamlv2State)
 
         __props__.__dict__["application_configurations"] = application_configurations
+        __props__.__dict__["assertion_configuration"] = assertion_configuration
         __props__.__dict__["button_image_url"] = button_image_url
         __props__.__dict__["button_text"] = button_text
         __props__.__dict__["debug"] = debug
@@ -1011,9 +1125,11 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         __props__.__dict__["enabled"] = enabled
         __props__.__dict__["idp_endpoint"] = idp_endpoint
         __props__.__dict__["idp_id"] = idp_id
+        __props__.__dict__["idp_initiated_configuration"] = idp_initiated_configuration
         __props__.__dict__["key_id"] = key_id
         __props__.__dict__["lambda_reconcile_id"] = lambda_reconcile_id
         __props__.__dict__["linking_strategy"] = linking_strategy
+        __props__.__dict__["login_hint_configuration"] = login_hint_configuration
         __props__.__dict__["name"] = name
         __props__.__dict__["name_id_format"] = name_id_format
         __props__.__dict__["post_request"] = post_request
@@ -1033,6 +1149,14 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         The configuration for each Application that the identity provider is enabled for.
         """
         return pulumi.get(self, "application_configurations")
+
+    @property
+    @pulumi.getter(name="assertionConfiguration")
+    def assertion_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthIdpSamlv2AssertionConfiguration']]:
+        """
+        The configuration for the SAML assertion.
+        """
+        return pulumi.get(self, "assertion_configuration")
 
     @property
     @pulumi.getter(name="buttonImageUrl")
@@ -1099,6 +1223,14 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         return pulumi.get(self, "idp_id")
 
     @property
+    @pulumi.getter(name="idpInitiatedConfiguration")
+    def idp_initiated_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthIdpSamlv2IdpInitiatedConfiguration']]:
+        """
+        The configuration for the IdP initiated login.
+        """
+        return pulumi.get(self, "idp_initiated_configuration")
+
+    @property
     @pulumi.getter(name="keyId")
     def key_id(self) -> pulumi.Output[str]:
         """
@@ -1121,6 +1253,14 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
         The linking strategy to use when creating the link between the {idp_display_name} Identity Provider and the user.
         """
         return pulumi.get(self, "linking_strategy")
+
+    @property
+    @pulumi.getter(name="loginHintConfiguration")
+    def login_hint_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthIdpSamlv2LoginHintConfiguration']]:
+        """
+        The configuration for the login hint.
+        """
+        return pulumi.get(self, "login_hint_configuration")
 
     @property
     @pulumi.getter
@@ -1150,7 +1290,7 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
     @pulumi.getter(name="requestSigningKey")
     def request_signing_key(self) -> pulumi.Output[Optional[str]]:
         """
-        TThe key pair Id to use to sign the SAML request. Required when `sign_request` is true.
+        The key pair Id to use to sign the SAML request. Required when `sign_request` is true.
         """
         return pulumi.get(self, "request_signing_key")
 
@@ -1174,8 +1314,7 @@ class FusionAuthIdpSamlv2(pulumi.CustomResource):
     @pulumi.getter(name="uniqueIdClaim")
     def unique_id_claim(self) -> pulumi.Output[Optional[str]]:
         """
-        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set,
-        the emailClaim will be used when linking user.
+        The name of the unique claim in the SAML response that FusionAuth uses to uniquely link the user. If this is not set, `the email_claim` will be used when linking user.
         """
         return pulumi.get(self, "unique_id_claim")
 

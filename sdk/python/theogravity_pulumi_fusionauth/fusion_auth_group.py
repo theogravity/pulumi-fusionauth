@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['FusionAuthGroupArgs', 'FusionAuthGroup']
@@ -15,14 +20,14 @@ __all__ = ['FusionAuthGroupArgs', 'FusionAuthGroup']
 class FusionAuthGroupArgs:
     def __init__(__self__, *,
                  tenant_id: pulumi.Input[str],
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  group_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  role_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a FusionAuthGroup resource.
         :param pulumi.Input[str] tenant_id: The unique Id of the tenant used to scope this API request.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Group that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Group that should be persisted.
         :param pulumi.Input[str] group_id: The Id to use for the new Group. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] role_ids: The Application Roles to assign to this group.
@@ -51,14 +56,14 @@ class FusionAuthGroupArgs:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Group that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -101,14 +106,14 @@ class FusionAuthGroupArgs:
 @pulumi.input_type
 class _FusionAuthGroupState:
     def __init__(__self__, *,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  group_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  role_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering FusionAuthGroup resources.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Group that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Group that should be persisted.
         :param pulumi.Input[str] group_id: The Id to use for the new Group. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] role_ids: The Application Roles to assign to this group.
@@ -127,14 +132,14 @@ class _FusionAuthGroupState:
 
     @property
     @pulumi.getter
-    def data(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An object that can hold any information about the Group that should be persisted.
         """
         return pulumi.get(self, "data")
 
     @data.setter
-    def data(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "data", value)
 
     @property
@@ -191,7 +196,7 @@ class FusionAuthGroup(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  group_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  role_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -219,7 +224,7 @@ class FusionAuthGroup(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Group that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Group that should be persisted.
         :param pulumi.Input[str] group_id: The Id to use for the new Group. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] role_ids: The Application Roles to assign to this group.
@@ -266,7 +271,7 @@ class FusionAuthGroup(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  group_id: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  role_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -297,7 +302,7 @@ class FusionAuthGroup(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            data: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             group_id: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
             role_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -309,7 +314,7 @@ class FusionAuthGroup(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, Any]] data: An object that can hold any information about the Group that should be persisted.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the Group that should be persisted.
         :param pulumi.Input[str] group_id: The Id to use for the new Group. If not specified a secure random UUID will be generated.
         :param pulumi.Input[str] name: The name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] role_ids: The Application Roles to assign to this group.
@@ -328,7 +333,7 @@ class FusionAuthGroup(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def data(self) -> pulumi.Output[Optional[Mapping[str, Any]]]:
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         An object that can hold any information about the Group that should be persisted.
         """

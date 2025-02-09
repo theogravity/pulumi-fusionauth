@@ -70,15 +70,11 @@ type GetApplicationRoleResult struct {
 }
 
 func GetApplicationRoleOutput(ctx *pulumi.Context, args GetApplicationRoleOutputArgs, opts ...pulumi.InvokeOption) GetApplicationRoleResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetApplicationRoleResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetApplicationRoleResultOutput, error) {
 			args := v.(GetApplicationRoleArgs)
-			r, err := GetApplicationRole(ctx, &args, opts...)
-			var s GetApplicationRoleResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getApplicationRole:getApplicationRole", args, GetApplicationRoleResultOutput{}, options).(GetApplicationRoleResultOutput), nil
 		}).(GetApplicationRoleResultOutput)
 }
 

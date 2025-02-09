@@ -68,15 +68,11 @@ type GetIdpResult struct {
 }
 
 func GetIdpOutput(ctx *pulumi.Context, args GetIdpOutputArgs, opts ...pulumi.InvokeOption) GetIdpResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetIdpResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetIdpResultOutput, error) {
 			args := v.(GetIdpArgs)
-			r, err := GetIdp(ctx, &args, opts...)
-			var s GetIdpResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getIdp:getIdp", args, GetIdpResultOutput{}, options).(GetIdpResultOutput), nil
 		}).(GetIdpResultOutput)
 }
 

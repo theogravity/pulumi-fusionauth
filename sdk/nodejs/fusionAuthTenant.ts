@@ -488,10 +488,13 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Tenant that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
-    public readonly emailConfiguration!: pulumi.Output<outputs.FusionAuthTenantEmailConfiguration>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * The email configuration for the tenant.
+     */
+    public readonly emailConfiguration!: pulumi.Output<outputs.FusionAuthTenantEmailConfiguration | undefined>;
     public readonly eventConfigurations!: pulumi.Output<outputs.FusionAuthTenantEventConfiguration[] | undefined>;
-    public readonly externalIdentifierConfiguration!: pulumi.Output<outputs.FusionAuthTenantExternalIdentifierConfiguration>;
+    public readonly externalIdentifierConfiguration!: pulumi.Output<outputs.FusionAuthTenantExternalIdentifierConfiguration | undefined>;
     public readonly failedAuthenticationConfiguration!: pulumi.Output<outputs.FusionAuthTenantFailedAuthenticationConfiguration>;
     public readonly familyConfiguration!: pulumi.Output<outputs.FusionAuthTenantFamilyConfiguration>;
     public readonly formConfiguration!: pulumi.Output<outputs.FusionAuthTenantFormConfiguration>;
@@ -503,7 +506,14 @@ export class FusionAuthTenant extends pulumi.CustomResource {
      * The named issuer used to sign tokens, this is generally your public fully qualified domain.
      */
     public readonly issuer!: pulumi.Output<string>;
-    public readonly jwtConfigurations!: pulumi.Output<outputs.FusionAuthTenantJwtConfiguration[]>;
+    /**
+     * The JWT configuration for the tenant.
+     */
+    public readonly jwtConfigurations!: pulumi.Output<outputs.FusionAuthTenantJwtConfiguration[] | undefined>;
+    /**
+     * Lamnda configuration for this tenant.
+     */
+    public readonly lambdaConfiguration!: pulumi.Output<outputs.FusionAuthTenantLambdaConfiguration | undefined>;
     public readonly loginConfiguration!: pulumi.Output<outputs.FusionAuthTenantLoginConfiguration | undefined>;
     /**
      * The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
@@ -511,7 +521,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     public readonly logoutUrl!: pulumi.Output<string | undefined>;
     public readonly maximumPasswordAge!: pulumi.Output<outputs.FusionAuthTenantMaximumPasswordAge>;
     public readonly minimumPasswordAge!: pulumi.Output<outputs.FusionAuthTenantMinimumPasswordAge>;
-    public readonly multiFactorConfiguration!: pulumi.Output<outputs.FusionAuthTenantMultiFactorConfiguration>;
+    public readonly multiFactorConfiguration!: pulumi.Output<outputs.FusionAuthTenantMultiFactorConfiguration | undefined>;
     /**
      * The unique name of the Tenant.
      */
@@ -521,10 +531,12 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     public readonly passwordValidationRules!: pulumi.Output<outputs.FusionAuthTenantPasswordValidationRules>;
     public readonly rateLimitConfiguration!: pulumi.Output<outputs.FusionAuthTenantRateLimitConfiguration>;
     public readonly registrationConfiguration!: pulumi.Output<outputs.FusionAuthTenantRegistrationConfiguration>;
+    public readonly scimServerConfiguration!: pulumi.Output<outputs.FusionAuthTenantScimServerConfiguration | undefined>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */
     public readonly sourceTenantId!: pulumi.Output<string | undefined>;
+    public readonly ssoConfiguration!: pulumi.Output<outputs.FusionAuthTenantSsoConfiguration | undefined>;
     /**
      * The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
      */
@@ -535,6 +547,10 @@ export class FusionAuthTenant extends pulumi.CustomResource {
     public readonly themeId!: pulumi.Output<string>;
     public readonly userDeletePolicy!: pulumi.Output<outputs.FusionAuthTenantUserDeletePolicy>;
     public readonly usernameConfiguration!: pulumi.Output<outputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * The WebAuthn configuration for this tenant.
+     */
+    public readonly webauthnConfiguration!: pulumi.Output<outputs.FusionAuthTenantWebauthnConfiguration | undefined>;
     /**
      * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
      */
@@ -547,7 +563,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args: FusionAuthTenantArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args?: FusionAuthTenantArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: FusionAuthTenantArgs | FusionAuthTenantState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -566,6 +582,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["httpSessionMaxInactiveInterval"] = state ? state.httpSessionMaxInactiveInterval : undefined;
             resourceInputs["issuer"] = state ? state.issuer : undefined;
             resourceInputs["jwtConfigurations"] = state ? state.jwtConfigurations : undefined;
+            resourceInputs["lambdaConfiguration"] = state ? state.lambdaConfiguration : undefined;
             resourceInputs["loginConfiguration"] = state ? state.loginConfiguration : undefined;
             resourceInputs["logoutUrl"] = state ? state.logoutUrl : undefined;
             resourceInputs["maximumPasswordAge"] = state ? state.maximumPasswordAge : undefined;
@@ -577,29 +594,17 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["passwordValidationRules"] = state ? state.passwordValidationRules : undefined;
             resourceInputs["rateLimitConfiguration"] = state ? state.rateLimitConfiguration : undefined;
             resourceInputs["registrationConfiguration"] = state ? state.registrationConfiguration : undefined;
+            resourceInputs["scimServerConfiguration"] = state ? state.scimServerConfiguration : undefined;
             resourceInputs["sourceTenantId"] = state ? state.sourceTenantId : undefined;
+            resourceInputs["ssoConfiguration"] = state ? state.ssoConfiguration : undefined;
             resourceInputs["tenantId"] = state ? state.tenantId : undefined;
             resourceInputs["themeId"] = state ? state.themeId : undefined;
             resourceInputs["userDeletePolicy"] = state ? state.userDeletePolicy : undefined;
             resourceInputs["usernameConfiguration"] = state ? state.usernameConfiguration : undefined;
+            resourceInputs["webauthnConfiguration"] = state ? state.webauthnConfiguration : undefined;
             resourceInputs["webhookIds"] = state ? state.webhookIds : undefined;
         } else {
             const args = argsOrState as FusionAuthTenantArgs | undefined;
-            if ((!args || args.emailConfiguration === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'emailConfiguration'");
-            }
-            if ((!args || args.externalIdentifierConfiguration === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'externalIdentifierConfiguration'");
-            }
-            if ((!args || args.issuer === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'issuer'");
-            }
-            if ((!args || args.jwtConfigurations === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'jwtConfigurations'");
-            }
-            if ((!args || args.themeId === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'themeId'");
-            }
             resourceInputs["accessControlConfiguration"] = args ? args.accessControlConfiguration : undefined;
             resourceInputs["captchaConfiguration"] = args ? args.captchaConfiguration : undefined;
             resourceInputs["connectorPolicies"] = args ? args.connectorPolicies : undefined;
@@ -613,6 +618,7 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["httpSessionMaxInactiveInterval"] = args ? args.httpSessionMaxInactiveInterval : undefined;
             resourceInputs["issuer"] = args ? args.issuer : undefined;
             resourceInputs["jwtConfigurations"] = args ? args.jwtConfigurations : undefined;
+            resourceInputs["lambdaConfiguration"] = args ? args.lambdaConfiguration : undefined;
             resourceInputs["loginConfiguration"] = args ? args.loginConfiguration : undefined;
             resourceInputs["logoutUrl"] = args ? args.logoutUrl : undefined;
             resourceInputs["maximumPasswordAge"] = args ? args.maximumPasswordAge : undefined;
@@ -624,11 +630,14 @@ export class FusionAuthTenant extends pulumi.CustomResource {
             resourceInputs["passwordValidationRules"] = args ? args.passwordValidationRules : undefined;
             resourceInputs["rateLimitConfiguration"] = args ? args.rateLimitConfiguration : undefined;
             resourceInputs["registrationConfiguration"] = args ? args.registrationConfiguration : undefined;
+            resourceInputs["scimServerConfiguration"] = args ? args.scimServerConfiguration : undefined;
             resourceInputs["sourceTenantId"] = args ? args.sourceTenantId : undefined;
+            resourceInputs["ssoConfiguration"] = args ? args.ssoConfiguration : undefined;
             resourceInputs["tenantId"] = args ? args.tenantId : undefined;
             resourceInputs["themeId"] = args ? args.themeId : undefined;
             resourceInputs["userDeletePolicy"] = args ? args.userDeletePolicy : undefined;
             resourceInputs["usernameConfiguration"] = args ? args.usernameConfiguration : undefined;
+            resourceInputs["webauthnConfiguration"] = args ? args.webauthnConfiguration : undefined;
             resourceInputs["webhookIds"] = args ? args.webhookIds : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -649,7 +658,10 @@ export interface FusionAuthTenantState {
     /**
      * An object that can hold any information about the Tenant that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The email configuration for the tenant.
+     */
     emailConfiguration?: pulumi.Input<inputs.FusionAuthTenantEmailConfiguration>;
     eventConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantEventConfiguration>[]>;
     externalIdentifierConfiguration?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfiguration>;
@@ -664,7 +676,14 @@ export interface FusionAuthTenantState {
      * The named issuer used to sign tokens, this is generally your public fully qualified domain.
      */
     issuer?: pulumi.Input<string>;
+    /**
+     * The JWT configuration for the tenant.
+     */
     jwtConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantJwtConfiguration>[]>;
+    /**
+     * Lamnda configuration for this tenant.
+     */
+    lambdaConfiguration?: pulumi.Input<inputs.FusionAuthTenantLambdaConfiguration>;
     loginConfiguration?: pulumi.Input<inputs.FusionAuthTenantLoginConfiguration>;
     /**
      * The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
@@ -682,10 +701,12 @@ export interface FusionAuthTenantState {
     passwordValidationRules?: pulumi.Input<inputs.FusionAuthTenantPasswordValidationRules>;
     rateLimitConfiguration?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfiguration>;
     registrationConfiguration?: pulumi.Input<inputs.FusionAuthTenantRegistrationConfiguration>;
+    scimServerConfiguration?: pulumi.Input<inputs.FusionAuthTenantScimServerConfiguration>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */
     sourceTenantId?: pulumi.Input<string>;
+    ssoConfiguration?: pulumi.Input<inputs.FusionAuthTenantSsoConfiguration>;
     /**
      * The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
      */
@@ -696,6 +717,10 @@ export interface FusionAuthTenantState {
     themeId?: pulumi.Input<string>;
     userDeletePolicy?: pulumi.Input<inputs.FusionAuthTenantUserDeletePolicy>;
     usernameConfiguration?: pulumi.Input<inputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * The WebAuthn configuration for this tenant.
+     */
+    webauthnConfiguration?: pulumi.Input<inputs.FusionAuthTenantWebauthnConfiguration>;
     /**
      * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
      */
@@ -715,10 +740,13 @@ export interface FusionAuthTenantArgs {
     /**
      * An object that can hold any information about the Tenant that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
-    emailConfiguration: pulumi.Input<inputs.FusionAuthTenantEmailConfiguration>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The email configuration for the tenant.
+     */
+    emailConfiguration?: pulumi.Input<inputs.FusionAuthTenantEmailConfiguration>;
     eventConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantEventConfiguration>[]>;
-    externalIdentifierConfiguration: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfiguration>;
+    externalIdentifierConfiguration?: pulumi.Input<inputs.FusionAuthTenantExternalIdentifierConfiguration>;
     failedAuthenticationConfiguration?: pulumi.Input<inputs.FusionAuthTenantFailedAuthenticationConfiguration>;
     familyConfiguration?: pulumi.Input<inputs.FusionAuthTenantFamilyConfiguration>;
     formConfiguration?: pulumi.Input<inputs.FusionAuthTenantFormConfiguration>;
@@ -729,8 +757,15 @@ export interface FusionAuthTenantArgs {
     /**
      * The named issuer used to sign tokens, this is generally your public fully qualified domain.
      */
-    issuer: pulumi.Input<string>;
-    jwtConfigurations: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantJwtConfiguration>[]>;
+    issuer?: pulumi.Input<string>;
+    /**
+     * The JWT configuration for the tenant.
+     */
+    jwtConfigurations?: pulumi.Input<pulumi.Input<inputs.FusionAuthTenantJwtConfiguration>[]>;
+    /**
+     * Lamnda configuration for this tenant.
+     */
+    lambdaConfiguration?: pulumi.Input<inputs.FusionAuthTenantLambdaConfiguration>;
     loginConfiguration?: pulumi.Input<inputs.FusionAuthTenantLoginConfiguration>;
     /**
      * The logout redirect URL when sending the user’s browser to the /oauth2/logout URI of the FusionAuth Front End. This value is only used when a logout URL is not defined in your Application.
@@ -748,10 +783,12 @@ export interface FusionAuthTenantArgs {
     passwordValidationRules?: pulumi.Input<inputs.FusionAuthTenantPasswordValidationRules>;
     rateLimitConfiguration?: pulumi.Input<inputs.FusionAuthTenantRateLimitConfiguration>;
     registrationConfiguration?: pulumi.Input<inputs.FusionAuthTenantRegistrationConfiguration>;
+    scimServerConfiguration?: pulumi.Input<inputs.FusionAuthTenantScimServerConfiguration>;
     /**
      * The optional Id of an existing Tenant to make a copy of. If present, the tenant.id and tenant.name values of the request body will be applied to the new Tenant, all other values will be copied from the source Tenant to the new Tenant.
      */
     sourceTenantId?: pulumi.Input<string>;
+    ssoConfiguration?: pulumi.Input<inputs.FusionAuthTenantSsoConfiguration>;
     /**
      * The Id to use for the new Tenant. If not specified a secure random UUID will be generated.
      */
@@ -759,9 +796,13 @@ export interface FusionAuthTenantArgs {
     /**
      * The unique Id of the theme to be used to style the login page and other end user templates.
      */
-    themeId: pulumi.Input<string>;
+    themeId?: pulumi.Input<string>;
     userDeletePolicy?: pulumi.Input<inputs.FusionAuthTenantUserDeletePolicy>;
     usernameConfiguration?: pulumi.Input<inputs.FusionAuthTenantUsernameConfiguration>;
+    /**
+     * The WebAuthn configuration for this tenant.
+     */
+    webauthnConfiguration?: pulumi.Input<inputs.FusionAuthTenantWebauthnConfiguration>;
     /**
      * An array of Webhook Ids. For Webhooks that are not already configured for All Tenants, specifying an Id on this request will indicate the associated Webhook should handle events for this tenant.
      */

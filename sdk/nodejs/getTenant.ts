@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getTenant(args: GetTenantArgs, opts?: pulumi.InvokeOptions): Promise<GetTenantResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getTenant:getTenant", {
         "name": args.name,
@@ -76,8 +75,11 @@ export interface GetTenantResult {
  * });
  * ```
  */
-export function getTenantOutput(args: GetTenantOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetTenantResult> {
-    return pulumi.output(args).apply((a: any) => getTenant(a, opts))
+export function getTenantOutput(args: GetTenantOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetTenantResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getTenant:getTenant", {
+        "name": args.name,
+    }, opts);
 }
 
 /**

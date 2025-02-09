@@ -5,8 +5,10 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
+from .application_oauth_scope import *
 from .fusion_auth_api_key import *
 from .fusion_auth_application import *
+from .fusion_auth_application_o_auth_scope import *
 from .fusion_auth_application_role import *
 from .fusion_auth_e_mail import *
 from .fusion_auth_entity import *
@@ -39,8 +41,10 @@ from .fusion_auth_tenant import *
 from .fusion_auth_theme import *
 from .fusion_auth_user import *
 from .fusion_auth_user_action import *
+from .fusion_auth_user_group_membership import *
 from .fusion_auth_webhook import *
 from .get_application import *
+from .get_application_oauth_scope import *
 from .get_application_role import *
 from .get_e_mail import *
 from .get_form import *
@@ -49,7 +53,9 @@ from .get_idp import *
 from .get_lambda import *
 from .get_tenant import *
 from .get_user import *
+from .get_user_group_membership import *
 from .provider import *
+from .user_group_membership import *
 from ._inputs import *
 from . import outputs
 
@@ -65,6 +71,14 @@ _utilities.register(
 [
  {
   "pkg": "fusionauth",
+  "mod": "index/applicationOauthScope",
+  "fqn": "theogravity_pulumi_fusionauth",
+  "classes": {
+   "fusionauth:index/applicationOauthScope:ApplicationOauthScope": "ApplicationOauthScope"
+  }
+ },
+ {
+  "pkg": "fusionauth",
   "mod": "index/fusionAuthApiKey",
   "fqn": "theogravity_pulumi_fusionauth",
   "classes": {
@@ -77,6 +91,14 @@ _utilities.register(
   "fqn": "theogravity_pulumi_fusionauth",
   "classes": {
    "fusionauth:index/fusionAuthApplication:FusionAuthApplication": "FusionAuthApplication"
+  }
+ },
+ {
+  "pkg": "fusionauth",
+  "mod": "index/fusionAuthApplicationOAuthScope",
+  "fqn": "theogravity_pulumi_fusionauth",
+  "classes": {
+   "fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope": "FusionAuthApplicationOAuthScope"
   }
  },
  {
@@ -337,10 +359,26 @@ _utilities.register(
  },
  {
   "pkg": "fusionauth",
+  "mod": "index/fusionAuthUserGroupMembership",
+  "fqn": "theogravity_pulumi_fusionauth",
+  "classes": {
+   "fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership": "FusionAuthUserGroupMembership"
+  }
+ },
+ {
+  "pkg": "fusionauth",
   "mod": "index/fusionAuthWebhook",
   "fqn": "theogravity_pulumi_fusionauth",
   "classes": {
    "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook": "FusionAuthWebhook"
+  }
+ },
+ {
+  "pkg": "fusionauth",
+  "mod": "index/userGroupMembership",
+  "fqn": "theogravity_pulumi_fusionauth",
+  "classes": {
+   "fusionauth:index/userGroupMembership:UserGroupMembership": "UserGroupMembership"
   }
  }
 ]

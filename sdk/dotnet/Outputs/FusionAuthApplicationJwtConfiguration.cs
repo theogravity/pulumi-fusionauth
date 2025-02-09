@@ -27,13 +27,13 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly string? IdTokenKeyId;
         /// <summary>
-        /// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_time_to_live_in_minutes` is reached.
+        /// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refresh_token_sliding_window_maximum_ttl_in_minutes` is reached.
         /// </summary>
         public readonly string? RefreshTokenExpirationPolicy;
         /// <summary>
         /// The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
         /// </summary>
-        public readonly int? RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
+        public readonly int? RefreshTokenSlidingWindowMaximumTtlInMinutes;
         /// <summary>
         /// The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
         /// </summary>
@@ -57,7 +57,7 @@ namespace theogravity.Fusionauth.Outputs
 
             string? refreshTokenExpirationPolicy,
 
-            int? refreshTokenSlidingWindowMaximumTimeToLiveInMinutes,
+            int? refreshTokenSlidingWindowMaximumTtlInMinutes,
 
             int? refreshTokenTtlMinutes,
 
@@ -69,7 +69,7 @@ namespace theogravity.Fusionauth.Outputs
             Enabled = enabled;
             IdTokenKeyId = idTokenKeyId;
             RefreshTokenExpirationPolicy = refreshTokenExpirationPolicy;
-            RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes = refreshTokenSlidingWindowMaximumTimeToLiveInMinutes;
+            RefreshTokenSlidingWindowMaximumTtlInMinutes = refreshTokenSlidingWindowMaximumTtlInMinutes;
             RefreshTokenTtlMinutes = refreshTokenTtlMinutes;
             RefreshTokenUsagePolicy = refreshTokenUsagePolicy;
             TtlSeconds = ttlSeconds;

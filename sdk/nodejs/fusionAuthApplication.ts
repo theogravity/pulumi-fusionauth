@@ -159,11 +159,19 @@ export class FusionAuthApplication extends pulumi.CustomResource {
     /**
      * An object that can hold any information about the Application that should be persisted.
      */
-    public readonly data!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly data!: pulumi.Output<{[key: string]: string} | undefined>;
     public readonly emailConfiguration!: pulumi.Output<outputs.FusionAuthApplicationEmailConfiguration>;
-    public readonly formConfiguration!: pulumi.Output<outputs.FusionAuthApplicationFormConfiguration>;
-    public readonly jwtConfiguration!: pulumi.Output<outputs.FusionAuthApplicationJwtConfiguration>;
+    public readonly formConfiguration!: pulumi.Output<outputs.FusionAuthApplicationFormConfiguration | undefined>;
+    /**
+     * The instant that the Application was added to the FusionAuth database.
+     */
+    public /*out*/ readonly insertInstant!: pulumi.Output<number>;
+    public readonly jwtConfiguration!: pulumi.Output<outputs.FusionAuthApplicationJwtConfiguration | undefined>;
     public readonly lambdaConfiguration!: pulumi.Output<outputs.FusionAuthApplicationLambdaConfiguration>;
+    /**
+     * The instant that the Application was last updated in the FusionAuth database.
+     */
+    public /*out*/ readonly lastUpdateInstant!: pulumi.Output<number>;
     public readonly loginConfiguration!: pulumi.Output<outputs.FusionAuthApplicationLoginConfiguration>;
     public readonly multiFactorConfiguration!: pulumi.Output<outputs.FusionAuthApplicationMultiFactorConfiguration>;
     /**
@@ -178,6 +186,9 @@ export class FusionAuthApplication extends pulumi.CustomResource {
     public readonly registrationConfiguration!: pulumi.Output<outputs.FusionAuthApplicationRegistrationConfiguration>;
     public readonly registrationDeletePolicy!: pulumi.Output<outputs.FusionAuthApplicationRegistrationDeletePolicy>;
     public readonly samlv2Configuration!: pulumi.Output<outputs.FusionAuthApplicationSamlv2Configuration>;
+    /**
+     * The Id of the Tenant that this Application belongs to.
+     */
     public readonly tenantId!: pulumi.Output<string>;
     /**
      * The unique Id of the theme to be used to style the login page and other end user templates.
@@ -195,6 +206,7 @@ export class FusionAuthApplication extends pulumi.CustomResource {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     public readonly verifyRegistration!: pulumi.Output<boolean | undefined>;
+    public readonly webauthnConfiguration!: pulumi.Output<outputs.FusionAuthApplicationWebauthnConfiguration | undefined>;
 
     /**
      * Create a FusionAuthApplication resource with the given unique name, arguments, and options.
@@ -216,8 +228,10 @@ export class FusionAuthApplication extends pulumi.CustomResource {
             resourceInputs["data"] = state ? state.data : undefined;
             resourceInputs["emailConfiguration"] = state ? state.emailConfiguration : undefined;
             resourceInputs["formConfiguration"] = state ? state.formConfiguration : undefined;
+            resourceInputs["insertInstant"] = state ? state.insertInstant : undefined;
             resourceInputs["jwtConfiguration"] = state ? state.jwtConfiguration : undefined;
             resourceInputs["lambdaConfiguration"] = state ? state.lambdaConfiguration : undefined;
+            resourceInputs["lastUpdateInstant"] = state ? state.lastUpdateInstant : undefined;
             resourceInputs["loginConfiguration"] = state ? state.loginConfiguration : undefined;
             resourceInputs["multiFactorConfiguration"] = state ? state.multiFactorConfiguration : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
@@ -231,6 +245,7 @@ export class FusionAuthApplication extends pulumi.CustomResource {
             resourceInputs["verificationEmailTemplateId"] = state ? state.verificationEmailTemplateId : undefined;
             resourceInputs["verificationStrategy"] = state ? state.verificationStrategy : undefined;
             resourceInputs["verifyRegistration"] = state ? state.verifyRegistration : undefined;
+            resourceInputs["webauthnConfiguration"] = state ? state.webauthnConfiguration : undefined;
         } else {
             const args = argsOrState as FusionAuthApplicationArgs | undefined;
             if ((!args || args.tenantId === undefined) && !opts.urn) {
@@ -258,6 +273,9 @@ export class FusionAuthApplication extends pulumi.CustomResource {
             resourceInputs["verificationEmailTemplateId"] = args ? args.verificationEmailTemplateId : undefined;
             resourceInputs["verificationStrategy"] = args ? args.verificationStrategy : undefined;
             resourceInputs["verifyRegistration"] = args ? args.verifyRegistration : undefined;
+            resourceInputs["webauthnConfiguration"] = args ? args.webauthnConfiguration : undefined;
+            resourceInputs["insertInstant"] = undefined /*out*/;
+            resourceInputs["lastUpdateInstant"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FusionAuthApplication.__pulumiType, name, resourceInputs, opts);
@@ -281,11 +299,19 @@ export interface FusionAuthApplicationState {
     /**
      * An object that can hold any information about the Application that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     emailConfiguration?: pulumi.Input<inputs.FusionAuthApplicationEmailConfiguration>;
     formConfiguration?: pulumi.Input<inputs.FusionAuthApplicationFormConfiguration>;
+    /**
+     * The instant that the Application was added to the FusionAuth database.
+     */
+    insertInstant?: pulumi.Input<number>;
     jwtConfiguration?: pulumi.Input<inputs.FusionAuthApplicationJwtConfiguration>;
     lambdaConfiguration?: pulumi.Input<inputs.FusionAuthApplicationLambdaConfiguration>;
+    /**
+     * The instant that the Application was last updated in the FusionAuth database.
+     */
+    lastUpdateInstant?: pulumi.Input<number>;
     loginConfiguration?: pulumi.Input<inputs.FusionAuthApplicationLoginConfiguration>;
     multiFactorConfiguration?: pulumi.Input<inputs.FusionAuthApplicationMultiFactorConfiguration>;
     /**
@@ -300,6 +326,9 @@ export interface FusionAuthApplicationState {
     registrationConfiguration?: pulumi.Input<inputs.FusionAuthApplicationRegistrationConfiguration>;
     registrationDeletePolicy?: pulumi.Input<inputs.FusionAuthApplicationRegistrationDeletePolicy>;
     samlv2Configuration?: pulumi.Input<inputs.FusionAuthApplicationSamlv2Configuration>;
+    /**
+     * The Id of the Tenant that this Application belongs to.
+     */
     tenantId?: pulumi.Input<string>;
     /**
      * The unique Id of the theme to be used to style the login page and other end user templates.
@@ -317,6 +346,7 @@ export interface FusionAuthApplicationState {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     verifyRegistration?: pulumi.Input<boolean>;
+    webauthnConfiguration?: pulumi.Input<inputs.FusionAuthApplicationWebauthnConfiguration>;
 }
 
 /**
@@ -336,7 +366,7 @@ export interface FusionAuthApplicationArgs {
     /**
      * An object that can hold any information about the Application that should be persisted.
      */
-    data?: pulumi.Input<{[key: string]: any}>;
+    data?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     emailConfiguration?: pulumi.Input<inputs.FusionAuthApplicationEmailConfiguration>;
     formConfiguration?: pulumi.Input<inputs.FusionAuthApplicationFormConfiguration>;
     jwtConfiguration?: pulumi.Input<inputs.FusionAuthApplicationJwtConfiguration>;
@@ -355,6 +385,9 @@ export interface FusionAuthApplicationArgs {
     registrationConfiguration?: pulumi.Input<inputs.FusionAuthApplicationRegistrationConfiguration>;
     registrationDeletePolicy?: pulumi.Input<inputs.FusionAuthApplicationRegistrationDeletePolicy>;
     samlv2Configuration?: pulumi.Input<inputs.FusionAuthApplicationSamlv2Configuration>;
+    /**
+     * The Id of the Tenant that this Application belongs to.
+     */
     tenantId: pulumi.Input<string>;
     /**
      * The unique Id of the theme to be used to style the login page and other end user templates.
@@ -372,4 +405,5 @@ export interface FusionAuthApplicationArgs {
      * Whether or not registrations to this Application may be verified. When this is set to true the verificationEmailTemplateId parameter is also required.
      */
     verifyRegistration?: pulumi.Input<boolean>;
+    webauthnConfiguration?: pulumi.Input<inputs.FusionAuthApplicationWebauthnConfiguration>;
 }

@@ -13,10 +13,12 @@
         "strict": true
     },
     "files": [
+        "applicationOauthScope.ts",
         "config/index.ts",
         "config/vars.ts",
         "fusionAuthApiKey.ts",
         "fusionAuthApplication.ts",
+        "fusionAuthApplicationOAuthScope.ts",
         "fusionAuthApplicationRole.ts",
         "fusionAuthEMail.ts",
         "fusionAuthEntity.ts",
@@ -49,8 +51,10 @@
         "fusionAuthTheme.ts",
         "fusionAuthUser.ts",
         "fusionAuthUserAction.ts",
+        "fusionAuthUserGroupMembership.ts",
         "fusionAuthWebhook.ts",
         "getApplication.ts",
+        "getApplicationOauthScope.ts",
         "getApplicationRole.ts",
         "getEMail.ts",
         "getForm.ts",
@@ -59,11 +63,13 @@
         "getLambda.ts",
         "getTenant.ts",
         "getUser.ts",
+        "getUserGroupMembership.ts",
         "index.ts",
         "provider.ts",
         "types/index.ts",
         "types/input.ts",
         "types/output.ts",
+        "userGroupMembership.ts",
         "utilities.ts"
     ]
 }

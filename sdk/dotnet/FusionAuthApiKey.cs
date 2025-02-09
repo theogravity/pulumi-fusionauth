@@ -59,6 +59,12 @@ namespace theogravity.Fusionauth
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
+        /// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        /// </summary>
+        [Output("expirationInstant")]
+        public Output<int?> ExpirationInstant { get; private set; } = null!;
+
+        /// <summary>
         /// The Id of the IP Access Control List limiting access to this API key.
         /// </summary>
         [Output("ipAccessControlListId")]
@@ -77,7 +83,7 @@ namespace theogravity.Fusionauth
         public Output<string?> KeyId { get; private set; } = null!;
 
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         /// </summary>
         [Output("permissionsEndpoints")]
         public Output<ImmutableArray<Outputs.FusionAuthApiKeyPermissionsEndpoint>> PermissionsEndpoints { get; private set; } = null!;
@@ -146,6 +152,12 @@ namespace theogravity.Fusionauth
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        /// </summary>
+        [Input("expirationInstant")]
+        public Input<int>? ExpirationInstant { get; set; }
+
+        /// <summary>
         /// The Id of the IP Access Control List limiting access to this API key.
         /// </summary>
         [Input("ipAccessControlListId")]
@@ -177,7 +189,7 @@ namespace theogravity.Fusionauth
         private InputList<Inputs.FusionAuthApiKeyPermissionsEndpointArgs>? _permissionsEndpoints;
 
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         /// </summary>
         public InputList<Inputs.FusionAuthApiKeyPermissionsEndpointArgs> PermissionsEndpoints
         {
@@ -204,6 +216,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+        /// </summary>
+        [Input("expirationInstant")]
+        public Input<int>? ExpirationInstant { get; set; }
 
         /// <summary>
         /// The Id of the IP Access Control List limiting access to this API key.
@@ -237,7 +255,7 @@ namespace theogravity.Fusionauth
         private InputList<Inputs.FusionAuthApiKeyPermissionsEndpointGetArgs>? _permissionsEndpoints;
 
         /// <summary>
-        /// The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+        /// Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissions_endpoints object mean that this is a super key that authorizes this key for all the endpoints.
         /// </summary>
         public InputList<Inputs.FusionAuthApiKeyPermissionsEndpointGetArgs> PermissionsEndpoints
         {

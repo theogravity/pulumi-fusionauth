@@ -13,6 +13,9 @@ namespace theogravity.Fusionauth.Inputs
 
     public sealed class FusionAuthApplicationSamlv2ConfigurationGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("assertionEncryptionConfiguration")]
+        public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationGetArgs>? AssertionEncryptionConfiguration { get; set; }
+
         /// <summary>
         /// The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
         /// </summary>
@@ -55,6 +58,9 @@ namespace theogravity.Fusionauth.Inputs
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        [Input("initiatedLogin")]
+        public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationInitiatedLoginGetArgs>? InitiatedLogin { get; set; }
+
         /// <summary>
         /// The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
         /// </summary>
@@ -66,6 +72,9 @@ namespace theogravity.Fusionauth.Inputs
         /// </summary>
         [Input("keyId")]
         public Input<string>? KeyId { get; set; }
+
+        [Input("loginHintConfiguration")]
+        public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationGetArgs>? LoginHintConfiguration { get; set; }
 
         [Input("logout")]
         public Input<Inputs.FusionAuthApplicationSamlv2ConfigurationLogoutGetArgs>? Logout { get; set; }

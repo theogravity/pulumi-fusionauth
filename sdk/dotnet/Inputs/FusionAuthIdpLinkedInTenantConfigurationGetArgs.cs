@@ -14,7 +14,7 @@ namespace theogravity.Fusionauth.Inputs
     public sealed class FusionAuthIdpLinkedInTenantConfigurationGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+        /// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
         /// </summary>
         [Input("limitUserLinkCountEnabled")]
         public Input<bool>? LimitUserLinkCountEnabled { get; set; }

@@ -59,7 +59,7 @@ namespace theogravity.Fusionauth
         /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
         [Output("localizedNames")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedNames { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedNames { get; private set; } = null!;
 
         /// <summary>
         /// The Id of the Email Template that is used when User Actions are modified.
@@ -187,14 +187,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? IncludeEmailInEventJson { get; set; }
 
         [Input("localizedNames")]
-        private InputMap<object>? _localizedNames;
+        private InputMap<string>? _localizedNames;
 
         /// <summary>
         /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
-        public InputMap<object> LocalizedNames
+        public InputMap<string> LocalizedNames
         {
-            get => _localizedNames ?? (_localizedNames = new InputMap<object>());
+            get => _localizedNames ?? (_localizedNames = new InputMap<string>());
             set => _localizedNames = value;
         }
 
@@ -291,14 +291,14 @@ namespace theogravity.Fusionauth
         public Input<bool>? IncludeEmailInEventJson { get; set; }
 
         [Input("localizedNames")]
-        private InputMap<object>? _localizedNames;
+        private InputMap<string>? _localizedNames;
 
         /// <summary>
         /// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
         /// </summary>
-        public InputMap<object> LocalizedNames
+        public InputMap<string> LocalizedNames
         {
-            get => _localizedNames ?? (_localizedNames = new InputMap<object>());
+            get => _localizedNames ?? (_localizedNames = new InputMap<string>());
             set => _localizedNames = value;
         }
 

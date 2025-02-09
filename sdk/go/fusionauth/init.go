@@ -21,10 +21,14 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
+	case "fusionauth:index/applicationOauthScope:ApplicationOauthScope":
+		r = &ApplicationOauthScope{}
 	case "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey":
 		r = &FusionAuthApiKey{}
 	case "fusionauth:index/fusionAuthApplication:FusionAuthApplication":
 		r = &FusionAuthApplication{}
+	case "fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope":
+		r = &FusionAuthApplicationOAuthScope{}
 	case "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole":
 		r = &FusionAuthApplicationRole{}
 	case "fusionauth:index/fusionAuthEMail:FusionAuthEMail":
@@ -89,8 +93,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &FusionAuthUser{}
 	case "fusionauth:index/fusionAuthUserAction:FusionAuthUserAction":
 		r = &FusionAuthUserAction{}
+	case "fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership":
+		r = &FusionAuthUserGroupMembership{}
 	case "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook":
 		r = &FusionAuthWebhook{}
+	case "fusionauth:index/userGroupMembership:UserGroupMembership":
+		r = &UserGroupMembership{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}
@@ -124,12 +132,22 @@ func init() {
 	}
 	pulumi.RegisterResourceModule(
 		"fusionauth",
+		"index/applicationOauthScope",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
 		"index/fusionAuthApiKey",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
 		"fusionauth",
 		"index/fusionAuthApplication",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
+		"index/fusionAuthApplicationOAuthScope",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -294,7 +312,17 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"fusionauth",
+		"index/fusionAuthUserGroupMembership",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
 		"index/fusionAuthWebhook",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"fusionauth",
+		"index/userGroupMembership",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

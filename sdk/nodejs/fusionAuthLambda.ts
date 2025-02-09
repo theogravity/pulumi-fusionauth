@@ -17,7 +17,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "pulumi-fusionauth";
  *
- * const preferred_Username = new fusionauth.FusionAuthLambda("preferred Username", {
+ * const preferredUsername = new fusionauth.FusionAuthLambda("preferredUsername", {
  *     body: `// Using the user and registration parameters add additional values to the jwt object.
  * function populate(jwt, user, registration) {
  *   jwt.preferred_username = registration.username;
@@ -85,26 +85,32 @@ export class FusionAuthLambda extends pulumi.CustomResource {
     public readonly name!: pulumi.Output<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `SelfServiceRegistrationValidation`
-     * - `ClientCredentialsJWTPopulate`
+     * * `AppleReconcile`
+     * * `ClientCredentialsJWTPopulate`
+     * * `EpicGamesReconcile`
+     * * `ExternalJWTReconcile`
+     * * `FacebookReconcile`
+     * * `GoogleReconcile`
+     * * `HYPRReconcile`
+     * * `JWTPopulate`
+     * * `LDAPConnectorReconcile`
+     * * `LinkedInReconcile`
+     * * `LoginValidation`
+     * * `NintendoReconcile`
+     * * `OpenIDReconcile`
+     * * `SAMLv2Populate`
+     * * `SAMLv2Reconcile`
+     * * `SCIMServerGroupRequestConverter`
+     * * `SCIMServerGroupResponseConverter`
+     * * `SCIMServerUserRequestConverter`
+     * * `SCIMServerUserResponseConverter`
+     * * `SelfServiceRegistrationValidation`
+     * * `SonyPSNReconcile`
+     * * `SteamReconcile`
+     * * `TwitchReconcile`
+     * * `TwitterReconcile`
+     * * `UserInfoPopulate`
+     * * `XboxReconcile`
      */
     public readonly type!: pulumi.Output<string>;
 
@@ -181,26 +187,32 @@ export interface FusionAuthLambdaState {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `SelfServiceRegistrationValidation`
-     * - `ClientCredentialsJWTPopulate`
+     * * `AppleReconcile`
+     * * `ClientCredentialsJWTPopulate`
+     * * `EpicGamesReconcile`
+     * * `ExternalJWTReconcile`
+     * * `FacebookReconcile`
+     * * `GoogleReconcile`
+     * * `HYPRReconcile`
+     * * `JWTPopulate`
+     * * `LDAPConnectorReconcile`
+     * * `LinkedInReconcile`
+     * * `LoginValidation`
+     * * `NintendoReconcile`
+     * * `OpenIDReconcile`
+     * * `SAMLv2Populate`
+     * * `SAMLv2Reconcile`
+     * * `SCIMServerGroupRequestConverter`
+     * * `SCIMServerGroupResponseConverter`
+     * * `SCIMServerUserRequestConverter`
+     * * `SCIMServerUserResponseConverter`
+     * * `SelfServiceRegistrationValidation`
+     * * `SonyPSNReconcile`
+     * * `SteamReconcile`
+     * * `TwitchReconcile`
+     * * `TwitterReconcile`
+     * * `UserInfoPopulate`
+     * * `XboxReconcile`
      */
     type?: pulumi.Input<string>;
 }
@@ -237,26 +249,32 @@ export interface FusionAuthLambdaArgs {
     name?: pulumi.Input<string>;
     /**
      * The lambda type. The possible values are:
-     * - `JWTPopulate`
-     * - `OpenIDReconcile`
-     * - `SAMLv2Reconcile`
-     * - `SAMLv2Populate`
-     * - `AppleReconcile`
-     * - `ExternalJWTReconcile`
-     * - `FacebookReconcile`
-     * - `GoogleReconcile`
-     * - `HYPRReconcile`
-     * - `TwitterReconcile`
-     * - `LDAPConnectorReconcile`
-     * - `LinkedInReconcile`
-     * - `EpicGamesReconcile`
-     * - `NintendoReconcile`
-     * - `SonyPSNReconcile`
-     * - `SteamReconcile`
-     * - `TwitchReconcile`
-     * - `XboxReconcile`
-     * - `SelfServiceRegistrationValidation`
-     * - `ClientCredentialsJWTPopulate`
+     * * `AppleReconcile`
+     * * `ClientCredentialsJWTPopulate`
+     * * `EpicGamesReconcile`
+     * * `ExternalJWTReconcile`
+     * * `FacebookReconcile`
+     * * `GoogleReconcile`
+     * * `HYPRReconcile`
+     * * `JWTPopulate`
+     * * `LDAPConnectorReconcile`
+     * * `LinkedInReconcile`
+     * * `LoginValidation`
+     * * `NintendoReconcile`
+     * * `OpenIDReconcile`
+     * * `SAMLv2Populate`
+     * * `SAMLv2Reconcile`
+     * * `SCIMServerGroupRequestConverter`
+     * * `SCIMServerGroupResponseConverter`
+     * * `SCIMServerUserRequestConverter`
+     * * `SCIMServerUserResponseConverter`
+     * * `SelfServiceRegistrationValidation`
+     * * `SonyPSNReconcile`
+     * * `SteamReconcile`
+     * * `TwitchReconcile`
+     * * `TwitterReconcile`
+     * * `UserInfoPopulate`
+     * * `XboxReconcile`
      */
     type: pulumi.Input<string>;
 }

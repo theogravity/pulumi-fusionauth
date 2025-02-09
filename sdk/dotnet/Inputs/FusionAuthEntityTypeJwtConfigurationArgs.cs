@@ -29,8 +29,7 @@ namespace theogravity.Fusionauth.Inputs
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// The length of time in seconds the JWT will live before it is expired and no
-        /// longer valid. Required when enabled is set to true.
+        /// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
         /// </summary>
         [Input("timeToLiveInSeconds")]
         public Input<int>? TimeToLiveInSeconds { get; set; }

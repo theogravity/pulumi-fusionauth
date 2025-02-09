@@ -985,7 +985,8 @@ func (o FusionAuthApplicationEmailConfigurationPtrOutput) TwoFactorMethodRemoveT
 
 type FusionAuthApplicationFormConfiguration struct {
 	// The unique Id of the form to use for the Add and Edit User Registration form when used in the FusionAuth admin UI.
-	AdminRegistrationFormId *string `pulumi:"adminRegistrationFormId"`
+	AdminRegistrationFormId      *string                                                             `pulumi:"adminRegistrationFormId"`
+	SelfServiceFormConfiguration *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration `pulumi:"selfServiceFormConfiguration"`
 	// The unique Id of the form to to enable authenticated users to manage their profile on the account page.
 	SelfServiceFormId *string `pulumi:"selfServiceFormId"`
 }
@@ -1003,7 +1004,8 @@ type FusionAuthApplicationFormConfigurationInput interface {
 
 type FusionAuthApplicationFormConfigurationArgs struct {
 	// The unique Id of the form to use for the Add and Edit User Registration form when used in the FusionAuth admin UI.
-	AdminRegistrationFormId pulumi.StringPtrInput `pulumi:"adminRegistrationFormId"`
+	AdminRegistrationFormId      pulumi.StringPtrInput                                                      `pulumi:"adminRegistrationFormId"`
+	SelfServiceFormConfiguration FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput `pulumi:"selfServiceFormConfiguration"`
 	// The unique Id of the form to to enable authenticated users to manage their profile on the account page.
 	SelfServiceFormId pulumi.StringPtrInput `pulumi:"selfServiceFormId"`
 }
@@ -1090,6 +1092,12 @@ func (o FusionAuthApplicationFormConfigurationOutput) AdminRegistrationFormId() 
 	return o.ApplyT(func(v FusionAuthApplicationFormConfiguration) *string { return v.AdminRegistrationFormId }).(pulumi.StringPtrOutput)
 }
 
+func (o FusionAuthApplicationFormConfigurationOutput) SelfServiceFormConfiguration() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationFormConfiguration) *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+		return v.SelfServiceFormConfiguration
+	}).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput)
+}
+
 // The unique Id of the form to to enable authenticated users to manage their profile on the account page.
 func (o FusionAuthApplicationFormConfigurationOutput) SelfServiceFormId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationFormConfiguration) *string { return v.SelfServiceFormId }).(pulumi.StringPtrOutput)
@@ -1129,6 +1137,15 @@ func (o FusionAuthApplicationFormConfigurationPtrOutput) AdminRegistrationFormId
 	}).(pulumi.StringPtrOutput)
 }
 
+func (o FusionAuthApplicationFormConfigurationPtrOutput) SelfServiceFormConfiguration() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationFormConfiguration) *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+		if v == nil {
+			return nil
+		}
+		return v.SelfServiceFormConfiguration
+	}).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput)
+}
+
 // The unique Id of the form to to enable authenticated users to manage their profile on the account page.
 func (o FusionAuthApplicationFormConfigurationPtrOutput) SelfServiceFormId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationFormConfiguration) *string {
@@ -1139,6 +1156,145 @@ func (o FusionAuthApplicationFormConfigurationPtrOutput) SelfServiceFormId() pul
 	}).(pulumi.StringPtrOutput)
 }
 
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration struct {
+	// When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+	RequireCurrentPasswordOnPasswordChange *bool `pulumi:"requireCurrentPasswordOnPasswordChange"`
+}
+
+// FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationInput is an input type that accepts FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs and FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationInput` via:
+//
+//	FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs{...}
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput
+	ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutputWithContext(context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput
+}
+
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs struct {
+	// When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+	RequireCurrentPasswordOnPasswordChange pulumi.BoolPtrInput `pulumi:"requireCurrentPasswordOnPasswordChange"`
+}
+
+func (FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput {
+	return i.ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput)
+}
+
+func (i FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput).ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput is an input type that accepts FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs, FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtr and FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput` via:
+//
+//	        FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput
+	ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput
+}
+
+type fusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrType FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs
+
+func FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtr(v *FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput {
+	return (*fusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrType)(v)
+}
+
+func (*fusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrType) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrType) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput)
+}
+
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o.ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration) *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+		return &v
+	}).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput)
+}
+
+// When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput) RequireCurrentPasswordOnPasswordChange() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration) *bool {
+		return v.RequireCurrentPasswordOnPasswordChange
+	}).(pulumi.BoolPtrOutput)
+}
+
+type FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput) ToFusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput) Elem() FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration) FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration
+		return ret
+	}).(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput)
+}
+
+// When enabled a user will be required to provide their current password when changing their password on a self-service account form.
+func (o FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput) RequireCurrentPasswordOnPasswordChange() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationFormConfigurationSelfServiceFormConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.RequireCurrentPasswordOnPasswordChange
+	}).(pulumi.BoolPtrOutput)
+}
+
 type FusionAuthApplicationJwtConfiguration struct {
 	// The Id of the signing key used to sign the access token.
 	AccessTokenId *string `pulumi:"accessTokenId"`
@@ -1146,10 +1302,10 @@ type FusionAuthApplicationJwtConfiguration struct {
 	Enabled *bool `pulumi:"enabled"`
 	// The Id of the signing key used to sign the Id token.
 	IdTokenKeyId *string `pulumi:"idTokenKeyId"`
-	// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+	// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
 	RefreshTokenExpirationPolicy *string `pulumi:"refreshTokenExpirationPolicy"`
 	// The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
-	RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes *int `pulumi:"refreshTokenSlidingWindowMaximumTimeToLiveInMinutes"`
+	RefreshTokenSlidingWindowMaximumTtlInMinutes *int `pulumi:"refreshTokenSlidingWindowMaximumTtlInMinutes"`
 	// The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
 	RefreshTokenTtlMinutes *int `pulumi:"refreshTokenTtlMinutes"`
 	// The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
@@ -1176,10 +1332,10 @@ type FusionAuthApplicationJwtConfigurationArgs struct {
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
 	// The Id of the signing key used to sign the Id token.
 	IdTokenKeyId pulumi.StringPtrInput `pulumi:"idTokenKeyId"`
-	// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+	// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
 	RefreshTokenExpirationPolicy pulumi.StringPtrInput `pulumi:"refreshTokenExpirationPolicy"`
 	// The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
-	RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes pulumi.IntPtrInput `pulumi:"refreshTokenSlidingWindowMaximumTimeToLiveInMinutes"`
+	RefreshTokenSlidingWindowMaximumTtlInMinutes pulumi.IntPtrInput `pulumi:"refreshTokenSlidingWindowMaximumTtlInMinutes"`
 	// The length of time in minutes the JWT refresh token will live before it is expired and is not able to be exchanged for a JWT.
 	RefreshTokenTtlMinutes pulumi.IntPtrInput `pulumi:"refreshTokenTtlMinutes"`
 	// The refresh token usage policy. The following are valid values: Reusable - the token does not change after it was issued. OneTimeUse - the token value will be changed each time the token is used to refresh a JWT. The client must store the new value after each usage. Defaults to Reusable.
@@ -1280,15 +1436,15 @@ func (o FusionAuthApplicationJwtConfigurationOutput) IdTokenKeyId() pulumi.Strin
 	return o.ApplyT(func(v FusionAuthApplicationJwtConfiguration) *string { return v.IdTokenKeyId }).(pulumi.StringPtrOutput)
 }
 
-// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
 func (o FusionAuthApplicationJwtConfigurationOutput) RefreshTokenExpirationPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationJwtConfiguration) *string { return v.RefreshTokenExpirationPolicy }).(pulumi.StringPtrOutput)
 }
 
 // The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
-func (o FusionAuthApplicationJwtConfigurationOutput) RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes() pulumi.IntPtrOutput {
+func (o FusionAuthApplicationJwtConfigurationOutput) RefreshTokenSlidingWindowMaximumTtlInMinutes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationJwtConfiguration) *int {
-		return v.RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes
+		return v.RefreshTokenSlidingWindowMaximumTtlInMinutes
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -1361,7 +1517,7 @@ func (o FusionAuthApplicationJwtConfigurationPtrOutput) IdTokenKeyId() pulumi.St
 	}).(pulumi.StringPtrOutput)
 }
 
-// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTimeToLiveInMinutes` is reached.
+// The Refresh Token expiration policy. The possible values are: Fixed - the expiration is calculated from the time the token is issued.  SlidingWindow - the expiration is calculated from the last time the token was used. SlidingWindowWithMaximumLifetime - the expiration is calculated from the last time the token was used, or until `refreshTokenSlidingWindowMaximumTtlInMinutes` is reached.
 func (o FusionAuthApplicationJwtConfigurationPtrOutput) RefreshTokenExpirationPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationJwtConfiguration) *string {
 		if v == nil {
@@ -1372,12 +1528,12 @@ func (o FusionAuthApplicationJwtConfigurationPtrOutput) RefreshTokenExpirationPo
 }
 
 // The maximum lifetime of a refresh token when using a refresh token expiration policy of `SlidingWindowWithMaximumLifetime`. Value must be greater than 0.
-func (o FusionAuthApplicationJwtConfigurationPtrOutput) RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes() pulumi.IntPtrOutput {
+func (o FusionAuthApplicationJwtConfigurationPtrOutput) RefreshTokenSlidingWindowMaximumTtlInMinutes() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationJwtConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return v.RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes
+		return v.RefreshTokenSlidingWindowMaximumTtlInMinutes
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -2007,9 +2163,9 @@ type FusionAuthApplicationOauthConfiguration struct {
 	// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
 	ClientSecret *string `pulumi:"clientSecret"`
 	// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
-	// - `AlwaysPrompt` - Always prompt the user for consent.
-	// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-	// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+	// * `AlwaysPrompt` - Always prompt the user for consent.
+	// * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+	// * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
 	ConsentMode *string `pulumi:"consentMode"`
 	// Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
 	Debug *bool `pulumi:"debug"`
@@ -2028,8 +2184,8 @@ type FusionAuthApplicationOauthConfiguration struct {
 	// Configures which of the default scopes are enabled and required.
 	ProvidedScopePolicies []FusionAuthApplicationOauthConfigurationProvidedScopePolicy `pulumi:"providedScopePolicies"`
 	// The application’s relationship to the OAuth server. The possible values are:
-	// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-	// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+	// * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+	// * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
 	Relationship *string `pulumi:"relationship"`
 	// Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The clientId and clientSecret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
 	//
@@ -2038,13 +2194,13 @@ type FusionAuthApplicationOauthConfiguration struct {
 	// When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
 	RequireRegistration *bool `pulumi:"requireRegistration"`
 	// Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-	// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-	// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+	// * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+	// * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
 	ScopeHandlingPolicy string `pulumi:"scopeHandlingPolicy"`
 	// Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
-	// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-	// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-	// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+	// * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+	// * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+	// * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
 	UnknownScopePolicy string `pulumi:"unknownScopePolicy"`
 }
 
@@ -2073,9 +2229,9 @@ type FusionAuthApplicationOauthConfigurationArgs struct {
 	// The OAuth 2.0 client secret. If you leave this blank during a POST, a secure secret will be generated for you. If you leave this blank during PUT, the previous value will be maintained. For both POST and PUT you can provide a value and it will be stored.
 	ClientSecret pulumi.StringPtrInput `pulumi:"clientSecret"`
 	// Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
-	// - `AlwaysPrompt` - Always prompt the user for consent.
-	// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-	// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+	// * `AlwaysPrompt` - Always prompt the user for consent.
+	// * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+	// * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
 	ConsentMode pulumi.StringPtrInput `pulumi:"consentMode"`
 	// Whether or not FusionAuth will log a debug Event Log. This is particular useful for debugging the authorization code exchange with the Token endpoint during an Authorization Code grant."
 	Debug pulumi.BoolPtrInput `pulumi:"debug"`
@@ -2094,8 +2250,8 @@ type FusionAuthApplicationOauthConfigurationArgs struct {
 	// Configures which of the default scopes are enabled and required.
 	ProvidedScopePolicies FusionAuthApplicationOauthConfigurationProvidedScopePolicyArrayInput `pulumi:"providedScopePolicies"`
 	// The application’s relationship to the OAuth server. The possible values are:
-	// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-	// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+	// * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+	// * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
 	Relationship pulumi.StringPtrInput `pulumi:"relationship"`
 	// Determines if the OAuth 2.0 Token endpoint requires client authentication. If this is enabled, the client must provide client credentials when using the Token endpoint. The clientId and clientSecret may be provided using a Basic Authorization HTTP header, or by sending these parameters in the request body using POST data.
 	//
@@ -2104,13 +2260,13 @@ type FusionAuthApplicationOauthConfigurationArgs struct {
 	// When enabled the user will be required to be registered, or complete registration before redirecting to the configured callback in the authorization code grant or the implicit grant. This configuration does not currently apply to any other grant.
 	RequireRegistration pulumi.BoolPtrInput `pulumi:"requireRegistration"`
 	// Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-	// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-	// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+	// * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+	// * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
 	ScopeHandlingPolicy pulumi.StringInput `pulumi:"scopeHandlingPolicy"`
 	// Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
-	// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-	// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-	// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+	// * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+	// * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+	// * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
 	UnknownScopePolicy pulumi.StringInput `pulumi:"unknownScopePolicy"`
 }
 
@@ -2222,9 +2378,9 @@ func (o FusionAuthApplicationOauthConfigurationOutput) ClientSecret() pulumi.Str
 }
 
 // Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
-// - `AlwaysPrompt` - Always prompt the user for consent.
-// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+// * `AlwaysPrompt` - Always prompt the user for consent.
+// * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+// * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
 func (o FusionAuthApplicationOauthConfigurationOutput) ConsentMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) *string { return v.ConsentMode }).(pulumi.StringPtrOutput)
 }
@@ -2272,8 +2428,8 @@ func (o FusionAuthApplicationOauthConfigurationOutput) ProvidedScopePolicies() F
 }
 
 // The application’s relationship to the OAuth server. The possible values are:
-// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+// * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+// * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
 func (o FusionAuthApplicationOauthConfigurationOutput) Relationship() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) *string { return v.Relationship }).(pulumi.StringPtrOutput)
 }
@@ -2291,16 +2447,16 @@ func (o FusionAuthApplicationOauthConfigurationOutput) RequireRegistration() pul
 }
 
 // Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+// * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+// * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
 func (o FusionAuthApplicationOauthConfigurationOutput) ScopeHandlingPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) string { return v.ScopeHandlingPolicy }).(pulumi.StringOutput)
 }
 
 // Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
-// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+// * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+// * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+// * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
 func (o FusionAuthApplicationOauthConfigurationOutput) UnknownScopePolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v FusionAuthApplicationOauthConfiguration) string { return v.UnknownScopePolicy }).(pulumi.StringOutput)
 }
@@ -2390,9 +2546,9 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) ClientSecret() pulumi.
 }
 
 // Controls the policy for prompting a user to consent to requested OAuth scopes. This configuration only takes effect when `application.oauthConfiguration.relationship` is `ThirdParty`. The possible values are:
-// - `AlwaysPrompt` - Always prompt the user for consent.
-// - `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
-// - `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
+// * `AlwaysPrompt` - Always prompt the user for consent.
+// * `RememberDecision` - Remember previous consents; only prompt if the choice expires or if the requested or required scopes have changed. The duration of this persisted choice is controlled by the Tenant’s `externalIdentifierConfiguration.rememberOAuthScopeConsentChoiceTimeToLiveInSeconds` value.
+// * `NeverPrompt` - The user will be never be prompted to consent to requested OAuth scopes. Permission will be granted implicitly as if this were a `FirstParty` application. This configuration is meant for testing purposes only and should not be used in production.
 func (o FusionAuthApplicationOauthConfigurationPtrOutput) ConsentMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
 		if v == nil {
@@ -2483,8 +2639,8 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) ProvidedScopePolicies(
 }
 
 // The application’s relationship to the OAuth server. The possible values are:
-// - `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
-// - `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
+// * `FirstParty` - The application has the same owner as the authorization server. Consent to requested OAuth scopes is granted implicitly.
+// * `ThirdParty` - The application is external to the authorization server. Users will be prompted to consent to requested OAuth scopes based on the application object’s `oauthConfiguration.consentMode` value. Note: An Essentials or Enterprise plan is required to utilize third-party applications.
 func (o FusionAuthApplicationOauthConfigurationPtrOutput) Relationship() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
 		if v == nil {
@@ -2517,8 +2673,8 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) RequireRegistration() 
 }
 
 // Controls the policy for handling of OAuth scopes when populating JWTs and the UserInfo response. The possible values are:
-// - `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
-// - `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
+// * `Compatibility` - OAuth workflows will populate JWT and UserInfo claims in a manner compatible with versions of FusionAuth before version 1.50.0.
+// * `Strict` - OAuth workflows will populate token and UserInfo claims according to the OpenID Connect 1.0 specification based on requested and consented scopes.
 func (o FusionAuthApplicationOauthConfigurationPtrOutput) ScopeHandlingPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
 		if v == nil {
@@ -2529,9 +2685,9 @@ func (o FusionAuthApplicationOauthConfigurationPtrOutput) ScopeHandlingPolicy() 
 }
 
 // Controls the policy for handling unknown scopes on an OAuth request. The possible values are:
-// - `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
-// - `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
-// - `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
+// * `Allow` - Unknown scopes will be allowed on the request, passed through the OAuth workflow, and written to the resulting tokens without consent.
+// * `Remove` - Unknown scopes will be removed from the OAuth workflow, but the workflow will proceed without them.
+// * `Reject` - Unknown scopes will be rejected and cause the OAuth workflow to fail with an error.
 func (o FusionAuthApplicationOauthConfigurationPtrOutput) UnknownScopePolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationOauthConfiguration) *string {
 		if v == nil {
@@ -4778,6 +4934,7 @@ func (o FusionAuthApplicationRegistrationDeletePolicyPtrOutput) UnverifiedNumber
 }
 
 type FusionAuthApplicationSamlv2Configuration struct {
+	AssertionEncryptionConfiguration *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration `pulumi:"assertionEncryptionConfiguration"`
 	// The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
 	Audience *string `pulumi:"audience"`
 	// An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
@@ -4791,12 +4948,14 @@ type FusionAuthApplicationSamlv2Configuration struct {
 	// Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
 	DefaultVerificationKeyId *string `pulumi:"defaultVerificationKeyId"`
 	// Whether or not the SAML IdP for this Application is enabled or not.
-	Enabled *bool `pulumi:"enabled"`
+	Enabled        *bool                                                   `pulumi:"enabled"`
+	InitiatedLogin *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin `pulumi:"initiatedLogin"`
 	// The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
 	Issuer string `pulumi:"issuer"`
 	// The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
-	KeyId  *string                                         `pulumi:"keyId"`
-	Logout *FusionAuthApplicationSamlv2ConfigurationLogout `pulumi:"logout"`
+	KeyId                  *string                                                         `pulumi:"keyId"`
+	LoginHintConfiguration *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration `pulumi:"loginHintConfiguration"`
+	Logout                 *FusionAuthApplicationSamlv2ConfigurationLogout                 `pulumi:"logout"`
 	// The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
 	LogoutUrl *string `pulumi:"logoutUrl"`
 	// If set to true, will force verification through the key store.
@@ -4819,6 +4978,7 @@ type FusionAuthApplicationSamlv2ConfigurationInput interface {
 }
 
 type FusionAuthApplicationSamlv2ConfigurationArgs struct {
+	AssertionEncryptionConfiguration FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput `pulumi:"assertionEncryptionConfiguration"`
 	// The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
 	Audience pulumi.StringPtrInput `pulumi:"audience"`
 	// An array of URLs that are the authorized redirect URLs for FusionAuth OAuth.
@@ -4832,12 +4992,14 @@ type FusionAuthApplicationSamlv2ConfigurationArgs struct {
 	// Default verification key to use for HTTP Redirect Bindings, and for POST Bindings when no key is found in request.
 	DefaultVerificationKeyId pulumi.StringPtrInput `pulumi:"defaultVerificationKeyId"`
 	// Whether or not the SAML IdP for this Application is enabled or not.
-	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	Enabled        pulumi.BoolPtrInput                                            `pulumi:"enabled"`
+	InitiatedLogin FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput `pulumi:"initiatedLogin"`
 	// The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
 	Issuer pulumi.StringInput `pulumi:"issuer"`
 	// The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
-	KeyId  pulumi.StringPtrInput                                  `pulumi:"keyId"`
-	Logout FusionAuthApplicationSamlv2ConfigurationLogoutPtrInput `pulumi:"logout"`
+	KeyId                  pulumi.StringPtrInput                                                  `pulumi:"keyId"`
+	LoginHintConfiguration FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput `pulumi:"loginHintConfiguration"`
+	Logout                 FusionAuthApplicationSamlv2ConfigurationLogoutPtrInput                 `pulumi:"logout"`
 	// The URL that the browser is taken to after the user logs out of the SAML service provider. Often service providers need this URL in order to correctly hook up single-logout. Note that FusionAuth does not support the SAML single-logout profile because most service providers to not support it properly.
 	LogoutUrl pulumi.StringPtrInput `pulumi:"logoutUrl"`
 	// If set to true, will force verification through the key store.
@@ -4925,6 +5087,12 @@ func (o FusionAuthApplicationSamlv2ConfigurationOutput) ToFusionAuthApplicationS
 	}).(FusionAuthApplicationSamlv2ConfigurationPtrOutput)
 }
 
+func (o FusionAuthApplicationSamlv2ConfigurationOutput) AssertionEncryptionConfiguration() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+		return v.AssertionEncryptionConfiguration
+	}).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput)
+}
+
 // The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
 func (o FusionAuthApplicationSamlv2ConfigurationOutput) Audience() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *string { return v.Audience }).(pulumi.StringPtrOutput)
@@ -4957,6 +5125,12 @@ func (o FusionAuthApplicationSamlv2ConfigurationOutput) Enabled() pulumi.BoolPtr
 	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
+func (o FusionAuthApplicationSamlv2ConfigurationOutput) InitiatedLogin() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+		return v.InitiatedLogin
+	}).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput)
+}
+
 // The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
 func (o FusionAuthApplicationSamlv2ConfigurationOutput) Issuer() pulumi.StringOutput {
 	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) string { return v.Issuer }).(pulumi.StringOutput)
@@ -4965,6 +5139,12 @@ func (o FusionAuthApplicationSamlv2ConfigurationOutput) Issuer() pulumi.StringOu
 // The id of the Key used to sign the SAML response. If you do not specify this property, FusionAuth will create a new key and associate it with this Application.
 func (o FusionAuthApplicationSamlv2ConfigurationOutput) KeyId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *string { return v.KeyId }).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationOutput) LoginHintConfiguration() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+		return v.LoginHintConfiguration
+	}).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput)
 }
 
 func (o FusionAuthApplicationSamlv2ConfigurationOutput) Logout() FusionAuthApplicationSamlv2ConfigurationLogoutPtrOutput {
@@ -5015,6 +5195,15 @@ func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) Elem() FusionAuthAppl
 		var ret FusionAuthApplicationSamlv2Configuration
 		return ret
 	}).(FusionAuthApplicationSamlv2ConfigurationOutput)
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) AssertionEncryptionConfiguration() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+		if v == nil {
+			return nil
+		}
+		return v.AssertionEncryptionConfiguration
+	}).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput)
 }
 
 // The audience for the SAML response sent to back to the service provider from FusionAuth. Some service providers require different audience values than the issuer and this configuration option lets you change the audience in the response.
@@ -5079,6 +5268,15 @@ func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) Enabled() pulumi.Bool
 	}).(pulumi.BoolPtrOutput)
 }
 
+func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) InitiatedLogin() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+		if v == nil {
+			return nil
+		}
+		return v.InitiatedLogin
+	}).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput)
+}
+
 // The issuer that identifies the service provider and allows FusionAuth to load the correct Application and SAML configuration. If you don’t know the issuer, you can often times put in anything here and FusionAuth will display an error message with the issuer from the service provider when you test the SAML login.
 func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) Issuer() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthApplicationSamlv2Configuration) *string {
@@ -5097,6 +5295,15 @@ func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) KeyId() pulumi.String
 		}
 		return v.KeyId
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) LoginHintConfiguration() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2Configuration) *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+		if v == nil {
+			return nil
+		}
+		return v.LoginHintConfiguration
+	}).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput)
 }
 
 func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) Logout() FusionAuthApplicationSamlv2ConfigurationLogoutPtrOutput {
@@ -5145,6 +5352,583 @@ func (o FusionAuthApplicationSamlv2ConfigurationPtrOutput) XmlSignatureLocation(
 			return nil
 		}
 		return v.XmlSignatureLocation
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration struct {
+	// The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+	DigestAlgorithm *string `pulumi:"digestAlgorithm"`
+	// Determines if SAML assertion encryption is enabled for this Application.
+	Enabled *bool `pulumi:"enabled"`
+	// The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+	EncryptionAlgorithm *string `pulumi:"encryptionAlgorithm"`
+	// The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+	KeyLocation *string `pulumi:"keyLocation"`
+	// The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+	KeyTransportAlgorithm *string `pulumi:"keyTransportAlgorithm"`
+	// The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+	KeyTransportEncryptionKeyId *string `pulumi:"keyTransportEncryptionKeyId"`
+	// The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+	MaskGenerationFunction *string `pulumi:"maskGenerationFunction"`
+}
+
+// FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs and FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationInput` via:
+//
+//	FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs{...}
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput
+	ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput
+}
+
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs struct {
+	// The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+	DigestAlgorithm pulumi.StringPtrInput `pulumi:"digestAlgorithm"`
+	// Determines if SAML assertion encryption is enabled for this Application.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+	EncryptionAlgorithm pulumi.StringPtrInput `pulumi:"encryptionAlgorithm"`
+	// The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+	KeyLocation pulumi.StringPtrInput `pulumi:"keyLocation"`
+	// The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+	KeyTransportAlgorithm pulumi.StringPtrInput `pulumi:"keyTransportAlgorithm"`
+	// The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+	KeyTransportEncryptionKeyId pulumi.StringPtrInput `pulumi:"keyTransportEncryptionKeyId"`
+	// The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+	MaskGenerationFunction pulumi.StringPtrInput `pulumi:"maskGenerationFunction"`
+}
+
+func (FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput)
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput).ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs, FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtr and FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput` via:
+//
+//	        FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput
+	ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput
+}
+
+type fusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrType FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs
+
+func FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtr(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput {
+	return (*fusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrType)(v)
+}
+
+func (*fusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrType) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrType) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o.ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+		return &v
+	}).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput)
+}
+
+// The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) DigestAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.DigestAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// Determines if SAML assertion encryption is enabled for this Application.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *bool {
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) EncryptionAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.EncryptionAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) KeyLocation() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.KeyLocation
+	}).(pulumi.StringPtrOutput)
+}
+
+// The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) KeyTransportAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.KeyTransportAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) KeyTransportEncryptionKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.KeyTransportEncryptionKeyId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput) MaskGenerationFunction() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		return v.MaskGenerationFunction
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) Elem() FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration
+		return ret
+	}).(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput)
+}
+
+// The message digest algorithm to use when encrypting the symmetric key for transport. The possible values are: SHA1 - SHA-1 hashing algorithm, SHA256 - SHA-256 hashing algorithm, SHA384 - SHA-384 hashing algorithm or SHA512 - SHA-512 hashing algorithm. Using SHA256 or higher is recommended.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) DigestAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.DigestAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// Determines if SAML assertion encryption is enabled for this Application.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The symmetric key encryption algorithm that will be used to encrypt SAML assertions. A new symmetric key will be generated every time an assertion is encrypted. AES ciphers can operate in Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM). The possible values are: AES128, AES192, AES256, AES128GCM, AES192GCM, AES256GCM or TripleDES.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) EncryptionAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.EncryptionAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// The location that the encrypted symmetric key information will be placed in the SAML response in relation to the EncryptedData element containing the encrypted assertion value. The possible values are: Child (The EncryptedKey element will be wrapped in a KeyInfo element and added inside the EncryptedData) or Sibling (The EncryptedKey element will be added to the document as a sibling of EncryptedData).
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) KeyLocation() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.KeyLocation
+	}).(pulumi.StringPtrOutput)
+}
+
+// The encryption algorithm used to encrypt the symmetric key for transport in the SAML response. The possible values are: RSAv15, RSA_OAEP or RSA_OAEP_MGF1P.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) KeyTransportAlgorithm() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.KeyTransportAlgorithm
+	}).(pulumi.StringPtrOutput)
+}
+
+// The unique Id of the Key used to encrypt the symmetric key for transport in the SAML response. The selected Key must contain an RSA certificate. This parameter is required when application.samlv2Configuration.assertionEncryptionConfiguration.enabled is set to true.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) KeyTransportEncryptionKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.KeyTransportEncryptionKeyId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The mask generation function and hash function to use for the Optimal Asymmetric Encryption Padding when encrypting a symmetric key for transport. The possible values are: MGF1_SHA1, MGF1_SHA224, MGF1_SHA256, MGF1_SHA384 or MGF1_SHA512. This value is only used when the `application.samlv2Configuration.assertionEncryptionConfiguration.keyTransportAlgorithm` is set to RSA_OAEP. RSAv15 does not require a message digest function, and RSA_OAEP_MGF1P will always use MGF1_SHA1 regardless of this value.
+func (o FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput) MaskGenerationFunction() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaskGenerationFunction
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLogin struct {
+	// Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+	Enabled *bool `pulumi:"enabled"`
+	// The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+	NameIdFormat *string `pulumi:"nameIdFormat"`
+}
+
+// FusionAuthApplicationSamlv2ConfigurationInitiatedLoginInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs and FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationInitiatedLoginInput` via:
+//
+//	FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs{...}
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLoginInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput
+	ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput
+}
+
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs struct {
+	// Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+	NameIdFormat pulumi.StringPtrInput `pulumi:"nameIdFormat"`
+}
+
+func (FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationInitiatedLogin)(nil)).Elem()
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput)
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput).ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(ctx)
+}
+
+// FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs, FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtr and FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput` via:
+//
+//	        FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput
+	ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput
+}
+
+type fusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrType FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs
+
+func FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtr(v *FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput {
+	return (*fusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrType)(v)
+}
+
+func (*fusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationInitiatedLogin)(nil)).Elem()
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrType) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrType) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationInitiatedLogin)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o.ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+		return &v
+	}).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput)
+}
+
+// Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput) NameIdFormat() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) *string { return v.NameIdFormat }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationInitiatedLogin)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) Elem() FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) FusionAuthApplicationSamlv2ConfigurationInitiatedLogin {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthApplicationSamlv2ConfigurationInitiatedLogin
+		return ret
+	}).(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput)
+}
+
+// Determines if SAML v2 IdP initiated login is enabled for this application. See application.samlv2Configuration.authorizedRedirectURLs for information on which destination URLs are allowed.
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The value sent in the AuthN response to the SAML v2 Service Provider in the NameID assertion.
+func (o FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput) NameIdFormat() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationInitiatedLogin) *string {
+		if v == nil {
+			return nil
+		}
+		return v.NameIdFormat
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration struct {
+	// When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+	Enabled *bool `pulumi:"enabled"`
+	// The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+	ParameterName *string `pulumi:"parameterName"`
+}
+
+// FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs and FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationInput` via:
+//
+//	FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs{...}
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput
+	ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput
+}
+
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs struct {
+	// When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+	ParameterName pulumi.StringPtrInput `pulumi:"parameterName"`
+}
+
+func (FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput)
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput).ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput is an input type that accepts FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs, FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtr and FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput` via:
+//
+//	        FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput
+	ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput
+}
+
+type fusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrType FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs
+
+func FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtr(v *FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput {
+	return (*fusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrType)(v)
+}
+
+func (*fusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrType) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrType) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o.ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+		return &v
+	}).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput)
+}
+
+// When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput) ParameterName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) *string { return v.ParameterName }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) ToFusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) Elem() FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration
+		return ret
+	}).(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput)
+}
+
+// When enabled, FusionAuth will accept a username or email address as a login hint on a custom HTTP request parameter.
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The name of the parameter that will be used to pass the login hint to the SAML v2 IdP.
+func (o FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput) ParameterName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationSamlv2ConfigurationLoginHintConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ParameterName
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -5576,6 +6360,181 @@ func (o FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutPtrOutput) Xml
 	}).(pulumi.StringPtrOutput)
 }
 
+type FusionAuthApplicationWebauthnConfiguration struct {
+	// Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+	BootstrapWorkflowEnabled *bool `pulumi:"bootstrapWorkflowEnabled"`
+	// Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+	Enabled *bool `pulumi:"enabled"`
+	// Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+	ReauthenticationWorkflowEnabled *bool `pulumi:"reauthenticationWorkflowEnabled"`
+}
+
+// FusionAuthApplicationWebauthnConfigurationInput is an input type that accepts FusionAuthApplicationWebauthnConfigurationArgs and FusionAuthApplicationWebauthnConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationWebauthnConfigurationInput` via:
+//
+//	FusionAuthApplicationWebauthnConfigurationArgs{...}
+type FusionAuthApplicationWebauthnConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationWebauthnConfigurationOutput() FusionAuthApplicationWebauthnConfigurationOutput
+	ToFusionAuthApplicationWebauthnConfigurationOutputWithContext(context.Context) FusionAuthApplicationWebauthnConfigurationOutput
+}
+
+type FusionAuthApplicationWebauthnConfigurationArgs struct {
+	// Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+	BootstrapWorkflowEnabled pulumi.BoolPtrInput `pulumi:"bootstrapWorkflowEnabled"`
+	// Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+	ReauthenticationWorkflowEnabled pulumi.BoolPtrInput `pulumi:"reauthenticationWorkflowEnabled"`
+}
+
+func (FusionAuthApplicationWebauthnConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthApplicationWebauthnConfigurationArgs) ToFusionAuthApplicationWebauthnConfigurationOutput() FusionAuthApplicationWebauthnConfigurationOutput {
+	return i.ToFusionAuthApplicationWebauthnConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationWebauthnConfigurationArgs) ToFusionAuthApplicationWebauthnConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationWebauthnConfigurationOutput)
+}
+
+func (i FusionAuthApplicationWebauthnConfigurationArgs) ToFusionAuthApplicationWebauthnConfigurationPtrOutput() FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthApplicationWebauthnConfigurationArgs) ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationWebauthnConfigurationOutput).ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthApplicationWebauthnConfigurationPtrInput is an input type that accepts FusionAuthApplicationWebauthnConfigurationArgs, FusionAuthApplicationWebauthnConfigurationPtr and FusionAuthApplicationWebauthnConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthApplicationWebauthnConfigurationPtrInput` via:
+//
+//	        FusionAuthApplicationWebauthnConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthApplicationWebauthnConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthApplicationWebauthnConfigurationPtrOutput() FusionAuthApplicationWebauthnConfigurationPtrOutput
+	ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(context.Context) FusionAuthApplicationWebauthnConfigurationPtrOutput
+}
+
+type fusionAuthApplicationWebauthnConfigurationPtrType FusionAuthApplicationWebauthnConfigurationArgs
+
+func FusionAuthApplicationWebauthnConfigurationPtr(v *FusionAuthApplicationWebauthnConfigurationArgs) FusionAuthApplicationWebauthnConfigurationPtrInput {
+	return (*fusionAuthApplicationWebauthnConfigurationPtrType)(v)
+}
+
+func (*fusionAuthApplicationWebauthnConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthApplicationWebauthnConfigurationPtrType) ToFusionAuthApplicationWebauthnConfigurationPtrOutput() FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return i.ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthApplicationWebauthnConfigurationPtrType) ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthApplicationWebauthnConfigurationPtrOutput)
+}
+
+type FusionAuthApplicationWebauthnConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationWebauthnConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationOutput) ToFusionAuthApplicationWebauthnConfigurationOutput() FusionAuthApplicationWebauthnConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationOutput) ToFusionAuthApplicationWebauthnConfigurationOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationOutput) ToFusionAuthApplicationWebauthnConfigurationPtrOutput() FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return o.ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationOutput) ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthApplicationWebauthnConfiguration) *FusionAuthApplicationWebauthnConfiguration {
+		return &v
+	}).(FusionAuthApplicationWebauthnConfigurationPtrOutput)
+}
+
+// Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+func (o FusionAuthApplicationWebauthnConfigurationOutput) BootstrapWorkflowEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationWebauthnConfiguration) *bool { return v.BootstrapWorkflowEnabled }).(pulumi.BoolPtrOutput)
+}
+
+// Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+func (o FusionAuthApplicationWebauthnConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationWebauthnConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+func (o FusionAuthApplicationWebauthnConfigurationOutput) ReauthenticationWorkflowEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthApplicationWebauthnConfiguration) *bool { return v.ReauthenticationWorkflowEnabled }).(pulumi.BoolPtrOutput)
+}
+
+type FusionAuthApplicationWebauthnConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthApplicationWebauthnConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) ToFusionAuthApplicationWebauthnConfigurationPtrOutput() FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) ToFusionAuthApplicationWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthApplicationWebauthnConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) Elem() FusionAuthApplicationWebauthnConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationWebauthnConfiguration) FusionAuthApplicationWebauthnConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthApplicationWebauthnConfiguration
+		return ret
+	}).(FusionAuthApplicationWebauthnConfigurationOutput)
+}
+
+// Indicates if this application enables WebAuthn workflows based on the configuration defined here or the Tenant WebAuthn configuration. If this is false, WebAuthn workflows will be enabled based on the Tenant configuration. If true, WebAuthn workflows will be enabled according to the configuration of this application.
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) BootstrapWorkflowEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationWebauthnConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.BootstrapWorkflowEnabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Whether the WebAuthn bootstrap workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationWebauthnConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Whether the WebAuthn reauthentication workflow is enabled for this application. This overrides the tenant configuration. Has no effect if application.webAuthnConfiguration.enabled is false.
+func (o FusionAuthApplicationWebauthnConfigurationPtrOutput) ReauthenticationWorkflowEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthApplicationWebauthnConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.ReauthenticationWorkflowEnabled
+	}).(pulumi.BoolPtrOutput)
+}
+
 type FusionAuthEntityTypeJwtConfiguration struct {
 	// The unique ID of the signing key used to sign the access token. Required when
 	// enabled is set to true.
@@ -5584,8 +6543,7 @@ type FusionAuthEntityTypeJwtConfiguration struct {
 	// configuration defined by the Tenant. If this is false the signing algorithm configured in the Tenant will be used.
 	// If true the signing algorithm defined in this application will be used.
 	Enabled *bool `pulumi:"enabled"`
-	// The length of time in seconds the JWT will live before it is expired and no
-	// longer valid. Required when enabled is set to true.
+	// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
 	TimeToLiveInSeconds *int `pulumi:"timeToLiveInSeconds"`
 }
 
@@ -5608,8 +6566,7 @@ type FusionAuthEntityTypeJwtConfigurationArgs struct {
 	// configuration defined by the Tenant. If this is false the signing algorithm configured in the Tenant will be used.
 	// If true the signing algorithm defined in this application will be used.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
-	// The length of time in seconds the JWT will live before it is expired and no
-	// longer valid. Required when enabled is set to true.
+	// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
 	TimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"timeToLiveInSeconds"`
 }
 
@@ -5703,8 +6660,7 @@ func (o FusionAuthEntityTypeJwtConfigurationOutput) Enabled() pulumi.BoolPtrOutp
 	return o.ApplyT(func(v FusionAuthEntityTypeJwtConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
-// The length of time in seconds the JWT will live before it is expired and no
-// longer valid. Required when enabled is set to true.
+// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
 func (o FusionAuthEntityTypeJwtConfigurationOutput) TimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthEntityTypeJwtConfiguration) *int { return v.TimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
@@ -5756,8 +6712,7 @@ func (o FusionAuthEntityTypeJwtConfigurationPtrOutput) Enabled() pulumi.BoolPtrO
 	}).(pulumi.BoolPtrOutput)
 }
 
-// The length of time in seconds the JWT will live before it is expired and no
-// longer valid. Required when enabled is set to true.
+// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
 func (o FusionAuthEntityTypeJwtConfigurationPtrOutput) TimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthEntityTypeJwtConfiguration) *int {
 		if v == nil {
@@ -6023,7 +6978,7 @@ func (o FusionAuthFormStepArrayOutput) Index(i pulumi.IntInput) FusionAuthFormSt
 type FusionAuthIdpAppleApplicationConfiguration struct {
 	// ID of the Application to apply this configuration to.
 	ApplicationId *string `pulumi:"applicationId"`
-	// This is an optional Application specific override for for the top level bundleId.
+	// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundleId` or `servicesId` . If `servicesId` is omitted, this field is required.
 	BundleId *string `pulumi:"bundleId"`
 	// This is an optional Application specific override for the top level button text.
 	ButtonText *string `pulumi:"buttonText"`
@@ -6055,7 +7010,7 @@ type FusionAuthIdpAppleApplicationConfigurationInput interface {
 type FusionAuthIdpAppleApplicationConfigurationArgs struct {
 	// ID of the Application to apply this configuration to.
 	ApplicationId pulumi.StringPtrInput `pulumi:"applicationId"`
-	// This is an optional Application specific override for for the top level bundleId.
+	// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundleId` or `servicesId` . If `servicesId` is omitted, this field is required.
 	BundleId pulumi.StringPtrInput `pulumi:"bundleId"`
 	// This is an optional Application specific override for the top level button text.
 	ButtonText pulumi.StringPtrInput `pulumi:"buttonText"`
@@ -6129,7 +7084,7 @@ func (o FusionAuthIdpAppleApplicationConfigurationOutput) ApplicationId() pulumi
 	return o.ApplyT(func(v FusionAuthIdpAppleApplicationConfiguration) *string { return v.ApplicationId }).(pulumi.StringPtrOutput)
 }
 
-// This is an optional Application specific override for for the top level bundleId.
+// The Apple Bundle identifier found in your Apple Developer Account which has been configured for Sign in with Apple. The Bundle identifier is used to Sign in with Apple from native applications. The request must include `bundleId` or `servicesId` . If `servicesId` is omitted, this field is required.
 func (o FusionAuthIdpAppleApplicationConfigurationOutput) BundleId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpAppleApplicationConfiguration) *string { return v.BundleId }).(pulumi.StringPtrOutput)
 }
@@ -6190,7 +7145,7 @@ func (o FusionAuthIdpAppleApplicationConfigurationArrayOutput) Index(i pulumi.In
 }
 
 type FusionAuthIdpAppleTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6210,7 +7165,7 @@ type FusionAuthIdpAppleTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpAppleTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6269,7 +7224,7 @@ func (o FusionAuthIdpAppleTenantConfigurationOutput) ToFusionAuthIdpAppleTenantC
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpAppleTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpAppleTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -6420,7 +7375,7 @@ func (o FusionAuthIdpExternalJwtApplicationConfigurationArrayOutput) Index(i pul
 }
 
 type FusionAuthIdpExternalJwtTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6440,7 +7395,7 @@ type FusionAuthIdpExternalJwtTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpExternalJwtTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6499,7 +7454,7 @@ func (o FusionAuthIdpExternalJwtTenantConfigurationOutput) ToFusionAuthIdpExtern
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpExternalJwtTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpExternalJwtTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -6695,7 +7650,7 @@ func (o FusionAuthIdpFacebookApplicationConfigurationArrayOutput) Index(i pulumi
 }
 
 type FusionAuthIdpFacebookTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6715,7 +7670,7 @@ type FusionAuthIdpFacebookTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpFacebookTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6774,7 +7729,7 @@ func (o FusionAuthIdpFacebookTenantConfigurationOutput) ToFusionAuthIdpFacebookT
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpFacebookTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpFacebookTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -6822,6 +7777,8 @@ type FusionAuthIdpGoogleApplicationConfiguration struct {
 	CreateRegistration *bool `pulumi:"createRegistration"`
 	// Determines if this identity provider is enabled for the Application specified by the applicationId key.
 	Enabled *bool `pulumi:"enabled"`
+	// This is an optional Application specific override for the top level properties.
+	Properties *FusionAuthIdpGoogleApplicationConfigurationProperties `pulumi:"properties"`
 	// This is an optional Application specific override for for the top level scope.
 	Scope *string `pulumi:"scope"`
 }
@@ -6850,6 +7807,8 @@ type FusionAuthIdpGoogleApplicationConfigurationArgs struct {
 	CreateRegistration pulumi.BoolPtrInput `pulumi:"createRegistration"`
 	// Determines if this identity provider is enabled for the Application specified by the applicationId key.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// This is an optional Application specific override for the top level properties.
+	Properties FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput `pulumi:"properties"`
 	// This is an optional Application specific override for for the top level scope.
 	Scope pulumi.StringPtrInput `pulumi:"scope"`
 }
@@ -6935,6 +7894,13 @@ func (o FusionAuthIdpGoogleApplicationConfigurationOutput) Enabled() pulumi.Bool
 	return o.ApplyT(func(v FusionAuthIdpGoogleApplicationConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
+// This is an optional Application specific override for the top level properties.
+func (o FusionAuthIdpGoogleApplicationConfigurationOutput) Properties() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpGoogleApplicationConfiguration) *FusionAuthIdpGoogleApplicationConfigurationProperties {
+		return v.Properties
+	}).(FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput)
+}
+
 // This is an optional Application specific override for for the top level scope.
 func (o FusionAuthIdpGoogleApplicationConfigurationOutput) Scope() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpGoogleApplicationConfiguration) *string { return v.Scope }).(pulumi.StringPtrOutput)
@@ -6960,8 +7926,320 @@ func (o FusionAuthIdpGoogleApplicationConfigurationArrayOutput) Index(i pulumi.I
 	}).(FusionAuthIdpGoogleApplicationConfigurationOutput)
 }
 
+type FusionAuthIdpGoogleApplicationConfigurationProperties struct {
+	// This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+	Api *string `pulumi:"api"`
+	// This is an optional Application specific override for the top level `button`.
+	Button *string `pulumi:"button"`
+}
+
+// FusionAuthIdpGoogleApplicationConfigurationPropertiesInput is an input type that accepts FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs and FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput values.
+// You can construct a concrete instance of `FusionAuthIdpGoogleApplicationConfigurationPropertiesInput` via:
+//
+//	FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs{...}
+type FusionAuthIdpGoogleApplicationConfigurationPropertiesInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput
+	ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutputWithContext(context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput
+}
+
+type FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs struct {
+	// This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+	Api pulumi.StringPtrInput `pulumi:"api"`
+	// This is an optional Application specific override for the top level `button`.
+	Button pulumi.StringPtrInput `pulumi:"button"`
+}
+
+func (FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationProperties)(nil)).Elem()
+}
+
+func (i FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput {
+	return i.ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput)
+}
+
+func (i FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return i.ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput).ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput is an input type that accepts FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs, FusionAuthIdpGoogleApplicationConfigurationPropertiesPtr and FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput` via:
+//
+//	        FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput
+	ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput
+}
+
+type fusionAuthIdpGoogleApplicationConfigurationPropertiesPtrType FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs
+
+func FusionAuthIdpGoogleApplicationConfigurationPropertiesPtr(v *FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput {
+	return (*fusionAuthIdpGoogleApplicationConfigurationPropertiesPtrType)(v)
+}
+
+func (*fusionAuthIdpGoogleApplicationConfigurationPropertiesPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpGoogleApplicationConfigurationProperties)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpGoogleApplicationConfigurationPropertiesPtrType) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return i.ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpGoogleApplicationConfigurationPropertiesPtrType) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput)
+}
+
+type FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationProperties)(nil)).Elem()
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput {
+	return o
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput {
+	return o
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return o.ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpGoogleApplicationConfigurationProperties) *FusionAuthIdpGoogleApplicationConfigurationProperties {
+		return &v
+	}).(FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput)
+}
+
+// This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) Api() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpGoogleApplicationConfigurationProperties) *string { return v.Api }).(pulumi.StringPtrOutput)
+}
+
+// This is an optional Application specific override for the top level `button`.
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput) Button() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpGoogleApplicationConfigurationProperties) *string { return v.Button }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpGoogleApplicationConfigurationProperties)(nil)).Elem()
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput() FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) ToFusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) Elem() FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleApplicationConfigurationProperties) FusionAuthIdpGoogleApplicationConfigurationProperties {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpGoogleApplicationConfigurationProperties
+		return ret
+	}).(FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput)
+}
+
+// This is an optional Application specific override for the top level properties.api . If this `loginMethod` is set to UsePopup, or the Application configuration is unset and the top level loginMethod is set to UsePopup, and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) Api() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleApplicationConfigurationProperties) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Api
+	}).(pulumi.StringPtrOutput)
+}
+
+// This is an optional Application specific override for the top level `button`.
+func (o FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput) Button() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleApplicationConfigurationProperties) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Button
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpGoogleProperties struct {
+	// Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+	Api *string `pulumi:"api"`
+	// Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+	Button *string `pulumi:"button"`
+}
+
+// FusionAuthIdpGooglePropertiesInput is an input type that accepts FusionAuthIdpGooglePropertiesArgs and FusionAuthIdpGooglePropertiesOutput values.
+// You can construct a concrete instance of `FusionAuthIdpGooglePropertiesInput` via:
+//
+//	FusionAuthIdpGooglePropertiesArgs{...}
+type FusionAuthIdpGooglePropertiesInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpGooglePropertiesOutput() FusionAuthIdpGooglePropertiesOutput
+	ToFusionAuthIdpGooglePropertiesOutputWithContext(context.Context) FusionAuthIdpGooglePropertiesOutput
+}
+
+type FusionAuthIdpGooglePropertiesArgs struct {
+	// Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+	Api pulumi.StringPtrInput `pulumi:"api"`
+	// Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+	Button pulumi.StringPtrInput `pulumi:"button"`
+}
+
+func (FusionAuthIdpGooglePropertiesArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpGoogleProperties)(nil)).Elem()
+}
+
+func (i FusionAuthIdpGooglePropertiesArgs) ToFusionAuthIdpGooglePropertiesOutput() FusionAuthIdpGooglePropertiesOutput {
+	return i.ToFusionAuthIdpGooglePropertiesOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpGooglePropertiesArgs) ToFusionAuthIdpGooglePropertiesOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGooglePropertiesOutput)
+}
+
+func (i FusionAuthIdpGooglePropertiesArgs) ToFusionAuthIdpGooglePropertiesPtrOutput() FusionAuthIdpGooglePropertiesPtrOutput {
+	return i.ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpGooglePropertiesArgs) ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGooglePropertiesOutput).ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpGooglePropertiesPtrInput is an input type that accepts FusionAuthIdpGooglePropertiesArgs, FusionAuthIdpGooglePropertiesPtr and FusionAuthIdpGooglePropertiesPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpGooglePropertiesPtrInput` via:
+//
+//	        FusionAuthIdpGooglePropertiesArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpGooglePropertiesPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpGooglePropertiesPtrOutput() FusionAuthIdpGooglePropertiesPtrOutput
+	ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(context.Context) FusionAuthIdpGooglePropertiesPtrOutput
+}
+
+type fusionAuthIdpGooglePropertiesPtrType FusionAuthIdpGooglePropertiesArgs
+
+func FusionAuthIdpGooglePropertiesPtr(v *FusionAuthIdpGooglePropertiesArgs) FusionAuthIdpGooglePropertiesPtrInput {
+	return (*fusionAuthIdpGooglePropertiesPtrType)(v)
+}
+
+func (*fusionAuthIdpGooglePropertiesPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpGoogleProperties)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpGooglePropertiesPtrType) ToFusionAuthIdpGooglePropertiesPtrOutput() FusionAuthIdpGooglePropertiesPtrOutput {
+	return i.ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpGooglePropertiesPtrType) ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpGooglePropertiesPtrOutput)
+}
+
+type FusionAuthIdpGooglePropertiesOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpGooglePropertiesOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpGoogleProperties)(nil)).Elem()
+}
+
+func (o FusionAuthIdpGooglePropertiesOutput) ToFusionAuthIdpGooglePropertiesOutput() FusionAuthIdpGooglePropertiesOutput {
+	return o
+}
+
+func (o FusionAuthIdpGooglePropertiesOutput) ToFusionAuthIdpGooglePropertiesOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesOutput {
+	return o
+}
+
+func (o FusionAuthIdpGooglePropertiesOutput) ToFusionAuthIdpGooglePropertiesPtrOutput() FusionAuthIdpGooglePropertiesPtrOutput {
+	return o.ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpGooglePropertiesOutput) ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpGoogleProperties) *FusionAuthIdpGoogleProperties {
+		return &v
+	}).(FusionAuthIdpGooglePropertiesPtrOutput)
+}
+
+// Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+func (o FusionAuthIdpGooglePropertiesOutput) Api() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpGoogleProperties) *string { return v.Api }).(pulumi.StringPtrOutput)
+}
+
+// Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+func (o FusionAuthIdpGooglePropertiesOutput) Button() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpGoogleProperties) *string { return v.Button }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpGooglePropertiesPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpGooglePropertiesPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpGoogleProperties)(nil)).Elem()
+}
+
+func (o FusionAuthIdpGooglePropertiesPtrOutput) ToFusionAuthIdpGooglePropertiesPtrOutput() FusionAuthIdpGooglePropertiesPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpGooglePropertiesPtrOutput) ToFusionAuthIdpGooglePropertiesPtrOutputWithContext(ctx context.Context) FusionAuthIdpGooglePropertiesPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpGooglePropertiesPtrOutput) Elem() FusionAuthIdpGooglePropertiesOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleProperties) FusionAuthIdpGoogleProperties {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpGoogleProperties
+		return ret
+	}).(FusionAuthIdpGooglePropertiesOutput)
+}
+
+// Google Identity Services login API configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to initialize the API via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name. If the `loginMethod` is set to UsePopup and this value contains the conflicting ux_mode=redirect property, that single property will be replaced with ux_mode=popup.
+func (o FusionAuthIdpGooglePropertiesPtrOutput) Api() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleProperties) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Api
+	}).(pulumi.StringPtrOutput)
+}
+
+// Google Identity Services button configuration in a properties file formatted String. Any attribute from Google's documentation can be added. Properties can be referenced in templates that support Google login to render the login button via HTML or JavaScript. The properties specified in this field should not include the data- prefix on the property name.
+func (o FusionAuthIdpGooglePropertiesPtrOutput) Button() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpGoogleProperties) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Button
+	}).(pulumi.StringPtrOutput)
+}
+
 type FusionAuthIdpGoogleTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -6981,7 +8259,7 @@ type FusionAuthIdpGoogleTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpGoogleTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7040,7 +8318,7 @@ func (o FusionAuthIdpGoogleTenantConfigurationOutput) ToFusionAuthIdpGoogleTenan
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpGoogleTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpGoogleTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -7080,7 +8358,7 @@ type FusionAuthIdpLinkedInApplicationConfiguration struct {
 	ApplicationId *string `pulumi:"applicationId"`
 	// This is an optional Application specific override for the top level `buttonText`.
 	ButtonText *string `pulumi:"buttonText"`
-	// The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+	// This is an optional Application specific override for the top level `clientId`.
 	ClientId *string `pulumi:"clientId"`
 	// This is an optional Application specific override for the top level `clientSecret`.
 	ClientSecret *string `pulumi:"clientSecret"`
@@ -7088,7 +8366,7 @@ type FusionAuthIdpLinkedInApplicationConfiguration struct {
 	CreateRegistration *bool `pulumi:"createRegistration"`
 	// Determines if this identity provider is enabled for the Application specified by the `applicationId` property.
 	Enabled *bool `pulumi:"enabled"`
-	// The top-level scope that you are requesting from LinkedIn.
+	// This is an optional Application specific override for the top level `scope`.
 	Scope *string `pulumi:"scope"`
 }
 
@@ -7108,7 +8386,7 @@ type FusionAuthIdpLinkedInApplicationConfigurationArgs struct {
 	ApplicationId pulumi.StringPtrInput `pulumi:"applicationId"`
 	// This is an optional Application specific override for the top level `buttonText`.
 	ButtonText pulumi.StringPtrInput `pulumi:"buttonText"`
-	// The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+	// This is an optional Application specific override for the top level `clientId`.
 	ClientId pulumi.StringPtrInput `pulumi:"clientId"`
 	// This is an optional Application specific override for the top level `clientSecret`.
 	ClientSecret pulumi.StringPtrInput `pulumi:"clientSecret"`
@@ -7116,7 +8394,7 @@ type FusionAuthIdpLinkedInApplicationConfigurationArgs struct {
 	CreateRegistration pulumi.BoolPtrInput `pulumi:"createRegistration"`
 	// Determines if this identity provider is enabled for the Application specified by the `applicationId` property.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
-	// The top-level scope that you are requesting from LinkedIn.
+	// This is an optional Application specific override for the top level `scope`.
 	Scope pulumi.StringPtrInput `pulumi:"scope"`
 }
 
@@ -7181,7 +8459,7 @@ func (o FusionAuthIdpLinkedInApplicationConfigurationOutput) ButtonText() pulumi
 	return o.ApplyT(func(v FusionAuthIdpLinkedInApplicationConfiguration) *string { return v.ButtonText }).(pulumi.StringPtrOutput)
 }
 
-// The top-level LinkedIn client id for your Application. This value is retrieved from the LinkedIn developer website when you set up your LinkedIn app.
+// This is an optional Application specific override for the top level `clientId`.
 func (o FusionAuthIdpLinkedInApplicationConfigurationOutput) ClientId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpLinkedInApplicationConfiguration) *string { return v.ClientId }).(pulumi.StringPtrOutput)
 }
@@ -7201,7 +8479,7 @@ func (o FusionAuthIdpLinkedInApplicationConfigurationOutput) Enabled() pulumi.Bo
 	return o.ApplyT(func(v FusionAuthIdpLinkedInApplicationConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
-// The top-level scope that you are requesting from LinkedIn.
+// This is an optional Application specific override for the top level `scope`.
 func (o FusionAuthIdpLinkedInApplicationConfigurationOutput) Scope() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpLinkedInApplicationConfiguration) *string { return v.Scope }).(pulumi.StringPtrOutput)
 }
@@ -7227,7 +8505,7 @@ func (o FusionAuthIdpLinkedInApplicationConfigurationArrayOutput) Index(i pulumi
 }
 
 type FusionAuthIdpLinkedInTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7247,7 +8525,7 @@ type FusionAuthIdpLinkedInTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpLinkedInTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7306,7 +8584,7 @@ func (o FusionAuthIdpLinkedInTenantConfigurationOutput) ToFusionAuthIdpLinkedInT
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpLinkedInTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpLinkedInTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -7502,7 +8780,7 @@ func (o FusionAuthIdpOpenIdConnectApplicationConfigurationArrayOutput) Index(i p
 }
 
 type FusionAuthIdpOpenIdConnectTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7522,7 +8800,7 @@ type FusionAuthIdpOpenIdConnectTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpOpenIdConnectTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7581,7 +8859,7 @@ func (o FusionAuthIdpOpenIdConnectTenantConfigurationOutput) ToFusionAuthIdpOpen
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpOpenIdConnectTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpOpenIdConnectTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -7768,7 +9046,7 @@ func (o FusionAuthIdpPsnApplicationConfigurationArrayOutput) Index(i pulumi.IntI
 }
 
 type FusionAuthIdpPsnTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7788,7 +9066,7 @@ type FusionAuthIdpPsnTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpPsnTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -7847,7 +9125,7 @@ func (o FusionAuthIdpPsnTenantConfigurationOutput) ToFusionAuthIdpPsnTenantConfi
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpPsnTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpPsnTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -7992,6 +9270,303 @@ func (o FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayOutput) Inde
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration {
 		return vs[0].([]FusionAuthIdpSamlV2IdpInitiatedApplicationConfiguration)[vs[1].(int)]
 	}).(FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration struct {
+	// The decryption configuration for the SAML v2 identity provider.
+	Decryption *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption `pulumi:"decryption"`
+}
+
+// FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationInput is an input type that accepts FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs and FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationInput` via:
+//
+//	FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs{...}
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutputWithContext(context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs struct {
+	// The decryption configuration for the SAML v2 identity provider.
+	Decryption FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput `pulumi:"decryption"`
+}
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput)
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput).ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput is an input type that accepts FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs, FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtr and FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput` via:
+//
+//	        FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput
+}
+
+type fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrType FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs
+
+func FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtr(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput {
+	return (*fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrType) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrType) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return o.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration) *FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration {
+		return &v
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput)
+}
+
+// The decryption configuration for the SAML v2 identity provider.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput) Decryption() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration) *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+		return v.Decryption
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput) Elem() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration) FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration
+		return ret
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput)
+}
+
+// The decryption configuration for the SAML v2 identity provider.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput) Decryption() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfiguration) *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+		if v == nil {
+			return nil
+		}
+		return v.Decryption
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption struct {
+	// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+	Enabled *bool `pulumi:"enabled"`
+	// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+	KeyTransportDecryptionKeyId string `pulumi:"keyTransportDecryptionKeyId"`
+}
+
+// FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionInput is an input type that accepts FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs and FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionInput` via:
+//
+//	FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs{...}
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutputWithContext(context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs struct {
+	// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+	KeyTransportDecryptionKeyId pulumi.StringInput `pulumi:"keyTransportDecryptionKeyId"`
+}
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput)
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput).ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput is an input type that accepts FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs, FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtr and FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput` via:
+//
+//	        FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput
+	ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput
+}
+
+type fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrType FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs
+
+func FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtr(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput {
+	return (*fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrType) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return i.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrType) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o.ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+		return &v
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput)
+}
+
+// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput) KeyTransportDecryptionKeyId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) string {
+		return v.KeyTransportDecryptionKeyId
+	}).(pulumi.StringOutput)
+}
+
+type FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) ToFusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) Elem() FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption
+		return ret
+	}).(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput)
+}
+
+// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `'enabled` is true.
+func (o FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput) KeyTransportDecryptionKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryption) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.KeyTransportDecryptionKeyId
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthIdpSamlV2IdpInitiatedTenantConfiguration struct {
@@ -8241,8 +9816,794 @@ func (o FusionAuthIdpSamlv2ApplicationConfigurationArrayOutput) Index(i pulumi.I
 	}).(FusionAuthIdpSamlv2ApplicationConfigurationOutput)
 }
 
+type FusionAuthIdpSamlv2AssertionConfiguration struct {
+	// The configuration for the SAML assertion decryption.
+	Decryption *FusionAuthIdpSamlv2AssertionConfigurationDecryption `pulumi:"decryption"`
+	// The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+	Destination *FusionAuthIdpSamlv2AssertionConfigurationDestination `pulumi:"destination"`
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationArgs and FusionAuthIdpSamlv2AssertionConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationInput` via:
+//
+//	FusionAuthIdpSamlv2AssertionConfigurationArgs{...}
+type FusionAuthIdpSamlv2AssertionConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationOutput() FusionAuthIdpSamlv2AssertionConfigurationOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationOutput
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationArgs struct {
+	// The configuration for the SAML assertion decryption.
+	Decryption FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput `pulumi:"decryption"`
+	// The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+	Destination FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput `pulumi:"destination"`
+}
+
+func (FusionAuthIdpSamlv2AssertionConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationOutput() FusionAuthIdpSamlv2AssertionConfigurationOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationOutput)
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationOutput).ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationPtrInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationArgs, FusionAuthIdpSamlv2AssertionConfigurationPtr and FusionAuthIdpSamlv2AssertionConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationPtrInput` via:
+//
+//	        FusionAuthIdpSamlv2AssertionConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlv2AssertionConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput
+}
+
+type fusionAuthIdpSamlv2AssertionConfigurationPtrType FusionAuthIdpSamlv2AssertionConfigurationArgs
+
+func FusionAuthIdpSamlv2AssertionConfigurationPtr(v *FusionAuthIdpSamlv2AssertionConfigurationArgs) FusionAuthIdpSamlv2AssertionConfigurationPtrInput {
+	return (*fusionAuthIdpSamlv2AssertionConfigurationPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlv2AssertionConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationOutput() FusionAuthIdpSamlv2AssertionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return o.ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlv2AssertionConfiguration) *FusionAuthIdpSamlv2AssertionConfiguration {
+		return &v
+	}).(FusionAuthIdpSamlv2AssertionConfigurationPtrOutput)
+}
+
+// The configuration for the SAML assertion decryption.
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) Decryption() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfiguration) *FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+		return v.Decryption
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput)
+}
+
+// The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+func (o FusionAuthIdpSamlv2AssertionConfigurationOutput) Destination() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfiguration) *FusionAuthIdpSamlv2AssertionConfigurationDestination {
+		return v.Destination
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) Elem() FusionAuthIdpSamlv2AssertionConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfiguration) FusionAuthIdpSamlv2AssertionConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlv2AssertionConfiguration
+		return ret
+	}).(FusionAuthIdpSamlv2AssertionConfigurationOutput)
+}
+
+// The configuration for the SAML assertion decryption.
+func (o FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) Decryption() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfiguration) *FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+		if v == nil {
+			return nil
+		}
+		return v.Decryption
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput)
+}
+
+// The array of URLs that FusionAuth will accept as SAML login destinations if the `policy` setting is AllowAlternates.
+func (o FusionAuthIdpSamlv2AssertionConfigurationPtrOutput) Destination() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfiguration) *FusionAuthIdpSamlv2AssertionConfigurationDestination {
+		if v == nil {
+			return nil
+		}
+		return v.Destination
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDecryption struct {
+	// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+	Enabled *bool `pulumi:"enabled"`
+	// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+	KeyTransportDecryptionKeyId string `pulumi:"keyTransportDecryptionKeyId"`
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationDecryptionInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs and FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationDecryptionInput` via:
+//
+//	FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs{...}
+type FusionAuthIdpSamlv2AssertionConfigurationDecryptionInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs struct {
+	// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+	KeyTransportDecryptionKeyId pulumi.StringInput `pulumi:"keyTransportDecryptionKeyId"`
+}
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput)
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput).ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs, FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtr and FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput` via:
+//
+//	        FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput
+}
+
+type fusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrType FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs
+
+func FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtr(v *FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput {
+	return (*fusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o.ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlv2AssertionConfigurationDecryption) *FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+		return &v
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput)
+}
+
+// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfigurationDecryption) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput) KeyTransportDecryptionKeyId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfigurationDecryption) string {
+		return v.KeyTransportDecryptionKeyId
+	}).(pulumi.StringOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfigurationDecryption)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) Elem() FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDecryption) FusionAuthIdpSamlv2AssertionConfigurationDecryption {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlv2AssertionConfigurationDecryption
+		return ret
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput)
+}
+
+// Determines if FusionAuth requires encrypted assertions in SAML responses from the identity provider. When true, SAML responses from the identity provider containing unencrypted assertions will be rejected by FusionAuth.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDecryption) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The Id of the key stored in Key Master that is used to decrypt the symmetric key on the SAML response sent to FusionAuth from the identity provider. The selected Key must contain an RSA private key. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput) KeyTransportDecryptionKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDecryption) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.KeyTransportDecryptionKeyId
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDestination struct {
+	// The alternate destinations of the assertion.
+	Alternates []string `pulumi:"alternates"`
+	// The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+	Policy *string `pulumi:"policy"`
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationDestinationInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs and FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationDestinationInput` via:
+//
+//	FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs{...}
+type FusionAuthIdpSamlv2AssertionConfigurationDestinationInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs struct {
+	// The alternate destinations of the assertion.
+	Alternates pulumi.StringArrayInput `pulumi:"alternates"`
+	// The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+	Policy pulumi.StringPtrInput `pulumi:"policy"`
+}
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDestination)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput)
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput).ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput is an input type that accepts FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs, FusionAuthIdpSamlv2AssertionConfigurationDestinationPtr and FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput` via:
+//
+//	        FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput
+	ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput
+}
+
+type fusionAuthIdpSamlv2AssertionConfigurationDestinationPtrType FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs
+
+func FusionAuthIdpSamlv2AssertionConfigurationDestinationPtr(v *FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput {
+	return (*fusionAuthIdpSamlv2AssertionConfigurationDestinationPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlv2AssertionConfigurationDestinationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfigurationDestination)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationDestinationPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlv2AssertionConfigurationDestinationPtrType) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDestination)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o.ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlv2AssertionConfigurationDestination) *FusionAuthIdpSamlv2AssertionConfigurationDestination {
+		return &v
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput)
+}
+
+// The alternate destinations of the assertion.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) Alternates() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfigurationDestination) []string { return v.Alternates }).(pulumi.StringArrayOutput)
+}
+
+// The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput) Policy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2AssertionConfigurationDestination) *string { return v.Policy }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2AssertionConfigurationDestination)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput() FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) ToFusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) Elem() FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDestination) FusionAuthIdpSamlv2AssertionConfigurationDestination {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlv2AssertionConfigurationDestination
+		return ret
+	}).(FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput)
+}
+
+// The alternate destinations of the assertion.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) Alternates() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDestination) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Alternates
+	}).(pulumi.StringArrayOutput)
+}
+
+// The policy to use when performing a destination assertion on the SAML login request. The possible values are `Enabled`, `Disabled`, and `AllowAlternates`.
+func (o FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput) Policy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2AssertionConfigurationDestination) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Policy
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2IdpInitiatedConfiguration struct {
+	// Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+	Enabled *bool `pulumi:"enabled"`
+	// The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+	Issuer *string `pulumi:"issuer"`
+}
+
+// FusionAuthIdpSamlv2IdpInitiatedConfigurationInput is an input type that accepts FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs and FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2IdpInitiatedConfigurationInput` via:
+//
+//	FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs{...}
+type FusionAuthIdpSamlv2IdpInitiatedConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput
+	ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutputWithContext(context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput
+}
+
+type FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs struct {
+	// Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+	Issuer pulumi.StringPtrInput `pulumi:"issuer"`
+}
+
+func (FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2IdpInitiatedConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput {
+	return i.ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput)
+}
+
+func (i FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput).ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput is an input type that accepts FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs, FusionAuthIdpSamlv2IdpInitiatedConfigurationPtr and FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput` via:
+//
+//	        FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput
+	ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput
+}
+
+type fusionAuthIdpSamlv2IdpInitiatedConfigurationPtrType FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs
+
+func FusionAuthIdpSamlv2IdpInitiatedConfigurationPtr(v *FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput {
+	return (*fusionAuthIdpSamlv2IdpInitiatedConfigurationPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlv2IdpInitiatedConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2IdpInitiatedConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlv2IdpInitiatedConfigurationPtrType) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlv2IdpInitiatedConfigurationPtrType) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2IdpInitiatedConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return o.ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlv2IdpInitiatedConfiguration) *FusionAuthIdpSamlv2IdpInitiatedConfiguration {
+		return &v
+	}).(FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput)
+}
+
+// Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2IdpInitiatedConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput) Issuer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2IdpInitiatedConfiguration) *string { return v.Issuer }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2IdpInitiatedConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput() FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) ToFusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) Elem() FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2IdpInitiatedConfiguration) FusionAuthIdpSamlv2IdpInitiatedConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlv2IdpInitiatedConfiguration
+		return ret
+	}).(FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput)
+}
+
+// Determines if FusionAuth will accept IdP initiated login requests from this SAMLv2 Identity Provider.
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2IdpInitiatedConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The EntityId (unique identifier) of the SAML v2 identity provider. This value should be provided to you. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput) Issuer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2IdpInitiatedConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Issuer
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2LoginHintConfiguration struct {
+	// When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+	Enabled *bool `pulumi:"enabled"`
+	// The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+	ParameterName *string `pulumi:"parameterName"`
+}
+
+// FusionAuthIdpSamlv2LoginHintConfigurationInput is an input type that accepts FusionAuthIdpSamlv2LoginHintConfigurationArgs and FusionAuthIdpSamlv2LoginHintConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2LoginHintConfigurationInput` via:
+//
+//	FusionAuthIdpSamlv2LoginHintConfigurationArgs{...}
+type FusionAuthIdpSamlv2LoginHintConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2LoginHintConfigurationOutput() FusionAuthIdpSamlv2LoginHintConfigurationOutput
+	ToFusionAuthIdpSamlv2LoginHintConfigurationOutputWithContext(context.Context) FusionAuthIdpSamlv2LoginHintConfigurationOutput
+}
+
+type FusionAuthIdpSamlv2LoginHintConfigurationArgs struct {
+	// When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+	ParameterName pulumi.StringPtrInput `pulumi:"parameterName"`
+}
+
+func (FusionAuthIdpSamlv2LoginHintConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2LoginHintConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthIdpSamlv2LoginHintConfigurationArgs) ToFusionAuthIdpSamlv2LoginHintConfigurationOutput() FusionAuthIdpSamlv2LoginHintConfigurationOutput {
+	return i.ToFusionAuthIdpSamlv2LoginHintConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2LoginHintConfigurationArgs) ToFusionAuthIdpSamlv2LoginHintConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2LoginHintConfigurationOutput)
+}
+
+func (i FusionAuthIdpSamlv2LoginHintConfigurationArgs) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutput() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthIdpSamlv2LoginHintConfigurationArgs) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2LoginHintConfigurationOutput).ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthIdpSamlv2LoginHintConfigurationPtrInput is an input type that accepts FusionAuthIdpSamlv2LoginHintConfigurationArgs, FusionAuthIdpSamlv2LoginHintConfigurationPtr and FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthIdpSamlv2LoginHintConfigurationPtrInput` via:
+//
+//	        FusionAuthIdpSamlv2LoginHintConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthIdpSamlv2LoginHintConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutput() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput
+	ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(context.Context) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput
+}
+
+type fusionAuthIdpSamlv2LoginHintConfigurationPtrType FusionAuthIdpSamlv2LoginHintConfigurationArgs
+
+func FusionAuthIdpSamlv2LoginHintConfigurationPtr(v *FusionAuthIdpSamlv2LoginHintConfigurationArgs) FusionAuthIdpSamlv2LoginHintConfigurationPtrInput {
+	return (*fusionAuthIdpSamlv2LoginHintConfigurationPtrType)(v)
+}
+
+func (*fusionAuthIdpSamlv2LoginHintConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2LoginHintConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthIdpSamlv2LoginHintConfigurationPtrType) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutput() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return i.ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthIdpSamlv2LoginHintConfigurationPtrType) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput)
+}
+
+type FusionAuthIdpSamlv2LoginHintConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2LoginHintConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthIdpSamlv2LoginHintConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationOutput() FusionAuthIdpSamlv2LoginHintConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutput() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return o.ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthIdpSamlv2LoginHintConfiguration) *FusionAuthIdpSamlv2LoginHintConfiguration {
+		return &v
+	}).(FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput)
+}
+
+// When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2LoginHintConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2LoginHintConfigurationOutput) ParameterName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSamlv2LoginHintConfiguration) *string { return v.ParameterName }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthIdpSamlv2LoginHintConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutput() FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) ToFusionAuthIdpSamlv2LoginHintConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) Elem() FusionAuthIdpSamlv2LoginHintConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2LoginHintConfiguration) FusionAuthIdpSamlv2LoginHintConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthIdpSamlv2LoginHintConfiguration
+		return ret
+	}).(FusionAuthIdpSamlv2LoginHintConfigurationOutput)
+}
+
+// When enabled and HTTP-Redirect bindings are used, FusionAuth will provide the username or email address when available to the IdP as a login hint using the configured parameter name set by the `parameterName` to initiate the AuthN request.
+func (o FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2LoginHintConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The name of the parameter used to pass the username or email as login hint to the IDP when enabled, and HTTP redirect bindings are used to initiate the AuthN request. The default value is `loginHint`. Required when `enabled` is true.
+func (o FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput) ParameterName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthIdpSamlv2LoginHintConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ParameterName
+	}).(pulumi.StringPtrOutput)
+}
+
 type FusionAuthIdpSamlv2TenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8262,7 +10623,7 @@ type FusionAuthIdpSamlv2TenantConfigurationInput interface {
 }
 
 type FusionAuthIdpSamlv2TenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8321,7 +10682,7 @@ func (o FusionAuthIdpSamlv2TenantConfigurationOutput) ToFusionAuthIdpSamlv2Tenan
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpSamlv2TenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpSamlv2TenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -8357,6 +10718,8 @@ func (o FusionAuthIdpSamlv2TenantConfigurationArrayOutput) Index(i pulumi.IntInp
 }
 
 type FusionAuthIdpSteamApplicationConfiguration struct {
+	// This is an optional Application specific override for the top level apiMode.
+	ApiMode *string `pulumi:"apiMode"`
 	// ID of the Application to apply this configuration to.
 	ApplicationId *string `pulumi:"applicationId"`
 	// This is an optional Application specific override for the top level button text.
@@ -8385,6 +10748,8 @@ type FusionAuthIdpSteamApplicationConfigurationInput interface {
 }
 
 type FusionAuthIdpSteamApplicationConfigurationArgs struct {
+	// This is an optional Application specific override for the top level apiMode.
+	ApiMode pulumi.StringPtrInput `pulumi:"apiMode"`
 	// ID of the Application to apply this configuration to.
 	ApplicationId pulumi.StringPtrInput `pulumi:"applicationId"`
 	// This is an optional Application specific override for the top level button text.
@@ -8452,6 +10817,11 @@ func (o FusionAuthIdpSteamApplicationConfigurationOutput) ToFusionAuthIdpSteamAp
 	return o
 }
 
+// This is an optional Application specific override for the top level apiMode.
+func (o FusionAuthIdpSteamApplicationConfigurationOutput) ApiMode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthIdpSteamApplicationConfiguration) *string { return v.ApiMode }).(pulumi.StringPtrOutput)
+}
+
 // ID of the Application to apply this configuration to.
 func (o FusionAuthIdpSteamApplicationConfigurationOutput) ApplicationId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpSteamApplicationConfiguration) *string { return v.ApplicationId }).(pulumi.StringPtrOutput)
@@ -8508,7 +10878,7 @@ func (o FusionAuthIdpSteamApplicationConfigurationArrayOutput) Index(i pulumi.In
 }
 
 type FusionAuthIdpSteamTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8528,7 +10898,7 @@ type FusionAuthIdpSteamTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpSteamTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8587,7 +10957,7 @@ func (o FusionAuthIdpSteamTenantConfigurationOutput) ToFusionAuthIdpSteamTenantC
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpSteamTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpSteamTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -8774,7 +11144,7 @@ func (o FusionAuthIdpTwitchApplicationConfigurationArrayOutput) Index(i pulumi.I
 }
 
 type FusionAuthIdpTwitchTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8794,7 +11164,7 @@ type FusionAuthIdpTwitchTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpTwitchTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -8853,7 +11223,7 @@ func (o FusionAuthIdpTwitchTenantConfigurationOutput) ToFusionAuthIdpTwitchTenan
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpTwitchTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpTwitchTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -9040,7 +11410,7 @@ func (o FusionAuthIdpXBoxApplicationConfigurationArrayOutput) Index(i pulumi.Int
 }
 
 type FusionAuthIdpXBoxTenantConfiguration struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled *bool `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks *int `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -9060,7 +11430,7 @@ type FusionAuthIdpXBoxTenantConfigurationInput interface {
 }
 
 type FusionAuthIdpXBoxTenantConfigurationArgs struct {
-	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+	// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 	LimitUserLinkCountEnabled pulumi.BoolPtrInput `pulumi:"limitUserLinkCountEnabled"`
 	// Determines if this provider is enabled. If it is false then it will be disabled globally.
 	LimitUserLinkCountMaximumLinks pulumi.IntPtrInput `pulumi:"limitUserLinkCountMaximumLinks"`
@@ -9119,7 +11489,7 @@ func (o FusionAuthIdpXBoxTenantConfigurationOutput) ToFusionAuthIdpXBoxTenantCon
 	return o
 }
 
-// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
 func (o FusionAuthIdpXBoxTenantConfigurationOutput) LimitUserLinkCountEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthIdpXBoxTenantConfiguration) *bool { return v.LimitUserLinkCountEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -9454,6 +11824,8 @@ type FusionAuthSystemConfigurationCorsConfiguration struct {
 	AllowedMethods []string `pulumi:"allowedMethods"`
 	// The Access-Control-Allow-Origin response header values as described by MDN Access-Control-Allow-Origin. If the wildcard * is specified, no additional domains may be specified.
 	AllowedOrigins []string `pulumi:"allowedOrigins"`
+	// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+	Debug *bool `pulumi:"debug"`
 	// Whether the FusionAuth CORS filter will process requests made to FusionAuth.
 	Enabled *bool `pulumi:"enabled"`
 	// The Access-Control-Expose-Headers response header values as described by MDN Access-Control-Expose-Headers.
@@ -9482,6 +11854,8 @@ type FusionAuthSystemConfigurationCorsConfigurationArgs struct {
 	AllowedMethods pulumi.StringArrayInput `pulumi:"allowedMethods"`
 	// The Access-Control-Allow-Origin response header values as described by MDN Access-Control-Allow-Origin. If the wildcard * is specified, no additional domains may be specified.
 	AllowedOrigins pulumi.StringArrayInput `pulumi:"allowedOrigins"`
+	// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+	Debug pulumi.BoolPtrInput `pulumi:"debug"`
 	// Whether the FusionAuth CORS filter will process requests made to FusionAuth.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
 	// The Access-Control-Expose-Headers response header values as described by MDN Access-Control-Expose-Headers.
@@ -9587,6 +11961,11 @@ func (o FusionAuthSystemConfigurationCorsConfigurationOutput) AllowedOrigins() p
 	return o.ApplyT(func(v FusionAuthSystemConfigurationCorsConfiguration) []string { return v.AllowedOrigins }).(pulumi.StringArrayOutput)
 }
 
+// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+func (o FusionAuthSystemConfigurationCorsConfigurationOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationCorsConfiguration) *bool { return v.Debug }).(pulumi.BoolPtrOutput)
+}
+
 // Whether the FusionAuth CORS filter will process requests made to FusionAuth.
 func (o FusionAuthSystemConfigurationCorsConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthSystemConfigurationCorsConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
@@ -9664,6 +12043,16 @@ func (o FusionAuthSystemConfigurationCorsConfigurationPtrOutput) AllowedOrigins(
 		}
 		return v.AllowedOrigins
 	}).(pulumi.StringArrayOutput)
+}
+
+// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+func (o FusionAuthSystemConfigurationCorsConfigurationPtrOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationCorsConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Debug
+	}).(pulumi.BoolPtrOutput)
 }
 
 // Whether the FusionAuth CORS filter will process requests made to FusionAuth.
@@ -10126,6 +12515,162 @@ func (o FusionAuthSystemConfigurationLoginRecordConfigurationDeletePtrOutput) Nu
 	}).(pulumi.IntPtrOutput)
 }
 
+type FusionAuthSystemConfigurationTrustedProxyConfiguration struct {
+	// This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+	TrustPolicy *string `pulumi:"trustPolicy"`
+	// An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+	Trusteds []string `pulumi:"trusteds"`
+}
+
+// FusionAuthSystemConfigurationTrustedProxyConfigurationInput is an input type that accepts FusionAuthSystemConfigurationTrustedProxyConfigurationArgs and FusionAuthSystemConfigurationTrustedProxyConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationTrustedProxyConfigurationInput` via:
+//
+//	FusionAuthSystemConfigurationTrustedProxyConfigurationArgs{...}
+type FusionAuthSystemConfigurationTrustedProxyConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationOutput
+	ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutputWithContext(context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationOutput
+}
+
+type FusionAuthSystemConfigurationTrustedProxyConfigurationArgs struct {
+	// This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+	TrustPolicy pulumi.StringPtrInput `pulumi:"trustPolicy"`
+	// An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+	Trusteds pulumi.StringArrayInput `pulumi:"trusteds"`
+}
+
+func (FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationTrustedProxyConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationOutput {
+	return i.ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationTrustedProxyConfigurationOutput)
+}
+
+func (i FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationTrustedProxyConfigurationOutput).ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput is an input type that accepts FusionAuthSystemConfigurationTrustedProxyConfigurationArgs, FusionAuthSystemConfigurationTrustedProxyConfigurationPtr and FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput` via:
+//
+//	        FusionAuthSystemConfigurationTrustedProxyConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput
+	ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput
+}
+
+type fusionAuthSystemConfigurationTrustedProxyConfigurationPtrType FusionAuthSystemConfigurationTrustedProxyConfigurationArgs
+
+func FusionAuthSystemConfigurationTrustedProxyConfigurationPtr(v *FusionAuthSystemConfigurationTrustedProxyConfigurationArgs) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput {
+	return (*fusionAuthSystemConfigurationTrustedProxyConfigurationPtrType)(v)
+}
+
+func (*fusionAuthSystemConfigurationTrustedProxyConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationTrustedProxyConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthSystemConfigurationTrustedProxyConfigurationPtrType) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthSystemConfigurationTrustedProxyConfigurationPtrType) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput)
+}
+
+type FusionAuthSystemConfigurationTrustedProxyConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationTrustedProxyConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return o.ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthSystemConfigurationTrustedProxyConfiguration) *FusionAuthSystemConfigurationTrustedProxyConfiguration {
+		return &v
+	}).(FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput)
+}
+
+// This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) TrustPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationTrustedProxyConfiguration) *string { return v.TrustPolicy }).(pulumi.StringPtrOutput)
+}
+
+// An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationOutput) Trusteds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationTrustedProxyConfiguration) []string { return v.Trusteds }).(pulumi.StringArrayOutput)
+}
+
+type FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationTrustedProxyConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) ToFusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) Elem() FusionAuthSystemConfigurationTrustedProxyConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationTrustedProxyConfiguration) FusionAuthSystemConfigurationTrustedProxyConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthSystemConfigurationTrustedProxyConfiguration
+		return ret
+	}).(FusionAuthSystemConfigurationTrustedProxyConfigurationOutput)
+}
+
+// This setting is used to resolve the client IP address for use in logging, webhooks, and IP-based access control when an X-Forwarded-For header is provided. Because proxies are free to rewrite the X-Forwarded-For header, an untrusted proxy could write a value that allowed it to bypass IP-based ACLs, or cause an incorrect IP address to be logged or sent to a webhook. Valid values are `All` and `OnlyConfigured`.
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) TrustPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationTrustedProxyConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.TrustPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// An array of IP addresses, representing the set of trusted upstream proxies. This value will be accepted but ignored when `trustPolicy` is set to `All`. Values may be specified as IPv4, or IPv6 format, and ranges of addresses are also accepted in CIDR notation.
+func (o FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput) Trusteds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationTrustedProxyConfiguration) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Trusteds
+	}).(pulumi.StringArrayOutput)
+}
+
 type FusionAuthSystemConfigurationUiConfiguration struct {
 	// A hexadecimal color to override the default menu color in the user interface.
 	HeaderColor *string `pulumi:"headerColor"`
@@ -10299,6 +12844,143 @@ func (o FusionAuthSystemConfigurationUiConfigurationPtrOutput) MenuFontColor() p
 		}
 		return v.MenuFontColor
 	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthSystemConfigurationUsageDataConfiguration struct {
+	// Whether or not FusionAuth collects and sends usage data to improve the product.
+	Enabled *bool `pulumi:"enabled"`
+}
+
+// FusionAuthSystemConfigurationUsageDataConfigurationInput is an input type that accepts FusionAuthSystemConfigurationUsageDataConfigurationArgs and FusionAuthSystemConfigurationUsageDataConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationUsageDataConfigurationInput` via:
+//
+//	FusionAuthSystemConfigurationUsageDataConfigurationArgs{...}
+type FusionAuthSystemConfigurationUsageDataConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationUsageDataConfigurationOutput() FusionAuthSystemConfigurationUsageDataConfigurationOutput
+	ToFusionAuthSystemConfigurationUsageDataConfigurationOutputWithContext(context.Context) FusionAuthSystemConfigurationUsageDataConfigurationOutput
+}
+
+type FusionAuthSystemConfigurationUsageDataConfigurationArgs struct {
+	// Whether or not FusionAuth collects and sends usage data to improve the product.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+}
+
+func (FusionAuthSystemConfigurationUsageDataConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationUsageDataConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthSystemConfigurationUsageDataConfigurationArgs) ToFusionAuthSystemConfigurationUsageDataConfigurationOutput() FusionAuthSystemConfigurationUsageDataConfigurationOutput {
+	return i.ToFusionAuthSystemConfigurationUsageDataConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationUsageDataConfigurationArgs) ToFusionAuthSystemConfigurationUsageDataConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationUsageDataConfigurationOutput)
+}
+
+func (i FusionAuthSystemConfigurationUsageDataConfigurationArgs) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutput() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthSystemConfigurationUsageDataConfigurationArgs) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationUsageDataConfigurationOutput).ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthSystemConfigurationUsageDataConfigurationPtrInput is an input type that accepts FusionAuthSystemConfigurationUsageDataConfigurationArgs, FusionAuthSystemConfigurationUsageDataConfigurationPtr and FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthSystemConfigurationUsageDataConfigurationPtrInput` via:
+//
+//	        FusionAuthSystemConfigurationUsageDataConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthSystemConfigurationUsageDataConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutput() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput
+	ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(context.Context) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput
+}
+
+type fusionAuthSystemConfigurationUsageDataConfigurationPtrType FusionAuthSystemConfigurationUsageDataConfigurationArgs
+
+func FusionAuthSystemConfigurationUsageDataConfigurationPtr(v *FusionAuthSystemConfigurationUsageDataConfigurationArgs) FusionAuthSystemConfigurationUsageDataConfigurationPtrInput {
+	return (*fusionAuthSystemConfigurationUsageDataConfigurationPtrType)(v)
+}
+
+func (*fusionAuthSystemConfigurationUsageDataConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationUsageDataConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthSystemConfigurationUsageDataConfigurationPtrType) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutput() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return i.ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthSystemConfigurationUsageDataConfigurationPtrType) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput)
+}
+
+type FusionAuthSystemConfigurationUsageDataConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationUsageDataConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthSystemConfigurationUsageDataConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationOutput() FusionAuthSystemConfigurationUsageDataConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutput() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return o.ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthSystemConfigurationUsageDataConfiguration) *FusionAuthSystemConfigurationUsageDataConfiguration {
+		return &v
+	}).(FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput)
+}
+
+// Whether or not FusionAuth collects and sends usage data to improve the product.
+func (o FusionAuthSystemConfigurationUsageDataConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthSystemConfigurationUsageDataConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+type FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthSystemConfigurationUsageDataConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutput() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput) ToFusionAuthSystemConfigurationUsageDataConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput) Elem() FusionAuthSystemConfigurationUsageDataConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationUsageDataConfiguration) FusionAuthSystemConfigurationUsageDataConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthSystemConfigurationUsageDataConfiguration
+		return ret
+	}).(FusionAuthSystemConfigurationUsageDataConfigurationOutput)
+}
+
+// Whether or not FusionAuth collects and sends usage data to improve the product.
+func (o FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfigurationUsageDataConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
 }
 
 type FusionAuthSystemConfigurationWebhookEventLogConfiguration struct {
@@ -11061,7 +13743,9 @@ func (o FusionAuthTenantConnectorPolicyArrayOutput) Index(i pulumi.IntInput) Fus
 
 type FusionAuthTenantEmailConfiguration struct {
 	// The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
-	AdditionalHeaders map[string]interface{} `pulumi:"additionalHeaders"`
+	AdditionalHeaders map[string]string `pulumi:"additionalHeaders"`
+	// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+	Debug *bool `pulumi:"debug"`
 	// The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	DefaultFromEmail *string `pulumi:"defaultFromEmail"`
 	// The default From Name used in sending emails when a from name is not provided on an individual email template. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
@@ -11073,7 +13757,7 @@ type FusionAuthTenantEmailConfiguration struct {
 	// The Id of the Email Template that is used when a user is sent a forgot password email.
 	ForgotPasswordEmailTemplateId *string `pulumi:"forgotPasswordEmailTemplateId"`
 	// The host name of the SMTP server that FusionAuth will use.
-	Host string `pulumi:"host"`
+	Host *string `pulumi:"host"`
 	// When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
 	ImplicitEmailVerificationAllowed *bool `pulumi:"implicitEmailVerificationAllowed"`
 	// The Id of the Email Template used to send emails to users when another user attempts to create an account with their login Id.
@@ -11093,7 +13777,7 @@ type FusionAuthTenantEmailConfiguration struct {
 	// The Id of the Passwordless Email Template.
 	PasswordlessEmailTemplateId *string `pulumi:"passwordlessEmailTemplateId"`
 	// The port of the SMTP server that FusionAuth will use.
-	Port int `pulumi:"port"`
+	Port *int `pulumi:"port"`
 	// Additional Email Configuration in a properties file formatted String.
 	Properties *string `pulumi:"properties"`
 	// The type of security protocol FusionAuth will use when connecting to the SMTP server.
@@ -11130,7 +13814,9 @@ type FusionAuthTenantEmailConfigurationInput interface {
 
 type FusionAuthTenantEmailConfigurationArgs struct {
 	// The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
-	AdditionalHeaders pulumi.MapInput `pulumi:"additionalHeaders"`
+	AdditionalHeaders pulumi.StringMapInput `pulumi:"additionalHeaders"`
+	// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+	Debug pulumi.BoolPtrInput `pulumi:"debug"`
 	// The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
 	DefaultFromEmail pulumi.StringPtrInput `pulumi:"defaultFromEmail"`
 	// The default From Name used in sending emails when a from name is not provided on an individual email template. This is the display name part of the email address ( i.e. Jared Dunn <jared@piedpiper.com>).
@@ -11142,7 +13828,7 @@ type FusionAuthTenantEmailConfigurationArgs struct {
 	// The Id of the Email Template that is used when a user is sent a forgot password email.
 	ForgotPasswordEmailTemplateId pulumi.StringPtrInput `pulumi:"forgotPasswordEmailTemplateId"`
 	// The host name of the SMTP server that FusionAuth will use.
-	Host pulumi.StringInput `pulumi:"host"`
+	Host pulumi.StringPtrInput `pulumi:"host"`
 	// When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
 	ImplicitEmailVerificationAllowed pulumi.BoolPtrInput `pulumi:"implicitEmailVerificationAllowed"`
 	// The Id of the Email Template used to send emails to users when another user attempts to create an account with their login Id.
@@ -11162,7 +13848,7 @@ type FusionAuthTenantEmailConfigurationArgs struct {
 	// The Id of the Passwordless Email Template.
 	PasswordlessEmailTemplateId pulumi.StringPtrInput `pulumi:"passwordlessEmailTemplateId"`
 	// The port of the SMTP server that FusionAuth will use.
-	Port pulumi.IntInput `pulumi:"port"`
+	Port pulumi.IntPtrInput `pulumi:"port"`
 	// Additional Email Configuration in a properties file formatted String.
 	Properties pulumi.StringPtrInput `pulumi:"properties"`
 	// The type of security protocol FusionAuth will use when connecting to the SMTP server.
@@ -11264,8 +13950,13 @@ func (o FusionAuthTenantEmailConfigurationOutput) ToFusionAuthTenantEmailConfigu
 }
 
 // The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
-func (o FusionAuthTenantEmailConfigurationOutput) AdditionalHeaders() pulumi.MapOutput {
-	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) map[string]interface{} { return v.AdditionalHeaders }).(pulumi.MapOutput)
+func (o FusionAuthTenantEmailConfigurationOutput) AdditionalHeaders() pulumi.StringMapOutput {
+	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) map[string]string { return v.AdditionalHeaders }).(pulumi.StringMapOutput)
+}
+
+// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+func (o FusionAuthTenantEmailConfigurationOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) *bool { return v.Debug }).(pulumi.BoolPtrOutput)
 }
 
 // The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
@@ -11294,8 +13985,8 @@ func (o FusionAuthTenantEmailConfigurationOutput) ForgotPasswordEmailTemplateId(
 }
 
 // The host name of the SMTP server that FusionAuth will use.
-func (o FusionAuthTenantEmailConfigurationOutput) Host() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) string { return v.Host }).(pulumi.StringOutput)
+func (o FusionAuthTenantEmailConfigurationOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) *string { return v.Host }).(pulumi.StringPtrOutput)
 }
 
 // When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
@@ -11344,8 +14035,8 @@ func (o FusionAuthTenantEmailConfigurationOutput) PasswordlessEmailTemplateId() 
 }
 
 // The port of the SMTP server that FusionAuth will use.
-func (o FusionAuthTenantEmailConfigurationOutput) Port() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) int { return v.Port }).(pulumi.IntOutput)
+func (o FusionAuthTenantEmailConfigurationOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantEmailConfiguration) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
 
 // Additional Email Configuration in a properties file formatted String.
@@ -11429,13 +14120,23 @@ func (o FusionAuthTenantEmailConfigurationPtrOutput) Elem() FusionAuthTenantEmai
 }
 
 // The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
-func (o FusionAuthTenantEmailConfigurationPtrOutput) AdditionalHeaders() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthTenantEmailConfiguration) map[string]interface{} {
+func (o FusionAuthTenantEmailConfigurationPtrOutput) AdditionalHeaders() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthTenantEmailConfiguration) map[string]string {
 		if v == nil {
 			return nil
 		}
 		return v.AdditionalHeaders
-	}).(pulumi.MapOutput)
+	}).(pulumi.StringMapOutput)
+}
+
+// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+func (o FusionAuthTenantEmailConfigurationPtrOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantEmailConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Debug
+	}).(pulumi.BoolPtrOutput)
 }
 
 // The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn <jared@piedpiper.com>).
@@ -11494,7 +14195,7 @@ func (o FusionAuthTenantEmailConfigurationPtrOutput) Host() pulumi.StringPtrOutp
 		if v == nil {
 			return nil
 		}
-		return &v.Host
+		return v.Host
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -11594,7 +14295,7 @@ func (o FusionAuthTenantEmailConfigurationPtrOutput) Port() pulumi.IntPtrOutput 
 		if v == nil {
 			return nil
 		}
-		return &v.Port
+		return v.Port
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -11710,7 +14411,7 @@ func (o FusionAuthTenantEmailConfigurationPtrOutput) VerifyEmailWhenChanged() pu
 type FusionAuthTenantEmailConfigurationUnverified struct {
 	// When this value is set to true, the user is allowed to change their email address when they are gated because they haven’t verified their email address.
 	AllowEmailChangeWhenGated *bool `pulumi:"allowEmailChangeWhenGated"`
-	// = (Optional) The behavior when detecting breaches at time of user login
+	// = (Optional) The behavior when detecting breaches at time of user login.
 	Behavior *string `pulumi:"behavior"`
 }
 
@@ -11728,7 +14429,7 @@ type FusionAuthTenantEmailConfigurationUnverifiedInput interface {
 type FusionAuthTenantEmailConfigurationUnverifiedArgs struct {
 	// When this value is set to true, the user is allowed to change their email address when they are gated because they haven’t verified their email address.
 	AllowEmailChangeWhenGated pulumi.BoolPtrInput `pulumi:"allowEmailChangeWhenGated"`
-	// = (Optional) The behavior when detecting breaches at time of user login
+	// = (Optional) The behavior when detecting breaches at time of user login.
 	Behavior pulumi.StringPtrInput `pulumi:"behavior"`
 }
 
@@ -11814,7 +14515,7 @@ func (o FusionAuthTenantEmailConfigurationUnverifiedOutput) AllowEmailChangeWhen
 	return o.ApplyT(func(v FusionAuthTenantEmailConfigurationUnverified) *bool { return v.AllowEmailChangeWhenGated }).(pulumi.BoolPtrOutput)
 }
 
-// = (Optional) The behavior when detecting breaches at time of user login
+// = (Optional) The behavior when detecting breaches at time of user login.
 func (o FusionAuthTenantEmailConfigurationUnverifiedOutput) Behavior() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantEmailConfigurationUnverified) *string { return v.Behavior }).(pulumi.StringPtrOutput)
 }
@@ -11853,7 +14554,7 @@ func (o FusionAuthTenantEmailConfigurationUnverifiedPtrOutput) AllowEmailChangeW
 	}).(pulumi.BoolPtrOutput)
 }
 
-// = (Optional) The behavior when detecting breaches at time of user login
+// = (Optional) The behavior when detecting breaches at time of user login.
 func (o FusionAuthTenantEmailConfigurationUnverifiedPtrOutput) Behavior() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantEmailConfigurationUnverified) *string {
 		if v == nil {
@@ -11979,47 +14680,53 @@ func (o FusionAuthTenantEventConfigurationArrayOutput) Index(i pulumi.IntInput) 
 }
 
 type FusionAuthTenantExternalIdentifierConfiguration struct {
-	// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
-	AuthorizationGrantIdTimeToLiveInSeconds int                                                                      `pulumi:"authorizationGrantIdTimeToLiveInSeconds"`
-	ChangePasswordIdGenerator               FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator `pulumi:"changePasswordIdGenerator"`
-	// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-	ChangePasswordIdTimeToLiveInSeconds int `pulumi:"changePasswordIdTimeToLiveInSeconds"`
-	// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-	DeviceCodeTimeToLiveInSeconds int                                                                         `pulumi:"deviceCodeTimeToLiveInSeconds"`
-	DeviceUserCodeIdGenerator     FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator    `pulumi:"deviceUserCodeIdGenerator"`
-	EmailVerificationIdGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator `pulumi:"emailVerificationIdGenerator"`
+	// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
+	AuthorizationGrantIdTimeToLiveInSeconds *int                                                                      `pulumi:"authorizationGrantIdTimeToLiveInSeconds"`
+	ChangePasswordIdGenerator               *FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator `pulumi:"changePasswordIdGenerator"`
+	// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
+	ChangePasswordIdTimeToLiveInSeconds *int `pulumi:"changePasswordIdTimeToLiveInSeconds"`
+	// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+	DeviceCodeTimeToLiveInSeconds *int                                                                         `pulumi:"deviceCodeTimeToLiveInSeconds"`
+	DeviceUserCodeIdGenerator     *FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator    `pulumi:"deviceUserCodeIdGenerator"`
+	EmailVerificationIdGenerator  *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator `pulumi:"emailVerificationIdGenerator"`
 	// The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
-	EmailVerificationIdTimeToLiveInSeconds int                                                                                  `pulumi:"emailVerificationIdTimeToLiveInSeconds"`
-	EmailVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator `pulumi:"emailVerificationOneTimeCodeGenerator"`
-	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-	ExternalAuthenticationIdTimeToLiveInSeconds int `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
-	// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
-	LoginIntentTimeToLiveInSeconds int `pulumi:"loginIntentTimeToLiveInSeconds"`
-	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
-	OneTimePasswordTimeToLiveInSeconds int                                                                       `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
-	PasswordlessLoginGenerator         FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator `pulumi:"passwordlessLoginGenerator"`
-	// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
-	PasswordlessLoginTimeToLiveInSeconds int `pulumi:"passwordlessLoginTimeToLiveInSeconds"`
-	// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
-	PendingAccountLinkTimeToLiveInSeconds *int                                                                               `pulumi:"pendingAccountLinkTimeToLiveInSeconds"`
-	RegistrationVerificationIdGenerator   FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator `pulumi:"registrationVerificationIdGenerator"`
+	EmailVerificationIdTimeToLiveInSeconds *int                                                                                  `pulumi:"emailVerificationIdTimeToLiveInSeconds"`
+	EmailVerificationOneTimeCodeGenerator  *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator `pulumi:"emailVerificationOneTimeCodeGenerator"`
+	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+	ExternalAuthenticationIdTimeToLiveInSeconds *int `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
+	// The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
+	LoginIntentTimeToLiveInSeconds *int `pulumi:"loginIntentTimeToLiveInSeconds"`
+	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
+	OneTimePasswordTimeToLiveInSeconds *int                                                                       `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
+	PasswordlessLoginGenerator         *FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator `pulumi:"passwordlessLoginGenerator"`
+	// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
+	PasswordlessLoginTimeToLiveInSeconds *int `pulumi:"passwordlessLoginTimeToLiveInSeconds"`
+	// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
+	PendingAccountLinkTimeToLiveInSeconds *int                                                                                `pulumi:"pendingAccountLinkTimeToLiveInSeconds"`
+	RegistrationVerificationIdGenerator   *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator `pulumi:"registrationVerificationIdGenerator"`
 	// The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
-	RegistrationVerificationIdTimeToLiveInSeconds int                                                                                         `pulumi:"registrationVerificationIdTimeToLiveInSeconds"`
-	RegistrationVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator `pulumi:"registrationVerificationOneTimeCodeGenerator"`
-	// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
-	SamlV2AuthnRequestIdTtlSeconds *int                                                                    `pulumi:"samlV2AuthnRequestIdTtlSeconds"`
-	SetupPasswordIdGenerator       FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator `pulumi:"setupPasswordIdGenerator"`
+	RegistrationVerificationIdTimeToLiveInSeconds *int                                                                                         `pulumi:"registrationVerificationIdTimeToLiveInSeconds"`
+	RegistrationVerificationOneTimeCodeGenerator  *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator `pulumi:"registrationVerificationOneTimeCodeGenerator"`
+	// The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+	RememberOauthScopeConsentChoiceTimeToLiveInSeconds *int `pulumi:"rememberOauthScopeConsentChoiceTimeToLiveInSeconds"`
+	// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
+	SamlV2AuthnRequestIdTtlSeconds *int                                                                     `pulumi:"samlV2AuthnRequestIdTtlSeconds"`
+	SetupPasswordIdGenerator       *FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator `pulumi:"setupPasswordIdGenerator"`
 	// The time in seconds until a setup password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-	SetupPasswordIdTimeToLiveInSeconds int `pulumi:"setupPasswordIdTimeToLiveInSeconds"`
-	// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+	SetupPasswordIdTimeToLiveInSeconds *int `pulumi:"setupPasswordIdTimeToLiveInSeconds"`
+	// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
 	TrustTokenTimeToLiveInSeconds *int `pulumi:"trustTokenTimeToLiveInSeconds"`
-	// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
-	TwoFactorIdTimeToLiveInSeconds  int                                                                            `pulumi:"twoFactorIdTimeToLiveInSeconds"`
-	TwoFactorOneTimeCodeIdGenerator FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator `pulumi:"twoFactorOneTimeCodeIdGenerator"`
-	// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+	// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
+	TwoFactorIdTimeToLiveInSeconds  *int                                                                            `pulumi:"twoFactorIdTimeToLiveInSeconds"`
+	TwoFactorOneTimeCodeIdGenerator *FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator `pulumi:"twoFactorOneTimeCodeIdGenerator"`
+	// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
 	TwoFactorOneTimeCodeIdTimeToLiveInSeconds *int `pulumi:"twoFactorOneTimeCodeIdTimeToLiveInSeconds"`
-	// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
-	TwoFactorTrustIdTimeToLiveInSeconds int `pulumi:"twoFactorTrustIdTimeToLiveInSeconds"`
+	// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+	TwoFactorTrustIdTimeToLiveInSeconds *int `pulumi:"twoFactorTrustIdTimeToLiveInSeconds"`
+	// The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+	WebauthnAuthenticationChallengeTimeToLiveInSeconds *int `pulumi:"webauthnAuthenticationChallengeTimeToLiveInSeconds"`
+	// The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+	WebauthnRegistrationChallengeTimeToLiveInSeconds *int `pulumi:"webauthnRegistrationChallengeTimeToLiveInSeconds"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationArgs and FusionAuthTenantExternalIdentifierConfigurationOutput values.
@@ -12034,47 +14741,53 @@ type FusionAuthTenantExternalIdentifierConfigurationInput interface {
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationArgs struct {
-	// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
-	AuthorizationGrantIdTimeToLiveInSeconds pulumi.IntInput                                                               `pulumi:"authorizationGrantIdTimeToLiveInSeconds"`
-	ChangePasswordIdGenerator               FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorInput `pulumi:"changePasswordIdGenerator"`
-	// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-	ChangePasswordIdTimeToLiveInSeconds pulumi.IntInput `pulumi:"changePasswordIdTimeToLiveInSeconds"`
-	// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-	DeviceCodeTimeToLiveInSeconds pulumi.IntInput                                                                  `pulumi:"deviceCodeTimeToLiveInSeconds"`
-	DeviceUserCodeIdGenerator     FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorInput    `pulumi:"deviceUserCodeIdGenerator"`
-	EmailVerificationIdGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorInput `pulumi:"emailVerificationIdGenerator"`
+	// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
+	AuthorizationGrantIdTimeToLiveInSeconds pulumi.IntPtrInput                                                               `pulumi:"authorizationGrantIdTimeToLiveInSeconds"`
+	ChangePasswordIdGenerator               FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrInput `pulumi:"changePasswordIdGenerator"`
+	// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
+	ChangePasswordIdTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"changePasswordIdTimeToLiveInSeconds"`
+	// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+	DeviceCodeTimeToLiveInSeconds pulumi.IntPtrInput                                                                  `pulumi:"deviceCodeTimeToLiveInSeconds"`
+	DeviceUserCodeIdGenerator     FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrInput    `pulumi:"deviceUserCodeIdGenerator"`
+	EmailVerificationIdGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrInput `pulumi:"emailVerificationIdGenerator"`
 	// The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
-	EmailVerificationIdTimeToLiveInSeconds pulumi.IntInput                                                                           `pulumi:"emailVerificationIdTimeToLiveInSeconds"`
-	EmailVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorInput `pulumi:"emailVerificationOneTimeCodeGenerator"`
-	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-	ExternalAuthenticationIdTimeToLiveInSeconds pulumi.IntInput `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
-	// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
-	LoginIntentTimeToLiveInSeconds pulumi.IntInput `pulumi:"loginIntentTimeToLiveInSeconds"`
-	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
-	OneTimePasswordTimeToLiveInSeconds pulumi.IntInput                                                                `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
-	PasswordlessLoginGenerator         FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorInput `pulumi:"passwordlessLoginGenerator"`
-	// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
-	PasswordlessLoginTimeToLiveInSeconds pulumi.IntInput `pulumi:"passwordlessLoginTimeToLiveInSeconds"`
-	// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
-	PendingAccountLinkTimeToLiveInSeconds pulumi.IntPtrInput                                                                      `pulumi:"pendingAccountLinkTimeToLiveInSeconds"`
-	RegistrationVerificationIdGenerator   FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorInput `pulumi:"registrationVerificationIdGenerator"`
+	EmailVerificationIdTimeToLiveInSeconds pulumi.IntPtrInput                                                                           `pulumi:"emailVerificationIdTimeToLiveInSeconds"`
+	EmailVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrInput `pulumi:"emailVerificationOneTimeCodeGenerator"`
+	// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+	ExternalAuthenticationIdTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"externalAuthenticationIdTimeToLiveInSeconds"`
+	// The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
+	LoginIntentTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"loginIntentTimeToLiveInSeconds"`
+	// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
+	OneTimePasswordTimeToLiveInSeconds pulumi.IntPtrInput                                                                `pulumi:"oneTimePasswordTimeToLiveInSeconds"`
+	PasswordlessLoginGenerator         FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrInput `pulumi:"passwordlessLoginGenerator"`
+	// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
+	PasswordlessLoginTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"passwordlessLoginTimeToLiveInSeconds"`
+	// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
+	PendingAccountLinkTimeToLiveInSeconds pulumi.IntPtrInput                                                                         `pulumi:"pendingAccountLinkTimeToLiveInSeconds"`
+	RegistrationVerificationIdGenerator   FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrInput `pulumi:"registrationVerificationIdGenerator"`
 	// The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
-	RegistrationVerificationIdTimeToLiveInSeconds pulumi.IntInput                                                                                  `pulumi:"registrationVerificationIdTimeToLiveInSeconds"`
-	RegistrationVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorInput `pulumi:"registrationVerificationOneTimeCodeGenerator"`
-	// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
-	SamlV2AuthnRequestIdTtlSeconds pulumi.IntPtrInput                                                           `pulumi:"samlV2AuthnRequestIdTtlSeconds"`
-	SetupPasswordIdGenerator       FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorInput `pulumi:"setupPasswordIdGenerator"`
+	RegistrationVerificationIdTimeToLiveInSeconds pulumi.IntPtrInput                                                                                  `pulumi:"registrationVerificationIdTimeToLiveInSeconds"`
+	RegistrationVerificationOneTimeCodeGenerator  FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrInput `pulumi:"registrationVerificationOneTimeCodeGenerator"`
+	// The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+	RememberOauthScopeConsentChoiceTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"rememberOauthScopeConsentChoiceTimeToLiveInSeconds"`
+	// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
+	SamlV2AuthnRequestIdTtlSeconds pulumi.IntPtrInput                                                              `pulumi:"samlV2AuthnRequestIdTtlSeconds"`
+	SetupPasswordIdGenerator       FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrInput `pulumi:"setupPasswordIdGenerator"`
 	// The time in seconds until a setup password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-	SetupPasswordIdTimeToLiveInSeconds pulumi.IntInput `pulumi:"setupPasswordIdTimeToLiveInSeconds"`
-	// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+	SetupPasswordIdTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"setupPasswordIdTimeToLiveInSeconds"`
+	// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
 	TrustTokenTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"trustTokenTimeToLiveInSeconds"`
-	// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
-	TwoFactorIdTimeToLiveInSeconds  pulumi.IntInput                                                                     `pulumi:"twoFactorIdTimeToLiveInSeconds"`
-	TwoFactorOneTimeCodeIdGenerator FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorInput `pulumi:"twoFactorOneTimeCodeIdGenerator"`
-	// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+	// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
+	TwoFactorIdTimeToLiveInSeconds  pulumi.IntPtrInput                                                                     `pulumi:"twoFactorIdTimeToLiveInSeconds"`
+	TwoFactorOneTimeCodeIdGenerator FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrInput `pulumi:"twoFactorOneTimeCodeIdGenerator"`
+	// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
 	TwoFactorOneTimeCodeIdTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"twoFactorOneTimeCodeIdTimeToLiveInSeconds"`
-	// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
-	TwoFactorTrustIdTimeToLiveInSeconds pulumi.IntInput `pulumi:"twoFactorTrustIdTimeToLiveInSeconds"`
+	// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+	TwoFactorTrustIdTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"twoFactorTrustIdTimeToLiveInSeconds"`
+	// The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+	WebauthnAuthenticationChallengeTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"webauthnAuthenticationChallengeTimeToLiveInSeconds"`
+	// The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+	WebauthnRegistrationChallengeTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"webauthnRegistrationChallengeTimeToLiveInSeconds"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationArgs) ElementType() reflect.Type {
@@ -12154,160 +14867,181 @@ func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ToFusionAuthTenan
 	}).(FusionAuthTenantExternalIdentifierConfigurationPtrOutput)
 }
 
-// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) AuthorizationGrantIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) AuthorizationGrantIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.AuthorizationGrantIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ChangePasswordIdGenerator() FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ChangePasswordIdGenerator() FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator {
 		return v.ChangePasswordIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput)
 }
 
-// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ChangePasswordIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ChangePasswordIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.ChangePasswordIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) DeviceCodeTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int { return v.DeviceCodeTimeToLiveInSeconds }).(pulumi.IntOutput)
+// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) DeviceCodeTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int { return v.DeviceCodeTimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) DeviceUserCodeIdGenerator() FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) DeviceUserCodeIdGenerator() FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator {
 		return v.DeviceUserCodeIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationIdGenerator() FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationIdGenerator() FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator {
 		return v.EmailVerificationIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput)
 }
 
 // The time in seconds until a email verification Id is no longer valid and cannot be used by the Verify Email API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.EmailVerificationIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationOneTimeCodeGenerator() FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) EmailVerificationOneTimeCodeGenerator() FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator {
 		return v.EmailVerificationOneTimeCodeGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ExternalAuthenticationIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) ExternalAuthenticationIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.ExternalAuthenticationIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) LoginIntentTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int { return v.LoginIntentTimeToLiveInSeconds }).(pulumi.IntOutput)
+// The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) LoginIntentTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int { return v.LoginIntentTimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) OneTimePasswordTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) OneTimePasswordTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.OneTimePasswordTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) PasswordlessLoginGenerator() FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) PasswordlessLoginGenerator() FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator {
 		return v.PasswordlessLoginGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput)
 }
 
-// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) PasswordlessLoginTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) PasswordlessLoginTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.PasswordlessLoginTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
+// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
 func (o FusionAuthTenantExternalIdentifierConfigurationOutput) PendingAccountLinkTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.PendingAccountLinkTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationIdGenerator() FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationIdGenerator() FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator {
 		return v.RegistrationVerificationIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput)
 }
 
 // The time in seconds until a registration verification Id is no longer valid and cannot be used by the Verify Registration API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.RegistrationVerificationIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationOneTimeCodeGenerator() FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RegistrationVerificationOneTimeCodeGenerator() FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator {
 		return v.RegistrationVerificationOneTimeCodeGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
+// The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) RememberOauthScopeConsentChoiceTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
+		return v.RememberOauthScopeConsentChoiceTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
 func (o FusionAuthTenantExternalIdentifierConfigurationOutput) SamlV2AuthnRequestIdTtlSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int { return v.SamlV2AuthnRequestIdTtlSeconds }).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) SetupPasswordIdGenerator() FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) SetupPasswordIdGenerator() FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator {
 		return v.SetupPasswordIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput)
 }
 
 // The time in seconds until a setup password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) SetupPasswordIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) SetupPasswordIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.SetupPasswordIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
 func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TrustTokenTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int { return v.TrustTokenTimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int { return v.TwoFactorIdTimeToLiveInSeconds }).(pulumi.IntOutput)
+// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int { return v.TwoFactorIdTimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
 
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorOneTimeCodeIdGenerator() FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator {
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorOneTimeCodeIdGenerator() FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator {
 		return v.TwoFactorOneTimeCodeIdGenerator
-	}).(FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput)
+	}).(FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput)
 }
 
-// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
 func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorOneTimeCodeIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.TwoFactorOneTimeCodeIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
-func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorTrustIdTimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) int {
+// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) TwoFactorTrustIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
 		return v.TwoFactorTrustIdTimeToLiveInSeconds
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) WebauthnAuthenticationChallengeTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
+		return v.WebauthnAuthenticationChallengeTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+func (o FusionAuthTenantExternalIdentifierConfigurationOutput) WebauthnRegistrationChallengeTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfiguration) *int {
+		return v.WebauthnRegistrationChallengeTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationPtrOutput struct{ *pulumi.OutputState }
@@ -12334,13 +15068,13 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) Elem() FusionA
 	}).(FusionAuthTenantExternalIdentifierConfigurationOutput)
 }
 
-// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint.
+// The time in seconds until a OAuth authorization code in no longer valid to be exchanged for an access token. This is essentially the time allowed between the start of an Authorization request during the Authorization code grant and when you request an access token using this authorization code on the Token endpoint. Defaults to 30.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) AuthorizationGrantIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.AuthorizationGrantIdTimeToLiveInSeconds
+		return v.AuthorizationGrantIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12349,27 +15083,27 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) ChangePassword
 		if v == nil {
 			return nil
 		}
-		return &v.ChangePasswordIdGenerator
+		return v.ChangePasswordIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput)
 }
 
-// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0.
+// The time in seconds until a change password Id is no longer valid and cannot be used by the Change Password API. Value must be greater than 0. Defaults to 600.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) ChangePasswordIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.ChangePasswordIdTimeToLiveInSeconds
+		return v.ChangePasswordIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+// The time in seconds until a device code Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) DeviceCodeTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.DeviceCodeTimeToLiveInSeconds
+		return v.DeviceCodeTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12378,7 +15112,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) DeviceUserCode
 		if v == nil {
 			return nil
 		}
-		return &v.DeviceUserCodeIdGenerator
+		return v.DeviceUserCodeIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput)
 }
 
@@ -12387,7 +15121,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) EmailVerificat
 		if v == nil {
 			return nil
 		}
-		return &v.EmailVerificationIdGenerator
+		return v.EmailVerificationIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput)
 }
 
@@ -12397,7 +15131,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) EmailVerificat
 		if v == nil {
 			return nil
 		}
-		return &v.EmailVerificationIdTimeToLiveInSeconds
+		return v.EmailVerificationIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12406,37 +15140,37 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) EmailVerificat
 		if v == nil {
 			return nil
 		}
-		return &v.EmailVerificationOneTimeCodeGenerator
+		return v.EmailVerificationOneTimeCodeGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0.
+// The time in seconds until an external authentication Id is no longer valid and cannot be used by the Token API. Value must be greater than 0. Defaults to 300.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) ExternalAuthenticationIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.ExternalAuthenticationIdTimeToLiveInSeconds
+		return v.ExternalAuthenticationIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0.
+// The time in seconds until a Login Timeout identifier is no longer valid to complete post-authentication steps in the OAuth workflow. Must be greater than 0. Defaults to 1800.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) LoginIntentTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.LoginIntentTimeToLiveInSeconds
+		return v.LoginIntentTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0.
+// The time in seconds until a One Time Password is no longer valid and cannot be used by the Login API. Value must be greater than 0. Defaults to 60.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) OneTimePasswordTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.OneTimePasswordTimeToLiveInSeconds
+		return v.OneTimePasswordTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12445,21 +15179,21 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) PasswordlessLo
 		if v == nil {
 			return nil
 		}
-		return &v.PasswordlessLoginGenerator
+		return v.PasswordlessLoginGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput)
 }
 
-// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0.
+// The time in seconds until a passwordless code is no longer valid and cannot be used by the Passwordless API. Value must be greater than 0. Defaults to 180.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) PasswordlessLoginTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.PasswordlessLoginTimeToLiveInSeconds
+		return v.PasswordlessLoginTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0.
+// The number of seconds before the pending account link identifier is no longer valid to complete an account link request. Value must be greater than 0. Defaults to 3600
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) PendingAccountLinkTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
@@ -12474,7 +15208,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) RegistrationVe
 		if v == nil {
 			return nil
 		}
-		return &v.RegistrationVerificationIdGenerator
+		return v.RegistrationVerificationIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput)
 }
 
@@ -12484,7 +15218,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) RegistrationVe
 		if v == nil {
 			return nil
 		}
-		return &v.RegistrationVerificationIdTimeToLiveInSeconds
+		return v.RegistrationVerificationIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12493,11 +15227,21 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) RegistrationVe
 		if v == nil {
 			return nil
 		}
-		return &v.RegistrationVerificationOneTimeCodeGenerator
+		return v.RegistrationVerificationOneTimeCodeGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth.
+// The time in seconds until remembered OAuth scope consent choices are no longer valid, and the User will be prompted to consent to requested OAuth scopes even if they have not changed. Applies only when `application.oauthConfiguration.consentMode` is set to RememberDecision. Value must be greater than 0. Note: An Essentials or Enterprise plan is required to utilize advanced OAuth scopes. Defaults to 2592000.
+func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) RememberOauthScopeConsentChoiceTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
+		if v == nil {
+			return nil
+		}
+		return v.RememberOauthScopeConsentChoiceTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds that a SAML AuthN request will be eligible for use to authenticate with FusionAuth. Defaults to 300.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) SamlV2AuthnRequestIdTtlSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
@@ -12512,7 +15256,7 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) SetupPasswordI
 		if v == nil {
 			return nil
 		}
-		return &v.SetupPasswordIdGenerator
+		return v.SetupPasswordIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput)
 }
 
@@ -12522,11 +15266,11 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) SetupPasswordI
 		if v == nil {
 			return nil
 		}
-		return &v.SetupPasswordIdTimeToLiveInSeconds
+		return v.SetupPasswordIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
-// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0.
+// The number of seconds before the Trust Token is no longer valid to complete a request that requires trust. Value must be greater than 0. Defaults to 180
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TrustTokenTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
@@ -12536,13 +15280,13 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TrustTokenTime
 	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0.
+// The time in seconds until a two factor Id is no longer valid and cannot be used by the Two Factor Login API. Value must be greater than 0. Defaults to 300.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TwoFactorIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.TwoFactorIdTimeToLiveInSeconds
+		return v.TwoFactorIdTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -12551,11 +15295,11 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TwoFactorOneTi
 		if v == nil {
 			return nil
 		}
-		return &v.TwoFactorOneTimeCodeIdGenerator
+		return v.TwoFactorOneTimeCodeIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput)
 }
 
-// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0.
+// The number of seconds before the Two-Factor One Time Code used to enable or disable a two-factor method is no longer valid. Must be greater than 0. Defaults to 60.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TwoFactorOneTimeCodeIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
@@ -12565,21 +15309,41 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TwoFactorOneTi
 	}).(pulumi.IntPtrOutput)
 }
 
-// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be required to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
+// The time in seconds until an issued Two Factor trust Id is no longer valid and the User will be Optional to complete Two Factor authentication during the next authentication attempt. Value must be greater than 0.
 func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) TwoFactorTrustIdTimeToLiveInSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.TwoFactorTrustIdTimeToLiveInSeconds
+		return v.TwoFactorTrustIdTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds until a WebAuthn authentication challenge is no longer valid and the User will be required to restart the WebAuthn authentication ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.get API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) WebauthnAuthenticationChallengeTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
+		if v == nil {
+			return nil
+		}
+		return v.WebauthnAuthenticationChallengeTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+// The time in seconds until a WebAuthn registration challenge is no longer valid and the User will be required to restart the WebAuthn registration ceremony by creating a new challenge. This value also controls the timeout for the client-side WebAuthn navigator.credentials.create API call. Value must be greater than 0. Note: A license is required to utilize WebAuthn. Defaults to 180.
+func (o FusionAuthTenantExternalIdentifierConfigurationPtrOutput) WebauthnRegistrationChallengeTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfiguration) *int {
+		if v == nil {
+			return nil
+		}
+		return v.WebauthnRegistrationChallengeTimeToLiveInSeconds
 	}).(pulumi.IntPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput values.
@@ -12594,10 +15358,10 @@ type FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorInp
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorArgs) ElementType() reflect.Type {
@@ -12677,14 +15441,16 @@ func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) int { return v.Length }).(pulumi.IntOutput)
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
+func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) *int { return v.Length }).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) string { return v.Type }).(pulumi.StringOutput)
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) *string {
+		return v.Type
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -12711,31 +15477,31 @@ func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
 func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
 func (o FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationChangePasswordIdGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 6.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput values.
@@ -12750,10 +15516,10 @@ type FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorInp
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 6.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorArgs) ElementType() reflect.Type {
@@ -12833,14 +15599,16 @@ func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) int { return v.Length }).(pulumi.IntOutput)
+// The length of the secure generator used for generating the change password Id. Defaults to 6.
+func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) *int { return v.Length }).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) string { return v.Type }).(pulumi.StringOutput)
+// The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
+func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) *string {
+		return v.Type
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -12867,31 +15635,31 @@ func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator
 	}).(FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 6.
 func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomAlphaNumeric.
 func (o FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationDeviceUserCodeIdGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput values.
@@ -12906,10 +15674,10 @@ type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorArgs) ElementType() reflect.Type {
@@ -12989,18 +15757,18 @@ func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenera
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) int {
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
+func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) *int {
 		return v.Length
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) string {
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) *string {
 		return v.Type
-	}).(pulumi.StringOutput)
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -13027,30 +15795,30 @@ func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenera
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
 func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
 func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationIdGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator struct {
-	// The length of the secure generator used for generating the email verification one time code.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the email verification one time code.
+	// The length of the secure generator used for generating the email verification one time code. Defaults to 6.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
 	Type *string `pulumi:"type"`
 }
 
@@ -13066,9 +15834,9 @@ type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCode
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorArgs struct {
-	// The length of the secure generator used for generating the email verification one time code.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the email verification one time code.
+	// The length of the secure generator used for generating the email verification one time code. Defaults to 6.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
 	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
@@ -13149,14 +15917,14 @@ func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeC
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the email verification one time code.
-func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator) int {
+// The length of the secure generator used for generating the email verification one time code. Defaults to 6.
+func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator) *int {
 		return v.Length
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the email verification one time code.
+// The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
 func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator) *string {
 		return v.Type
@@ -13187,17 +15955,17 @@ func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeC
 	}).(FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the email verification one time code.
+// The length of the secure generator used for generating the email verification one time code. Defaults to 6.
 func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the email verification one time code.
+// The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
 func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator) *string {
 		if v == nil {
@@ -13208,10 +15976,10 @@ func (o FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeC
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput values.
@@ -13226,10 +15994,10 @@ type FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorIn
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorArgs) ElementType() reflect.Type {
@@ -13309,16 +16077,18 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerato
 	}).(FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) int { return v.Length }).(pulumi.IntOutput)
+// The length of the secure generator used for generating the change password Id. Defaults to 32
+func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) *int {
+		return v.Length
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) string {
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) *string {
 		return v.Type
-	}).(pulumi.StringOutput)
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -13345,31 +16115,31 @@ func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerato
 	}).(FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 32
 func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
 func (o FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationPasswordlessLoginGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput values.
@@ -13384,10 +16154,10 @@ type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGe
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorArgs) ElementType() reflect.Type {
@@ -13467,18 +16237,18 @@ func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationI
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) int {
+// The length of the secure generator used for generating the change password Id. Defaults to 32
+func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) *int {
 		return v.Length
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) string {
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) *string {
 		return v.Type
-	}).(pulumi.StringOutput)
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -13505,30 +16275,30 @@ func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationI
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 32
 func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
 func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationIdGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator struct {
-	// The length of the secure generator used for generating the registration verification one time code.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the registration verification one time code.
+	// The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
 	Type *string `pulumi:"type"`
 }
 
@@ -13544,9 +16314,9 @@ type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneT
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorArgs struct {
-	// The length of the secure generator used for generating the registration verification one time code.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the registration verification one time code.
+	// The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
 	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
@@ -13627,14 +16397,14 @@ func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationO
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the registration verification one time code.
-func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator) int {
+// The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
+func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator) *int {
 		return v.Length
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the registration verification one time code.
+// The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
 func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator) *string {
 		return v.Type
@@ -13665,17 +16435,17 @@ func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationO
 	}).(FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the registration verification one time code.
+// The length of the secure generator used for generating the registration verification one time code. Defaults to 6.
 func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the registration verification one time code.
+// The type of the secure generator used for generating the registration verification one time code. Defaults to randomAlphaNumeric.
 func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationOneTimeCodeGenerator) *string {
 		if v == nil {
@@ -13686,10 +16456,10 @@ func (o FusionAuthTenantExternalIdentifierConfigurationRegistrationVerificationO
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type string `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type *string `pulumi:"type"`
 }
 
 // FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorInput is an input type that accepts FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorArgs and FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput values.
@@ -13704,10 +16474,10 @@ type FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorInpu
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorArgs struct {
-	// The length of the secure generator used for generating the change password Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the change password Id.
-	Type pulumi.StringInput `pulumi:"type"`
+	// The length of the secure generator used for generating the change password Id. Defaults to 32.
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
 func (FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorArgs) ElementType() reflect.Type {
@@ -13787,14 +16557,14 @@ func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorO
 	}).(FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) int { return v.Length }).(pulumi.IntOutput)
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
+func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) *int { return v.Length }).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput) Type() pulumi.StringOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) string { return v.Type }).(pulumi.StringOutput)
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
+func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) *string { return v.Type }).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput struct{ *pulumi.OutputState }
@@ -13821,30 +16591,30 @@ func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorP
 	}).(FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorOutput)
 }
 
-// The length of the secure generator used for generating the change password Id.
+// The length of the secure generator used for generating the change password Id. Defaults to 32.
 func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the change password Id.
+// The type of the secure generator used for generating the change password Id. Defaults to randomBytes.
 func (o FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationSetupPasswordIdGenerator) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Type
+		return v.Type
 	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator struct {
-	// TThe length of the secure generator used for generating the the two factor code Id.
-	Length int `pulumi:"length"`
-	// The type of the secure generator used for generating the two factor one time code Id.
+	// The length of the secure generator used for generating the the two factor code Id. Defaults to 6
+	Length *int `pulumi:"length"`
+	// The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
 	Type *string `pulumi:"type"`
 }
 
@@ -13860,9 +16630,9 @@ type FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenera
 }
 
 type FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorArgs struct {
-	// TThe length of the secure generator used for generating the the two factor code Id.
-	Length pulumi.IntInput `pulumi:"length"`
-	// The type of the secure generator used for generating the two factor one time code Id.
+	// The length of the secure generator used for generating the the two factor code Id. Defaults to 6
+	Length pulumi.IntPtrInput `pulumi:"length"`
+	// The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
 	Type pulumi.StringPtrInput `pulumi:"type"`
 }
 
@@ -13943,14 +16713,14 @@ func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGen
 	}).(FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput)
 }
 
-// TThe length of the secure generator used for generating the the two factor code Id.
-func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput) Length() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator) int {
+// The length of the secure generator used for generating the the two factor code Id. Defaults to 6
+func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput) Length() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator) *int {
 		return v.Length
-	}).(pulumi.IntOutput)
+	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the two factor one time code Id.
+// The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
 func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator) *string {
 		return v.Type
@@ -13981,17 +16751,17 @@ func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGen
 	}).(FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorOutput)
 }
 
-// TThe length of the secure generator used for generating the the two factor code Id.
+// The length of the secure generator used for generating the the two factor code Id. Defaults to 6
 func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput) Length() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator) *int {
 		if v == nil {
 			return nil
 		}
-		return &v.Length
+		return v.Length
 	}).(pulumi.IntPtrOutput)
 }
 
-// The type of the secure generator used for generating the two factor one time code Id.
+// The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
 func (o FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGeneratorPtrOutput) Type() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator) *string {
 		if v == nil {
@@ -14706,18 +17476,24 @@ type FusionAuthTenantJwtConfiguration struct {
 	IdTokenKeyId *string `pulumi:"idTokenKeyId"`
 	// The refresh token expiration policy.
 	RefreshTokenExpirationPolicy *string `pulumi:"refreshTokenExpirationPolicy"`
+	// The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+	RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds *int `pulumi:"refreshTokenOneTimeUseConfigurationGracePeriodInSeconds"`
 	// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
 	RefreshTokenRevocationPolicyOnLoginPrevented *bool `pulumi:"refreshTokenRevocationPolicyOnLoginPrevented"`
+	// When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+	RefreshTokenRevocationPolicyOnMultiFactorEnable *bool `pulumi:"refreshTokenRevocationPolicyOnMultiFactorEnable"`
+	// When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+	RefreshTokenRevocationPolicyOnOneTimeTokenReuse *bool `pulumi:"refreshTokenRevocationPolicyOnOneTimeTokenReuse"`
 	// When enabled, the refresh token will be revoked when a user changes their password."
 	RefreshTokenRevocationPolicyOnPasswordChange *bool `pulumi:"refreshTokenRevocationPolicyOnPasswordChange"`
 	// The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
 	RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes *int `pulumi:"refreshTokenSlidingWindowMaximumTimeToLiveInMinutes"`
 	// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
-	RefreshTokenTimeToLiveInMinutes int `pulumi:"refreshTokenTimeToLiveInMinutes"`
+	RefreshTokenTimeToLiveInMinutes *int `pulumi:"refreshTokenTimeToLiveInMinutes"`
 	// The refresh token usage policy.
 	RefreshTokenUsagePolicy *string `pulumi:"refreshTokenUsagePolicy"`
 	// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-	TimeToLiveInSeconds int `pulumi:"timeToLiveInSeconds"`
+	TimeToLiveInSeconds *int `pulumi:"timeToLiveInSeconds"`
 }
 
 // FusionAuthTenantJwtConfigurationInput is an input type that accepts FusionAuthTenantJwtConfigurationArgs and FusionAuthTenantJwtConfigurationOutput values.
@@ -14738,18 +17514,24 @@ type FusionAuthTenantJwtConfigurationArgs struct {
 	IdTokenKeyId pulumi.StringPtrInput `pulumi:"idTokenKeyId"`
 	// The refresh token expiration policy.
 	RefreshTokenExpirationPolicy pulumi.StringPtrInput `pulumi:"refreshTokenExpirationPolicy"`
+	// The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+	RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds pulumi.IntPtrInput `pulumi:"refreshTokenOneTimeUseConfigurationGracePeriodInSeconds"`
 	// When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
 	RefreshTokenRevocationPolicyOnLoginPrevented pulumi.BoolPtrInput `pulumi:"refreshTokenRevocationPolicyOnLoginPrevented"`
+	// When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+	RefreshTokenRevocationPolicyOnMultiFactorEnable pulumi.BoolPtrInput `pulumi:"refreshTokenRevocationPolicyOnMultiFactorEnable"`
+	// When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+	RefreshTokenRevocationPolicyOnOneTimeTokenReuse pulumi.BoolPtrInput `pulumi:"refreshTokenRevocationPolicyOnOneTimeTokenReuse"`
 	// When enabled, the refresh token will be revoked when a user changes their password."
 	RefreshTokenRevocationPolicyOnPasswordChange pulumi.BoolPtrInput `pulumi:"refreshTokenRevocationPolicyOnPasswordChange"`
 	// The maximum lifetime of a refresh token when using a refresh token expiration policy of SlidingWindowWithMaximumLifetime. Value must be greater than 0.
 	RefreshTokenSlidingWindowMaximumTimeToLiveInMinutes pulumi.IntPtrInput `pulumi:"refreshTokenSlidingWindowMaximumTimeToLiveInMinutes"`
 	// The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
-	RefreshTokenTimeToLiveInMinutes pulumi.IntInput `pulumi:"refreshTokenTimeToLiveInMinutes"`
+	RefreshTokenTimeToLiveInMinutes pulumi.IntPtrInput `pulumi:"refreshTokenTimeToLiveInMinutes"`
 	// The refresh token usage policy.
 	RefreshTokenUsagePolicy pulumi.StringPtrInput `pulumi:"refreshTokenUsagePolicy"`
 	// The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-	TimeToLiveInSeconds pulumi.IntInput `pulumi:"timeToLiveInSeconds"`
+	TimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"timeToLiveInSeconds"`
 }
 
 func (FusionAuthTenantJwtConfigurationArgs) ElementType() reflect.Type {
@@ -14818,9 +17600,30 @@ func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenExpirationPolicy() p
 	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *string { return v.RefreshTokenExpirationPolicy }).(pulumi.StringPtrOutput)
 }
 
+// The length of time specified in seconds that a one-time use token can be reused. This value must be greater than 0 and less than 86400 which is equal to 24 hours. Setting this value to 0 effectively disables the grace period which means a one-time token may not be reused. For security reasons, you should keep this value as small as possible, and only increase past 0 to improve reliability for an asynchronous or clustered integration that may require a brief grace period. Defaults to 0.
+func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *int {
+		return v.RefreshTokenOneTimeUseConfigurationGracePeriodInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
 // When enabled, the refresh token will be revoked when a user action, such as locking an account based on a number of failed login attempts, prevents user login.
 func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenRevocationPolicyOnLoginPrevented() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *bool { return v.RefreshTokenRevocationPolicyOnLoginPrevented }).(pulumi.BoolPtrOutput)
+}
+
+// When enabled, all refresh tokens will be revoked when a user enables multi-factor authentication for the first time. This policy will not be applied when adding subsequent multi-factor methods to the user.
+func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenRevocationPolicyOnMultiFactorEnable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *bool {
+		return v.RefreshTokenRevocationPolicyOnMultiFactorEnable
+	}).(pulumi.BoolPtrOutput)
+}
+
+// When enabled, if a one-time use refresh token is reused, the token will be revoked. This does not cause all refresh tokens to be revoked, only the reused token is revoked.
+func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenRevocationPolicyOnOneTimeTokenReuse() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *bool {
+		return v.RefreshTokenRevocationPolicyOnOneTimeTokenReuse
+	}).(pulumi.BoolPtrOutput)
 }
 
 // When enabled, the refresh token will be revoked when a user changes their password."
@@ -14836,8 +17639,8 @@ func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenSlidingWindowMaximum
 }
 
 // The length of time in minutes a Refresh Token is valid from the time it was issued. Value must be greater than 0.
-func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenTimeToLiveInMinutes() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) int { return v.RefreshTokenTimeToLiveInMinutes }).(pulumi.IntOutput)
+func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenTimeToLiveInMinutes() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *int { return v.RefreshTokenTimeToLiveInMinutes }).(pulumi.IntPtrOutput)
 }
 
 // The refresh token usage policy.
@@ -14846,8 +17649,8 @@ func (o FusionAuthTenantJwtConfigurationOutput) RefreshTokenUsagePolicy() pulumi
 }
 
 // The length of time in seconds this JWT is valid from the time it was issued. Value must be greater than 0.
-func (o FusionAuthTenantJwtConfigurationOutput) TimeToLiveInSeconds() pulumi.IntOutput {
-	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) int { return v.TimeToLiveInSeconds }).(pulumi.IntOutput)
+func (o FusionAuthTenantJwtConfigurationOutput) TimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantJwtConfiguration) *int { return v.TimeToLiveInSeconds }).(pulumi.IntPtrOutput)
 }
 
 type FusionAuthTenantJwtConfigurationArrayOutput struct{ *pulumi.OutputState }
@@ -14868,6 +17671,257 @@ func (o FusionAuthTenantJwtConfigurationArrayOutput) Index(i pulumi.IntInput) Fu
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) FusionAuthTenantJwtConfiguration {
 		return vs[0].([]FusionAuthTenantJwtConfiguration)[vs[1].(int)]
 	}).(FusionAuthTenantJwtConfigurationOutput)
+}
+
+type FusionAuthTenantLambdaConfiguration struct {
+	// The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+	LoginValidationId string `pulumi:"loginValidationId"`
+	// The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimEnterpriseUserRequestConverterId string `pulumi:"scimEnterpriseUserRequestConverterId"`
+	// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimEnterpriseUserResponseConverterId string `pulumi:"scimEnterpriseUserResponseConverterId"`
+	// The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimGroupRequestConverterId string `pulumi:"scimGroupRequestConverterId"`
+	// The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimGroupResponseConverterId string `pulumi:"scimGroupResponseConverterId"`
+	// The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimUserRequestConverterId string `pulumi:"scimUserRequestConverterId"`
+	// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimUserResponseConverterId string `pulumi:"scimUserResponseConverterId"`
+}
+
+// FusionAuthTenantLambdaConfigurationInput is an input type that accepts FusionAuthTenantLambdaConfigurationArgs and FusionAuthTenantLambdaConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantLambdaConfigurationInput` via:
+//
+//	FusionAuthTenantLambdaConfigurationArgs{...}
+type FusionAuthTenantLambdaConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantLambdaConfigurationOutput() FusionAuthTenantLambdaConfigurationOutput
+	ToFusionAuthTenantLambdaConfigurationOutputWithContext(context.Context) FusionAuthTenantLambdaConfigurationOutput
+}
+
+type FusionAuthTenantLambdaConfigurationArgs struct {
+	// The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+	LoginValidationId pulumi.StringInput `pulumi:"loginValidationId"`
+	// The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimEnterpriseUserRequestConverterId pulumi.StringInput `pulumi:"scimEnterpriseUserRequestConverterId"`
+	// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimEnterpriseUserResponseConverterId pulumi.StringInput `pulumi:"scimEnterpriseUserResponseConverterId"`
+	// The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimGroupRequestConverterId pulumi.StringInput `pulumi:"scimGroupRequestConverterId"`
+	// The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimGroupResponseConverterId pulumi.StringInput `pulumi:"scimGroupResponseConverterId"`
+	// The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimUserRequestConverterId pulumi.StringInput `pulumi:"scimUserRequestConverterId"`
+	// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ScimUserResponseConverterId pulumi.StringInput `pulumi:"scimUserResponseConverterId"`
+}
+
+func (FusionAuthTenantLambdaConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantLambdaConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantLambdaConfigurationArgs) ToFusionAuthTenantLambdaConfigurationOutput() FusionAuthTenantLambdaConfigurationOutput {
+	return i.ToFusionAuthTenantLambdaConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantLambdaConfigurationArgs) ToFusionAuthTenantLambdaConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantLambdaConfigurationOutput)
+}
+
+func (i FusionAuthTenantLambdaConfigurationArgs) ToFusionAuthTenantLambdaConfigurationPtrOutput() FusionAuthTenantLambdaConfigurationPtrOutput {
+	return i.ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantLambdaConfigurationArgs) ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantLambdaConfigurationOutput).ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantLambdaConfigurationPtrInput is an input type that accepts FusionAuthTenantLambdaConfigurationArgs, FusionAuthTenantLambdaConfigurationPtr and FusionAuthTenantLambdaConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantLambdaConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantLambdaConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantLambdaConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantLambdaConfigurationPtrOutput() FusionAuthTenantLambdaConfigurationPtrOutput
+	ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantLambdaConfigurationPtrOutput
+}
+
+type fusionAuthTenantLambdaConfigurationPtrType FusionAuthTenantLambdaConfigurationArgs
+
+func FusionAuthTenantLambdaConfigurationPtr(v *FusionAuthTenantLambdaConfigurationArgs) FusionAuthTenantLambdaConfigurationPtrInput {
+	return (*fusionAuthTenantLambdaConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantLambdaConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantLambdaConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantLambdaConfigurationPtrType) ToFusionAuthTenantLambdaConfigurationPtrOutput() FusionAuthTenantLambdaConfigurationPtrOutput {
+	return i.ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantLambdaConfigurationPtrType) ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantLambdaConfigurationPtrOutput)
+}
+
+type FusionAuthTenantLambdaConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantLambdaConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantLambdaConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantLambdaConfigurationOutput) ToFusionAuthTenantLambdaConfigurationOutput() FusionAuthTenantLambdaConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantLambdaConfigurationOutput) ToFusionAuthTenantLambdaConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantLambdaConfigurationOutput) ToFusionAuthTenantLambdaConfigurationPtrOutput() FusionAuthTenantLambdaConfigurationPtrOutput {
+	return o.ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantLambdaConfigurationOutput) ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantLambdaConfiguration) *FusionAuthTenantLambdaConfiguration {
+		return &v
+	}).(FusionAuthTenantLambdaConfigurationPtrOutput)
+}
+
+// The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+func (o FusionAuthTenantLambdaConfigurationOutput) LoginValidationId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.LoginValidationId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimEnterpriseUserRequestConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimEnterpriseUserRequestConverterId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimEnterpriseUserResponseConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimEnterpriseUserResponseConverterId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimGroupRequestConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimGroupRequestConverterId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimGroupResponseConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimGroupResponseConverterId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimUserRequestConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimUserRequestConverterId }).(pulumi.StringOutput)
+}
+
+// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationOutput) ScimUserResponseConverterId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantLambdaConfiguration) string { return v.ScimUserResponseConverterId }).(pulumi.StringOutput)
+}
+
+type FusionAuthTenantLambdaConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantLambdaConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantLambdaConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ToFusionAuthTenantLambdaConfigurationPtrOutput() FusionAuthTenantLambdaConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ToFusionAuthTenantLambdaConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantLambdaConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) Elem() FusionAuthTenantLambdaConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) FusionAuthTenantLambdaConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantLambdaConfiguration
+		return ret
+	}).(FusionAuthTenantLambdaConfigurationOutput)
+}
+
+// The Id of the lambda that will be invoked at the end of a successful login request in order to extend custom validation of a login request.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) LoginValidationId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.LoginValidationId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM User Request lambda that will be used to convert the SCIM Enterprise User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimEnterpriseUserRequestConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimEnterpriseUserRequestConverterId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth Enterprise User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimEnterpriseUserResponseConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimEnterpriseUserResponseConverterId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM Group Request lambda that will be used to convert the SCIM Group request to a FusionAuth Group. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimGroupRequestConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimGroupRequestConverterId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM Group Response lambda that will be used to convert a FusionAuth Group to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimGroupResponseConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimGroupResponseConverterId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM User Request lambda that will be used to convert the SCIM User request to a FusionAuth User. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimUserRequestConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimUserRequestConverterId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Id of a SCIM User Response lambda that will be used to convert a FusionAuth User to a SCIM Server response. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantLambdaConfigurationPtrOutput) ScimUserResponseConverterId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantLambdaConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ScimUserResponseConverterId
+	}).(pulumi.StringPtrOutput)
 }
 
 type FusionAuthTenantLoginConfiguration struct {
@@ -18216,6 +21270,337 @@ func (o FusionAuthTenantRegistrationConfigurationPtrOutput) BlockedDomains() pul
 	}).(pulumi.StringArrayOutput)
 }
 
+type FusionAuthTenantScimServerConfiguration struct {
+	// The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ClientEntityTypeId string `pulumi:"clientEntityTypeId"`
+	// Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+	Enabled *bool `pulumi:"enabled"`
+	// SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+	Schemas *string `pulumi:"schemas"`
+	// The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ServerEntityTypeId string `pulumi:"serverEntityTypeId"`
+}
+
+// FusionAuthTenantScimServerConfigurationInput is an input type that accepts FusionAuthTenantScimServerConfigurationArgs and FusionAuthTenantScimServerConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantScimServerConfigurationInput` via:
+//
+//	FusionAuthTenantScimServerConfigurationArgs{...}
+type FusionAuthTenantScimServerConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantScimServerConfigurationOutput() FusionAuthTenantScimServerConfigurationOutput
+	ToFusionAuthTenantScimServerConfigurationOutputWithContext(context.Context) FusionAuthTenantScimServerConfigurationOutput
+}
+
+type FusionAuthTenantScimServerConfigurationArgs struct {
+	// The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ClientEntityTypeId pulumi.StringInput `pulumi:"clientEntityTypeId"`
+	// Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+	Schemas pulumi.StringPtrInput `pulumi:"schemas"`
+	// The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+	ServerEntityTypeId pulumi.StringInput `pulumi:"serverEntityTypeId"`
+}
+
+func (FusionAuthTenantScimServerConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantScimServerConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantScimServerConfigurationArgs) ToFusionAuthTenantScimServerConfigurationOutput() FusionAuthTenantScimServerConfigurationOutput {
+	return i.ToFusionAuthTenantScimServerConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantScimServerConfigurationArgs) ToFusionAuthTenantScimServerConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantScimServerConfigurationOutput)
+}
+
+func (i FusionAuthTenantScimServerConfigurationArgs) ToFusionAuthTenantScimServerConfigurationPtrOutput() FusionAuthTenantScimServerConfigurationPtrOutput {
+	return i.ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantScimServerConfigurationArgs) ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantScimServerConfigurationOutput).ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantScimServerConfigurationPtrInput is an input type that accepts FusionAuthTenantScimServerConfigurationArgs, FusionAuthTenantScimServerConfigurationPtr and FusionAuthTenantScimServerConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantScimServerConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantScimServerConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantScimServerConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantScimServerConfigurationPtrOutput() FusionAuthTenantScimServerConfigurationPtrOutput
+	ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantScimServerConfigurationPtrOutput
+}
+
+type fusionAuthTenantScimServerConfigurationPtrType FusionAuthTenantScimServerConfigurationArgs
+
+func FusionAuthTenantScimServerConfigurationPtr(v *FusionAuthTenantScimServerConfigurationArgs) FusionAuthTenantScimServerConfigurationPtrInput {
+	return (*fusionAuthTenantScimServerConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantScimServerConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantScimServerConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantScimServerConfigurationPtrType) ToFusionAuthTenantScimServerConfigurationPtrOutput() FusionAuthTenantScimServerConfigurationPtrOutput {
+	return i.ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantScimServerConfigurationPtrType) ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantScimServerConfigurationPtrOutput)
+}
+
+type FusionAuthTenantScimServerConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantScimServerConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantScimServerConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantScimServerConfigurationOutput) ToFusionAuthTenantScimServerConfigurationOutput() FusionAuthTenantScimServerConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantScimServerConfigurationOutput) ToFusionAuthTenantScimServerConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantScimServerConfigurationOutput) ToFusionAuthTenantScimServerConfigurationPtrOutput() FusionAuthTenantScimServerConfigurationPtrOutput {
+	return o.ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantScimServerConfigurationOutput) ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantScimServerConfiguration) *FusionAuthTenantScimServerConfiguration {
+		return &v
+	}).(FusionAuthTenantScimServerConfigurationPtrOutput)
+}
+
+// The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantScimServerConfigurationOutput) ClientEntityTypeId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantScimServerConfiguration) string { return v.ClientEntityTypeId }).(pulumi.StringOutput)
+}
+
+// Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+func (o FusionAuthTenantScimServerConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantScimServerConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+func (o FusionAuthTenantScimServerConfigurationOutput) Schemas() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantScimServerConfiguration) *string { return v.Schemas }).(pulumi.StringPtrOutput)
+}
+
+// The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantScimServerConfigurationOutput) ServerEntityTypeId() pulumi.StringOutput {
+	return o.ApplyT(func(v FusionAuthTenantScimServerConfiguration) string { return v.ServerEntityTypeId }).(pulumi.StringOutput)
+}
+
+type FusionAuthTenantScimServerConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantScimServerConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantScimServerConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) ToFusionAuthTenantScimServerConfigurationPtrOutput() FusionAuthTenantScimServerConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) ToFusionAuthTenantScimServerConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantScimServerConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) Elem() FusionAuthTenantScimServerConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantScimServerConfiguration) FusionAuthTenantScimServerConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantScimServerConfiguration
+		return ret
+	}).(FusionAuthTenantScimServerConfigurationOutput)
+}
+
+// The Entity Type that will be used to represent SCIM Clients for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) ClientEntityTypeId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantScimServerConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ClientEntityTypeId
+	}).(pulumi.StringPtrOutput)
+}
+
+// Whether or not this tenant has the SCIM endpoints enabled. Note: An Enterprise plan is required to utilize SCIM.
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantScimServerConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// SON formatted as a SCIM Schemas endpoint response. Because the SCIM lambdas may modify the JSON response, ensure the Schema's response matches that generated by the response lambdas. More about Schema definitions. When this parameter is not provided, it will default to EnterpriseUser, Group, and User schema definitions as defined by the SCIM core schemas spec. Note: An Enterprise plan is required to utilize SCIM.
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) Schemas() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantScimServerConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Schemas
+	}).(pulumi.StringPtrOutput)
+}
+
+// The Entity Type that will be used to represent SCIM Servers for this tenant. Note: An Enterprise plan is required to utilize SCIM. Required when `scim_server_configuration.enabled` is true.
+func (o FusionAuthTenantScimServerConfigurationPtrOutput) ServerEntityTypeId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantScimServerConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ServerEntityTypeId
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantSsoConfiguration struct {
+	// The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+	DeviceTrustTimeToLiveInSeconds *int `pulumi:"deviceTrustTimeToLiveInSeconds"`
+}
+
+// FusionAuthTenantSsoConfigurationInput is an input type that accepts FusionAuthTenantSsoConfigurationArgs and FusionAuthTenantSsoConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantSsoConfigurationInput` via:
+//
+//	FusionAuthTenantSsoConfigurationArgs{...}
+type FusionAuthTenantSsoConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantSsoConfigurationOutput() FusionAuthTenantSsoConfigurationOutput
+	ToFusionAuthTenantSsoConfigurationOutputWithContext(context.Context) FusionAuthTenantSsoConfigurationOutput
+}
+
+type FusionAuthTenantSsoConfigurationArgs struct {
+	// The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+	DeviceTrustTimeToLiveInSeconds pulumi.IntPtrInput `pulumi:"deviceTrustTimeToLiveInSeconds"`
+}
+
+func (FusionAuthTenantSsoConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantSsoConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantSsoConfigurationArgs) ToFusionAuthTenantSsoConfigurationOutput() FusionAuthTenantSsoConfigurationOutput {
+	return i.ToFusionAuthTenantSsoConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantSsoConfigurationArgs) ToFusionAuthTenantSsoConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantSsoConfigurationOutput)
+}
+
+func (i FusionAuthTenantSsoConfigurationArgs) ToFusionAuthTenantSsoConfigurationPtrOutput() FusionAuthTenantSsoConfigurationPtrOutput {
+	return i.ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantSsoConfigurationArgs) ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantSsoConfigurationOutput).ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantSsoConfigurationPtrInput is an input type that accepts FusionAuthTenantSsoConfigurationArgs, FusionAuthTenantSsoConfigurationPtr and FusionAuthTenantSsoConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantSsoConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantSsoConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantSsoConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantSsoConfigurationPtrOutput() FusionAuthTenantSsoConfigurationPtrOutput
+	ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantSsoConfigurationPtrOutput
+}
+
+type fusionAuthTenantSsoConfigurationPtrType FusionAuthTenantSsoConfigurationArgs
+
+func FusionAuthTenantSsoConfigurationPtr(v *FusionAuthTenantSsoConfigurationArgs) FusionAuthTenantSsoConfigurationPtrInput {
+	return (*fusionAuthTenantSsoConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantSsoConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantSsoConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantSsoConfigurationPtrType) ToFusionAuthTenantSsoConfigurationPtrOutput() FusionAuthTenantSsoConfigurationPtrOutput {
+	return i.ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantSsoConfigurationPtrType) ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantSsoConfigurationPtrOutput)
+}
+
+type FusionAuthTenantSsoConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantSsoConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantSsoConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantSsoConfigurationOutput) ToFusionAuthTenantSsoConfigurationOutput() FusionAuthTenantSsoConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantSsoConfigurationOutput) ToFusionAuthTenantSsoConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantSsoConfigurationOutput) ToFusionAuthTenantSsoConfigurationPtrOutput() FusionAuthTenantSsoConfigurationPtrOutput {
+	return o.ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantSsoConfigurationOutput) ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantSsoConfiguration) *FusionAuthTenantSsoConfiguration {
+		return &v
+	}).(FusionAuthTenantSsoConfigurationPtrOutput)
+}
+
+// The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+func (o FusionAuthTenantSsoConfigurationOutput) DeviceTrustTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantSsoConfiguration) *int { return v.DeviceTrustTimeToLiveInSeconds }).(pulumi.IntPtrOutput)
+}
+
+type FusionAuthTenantSsoConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantSsoConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantSsoConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantSsoConfigurationPtrOutput) ToFusionAuthTenantSsoConfigurationPtrOutput() FusionAuthTenantSsoConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantSsoConfigurationPtrOutput) ToFusionAuthTenantSsoConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantSsoConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantSsoConfigurationPtrOutput) Elem() FusionAuthTenantSsoConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantSsoConfiguration) FusionAuthTenantSsoConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantSsoConfiguration
+		return ret
+	}).(FusionAuthTenantSsoConfigurationOutput)
+}
+
+// The number of seconds before a trusted device is reset. When reset, a user is forced to complete captcha during login and complete two factor authentication if applicable.
+func (o FusionAuthTenantSsoConfigurationPtrOutput) DeviceTrustTimeToLiveInSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantSsoConfiguration) *int {
+		if v == nil {
+			return nil
+		}
+		return v.DeviceTrustTimeToLiveInSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
 type FusionAuthTenantUserDeletePolicy struct {
 	// Indicates that users without a verified email address will be permanently deleted after tenant.userDeletePolicy.unverified.numberOfDaysToRetain days.
 	UnverifiedEnabled *bool `pulumi:"unverifiedEnabled"`
@@ -18705,9 +22090,603 @@ func (o FusionAuthTenantUsernameConfigurationUniquePtrOutput) Strategy() pulumi.
 	}).(pulumi.StringPtrOutput)
 }
 
+type FusionAuthTenantWebauthnConfiguration struct {
+	// The Bootstrap Workflow configuration.
+	BootstrapWorkflow *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow `pulumi:"bootstrapWorkflow"`
+	// Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+	Debug *bool `pulumi:"debug"`
+	// Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+	Enabled *bool `pulumi:"enabled"`
+	// The Reauthentication Workflow configuration.
+	ReauthenticationWorkflow *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow `pulumi:"reauthenticationWorkflow"`
+	// The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+	RelyingPartyId *string `pulumi:"relyingPartyId"`
+	// The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+	RelyingPartyName *string `pulumi:"relyingPartyName"`
+}
+
+// FusionAuthTenantWebauthnConfigurationInput is an input type that accepts FusionAuthTenantWebauthnConfigurationArgs and FusionAuthTenantWebauthnConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationInput` via:
+//
+//	FusionAuthTenantWebauthnConfigurationArgs{...}
+type FusionAuthTenantWebauthnConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationOutput() FusionAuthTenantWebauthnConfigurationOutput
+	ToFusionAuthTenantWebauthnConfigurationOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationOutput
+}
+
+type FusionAuthTenantWebauthnConfigurationArgs struct {
+	// The Bootstrap Workflow configuration.
+	BootstrapWorkflow FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput `pulumi:"bootstrapWorkflow"`
+	// Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+	Debug pulumi.BoolPtrInput `pulumi:"debug"`
+	// Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The Reauthentication Workflow configuration.
+	ReauthenticationWorkflow FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput `pulumi:"reauthenticationWorkflow"`
+	// The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+	RelyingPartyId pulumi.StringPtrInput `pulumi:"relyingPartyId"`
+	// The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+	RelyingPartyName pulumi.StringPtrInput `pulumi:"relyingPartyName"`
+}
+
+func (FusionAuthTenantWebauthnConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthTenantWebauthnConfigurationArgs) ToFusionAuthTenantWebauthnConfigurationOutput() FusionAuthTenantWebauthnConfigurationOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationArgs) ToFusionAuthTenantWebauthnConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationOutput)
+}
+
+func (i FusionAuthTenantWebauthnConfigurationArgs) ToFusionAuthTenantWebauthnConfigurationPtrOutput() FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationArgs) ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationOutput).ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantWebauthnConfigurationPtrInput is an input type that accepts FusionAuthTenantWebauthnConfigurationArgs, FusionAuthTenantWebauthnConfigurationPtr and FusionAuthTenantWebauthnConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationPtrInput` via:
+//
+//	        FusionAuthTenantWebauthnConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantWebauthnConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationPtrOutput() FusionAuthTenantWebauthnConfigurationPtrOutput
+	ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationPtrOutput
+}
+
+type fusionAuthTenantWebauthnConfigurationPtrType FusionAuthTenantWebauthnConfigurationArgs
+
+func FusionAuthTenantWebauthnConfigurationPtr(v *FusionAuthTenantWebauthnConfigurationArgs) FusionAuthTenantWebauthnConfigurationPtrInput {
+	return (*fusionAuthTenantWebauthnConfigurationPtrType)(v)
+}
+
+func (*fusionAuthTenantWebauthnConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationPtrType) ToFusionAuthTenantWebauthnConfigurationPtrOutput() FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationPtrType) ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationOutput) ToFusionAuthTenantWebauthnConfigurationOutput() FusionAuthTenantWebauthnConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationOutput) ToFusionAuthTenantWebauthnConfigurationOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationOutput) ToFusionAuthTenantWebauthnConfigurationPtrOutput() FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return o.ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantWebauthnConfigurationOutput) ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantWebauthnConfiguration) *FusionAuthTenantWebauthnConfiguration {
+		return &v
+	}).(FusionAuthTenantWebauthnConfigurationPtrOutput)
+}
+
+// The Bootstrap Workflow configuration.
+func (o FusionAuthTenantWebauthnConfigurationOutput) BootstrapWorkflow() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+		return v.BootstrapWorkflow
+	}).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput)
+}
+
+// Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *bool { return v.Debug }).(pulumi.BoolPtrOutput)
+}
+
+// Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The Reauthentication Workflow configuration.
+func (o FusionAuthTenantWebauthnConfigurationOutput) ReauthenticationWorkflow() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+		return v.ReauthenticationWorkflow
+	}).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput)
+}
+
+// The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+func (o FusionAuthTenantWebauthnConfigurationOutput) RelyingPartyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *string { return v.RelyingPartyId }).(pulumi.StringPtrOutput)
+}
+
+// The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+func (o FusionAuthTenantWebauthnConfigurationOutput) RelyingPartyName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfiguration) *string { return v.RelyingPartyName }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) ToFusionAuthTenantWebauthnConfigurationPtrOutput() FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) ToFusionAuthTenantWebauthnConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) Elem() FusionAuthTenantWebauthnConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) FusionAuthTenantWebauthnConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantWebauthnConfiguration
+		return ret
+	}).(FusionAuthTenantWebauthnConfigurationOutput)
+}
+
+// The Bootstrap Workflow configuration.
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) BootstrapWorkflow() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+		if v == nil {
+			return nil
+		}
+		return v.BootstrapWorkflow
+	}).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput)
+}
+
+// Determines if debug should be enabled for this tenant to create an event log to assist in debugging WebAuthn errors. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) Debug() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Debug
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Whether or not this tenant has WebAuthn enabled globally.. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The Reauthentication Workflow configuration.
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) ReauthenticationWorkflow() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+		if v == nil {
+			return nil
+		}
+		return v.ReauthenticationWorkflow
+	}).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput)
+}
+
+// The value this tenant will use for the Relying Party Id in WebAuthn ceremonies. Passkeys can only be used to authenticate on sites using the same Relying Party Id they were registered with. This value must match the browser origin or be a registrable domain suffix of the browser origin. For example, if your domain is auth.piedpiper.com, you could use auth.piedpiper.com or piedpiper.com but not m.auth.piedpiper.com or com. When this parameter is omitted, FusionAuth will use null for the Relying Party Id in passkey creation and request options. A null value in the WebAuthn JavaScript API will use the browser origin. Note: A license is required to utilize WebAuthn.
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) RelyingPartyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RelyingPartyId
+	}).(pulumi.StringPtrOutput)
+}
+
+// The value this tenant will use for the Relying Party name in WebAuthn ceremonies. This value may be displayed by browser or operating system dialogs during WebAuthn ceremonies. When this parameter is omitted, FusionAuth will use the tenant.issuer value. Note: A license is required to utilize WebAuthn.
+func (o FusionAuthTenantWebauthnConfigurationPtrOutput) RelyingPartyName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RelyingPartyName
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflow struct {
+	// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+	AuthenticatorAttachmentPreference *string `pulumi:"authenticatorAttachmentPreference"`
+	// Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+	Enabled *bool `pulumi:"enabled"`
+	// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+	UserVerificationRequirement *string `pulumi:"userVerificationRequirement"`
+}
+
+// FusionAuthTenantWebauthnConfigurationBootstrapWorkflowInput is an input type that accepts FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs and FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationBootstrapWorkflowInput` via:
+//
+//	FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs{...}
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflowInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput
+	ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput
+}
+
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs struct {
+	// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+	AuthenticatorAttachmentPreference pulumi.StringPtrInput `pulumi:"authenticatorAttachmentPreference"`
+	// Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+	UserVerificationRequirement pulumi.StringPtrInput `pulumi:"userVerificationRequirement"`
+}
+
+func (FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationBootstrapWorkflow)(nil)).Elem()
+}
+
+func (i FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput)
+}
+
+func (i FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput).ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput is an input type that accepts FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs, FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtr and FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput` via:
+//
+//	        FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput
+	ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput
+}
+
+type fusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrType FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs
+
+func FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtr(v *FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput {
+	return (*fusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrType)(v)
+}
+
+func (*fusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfigurationBootstrapWorkflow)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrType) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrType) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationBootstrapWorkflow)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o.ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+		return &v
+	}).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput)
+}
+
+// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) AuthenticatorAttachmentPreference() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *string {
+		return v.AuthenticatorAttachmentPreference
+	}).(pulumi.StringPtrOutput)
+}
+
+// Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput) UserVerificationRequirement() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *string {
+		return v.UserVerificationRequirement
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfigurationBootstrapWorkflow)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) ToFusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) Elem() FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) FusionAuthTenantWebauthnConfigurationBootstrapWorkflow {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantWebauthnConfigurationBootstrapWorkflow
+		return ret
+	}).(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput)
+}
+
+// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) AuthenticatorAttachmentPreference() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *string {
+		if v == nil {
+			return nil
+		}
+		return v.AuthenticatorAttachmentPreference
+	}).(pulumi.StringPtrOutput)
+}
+
+// Whether or not this tenant has the WebAuthn bootstrap workflow enabled. The bootstrap workflow is used when the user must "bootstrap" the authentication process by identifying themselves prior to the WebAuthn ceremony and can be used to authenticate from a new device using WebAuthn. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput) UserVerificationRequirement() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationBootstrapWorkflow) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserVerificationRequirement
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow struct {
+	// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+	AuthenticatorAttachmentPreference *string `pulumi:"authenticatorAttachmentPreference"`
+	// Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+	Enabled *bool `pulumi:"enabled"`
+	// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+	UserVerificationRequirement *string `pulumi:"userVerificationRequirement"`
+}
+
+// FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowInput is an input type that accepts FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs and FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowInput` via:
+//
+//	FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs{...}
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput
+	ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput
+}
+
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs struct {
+	// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+	AuthenticatorAttachmentPreference pulumi.StringPtrInput `pulumi:"authenticatorAttachmentPreference"`
+	// Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+	UserVerificationRequirement pulumi.StringPtrInput `pulumi:"userVerificationRequirement"`
+}
+
+func (FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow)(nil)).Elem()
+}
+
+func (i FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput)
+}
+
+func (i FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput).ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(ctx)
+}
+
+// FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput is an input type that accepts FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs, FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtr and FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput values.
+// You can construct a concrete instance of `FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput` via:
+//
+//	        FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput
+	ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput
+}
+
+type fusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrType FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs
+
+func FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtr(v *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput {
+	return (*fusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrType)(v)
+}
+
+func (*fusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow)(nil)).Elem()
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrType) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return i.ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrType) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o.ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+		return &v
+	}).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput)
+}
+
+// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) AuthenticatorAttachmentPreference() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *string {
+		return v.AuthenticatorAttachmentPreference
+	}).(pulumi.StringPtrOutput)
+}
+
+// Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput) UserVerificationRequirement() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *string {
+		return v.UserVerificationRequirement
+	}).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow)(nil)).Elem()
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) ToFusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutputWithContext(ctx context.Context) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput {
+	return o
+}
+
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) Elem() FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow
+		return ret
+	}).(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput)
+}
+
+// Determines the authenticator attachment requirement for WebAuthn passkey registration when using the reauthentication workflow. The possible values are:: Any, CrossPlatform and Platform. Note: A license is required to utilize WebAuthn and an Enterprise plan is required to utilize WebAuthn cross-platform authenticators..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) AuthenticatorAttachmentPreference() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *string {
+		if v == nil {
+			return nil
+		}
+		return v.AuthenticatorAttachmentPreference
+	}).(pulumi.StringPtrOutput)
+}
+
+// Whether or not this tenant has the WebAuthn reauthentication workflow enabled. The reauthentication workflow will automatically prompt a user to authenticate using WebAuthn for repeated logins from the same device. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Determines the user verification requirement for WebAuthn passkey registration when using the bootstrap workflow. The possible values are: Discouraged, Preferred and Required. Note: A license is required to utilize WebAuthn..
+func (o FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput) UserVerificationRequirement() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthTenantWebauthnConfigurationReauthenticationWorkflow) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserVerificationRequirement
+	}).(pulumi.StringPtrOutput)
+}
+
 type FusionAuthUserActionOption struct {
 	// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
-	LocalizedNames map[string]interface{} `pulumi:"localizedNames"`
+	LocalizedNames map[string]string `pulumi:"localizedNames"`
 	// The name of this User Action Option.
 	Name string `pulumi:"name"`
 }
@@ -18725,7 +22704,7 @@ type FusionAuthUserActionOptionInput interface {
 
 type FusionAuthUserActionOptionArgs struct {
 	// A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
-	LocalizedNames pulumi.MapInput `pulumi:"localizedNames"`
+	LocalizedNames pulumi.StringMapInput `pulumi:"localizedNames"`
 	// The name of this User Action Option.
 	Name pulumi.StringInput `pulumi:"name"`
 }
@@ -18782,8 +22761,8 @@ func (o FusionAuthUserActionOptionOutput) ToFusionAuthUserActionOptionOutputWith
 }
 
 // A mapping of localized names for this User Action Option. The key is the Locale and the value is the name of the User Action Option for that language.
-func (o FusionAuthUserActionOptionOutput) LocalizedNames() pulumi.MapOutput {
-	return o.ApplyT(func(v FusionAuthUserActionOption) map[string]interface{} { return v.LocalizedNames }).(pulumi.MapOutput)
+func (o FusionAuthUserActionOptionOutput) LocalizedNames() pulumi.StringMapOutput {
+	return o.ApplyT(func(v FusionAuthUserActionOption) map[string]string { return v.LocalizedNames }).(pulumi.StringMapOutput)
 }
 
 // The name of this User Action Option.
@@ -19849,6 +23828,268 @@ func (o FusionAuthWebhookEventsEnabledPtrOutput) UserUpdateComplete() pulumi.Boo
 	}).(pulumi.BoolPtrOutput)
 }
 
+type FusionAuthWebhookSignatureConfiguration struct {
+	// Wether or not webhook signing is enabled
+	Enabled *bool `pulumi:"enabled"`
+	// The UUID key used for signing the Webhook
+	SigningKeyId *string `pulumi:"signingKeyId"`
+}
+
+// FusionAuthWebhookSignatureConfigurationInput is an input type that accepts FusionAuthWebhookSignatureConfigurationArgs and FusionAuthWebhookSignatureConfigurationOutput values.
+// You can construct a concrete instance of `FusionAuthWebhookSignatureConfigurationInput` via:
+//
+//	FusionAuthWebhookSignatureConfigurationArgs{...}
+type FusionAuthWebhookSignatureConfigurationInput interface {
+	pulumi.Input
+
+	ToFusionAuthWebhookSignatureConfigurationOutput() FusionAuthWebhookSignatureConfigurationOutput
+	ToFusionAuthWebhookSignatureConfigurationOutputWithContext(context.Context) FusionAuthWebhookSignatureConfigurationOutput
+}
+
+type FusionAuthWebhookSignatureConfigurationArgs struct {
+	// Wether or not webhook signing is enabled
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// The UUID key used for signing the Webhook
+	SigningKeyId pulumi.StringPtrInput `pulumi:"signingKeyId"`
+}
+
+func (FusionAuthWebhookSignatureConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthWebhookSignatureConfiguration)(nil)).Elem()
+}
+
+func (i FusionAuthWebhookSignatureConfigurationArgs) ToFusionAuthWebhookSignatureConfigurationOutput() FusionAuthWebhookSignatureConfigurationOutput {
+	return i.ToFusionAuthWebhookSignatureConfigurationOutputWithContext(context.Background())
+}
+
+func (i FusionAuthWebhookSignatureConfigurationArgs) ToFusionAuthWebhookSignatureConfigurationOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthWebhookSignatureConfigurationOutput)
+}
+
+func (i FusionAuthWebhookSignatureConfigurationArgs) ToFusionAuthWebhookSignatureConfigurationPtrOutput() FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return i.ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i FusionAuthWebhookSignatureConfigurationArgs) ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthWebhookSignatureConfigurationOutput).ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(ctx)
+}
+
+// FusionAuthWebhookSignatureConfigurationPtrInput is an input type that accepts FusionAuthWebhookSignatureConfigurationArgs, FusionAuthWebhookSignatureConfigurationPtr and FusionAuthWebhookSignatureConfigurationPtrOutput values.
+// You can construct a concrete instance of `FusionAuthWebhookSignatureConfigurationPtrInput` via:
+//
+//	        FusionAuthWebhookSignatureConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type FusionAuthWebhookSignatureConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToFusionAuthWebhookSignatureConfigurationPtrOutput() FusionAuthWebhookSignatureConfigurationPtrOutput
+	ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(context.Context) FusionAuthWebhookSignatureConfigurationPtrOutput
+}
+
+type fusionAuthWebhookSignatureConfigurationPtrType FusionAuthWebhookSignatureConfigurationArgs
+
+func FusionAuthWebhookSignatureConfigurationPtr(v *FusionAuthWebhookSignatureConfigurationArgs) FusionAuthWebhookSignatureConfigurationPtrInput {
+	return (*fusionAuthWebhookSignatureConfigurationPtrType)(v)
+}
+
+func (*fusionAuthWebhookSignatureConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthWebhookSignatureConfiguration)(nil)).Elem()
+}
+
+func (i *fusionAuthWebhookSignatureConfigurationPtrType) ToFusionAuthWebhookSignatureConfigurationPtrOutput() FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return i.ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *fusionAuthWebhookSignatureConfigurationPtrType) ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(FusionAuthWebhookSignatureConfigurationPtrOutput)
+}
+
+type FusionAuthWebhookSignatureConfigurationOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthWebhookSignatureConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*FusionAuthWebhookSignatureConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthWebhookSignatureConfigurationOutput) ToFusionAuthWebhookSignatureConfigurationOutput() FusionAuthWebhookSignatureConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthWebhookSignatureConfigurationOutput) ToFusionAuthWebhookSignatureConfigurationOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationOutput {
+	return o
+}
+
+func (o FusionAuthWebhookSignatureConfigurationOutput) ToFusionAuthWebhookSignatureConfigurationPtrOutput() FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return o.ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o FusionAuthWebhookSignatureConfigurationOutput) ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v FusionAuthWebhookSignatureConfiguration) *FusionAuthWebhookSignatureConfiguration {
+		return &v
+	}).(FusionAuthWebhookSignatureConfigurationPtrOutput)
+}
+
+// Wether or not webhook signing is enabled
+func (o FusionAuthWebhookSignatureConfigurationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v FusionAuthWebhookSignatureConfiguration) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// The UUID key used for signing the Webhook
+func (o FusionAuthWebhookSignatureConfigurationOutput) SigningKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v FusionAuthWebhookSignatureConfiguration) *string { return v.SigningKeyId }).(pulumi.StringPtrOutput)
+}
+
+type FusionAuthWebhookSignatureConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (FusionAuthWebhookSignatureConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**FusionAuthWebhookSignatureConfiguration)(nil)).Elem()
+}
+
+func (o FusionAuthWebhookSignatureConfigurationPtrOutput) ToFusionAuthWebhookSignatureConfigurationPtrOutput() FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthWebhookSignatureConfigurationPtrOutput) ToFusionAuthWebhookSignatureConfigurationPtrOutputWithContext(ctx context.Context) FusionAuthWebhookSignatureConfigurationPtrOutput {
+	return o
+}
+
+func (o FusionAuthWebhookSignatureConfigurationPtrOutput) Elem() FusionAuthWebhookSignatureConfigurationOutput {
+	return o.ApplyT(func(v *FusionAuthWebhookSignatureConfiguration) FusionAuthWebhookSignatureConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret FusionAuthWebhookSignatureConfiguration
+		return ret
+	}).(FusionAuthWebhookSignatureConfigurationOutput)
+}
+
+// Wether or not webhook signing is enabled
+func (o FusionAuthWebhookSignatureConfigurationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhookSignatureConfiguration) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The UUID key used for signing the Webhook
+func (o FusionAuthWebhookSignatureConfigurationPtrOutput) SigningKeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *FusionAuthWebhookSignatureConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SigningKeyId
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetApplicationWebauthnConfiguration struct {
+	BootstrapWorkflowEnabled        bool `pulumi:"bootstrapWorkflowEnabled"`
+	Enabled                         bool `pulumi:"enabled"`
+	ReauthenticationWorkflowEnabled bool `pulumi:"reauthenticationWorkflowEnabled"`
+}
+
+// GetApplicationWebauthnConfigurationInput is an input type that accepts GetApplicationWebauthnConfigurationArgs and GetApplicationWebauthnConfigurationOutput values.
+// You can construct a concrete instance of `GetApplicationWebauthnConfigurationInput` via:
+//
+//	GetApplicationWebauthnConfigurationArgs{...}
+type GetApplicationWebauthnConfigurationInput interface {
+	pulumi.Input
+
+	ToGetApplicationWebauthnConfigurationOutput() GetApplicationWebauthnConfigurationOutput
+	ToGetApplicationWebauthnConfigurationOutputWithContext(context.Context) GetApplicationWebauthnConfigurationOutput
+}
+
+type GetApplicationWebauthnConfigurationArgs struct {
+	BootstrapWorkflowEnabled        pulumi.BoolInput `pulumi:"bootstrapWorkflowEnabled"`
+	Enabled                         pulumi.BoolInput `pulumi:"enabled"`
+	ReauthenticationWorkflowEnabled pulumi.BoolInput `pulumi:"reauthenticationWorkflowEnabled"`
+}
+
+func (GetApplicationWebauthnConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i GetApplicationWebauthnConfigurationArgs) ToGetApplicationWebauthnConfigurationOutput() GetApplicationWebauthnConfigurationOutput {
+	return i.ToGetApplicationWebauthnConfigurationOutputWithContext(context.Background())
+}
+
+func (i GetApplicationWebauthnConfigurationArgs) ToGetApplicationWebauthnConfigurationOutputWithContext(ctx context.Context) GetApplicationWebauthnConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetApplicationWebauthnConfigurationOutput)
+}
+
+// GetApplicationWebauthnConfigurationArrayInput is an input type that accepts GetApplicationWebauthnConfigurationArray and GetApplicationWebauthnConfigurationArrayOutput values.
+// You can construct a concrete instance of `GetApplicationWebauthnConfigurationArrayInput` via:
+//
+//	GetApplicationWebauthnConfigurationArray{ GetApplicationWebauthnConfigurationArgs{...} }
+type GetApplicationWebauthnConfigurationArrayInput interface {
+	pulumi.Input
+
+	ToGetApplicationWebauthnConfigurationArrayOutput() GetApplicationWebauthnConfigurationArrayOutput
+	ToGetApplicationWebauthnConfigurationArrayOutputWithContext(context.Context) GetApplicationWebauthnConfigurationArrayOutput
+}
+
+type GetApplicationWebauthnConfigurationArray []GetApplicationWebauthnConfigurationInput
+
+func (GetApplicationWebauthnConfigurationArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (i GetApplicationWebauthnConfigurationArray) ToGetApplicationWebauthnConfigurationArrayOutput() GetApplicationWebauthnConfigurationArrayOutput {
+	return i.ToGetApplicationWebauthnConfigurationArrayOutputWithContext(context.Background())
+}
+
+func (i GetApplicationWebauthnConfigurationArray) ToGetApplicationWebauthnConfigurationArrayOutputWithContext(ctx context.Context) GetApplicationWebauthnConfigurationArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetApplicationWebauthnConfigurationArrayOutput)
+}
+
+type GetApplicationWebauthnConfigurationOutput struct{ *pulumi.OutputState }
+
+func (GetApplicationWebauthnConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o GetApplicationWebauthnConfigurationOutput) ToGetApplicationWebauthnConfigurationOutput() GetApplicationWebauthnConfigurationOutput {
+	return o
+}
+
+func (o GetApplicationWebauthnConfigurationOutput) ToGetApplicationWebauthnConfigurationOutputWithContext(ctx context.Context) GetApplicationWebauthnConfigurationOutput {
+	return o
+}
+
+func (o GetApplicationWebauthnConfigurationOutput) BootstrapWorkflowEnabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetApplicationWebauthnConfiguration) bool { return v.BootstrapWorkflowEnabled }).(pulumi.BoolOutput)
+}
+
+func (o GetApplicationWebauthnConfigurationOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetApplicationWebauthnConfiguration) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+func (o GetApplicationWebauthnConfigurationOutput) ReauthenticationWorkflowEnabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetApplicationWebauthnConfiguration) bool { return v.ReauthenticationWorkflowEnabled }).(pulumi.BoolOutput)
+}
+
+type GetApplicationWebauthnConfigurationArrayOutput struct{ *pulumi.OutputState }
+
+func (GetApplicationWebauthnConfigurationArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetApplicationWebauthnConfiguration)(nil)).Elem()
+}
+
+func (o GetApplicationWebauthnConfigurationArrayOutput) ToGetApplicationWebauthnConfigurationArrayOutput() GetApplicationWebauthnConfigurationArrayOutput {
+	return o
+}
+
+func (o GetApplicationWebauthnConfigurationArrayOutput) ToGetApplicationWebauthnConfigurationArrayOutputWithContext(ctx context.Context) GetApplicationWebauthnConfigurationArrayOutput {
+	return o
+}
+
+func (o GetApplicationWebauthnConfigurationArrayOutput) Index(i pulumi.IntInput) GetApplicationWebauthnConfigurationOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetApplicationWebauthnConfiguration {
+		return vs[0].([]GetApplicationWebauthnConfiguration)[vs[1].(int)]
+	}).(GetApplicationWebauthnConfigurationOutput)
+}
+
 type GetFormFieldValidator struct {
 	// Determines if user input should be validated.
 	Enabled *bool `pulumi:"enabled"`
@@ -20115,6 +24356,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationEmailConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationEmailConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationFormConfigurationInput)(nil)).Elem(), FusionAuthApplicationFormConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationFormConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationFormConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationInput)(nil)).Elem(), FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationJwtConfigurationInput)(nil)).Elem(), FusionAuthApplicationJwtConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationJwtConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationJwtConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationLambdaConfigurationInput)(nil)).Elem(), FusionAuthApplicationLambdaConfigurationArgs{})
@@ -20155,10 +24398,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationRegistrationDeletePolicyPtrInput)(nil)).Elem(), FusionAuthApplicationRegistrationDeletePolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationInitiatedLoginInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationInitiatedLoginArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLogoutInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLogoutArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLogoutPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLogoutArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutPtrInput)(nil)).Elem(), FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationWebauthnConfigurationInput)(nil)).Elem(), FusionAuthApplicationWebauthnConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthApplicationWebauthnConfigurationPtrInput)(nil)).Elem(), FusionAuthApplicationWebauthnConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthEntityTypeJwtConfigurationInput)(nil)).Elem(), FusionAuthEntityTypeJwtConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthEntityTypeJwtConfigurationPtrInput)(nil)).Elem(), FusionAuthEntityTypeJwtConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthFormFieldValidatorInput)(nil)).Elem(), FusionAuthFormFieldValidatorArgs{})
@@ -20179,6 +24430,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpFacebookTenantConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpFacebookTenantConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationInput)(nil)).Elem(), FusionAuthIdpGoogleApplicationConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpGoogleApplicationConfigurationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationPropertiesInput)(nil)).Elem(), FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrInput)(nil)).Elem(), FusionAuthIdpGoogleApplicationConfigurationPropertiesArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGooglePropertiesInput)(nil)).Elem(), FusionAuthIdpGooglePropertiesArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGooglePropertiesPtrInput)(nil)).Elem(), FusionAuthIdpGooglePropertiesArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleTenantConfigurationInput)(nil)).Elem(), FusionAuthIdpGoogleTenantConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpGoogleTenantConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpGoogleTenantConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpLinkedInApplicationConfigurationInput)(nil)).Elem(), FusionAuthIdpLinkedInApplicationConfigurationArgs{})
@@ -20195,10 +24450,24 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpPsnTenantConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpPsnTenantConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2ApplicationConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlv2ApplicationConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2ApplicationConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpSamlv2ApplicationConfigurationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationPtrInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDecryptionInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationDecryptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDestinationInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrInput)(nil)).Elem(), FusionAuthIdpSamlv2AssertionConfigurationDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2IdpInitiatedConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrInput)(nil)).Elem(), FusionAuthIdpSamlv2IdpInitiatedConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2LoginHintConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlv2LoginHintConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2LoginHintConfigurationPtrInput)(nil)).Elem(), FusionAuthIdpSamlv2LoginHintConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2TenantConfigurationInput)(nil)).Elem(), FusionAuthIdpSamlv2TenantConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSamlv2TenantConfigurationArrayInput)(nil)).Elem(), FusionAuthIdpSamlv2TenantConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthIdpSteamApplicationConfigurationInput)(nil)).Elem(), FusionAuthIdpSteamApplicationConfigurationArgs{})
@@ -20225,8 +24494,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationLoginRecordConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationLoginRecordConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationLoginRecordConfigurationDeleteInput)(nil)).Elem(), FusionAuthSystemConfigurationLoginRecordConfigurationDeleteArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationLoginRecordConfigurationDeletePtrInput)(nil)).Elem(), FusionAuthSystemConfigurationLoginRecordConfigurationDeleteArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationTrustedProxyConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationTrustedProxyConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationTrustedProxyConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUiConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationUiConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUiConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationUiConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUsageDataConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationUsageDataConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationUsageDataConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationUsageDataConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteInput)(nil)).Elem(), FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteArgs{})
@@ -20271,6 +24544,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantFormConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantFormConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantJwtConfigurationInput)(nil)).Elem(), FusionAuthTenantJwtConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantJwtConfigurationArrayInput)(nil)).Elem(), FusionAuthTenantJwtConfigurationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantLambdaConfigurationInput)(nil)).Elem(), FusionAuthTenantLambdaConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantLambdaConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantLambdaConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantLoginConfigurationInput)(nil)).Elem(), FusionAuthTenantLoginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantLoginConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantLoginConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantMaximumPasswordAgeInput)(nil)).Elem(), FusionAuthTenantMaximumPasswordAgeArgs{})
@@ -20311,18 +24586,32 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrInput)(nil)).Elem(), FusionAuthTenantRateLimitConfigurationSendTwoFactorArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRegistrationConfigurationInput)(nil)).Elem(), FusionAuthTenantRegistrationConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantRegistrationConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantRegistrationConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantScimServerConfigurationInput)(nil)).Elem(), FusionAuthTenantScimServerConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantScimServerConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantScimServerConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantSsoConfigurationInput)(nil)).Elem(), FusionAuthTenantSsoConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantSsoConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantSsoConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUserDeletePolicyInput)(nil)).Elem(), FusionAuthTenantUserDeletePolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUserDeletePolicyPtrInput)(nil)).Elem(), FusionAuthTenantUserDeletePolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUsernameConfigurationInput)(nil)).Elem(), FusionAuthTenantUsernameConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUsernameConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantUsernameConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUsernameConfigurationUniqueInput)(nil)).Elem(), FusionAuthTenantUsernameConfigurationUniqueArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantUsernameConfigurationUniquePtrInput)(nil)).Elem(), FusionAuthTenantUsernameConfigurationUniqueArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationPtrInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationBootstrapWorkflowInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationBootstrapWorkflowArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrInput)(nil)).Elem(), FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthUserActionOptionInput)(nil)).Elem(), FusionAuthUserActionOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthUserActionOptionArrayInput)(nil)).Elem(), FusionAuthUserActionOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthUserTwoFactorMethodInput)(nil)).Elem(), FusionAuthUserTwoFactorMethodArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthUserTwoFactorMethodArrayInput)(nil)).Elem(), FusionAuthUserTwoFactorMethodArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookEventsEnabledInput)(nil)).Elem(), FusionAuthWebhookEventsEnabledArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookEventsEnabledPtrInput)(nil)).Elem(), FusionAuthWebhookEventsEnabledArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookSignatureConfigurationInput)(nil)).Elem(), FusionAuthWebhookSignatureConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*FusionAuthWebhookSignatureConfigurationPtrInput)(nil)).Elem(), FusionAuthWebhookSignatureConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetApplicationWebauthnConfigurationInput)(nil)).Elem(), GetApplicationWebauthnConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetApplicationWebauthnConfigurationArrayInput)(nil)).Elem(), GetApplicationWebauthnConfigurationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFormFieldValidatorInput)(nil)).Elem(), GetFormFieldValidatorArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFormFieldValidatorPtrInput)(nil)).Elem(), GetFormFieldValidatorArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFormStepInput)(nil)).Elem(), GetFormStepArgs{})
@@ -20339,6 +24628,8 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthApplicationEmailConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationFormConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationFormConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationFormConfigurationSelfServiceFormConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationJwtConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationJwtConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationLambdaConfigurationOutput{})
@@ -20379,10 +24670,18 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthApplicationRegistrationDeletePolicyPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationAssertionEncryptionConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationInitiatedLoginPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLoginHintConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLogoutOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLogoutPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutOutput{})
 	pulumi.RegisterOutputType(FusionAuthApplicationSamlv2ConfigurationLogoutSingleLogoutPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationWebauthnConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthApplicationWebauthnConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthEntityTypeJwtConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthEntityTypeJwtConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthFormFieldValidatorOutput{})
@@ -20403,6 +24702,10 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthIdpFacebookTenantConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpGoogleApplicationConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpGoogleApplicationConfigurationArrayOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpGoogleApplicationConfigurationPropertiesOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpGoogleApplicationConfigurationPropertiesPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpGooglePropertiesOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpGooglePropertiesPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpGoogleTenantConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpGoogleTenantConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpLinkedInApplicationConfigurationOutput{})
@@ -20419,10 +24722,24 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthIdpPsnTenantConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedApplicationConfigurationArrayOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedAssertionConfigurationDecryptionPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlV2IdpInitiatedTenantConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlv2ApplicationConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlv2ApplicationConfigurationArrayOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationDecryptionOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationDecryptionPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationDestinationOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2AssertionConfigurationDestinationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2IdpInitiatedConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2IdpInitiatedConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2LoginHintConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthIdpSamlv2LoginHintConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlv2TenantConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSamlv2TenantConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthIdpSteamApplicationConfigurationOutput{})
@@ -20449,8 +24766,12 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationLoginRecordConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationLoginRecordConfigurationDeleteOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationLoginRecordConfigurationDeletePtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationTrustedProxyConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUiConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUiConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUsageDataConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthSystemConfigurationWebhookEventLogConfigurationDeleteOutput{})
@@ -20495,6 +24816,8 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthTenantFormConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantJwtConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantJwtConfigurationArrayOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantLambdaConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantLambdaConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantLoginConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantLoginConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantMaximumPasswordAgeOutput{})
@@ -20535,18 +24858,32 @@ func init() {
 	pulumi.RegisterOutputType(FusionAuthTenantRateLimitConfigurationSendTwoFactorPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantRegistrationConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantRegistrationConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantScimServerConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantScimServerConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantSsoConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantSsoConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUserDeletePolicyOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUserDeletePolicyPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUsernameConfigurationOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUsernameConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUsernameConfigurationUniqueOutput{})
 	pulumi.RegisterOutputType(FusionAuthTenantUsernameConfigurationUniquePtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationBootstrapWorkflowPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowOutput{})
+	pulumi.RegisterOutputType(FusionAuthTenantWebauthnConfigurationReauthenticationWorkflowPtrOutput{})
 	pulumi.RegisterOutputType(FusionAuthUserActionOptionOutput{})
 	pulumi.RegisterOutputType(FusionAuthUserActionOptionArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthUserTwoFactorMethodOutput{})
 	pulumi.RegisterOutputType(FusionAuthUserTwoFactorMethodArrayOutput{})
 	pulumi.RegisterOutputType(FusionAuthWebhookEventsEnabledOutput{})
 	pulumi.RegisterOutputType(FusionAuthWebhookEventsEnabledPtrOutput{})
+	pulumi.RegisterOutputType(FusionAuthWebhookSignatureConfigurationOutput{})
+	pulumi.RegisterOutputType(FusionAuthWebhookSignatureConfigurationPtrOutput{})
+	pulumi.RegisterOutputType(GetApplicationWebauthnConfigurationOutput{})
+	pulumi.RegisterOutputType(GetApplicationWebauthnConfigurationArrayOutput{})
 	pulumi.RegisterOutputType(GetFormFieldValidatorOutput{})
 	pulumi.RegisterOutputType(GetFormFieldValidatorPtrOutput{})
 	pulumi.RegisterOutputType(GetFormStepOutput{})

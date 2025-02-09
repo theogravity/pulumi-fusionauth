@@ -15,17 +15,17 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator
     {
         /// <summary>
-        /// The length of the secure generator used for generating the email verification one time code.
+        /// The length of the secure generator used for generating the email verification one time code. Defaults to 6.
         /// </summary>
-        public readonly int Length;
+        public readonly int? Length;
         /// <summary>
-        /// The type of the secure generator used for generating the email verification one time code.
+        /// The type of the secure generator used for generating the email verification one time code. Defaults to randomAlphaNumeric.
         /// </summary>
         public readonly string? Type;
 
         [OutputConstructor]
         private FusionAuthTenantExternalIdentifierConfigurationEmailVerificationOneTimeCodeGenerator(
-            int length,
+            int? length,
 
             string? type)
         {

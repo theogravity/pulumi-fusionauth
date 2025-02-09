@@ -15,7 +15,7 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthIdpSteamTenantConfiguration
     {
         /// <summary>
-        /// When enabled, the number of identity provider links a user may create is enforced by maximumLinks.
+        /// When enabled, the number of identity provider links a user may create is enforced by maximumLinks
         /// </summary>
         public readonly bool? LimitUserLinkCountEnabled;
         /// <summary>

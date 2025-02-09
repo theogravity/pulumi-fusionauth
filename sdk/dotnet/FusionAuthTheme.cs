@@ -142,7 +142,13 @@ namespace theogravity.Fusionauth
         public Output<string> ConfirmationRequired { get; private set; } = null!;
 
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// An object that can hold any information about the Theme that should be persisted.
+        /// </summary>
+        [Output("data")]
+        public Output<ImmutableDictionary<string, string>?> Data { get; private set; } = null!;
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
         /// 
         /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
@@ -198,7 +204,7 @@ namespace theogravity.Fusionauth
         /// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         /// </summary>
         [Output("localizedMessages")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedMessages { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedMessages { get; private set; } = null!;
 
         /// <summary>
         /// A unique name for the Theme.
@@ -397,7 +403,8 @@ namespace theogravity.Fusionauth
         public Output<string> Samlv2Logout { get; private set; } = null!;
 
         /// <summary>
-        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        /// and stylesheet from the source Theme will be copied to the new Theme.
         /// </summary>
         [Output("sourceThemeId")]
         public Output<string?> SourceThemeId { get; private set; } = null!;
@@ -407,6 +414,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("stylesheet")]
         public Output<string> Stylesheet { get; private set; } = null!;
+
+        /// <summary>
+        /// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Output("themeId")]
+        public Output<string> ThemeId { get; private set; } = null!;
 
         /// <summary>
         /// An optional FreeMarker template that contains the unauthorized page.
@@ -515,8 +528,20 @@ namespace theogravity.Fusionauth
         [Input("confirmationRequired")]
         public Input<string>? ConfirmationRequired { get; set; }
 
+        [Input("data")]
+        private InputMap<string>? _data;
+
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// An object that can hold any information about the Theme that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
         /// 
         /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
@@ -569,14 +594,14 @@ namespace theogravity.Fusionauth
         public Input<string>? Index { get; set; }
 
         [Input("localizedMessages")]
-        private InputMap<object>? _localizedMessages;
+        private InputMap<string>? _localizedMessages;
 
         /// <summary>
         /// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         /// </summary>
-        public InputMap<object> LocalizedMessages
+        public InputMap<string> LocalizedMessages
         {
-            get => _localizedMessages ?? (_localizedMessages = new InputMap<object>());
+            get => _localizedMessages ?? (_localizedMessages = new InputMap<string>());
             set => _localizedMessages = value;
         }
 
@@ -777,7 +802,8 @@ namespace theogravity.Fusionauth
         public Input<string>? Samlv2Logout { get; set; }
 
         /// <summary>
-        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        /// and stylesheet from the source Theme will be copied to the new Theme.
         /// </summary>
         [Input("sourceThemeId")]
         public Input<string>? SourceThemeId { get; set; }
@@ -787,6 +813,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("stylesheet")]
         public Input<string>? Stylesheet { get; set; }
+
+        /// <summary>
+        /// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("themeId")]
+        public Input<string>? ThemeId { get; set; }
 
         /// <summary>
         /// An optional FreeMarker template that contains the unauthorized page.
@@ -856,8 +888,20 @@ namespace theogravity.Fusionauth
         [Input("confirmationRequired")]
         public Input<string>? ConfirmationRequired { get; set; }
 
+        [Input("data")]
+        private InputMap<string>? _data;
+
         /// <summary>
-        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file. 
+        /// An object that can hold any information about the Theme that should be persisted.
+        /// </summary>
+        public InputMap<string> Data
+        {
+            get => _data ?? (_data = new InputMap<string>());
+            set => _data = value;
+        }
+
+        /// <summary>
+        /// A properties file formatted String containing at least all of the message keys defined in the FusionAuth shipped messages file.
         /// 
         /// &gt; **Note:** `default_messages` Is Required if not copying an existing Theme.
         /// </summary>
@@ -910,14 +954,14 @@ namespace theogravity.Fusionauth
         public Input<string>? Index { get; set; }
 
         [Input("localizedMessages")]
-        private InputMap<object>? _localizedMessages;
+        private InputMap<string>? _localizedMessages;
 
         /// <summary>
         /// A Map of localized versions of the messages. The key is the Locale and the value is a properties file formatted String.
         /// </summary>
-        public InputMap<object> LocalizedMessages
+        public InputMap<string> LocalizedMessages
         {
-            get => _localizedMessages ?? (_localizedMessages = new InputMap<object>());
+            get => _localizedMessages ?? (_localizedMessages = new InputMap<string>());
             set => _localizedMessages = value;
         }
 
@@ -1118,7 +1162,8 @@ namespace theogravity.Fusionauth
         public Input<string>? Samlv2Logout { get; set; }
 
         /// <summary>
-        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates, and stylesheet from the source Theme will be copied to the new Theme.
+        /// The optional Id of an existing Theme to make a copy of. If present, the defaultMessages, localizedMessages, templates,
+        /// and stylesheet from the source Theme will be copied to the new Theme.
         /// </summary>
         [Input("sourceThemeId")]
         public Input<string>? SourceThemeId { get; set; }
@@ -1128,6 +1173,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("stylesheet")]
         public Input<string>? Stylesheet { get; set; }
+
+        /// <summary>
+        /// The Id to use for the new Theme. If not specified a secure random UUID will be generated.
+        /// </summary>
+        [Input("themeId")]
+        public Input<string>? ThemeId { get; set; }
 
         /// <summary>
         /// An optional FreeMarker template that contains the unauthorized page.

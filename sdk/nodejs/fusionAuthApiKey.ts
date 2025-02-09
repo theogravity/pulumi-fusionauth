@@ -67,6 +67,10 @@ export class FusionAuthApiKey extends pulumi.CustomResource {
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
+     * The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+     */
+    public readonly expirationInstant!: pulumi.Output<number | undefined>;
+    /**
      * The Id of the IP Access Control List limiting access to this API key.
      */
     public readonly ipAccessControlListId!: pulumi.Output<string | undefined>;
@@ -79,7 +83,7 @@ export class FusionAuthApiKey extends pulumi.CustomResource {
      */
     public readonly keyId!: pulumi.Output<string | undefined>;
     /**
-     * The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+     * Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
      */
     public readonly permissionsEndpoints!: pulumi.Output<outputs.FusionAuthApiKeyPermissionsEndpoint[] | undefined>;
     /**
@@ -101,6 +105,7 @@ export class FusionAuthApiKey extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as FusionAuthApiKeyState | undefined;
             resourceInputs["description"] = state ? state.description : undefined;
+            resourceInputs["expirationInstant"] = state ? state.expirationInstant : undefined;
             resourceInputs["ipAccessControlListId"] = state ? state.ipAccessControlListId : undefined;
             resourceInputs["key"] = state ? state.key : undefined;
             resourceInputs["keyId"] = state ? state.keyId : undefined;
@@ -109,6 +114,7 @@ export class FusionAuthApiKey extends pulumi.CustomResource {
         } else {
             const args = argsOrState as FusionAuthApiKeyArgs | undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["expirationInstant"] = args ? args.expirationInstant : undefined;
             resourceInputs["ipAccessControlListId"] = args ? args.ipAccessControlListId : undefined;
             resourceInputs["key"] = args?.key ? pulumi.secret(args.key) : undefined;
             resourceInputs["keyId"] = args ? args.keyId : undefined;
@@ -131,6 +137,10 @@ export interface FusionAuthApiKeyState {
      */
     description?: pulumi.Input<string>;
     /**
+     * The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+     */
+    expirationInstant?: pulumi.Input<number>;
+    /**
      * The Id of the IP Access Control List limiting access to this API key.
      */
     ipAccessControlListId?: pulumi.Input<string>;
@@ -143,7 +153,7 @@ export interface FusionAuthApiKeyState {
      */
     keyId?: pulumi.Input<string>;
     /**
-     * The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+     * Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
      */
     permissionsEndpoints?: pulumi.Input<pulumi.Input<inputs.FusionAuthApiKeyPermissionsEndpoint>[]>;
     /**
@@ -161,6 +171,10 @@ export interface FusionAuthApiKeyArgs {
      */
     description?: pulumi.Input<string>;
     /**
+     * The expiration instant of this API key. Using an expired API key for API Authentication will result in a 401 response code.
+     */
+    expirationInstant?: pulumi.Input<number>;
+    /**
      * The Id of the IP Access Control List limiting access to this API key.
      */
     ipAccessControlListId?: pulumi.Input<string>;
@@ -173,7 +187,7 @@ export interface FusionAuthApiKeyArgs {
      */
     keyId?: pulumi.Input<string>;
     /**
-     * The unique Id of the private key downloaded from Apple and imported into Key Master that will be used to sign the client secret.
+     * Endpoint permissions for this key. Each key of the object is an endpoint, with the value being an array of the HTTP methods which can be used against the endpoint. An Empty permissionsEndpoints object mean that this is a super key that authorizes this key for all the endpoints.
      */
     permissionsEndpoints?: pulumi.Input<pulumi.Input<inputs.FusionAuthApiKeyPermissionsEndpoint>[]>;
     /**

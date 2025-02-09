@@ -56,6 +56,12 @@ namespace theogravity.Fusionauth.Inputs
         }
 
         /// <summary>
+        /// Whether or not FusionAuth will log debug messages to the event log. This is primarily useful for identifying why the FusionAuth CORS filter is rejecting a request and returning an HTTP response status code of 403.
+        /// </summary>
+        [Input("debug")]
+        public Input<bool>? Debug { get; set; }
+
+        /// <summary>
         /// Whether the FusionAuth CORS filter will process requests made to FusionAuth.
         /// </summary>
         [Input("enabled")]

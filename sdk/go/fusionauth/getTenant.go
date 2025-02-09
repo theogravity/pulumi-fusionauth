@@ -70,15 +70,11 @@ type GetTenantResult struct {
 }
 
 func GetTenantOutput(ctx *pulumi.Context, args GetTenantOutputArgs, opts ...pulumi.InvokeOption) GetTenantResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetTenantResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetTenantResultOutput, error) {
 			args := v.(GetTenantArgs)
-			r, err := GetTenant(ctx, &args, opts...)
-			var s GetTenantResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("fusionauth:index/getTenant:getTenant", args, GetTenantResultOutput{}, options).(GetTenantResultOutput), nil
 		}).(GetTenantResultOutput)
 }
 

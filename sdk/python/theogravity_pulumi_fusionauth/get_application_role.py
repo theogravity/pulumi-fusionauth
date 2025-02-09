@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -96,12 +101,9 @@ def get_application_role(application_id: Optional[str] = None,
         application_id=pulumi.get(__ret__, 'application_id'),
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'))
-
-
-@_utilities.lift_output_func(get_application_role)
 def get_application_role_output(application_id: Optional[pulumi.Input[str]] = None,
                                 name: Optional[pulumi.Input[str]] = None,
-                                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetApplicationRoleResult]:
+                                opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetApplicationRoleResult]:
     """
     ## # Application Role Resource
 
@@ -123,4 +125,12 @@ def get_application_role_output(application_id: Optional[pulumi.Input[str]] = No
     :param str application_id: ID of the application that this role is for.
     :param str name: The name of the Role.
     """
-    ...
+    __args__ = dict()
+    __args__['applicationId'] = application_id
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getApplicationRole:getApplicationRole', __args__, opts=opts, typ=GetApplicationRoleResult)
+    return __ret__.apply(lambda __response__: GetApplicationRoleResult(
+        application_id=pulumi.get(__response__, 'application_id'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name')))

@@ -51,7 +51,7 @@ type FusionAuthUserAction struct {
 	// Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
 	IncludeEmailInEventJson pulumi.BoolPtrOutput `pulumi:"includeEmailInEventJson"`
 	// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-	LocalizedNames pulumi.MapOutput `pulumi:"localizedNames"`
+	LocalizedNames pulumi.StringMapOutput `pulumi:"localizedNames"`
 	// The Id of the Email Template that is used when User Actions are modified.
 	ModifyEmailTemplateId pulumi.StringPtrOutput `pulumi:"modifyEmailTemplateId"`
 	// The name of this User Action.
@@ -111,7 +111,7 @@ type fusionAuthUserActionState struct {
 	// Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
 	IncludeEmailInEventJson *bool `pulumi:"includeEmailInEventJson"`
 	// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-	LocalizedNames map[string]interface{} `pulumi:"localizedNames"`
+	LocalizedNames map[string]string `pulumi:"localizedNames"`
 	// The Id of the Email Template that is used when User Actions are modified.
 	ModifyEmailTemplateId *string `pulumi:"modifyEmailTemplateId"`
 	// The name of this User Action.
@@ -142,7 +142,7 @@ type FusionAuthUserActionState struct {
 	// Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
 	IncludeEmailInEventJson pulumi.BoolPtrInput
 	// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-	LocalizedNames pulumi.MapInput
+	LocalizedNames pulumi.StringMapInput
 	// The Id of the Email Template that is used when User Actions are modified.
 	ModifyEmailTemplateId pulumi.StringPtrInput
 	// The name of this User Action.
@@ -177,7 +177,7 @@ type fusionAuthUserActionArgs struct {
 	// Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
 	IncludeEmailInEventJson *bool `pulumi:"includeEmailInEventJson"`
 	// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-	LocalizedNames map[string]interface{} `pulumi:"localizedNames"`
+	LocalizedNames map[string]string `pulumi:"localizedNames"`
 	// The Id of the Email Template that is used when User Actions are modified.
 	ModifyEmailTemplateId *string `pulumi:"modifyEmailTemplateId"`
 	// The name of this User Action.
@@ -209,7 +209,7 @@ type FusionAuthUserActionArgs struct {
 	// Whether to include the email information in the JSON that is sent to the Webhook when a user action is taken.
 	IncludeEmailInEventJson pulumi.BoolPtrInput
 	// A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-	LocalizedNames pulumi.MapInput
+	LocalizedNames pulumi.StringMapInput
 	// The Id of the Email Template that is used when User Actions are modified.
 	ModifyEmailTemplateId pulumi.StringPtrInput
 	// The name of this User Action.
@@ -335,8 +335,8 @@ func (o FusionAuthUserActionOutput) IncludeEmailInEventJson() pulumi.BoolPtrOutp
 }
 
 // A mapping of localized names for this User Action. The key is the Locale and the value is the name of the User Action for that language.
-func (o FusionAuthUserActionOutput) LocalizedNames() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthUserAction) pulumi.MapOutput { return v.LocalizedNames }).(pulumi.MapOutput)
+func (o FusionAuthUserActionOutput) LocalizedNames() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthUserAction) pulumi.StringMapOutput { return v.LocalizedNames }).(pulumi.StringMapOutput)
 }
 
 // The Id of the Email Template that is used when User Actions are modified.

@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -21,7 +23,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getApplication(args: GetApplicationArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("fusionauth:index/getApplication:getApplication", {
         "name": args.name,
@@ -47,6 +48,8 @@ export interface GetApplicationResult {
      */
     readonly id: string;
     readonly name: string;
+    readonly tenantId: string;
+    readonly webauthnConfigurations: outputs.GetApplicationWebauthnConfiguration[];
 }
 /**
  * ## # Application Resource
@@ -64,8 +67,11 @@ export interface GetApplicationResult {
  * });
  * ```
  */
-export function getApplicationOutput(args: GetApplicationOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetApplicationResult> {
-    return pulumi.output(args).apply((a: any) => getApplication(a, opts))
+export function getApplicationOutput(args: GetApplicationOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetApplicationResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("fusionauth:index/getApplication:getApplication", {
+        "name": args.name,
+    }, opts);
 }
 
 /**

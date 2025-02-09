@@ -56,13 +56,19 @@ import (
 type FusionAuthSystemConfiguration struct {
 	pulumi.CustomResourceState
 
-	AuditLogConfiguration    FusionAuthSystemConfigurationAuditLogConfigurationOutput    `pulumi:"auditLogConfiguration"`
-	CorsConfiguration        FusionAuthSystemConfigurationCorsConfigurationOutput        `pulumi:"corsConfiguration"`
+	AuditLogConfiguration FusionAuthSystemConfigurationAuditLogConfigurationOutput `pulumi:"auditLogConfiguration"`
+	CorsConfiguration     FusionAuthSystemConfigurationCorsConfigurationOutput     `pulumi:"corsConfiguration"`
+	// An object that can hold any information about the System that should be persisted.
+	Data                     pulumi.StringMapOutput                                      `pulumi:"data"`
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationOutput    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationOutput `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone               pulumi.StringPtrOutput                                          `pulumi:"reportTimezone"`
-	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationOutput              `pulumi:"uiConfiguration"`
+	ReportTimezone pulumi.StringPtrOutput `pulumi:"reportTimezone"`
+	// The trusted proxy configuration.
+	TrustedProxyConfiguration FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput `pulumi:"trustedProxyConfiguration"`
+	UiConfiguration           FusionAuthSystemConfigurationUiConfigurationOutput              `pulumi:"uiConfiguration"`
+	// The usage data configuration.
+	UsageDataConfiguration       FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput    `pulumi:"usageDataConfiguration"`
 	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput `pulumi:"webhookEventLogConfiguration"`
 }
 
@@ -96,24 +102,36 @@ func GetFusionAuthSystemConfiguration(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering FusionAuthSystemConfiguration resources.
 type fusionAuthSystemConfigurationState struct {
-	AuditLogConfiguration    *FusionAuthSystemConfigurationAuditLogConfiguration    `pulumi:"auditLogConfiguration"`
-	CorsConfiguration        *FusionAuthSystemConfigurationCorsConfiguration        `pulumi:"corsConfiguration"`
+	AuditLogConfiguration *FusionAuthSystemConfigurationAuditLogConfiguration `pulumi:"auditLogConfiguration"`
+	CorsConfiguration     *FusionAuthSystemConfigurationCorsConfiguration     `pulumi:"corsConfiguration"`
+	// An object that can hold any information about the System that should be persisted.
+	Data                     map[string]string                                      `pulumi:"data"`
 	EventLogConfiguration    *FusionAuthSystemConfigurationEventLogConfiguration    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration *FusionAuthSystemConfigurationLoginRecordConfiguration `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone               *string                                                    `pulumi:"reportTimezone"`
-	UiConfiguration              *FusionAuthSystemConfigurationUiConfiguration              `pulumi:"uiConfiguration"`
+	ReportTimezone *string `pulumi:"reportTimezone"`
+	// The trusted proxy configuration.
+	TrustedProxyConfiguration *FusionAuthSystemConfigurationTrustedProxyConfiguration `pulumi:"trustedProxyConfiguration"`
+	UiConfiguration           *FusionAuthSystemConfigurationUiConfiguration           `pulumi:"uiConfiguration"`
+	// The usage data configuration.
+	UsageDataConfiguration       *FusionAuthSystemConfigurationUsageDataConfiguration       `pulumi:"usageDataConfiguration"`
 	WebhookEventLogConfiguration *FusionAuthSystemConfigurationWebhookEventLogConfiguration `pulumi:"webhookEventLogConfiguration"`
 }
 
 type FusionAuthSystemConfigurationState struct {
-	AuditLogConfiguration    FusionAuthSystemConfigurationAuditLogConfigurationPtrInput
-	CorsConfiguration        FusionAuthSystemConfigurationCorsConfigurationPtrInput
+	AuditLogConfiguration FusionAuthSystemConfigurationAuditLogConfigurationPtrInput
+	CorsConfiguration     FusionAuthSystemConfigurationCorsConfigurationPtrInput
+	// An object that can hold any information about the System that should be persisted.
+	Data                     pulumi.StringMapInput
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationPtrInput
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationPtrInput
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone               pulumi.StringPtrInput
-	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationPtrInput
+	ReportTimezone pulumi.StringPtrInput
+	// The trusted proxy configuration.
+	TrustedProxyConfiguration FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput
+	UiConfiguration           FusionAuthSystemConfigurationUiConfigurationPtrInput
+	// The usage data configuration.
+	UsageDataConfiguration       FusionAuthSystemConfigurationUsageDataConfigurationPtrInput
 	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput
 }
 
@@ -122,25 +140,37 @@ func (FusionAuthSystemConfigurationState) ElementType() reflect.Type {
 }
 
 type fusionAuthSystemConfigurationArgs struct {
-	AuditLogConfiguration    *FusionAuthSystemConfigurationAuditLogConfiguration    `pulumi:"auditLogConfiguration"`
-	CorsConfiguration        *FusionAuthSystemConfigurationCorsConfiguration        `pulumi:"corsConfiguration"`
+	AuditLogConfiguration *FusionAuthSystemConfigurationAuditLogConfiguration `pulumi:"auditLogConfiguration"`
+	CorsConfiguration     *FusionAuthSystemConfigurationCorsConfiguration     `pulumi:"corsConfiguration"`
+	// An object that can hold any information about the System that should be persisted.
+	Data                     map[string]string                                      `pulumi:"data"`
 	EventLogConfiguration    *FusionAuthSystemConfigurationEventLogConfiguration    `pulumi:"eventLogConfiguration"`
 	LoginRecordConfiguration *FusionAuthSystemConfigurationLoginRecordConfiguration `pulumi:"loginRecordConfiguration"`
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone               *string                                                    `pulumi:"reportTimezone"`
-	UiConfiguration              *FusionAuthSystemConfigurationUiConfiguration              `pulumi:"uiConfiguration"`
+	ReportTimezone *string `pulumi:"reportTimezone"`
+	// The trusted proxy configuration.
+	TrustedProxyConfiguration *FusionAuthSystemConfigurationTrustedProxyConfiguration `pulumi:"trustedProxyConfiguration"`
+	UiConfiguration           *FusionAuthSystemConfigurationUiConfiguration           `pulumi:"uiConfiguration"`
+	// The usage data configuration.
+	UsageDataConfiguration       *FusionAuthSystemConfigurationUsageDataConfiguration       `pulumi:"usageDataConfiguration"`
 	WebhookEventLogConfiguration *FusionAuthSystemConfigurationWebhookEventLogConfiguration `pulumi:"webhookEventLogConfiguration"`
 }
 
 // The set of arguments for constructing a FusionAuthSystemConfiguration resource.
 type FusionAuthSystemConfigurationArgs struct {
-	AuditLogConfiguration    FusionAuthSystemConfigurationAuditLogConfigurationPtrInput
-	CorsConfiguration        FusionAuthSystemConfigurationCorsConfigurationPtrInput
+	AuditLogConfiguration FusionAuthSystemConfigurationAuditLogConfigurationPtrInput
+	CorsConfiguration     FusionAuthSystemConfigurationCorsConfigurationPtrInput
+	// An object that can hold any information about the System that should be persisted.
+	Data                     pulumi.StringMapInput
 	EventLogConfiguration    FusionAuthSystemConfigurationEventLogConfigurationPtrInput
 	LoginRecordConfiguration FusionAuthSystemConfigurationLoginRecordConfigurationPtrInput
 	// The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
-	ReportTimezone               pulumi.StringPtrInput
-	UiConfiguration              FusionAuthSystemConfigurationUiConfigurationPtrInput
+	ReportTimezone pulumi.StringPtrInput
+	// The trusted proxy configuration.
+	TrustedProxyConfiguration FusionAuthSystemConfigurationTrustedProxyConfigurationPtrInput
+	UiConfiguration           FusionAuthSystemConfigurationUiConfigurationPtrInput
+	// The usage data configuration.
+	UsageDataConfiguration       FusionAuthSystemConfigurationUsageDataConfigurationPtrInput
 	WebhookEventLogConfiguration FusionAuthSystemConfigurationWebhookEventLogConfigurationPtrInput
 }
 
@@ -243,6 +273,11 @@ func (o FusionAuthSystemConfigurationOutput) CorsConfiguration() FusionAuthSyste
 	}).(FusionAuthSystemConfigurationCorsConfigurationOutput)
 }
 
+// An object that can hold any information about the System that should be persisted.
+func (o FusionAuthSystemConfigurationOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfiguration) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
+}
+
 func (o FusionAuthSystemConfigurationOutput) EventLogConfiguration() FusionAuthSystemConfigurationEventLogConfigurationOutput {
 	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationEventLogConfigurationOutput {
 		return v.EventLogConfiguration
@@ -260,10 +295,24 @@ func (o FusionAuthSystemConfigurationOutput) ReportTimezone() pulumi.StringPtrOu
 	return o.ApplyT(func(v *FusionAuthSystemConfiguration) pulumi.StringPtrOutput { return v.ReportTimezone }).(pulumi.StringPtrOutput)
 }
 
+// The trusted proxy configuration.
+func (o FusionAuthSystemConfigurationOutput) TrustedProxyConfiguration() FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput {
+		return v.TrustedProxyConfiguration
+	}).(FusionAuthSystemConfigurationTrustedProxyConfigurationPtrOutput)
+}
+
 func (o FusionAuthSystemConfigurationOutput) UiConfiguration() FusionAuthSystemConfigurationUiConfigurationOutput {
 	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationUiConfigurationOutput {
 		return v.UiConfiguration
 	}).(FusionAuthSystemConfigurationUiConfigurationOutput)
+}
+
+// The usage data configuration.
+func (o FusionAuthSystemConfigurationOutput) UsageDataConfiguration() FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+	return o.ApplyT(func(v *FusionAuthSystemConfiguration) FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput {
+		return v.UsageDataConfiguration
+	}).(FusionAuthSystemConfigurationUsageDataConfigurationPtrOutput)
 }
 
 func (o FusionAuthSystemConfigurationOutput) WebhookEventLogConfiguration() FusionAuthSystemConfigurationWebhookEventLogConfigurationOutput {

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -18,27 +23,39 @@ class FusionAuthSystemConfigurationArgs:
     def __init__(__self__, *,
                  audit_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationAuditLogConfigurationArgs']] = None,
                  cors_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationCorsConfigurationArgs']] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationEventLogConfigurationArgs']] = None,
                  login_record_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
+                 trusted_proxy_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']] = None,
                  ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None,
+                 usage_data_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']] = None,
                  webhook_event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']] = None):
         """
         The set of arguments for constructing a FusionAuthSystemConfiguration resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the System that should be persisted.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
+        :param pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs'] trusted_proxy_configuration: The trusted proxy configuration.
+        :param pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs'] usage_data_configuration: The usage data configuration.
         """
         if audit_log_configuration is not None:
             pulumi.set(__self__, "audit_log_configuration", audit_log_configuration)
         if cors_configuration is not None:
             pulumi.set(__self__, "cors_configuration", cors_configuration)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if event_log_configuration is not None:
             pulumi.set(__self__, "event_log_configuration", event_log_configuration)
         if login_record_configuration is not None:
             pulumi.set(__self__, "login_record_configuration", login_record_configuration)
         if report_timezone is not None:
             pulumi.set(__self__, "report_timezone", report_timezone)
+        if trusted_proxy_configuration is not None:
+            pulumi.set(__self__, "trusted_proxy_configuration", trusted_proxy_configuration)
         if ui_configuration is not None:
             pulumi.set(__self__, "ui_configuration", ui_configuration)
+        if usage_data_configuration is not None:
+            pulumi.set(__self__, "usage_data_configuration", usage_data_configuration)
         if webhook_event_log_configuration is not None:
             pulumi.set(__self__, "webhook_event_log_configuration", webhook_event_log_configuration)
 
@@ -59,6 +76,18 @@ class FusionAuthSystemConfigurationArgs:
     @cors_configuration.setter
     def cors_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationCorsConfigurationArgs']]):
         pulumi.set(self, "cors_configuration", value)
+
+    @property
+    @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the System that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
 
     @property
     @pulumi.getter(name="eventLogConfiguration")
@@ -91,6 +120,18 @@ class FusionAuthSystemConfigurationArgs:
         pulumi.set(self, "report_timezone", value)
 
     @property
+    @pulumi.getter(name="trustedProxyConfiguration")
+    def trusted_proxy_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']]:
+        """
+        The trusted proxy configuration.
+        """
+        return pulumi.get(self, "trusted_proxy_configuration")
+
+    @trusted_proxy_configuration.setter
+    def trusted_proxy_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']]):
+        pulumi.set(self, "trusted_proxy_configuration", value)
+
+    @property
     @pulumi.getter(name="uiConfiguration")
     def ui_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]:
         return pulumi.get(self, "ui_configuration")
@@ -98,6 +139,18 @@ class FusionAuthSystemConfigurationArgs:
     @ui_configuration.setter
     def ui_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]):
         pulumi.set(self, "ui_configuration", value)
+
+    @property
+    @pulumi.getter(name="usageDataConfiguration")
+    def usage_data_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']]:
+        """
+        The usage data configuration.
+        """
+        return pulumi.get(self, "usage_data_configuration")
+
+    @usage_data_configuration.setter
+    def usage_data_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']]):
+        pulumi.set(self, "usage_data_configuration", value)
 
     @property
     @pulumi.getter(name="webhookEventLogConfiguration")
@@ -114,27 +167,39 @@ class _FusionAuthSystemConfigurationState:
     def __init__(__self__, *,
                  audit_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationAuditLogConfigurationArgs']] = None,
                  cors_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationCorsConfigurationArgs']] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationEventLogConfigurationArgs']] = None,
                  login_record_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
+                 trusted_proxy_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']] = None,
                  ui_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']] = None,
+                 usage_data_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']] = None,
                  webhook_event_log_configuration: Optional[pulumi.Input['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']] = None):
         """
         Input properties used for looking up and filtering FusionAuthSystemConfiguration resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the System that should be persisted.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
+        :param pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs'] trusted_proxy_configuration: The trusted proxy configuration.
+        :param pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs'] usage_data_configuration: The usage data configuration.
         """
         if audit_log_configuration is not None:
             pulumi.set(__self__, "audit_log_configuration", audit_log_configuration)
         if cors_configuration is not None:
             pulumi.set(__self__, "cors_configuration", cors_configuration)
+        if data is not None:
+            pulumi.set(__self__, "data", data)
         if event_log_configuration is not None:
             pulumi.set(__self__, "event_log_configuration", event_log_configuration)
         if login_record_configuration is not None:
             pulumi.set(__self__, "login_record_configuration", login_record_configuration)
         if report_timezone is not None:
             pulumi.set(__self__, "report_timezone", report_timezone)
+        if trusted_proxy_configuration is not None:
+            pulumi.set(__self__, "trusted_proxy_configuration", trusted_proxy_configuration)
         if ui_configuration is not None:
             pulumi.set(__self__, "ui_configuration", ui_configuration)
+        if usage_data_configuration is not None:
+            pulumi.set(__self__, "usage_data_configuration", usage_data_configuration)
         if webhook_event_log_configuration is not None:
             pulumi.set(__self__, "webhook_event_log_configuration", webhook_event_log_configuration)
 
@@ -155,6 +220,18 @@ class _FusionAuthSystemConfigurationState:
     @cors_configuration.setter
     def cors_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationCorsConfigurationArgs']]):
         pulumi.set(self, "cors_configuration", value)
+
+    @property
+    @pulumi.getter
+    def data(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        An object that can hold any information about the System that should be persisted.
+        """
+        return pulumi.get(self, "data")
+
+    @data.setter
+    def data(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "data", value)
 
     @property
     @pulumi.getter(name="eventLogConfiguration")
@@ -187,6 +264,18 @@ class _FusionAuthSystemConfigurationState:
         pulumi.set(self, "report_timezone", value)
 
     @property
+    @pulumi.getter(name="trustedProxyConfiguration")
+    def trusted_proxy_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']]:
+        """
+        The trusted proxy configuration.
+        """
+        return pulumi.get(self, "trusted_proxy_configuration")
+
+    @trusted_proxy_configuration.setter
+    def trusted_proxy_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs']]):
+        pulumi.set(self, "trusted_proxy_configuration", value)
+
+    @property
     @pulumi.getter(name="uiConfiguration")
     def ui_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]:
         return pulumi.get(self, "ui_configuration")
@@ -194,6 +283,18 @@ class _FusionAuthSystemConfigurationState:
     @ui_configuration.setter
     def ui_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUiConfigurationArgs']]):
         pulumi.set(self, "ui_configuration", value)
+
+    @property
+    @pulumi.getter(name="usageDataConfiguration")
+    def usage_data_configuration(self) -> Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']]:
+        """
+        The usage data configuration.
+        """
+        return pulumi.get(self, "usage_data_configuration")
+
+    @usage_data_configuration.setter
+    def usage_data_configuration(self, value: Optional[pulumi.Input['FusionAuthSystemConfigurationUsageDataConfigurationArgs']]):
+        pulumi.set(self, "usage_data_configuration", value)
 
     @property
     @pulumi.getter(name="webhookEventLogConfiguration")
@@ -210,13 +311,16 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 audit_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationAuditLogConfigurationArgs']]] = None,
-                 cors_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationCorsConfigurationArgs']]] = None,
-                 event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationEventLogConfigurationArgs']]] = None,
-                 login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
+                 audit_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationAuditLogConfigurationArgs', 'FusionAuthSystemConfigurationAuditLogConfigurationArgsDict']]] = None,
+                 cors_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationCorsConfigurationArgs', 'FusionAuthSystemConfigurationCorsConfigurationArgsDict']]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationEventLogConfigurationArgs', 'FusionAuthSystemConfigurationEventLogConfigurationArgsDict']]] = None,
+                 login_record_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationLoginRecordConfigurationArgs', 'FusionAuthSystemConfigurationLoginRecordConfigurationArgsDict']]] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
-                 ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
-                 webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None,
+                 trusted_proxy_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs', 'FusionAuthSystemConfigurationTrustedProxyConfigurationArgsDict']]] = None,
+                 ui_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUiConfigurationArgs', 'FusionAuthSystemConfigurationUiConfigurationArgsDict']]] = None,
+                 usage_data_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUsageDataConfigurationArgs', 'FusionAuthSystemConfigurationUsageDataConfigurationArgsDict']]] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs', 'FusionAuthSystemConfigurationWebhookEventLogConfigurationArgsDict']]] = None,
                  __props__=None):
         """
         ## # System Configuration Resource
@@ -232,23 +336,26 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         example = fusionauth.FusionAuthSystemConfiguration("example",
-            audit_log_configuration=fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationArgs(
-                delete=fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationDeleteArgs(
-                    enabled=True,
-                    number_of_days_to_retain=367,
-                ),
-            ),
-            cors_configuration=fusionauth.FusionAuthSystemConfigurationCorsConfigurationArgs(
-                allowed_methods=[
+            audit_log_configuration={
+                "delete": {
+                    "enabled": True,
+                    "number_of_days_to_retain": 367,
+                },
+            },
+            cors_configuration={
+                "allowed_methods": [
                     "POST",
                     "PUT",
                 ],
-            ))
+            })
         ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the System that should be persisted.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
+        :param pulumi.Input[Union['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs', 'FusionAuthSystemConfigurationTrustedProxyConfigurationArgsDict']] trusted_proxy_configuration: The trusted proxy configuration.
+        :param pulumi.Input[Union['FusionAuthSystemConfigurationUsageDataConfigurationArgs', 'FusionAuthSystemConfigurationUsageDataConfigurationArgsDict']] usage_data_configuration: The usage data configuration.
         """
         ...
     @overload
@@ -270,18 +377,18 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
         import theogravity_pulumi_fusionauth as fusionauth
 
         example = fusionauth.FusionAuthSystemConfiguration("example",
-            audit_log_configuration=fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationArgs(
-                delete=fusionauth.FusionAuthSystemConfigurationAuditLogConfigurationDeleteArgs(
-                    enabled=True,
-                    number_of_days_to_retain=367,
-                ),
-            ),
-            cors_configuration=fusionauth.FusionAuthSystemConfigurationCorsConfigurationArgs(
-                allowed_methods=[
+            audit_log_configuration={
+                "delete": {
+                    "enabled": True,
+                    "number_of_days_to_retain": 367,
+                },
+            },
+            cors_configuration={
+                "allowed_methods": [
                     "POST",
                     "PUT",
                 ],
-            ))
+            })
         ```
 
         :param str resource_name: The name of the resource.
@@ -299,13 +406,16 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 audit_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationAuditLogConfigurationArgs']]] = None,
-                 cors_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationCorsConfigurationArgs']]] = None,
-                 event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationEventLogConfigurationArgs']]] = None,
-                 login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
+                 audit_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationAuditLogConfigurationArgs', 'FusionAuthSystemConfigurationAuditLogConfigurationArgsDict']]] = None,
+                 cors_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationCorsConfigurationArgs', 'FusionAuthSystemConfigurationCorsConfigurationArgsDict']]] = None,
+                 data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationEventLogConfigurationArgs', 'FusionAuthSystemConfigurationEventLogConfigurationArgsDict']]] = None,
+                 login_record_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationLoginRecordConfigurationArgs', 'FusionAuthSystemConfigurationLoginRecordConfigurationArgsDict']]] = None,
                  report_timezone: Optional[pulumi.Input[str]] = None,
-                 ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
-                 webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None,
+                 trusted_proxy_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs', 'FusionAuthSystemConfigurationTrustedProxyConfigurationArgsDict']]] = None,
+                 ui_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUiConfigurationArgs', 'FusionAuthSystemConfigurationUiConfigurationArgsDict']]] = None,
+                 usage_data_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUsageDataConfigurationArgs', 'FusionAuthSystemConfigurationUsageDataConfigurationArgsDict']]] = None,
+                 webhook_event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs', 'FusionAuthSystemConfigurationWebhookEventLogConfigurationArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -317,10 +427,13 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
 
             __props__.__dict__["audit_log_configuration"] = audit_log_configuration
             __props__.__dict__["cors_configuration"] = cors_configuration
+            __props__.__dict__["data"] = data
             __props__.__dict__["event_log_configuration"] = event_log_configuration
             __props__.__dict__["login_record_configuration"] = login_record_configuration
             __props__.__dict__["report_timezone"] = report_timezone
+            __props__.__dict__["trusted_proxy_configuration"] = trusted_proxy_configuration
             __props__.__dict__["ui_configuration"] = ui_configuration
+            __props__.__dict__["usage_data_configuration"] = usage_data_configuration
             __props__.__dict__["webhook_event_log_configuration"] = webhook_event_log_configuration
         super(FusionAuthSystemConfiguration, __self__).__init__(
             'fusionauth:index/fusionAuthSystemConfiguration:FusionAuthSystemConfiguration',
@@ -332,13 +445,16 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            audit_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationAuditLogConfigurationArgs']]] = None,
-            cors_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationCorsConfigurationArgs']]] = None,
-            event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationEventLogConfigurationArgs']]] = None,
-            login_record_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationLoginRecordConfigurationArgs']]] = None,
+            audit_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationAuditLogConfigurationArgs', 'FusionAuthSystemConfigurationAuditLogConfigurationArgsDict']]] = None,
+            cors_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationCorsConfigurationArgs', 'FusionAuthSystemConfigurationCorsConfigurationArgsDict']]] = None,
+            data: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationEventLogConfigurationArgs', 'FusionAuthSystemConfigurationEventLogConfigurationArgsDict']]] = None,
+            login_record_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationLoginRecordConfigurationArgs', 'FusionAuthSystemConfigurationLoginRecordConfigurationArgsDict']]] = None,
             report_timezone: Optional[pulumi.Input[str]] = None,
-            ui_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationUiConfigurationArgs']]] = None,
-            webhook_event_log_configuration: Optional[pulumi.Input[pulumi.InputType['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs']]] = None) -> 'FusionAuthSystemConfiguration':
+            trusted_proxy_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs', 'FusionAuthSystemConfigurationTrustedProxyConfigurationArgsDict']]] = None,
+            ui_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUiConfigurationArgs', 'FusionAuthSystemConfigurationUiConfigurationArgsDict']]] = None,
+            usage_data_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationUsageDataConfigurationArgs', 'FusionAuthSystemConfigurationUsageDataConfigurationArgsDict']]] = None,
+            webhook_event_log_configuration: Optional[pulumi.Input[Union['FusionAuthSystemConfigurationWebhookEventLogConfigurationArgs', 'FusionAuthSystemConfigurationWebhookEventLogConfigurationArgsDict']]] = None) -> 'FusionAuthSystemConfiguration':
         """
         Get an existing FusionAuthSystemConfiguration resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -346,7 +462,10 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] data: An object that can hold any information about the System that should be persisted.
         :param pulumi.Input[str] report_timezone: The time zone used to adjust the stored UTC time when generating reports. Since reports are usually rolled up hourly, this timezone will be used for demarcating the hours.
+        :param pulumi.Input[Union['FusionAuthSystemConfigurationTrustedProxyConfigurationArgs', 'FusionAuthSystemConfigurationTrustedProxyConfigurationArgsDict']] trusted_proxy_configuration: The trusted proxy configuration.
+        :param pulumi.Input[Union['FusionAuthSystemConfigurationUsageDataConfigurationArgs', 'FusionAuthSystemConfigurationUsageDataConfigurationArgsDict']] usage_data_configuration: The usage data configuration.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -354,10 +473,13 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
 
         __props__.__dict__["audit_log_configuration"] = audit_log_configuration
         __props__.__dict__["cors_configuration"] = cors_configuration
+        __props__.__dict__["data"] = data
         __props__.__dict__["event_log_configuration"] = event_log_configuration
         __props__.__dict__["login_record_configuration"] = login_record_configuration
         __props__.__dict__["report_timezone"] = report_timezone
+        __props__.__dict__["trusted_proxy_configuration"] = trusted_proxy_configuration
         __props__.__dict__["ui_configuration"] = ui_configuration
+        __props__.__dict__["usage_data_configuration"] = usage_data_configuration
         __props__.__dict__["webhook_event_log_configuration"] = webhook_event_log_configuration
         return FusionAuthSystemConfiguration(resource_name, opts=opts, __props__=__props__)
 
@@ -370,6 +492,14 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
     @pulumi.getter(name="corsConfiguration")
     def cors_configuration(self) -> pulumi.Output['outputs.FusionAuthSystemConfigurationCorsConfiguration']:
         return pulumi.get(self, "cors_configuration")
+
+    @property
+    @pulumi.getter
+    def data(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        An object that can hold any information about the System that should be persisted.
+        """
+        return pulumi.get(self, "data")
 
     @property
     @pulumi.getter(name="eventLogConfiguration")
@@ -390,9 +520,25 @@ class FusionAuthSystemConfiguration(pulumi.CustomResource):
         return pulumi.get(self, "report_timezone")
 
     @property
+    @pulumi.getter(name="trustedProxyConfiguration")
+    def trusted_proxy_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthSystemConfigurationTrustedProxyConfiguration']]:
+        """
+        The trusted proxy configuration.
+        """
+        return pulumi.get(self, "trusted_proxy_configuration")
+
+    @property
     @pulumi.getter(name="uiConfiguration")
     def ui_configuration(self) -> pulumi.Output['outputs.FusionAuthSystemConfigurationUiConfiguration']:
         return pulumi.get(self, "ui_configuration")
+
+    @property
+    @pulumi.getter(name="usageDataConfiguration")
+    def usage_data_configuration(self) -> pulumi.Output[Optional['outputs.FusionAuthSystemConfigurationUsageDataConfiguration']]:
+        """
+        The usage data configuration.
+        """
+        return pulumi.get(self, "usage_data_configuration")
 
     @property
     @pulumi.getter(name="webhookEventLogConfiguration")

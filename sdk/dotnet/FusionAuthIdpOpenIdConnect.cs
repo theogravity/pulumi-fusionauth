@@ -162,6 +162,12 @@ namespace theogravity.Fusionauth
         public Output<string?> Oauth2EmailClaim { get; private set; } = null!;
 
         /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        /// </summary>
+        [Output("oauth2EmailVerifiedClaim")]
+        public Output<string?> Oauth2EmailVerifiedClaim { get; private set; } = null!;
+
+        /// <summary>
         /// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         /// </summary>
         [Output("oauth2Issuer")]
@@ -373,6 +379,12 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2EmailClaim { get; set; }
 
         /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        /// </summary>
+        [Input("oauth2EmailVerifiedClaim")]
+        public Input<string>? Oauth2EmailVerifiedClaim { get; set; }
+
+        /// <summary>
         /// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.
         /// </summary>
         [Input("oauth2Issuer")]
@@ -545,6 +557,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("oauth2EmailClaim")]
         public Input<string>? Oauth2EmailClaim { get; set; }
+
+        /// <summary>
+        /// An optional configuration to modify the expected name of the claim returned by the IdP that contains the email verified status.
+        /// </summary>
+        [Input("oauth2EmailVerifiedClaim")]
+        public Input<string>? Oauth2EmailVerifiedClaim { get; set; }
 
         /// <summary>
         /// The top-level issuer URI for the OpenID Connect identity provider. If this is provided, the authorization endpoint, token endpoint and userinfo endpoint will all be resolved using the issuer URI plus /.well-known/openid-configuration.

@@ -58,17 +58,22 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpExternalJwtApplicationConfiguration>> ApplicationConfigurations { get; private set; } = null!;
 
         /// <summary>
-        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        /// from the configured identity provider.
+        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         /// </summary>
         [Output("claimMap")]
-        public Output<ImmutableDictionary<string, object>?> ClaimMap { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> ClaimMap { get; private set; } = null!;
 
         /// <summary>
         /// Determines if debug is enabled for this provider. When enabled, each time this provider is invoked to reconcile a login an Event Log will be created.
         /// </summary>
         [Output("debug")]
         public Output<bool?> Debug { get; private set; } = null!;
+
+        /// <summary>
+        /// When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        /// </summary>
+        [Output("defaultKeyId")]
+        public Output<string?> DefaultKeyId { get; private set; } = null!;
 
         /// <summary>
         /// An array of domains that are managed by this Identity Provider.
@@ -119,10 +124,34 @@ namespace theogravity.Fusionauth
         public Output<string?> Oauth2AuthorizationEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        /// The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        /// </summary>
+        [Output("oauth2EmailClaim")]
+        public Output<string?> Oauth2EmailClaim { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        /// </summary>
+        [Output("oauth2EmailVerifiedClaim")]
+        public Output<string?> Oauth2EmailVerifiedClaim { get; private set; } = null!;
+
+        /// <summary>
+        /// The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         /// </summary>
         [Output("oauth2TokenEndpoint")]
         public Output<string?> Oauth2TokenEndpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the claim that contains the user's unique user Id.
+        /// </summary>
+        [Output("oauth2UniqueIdClaim")]
+        public Output<string?> Oauth2UniqueIdClaim { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Output("oauth2UsernameClaim")]
+        public Output<string?> Oauth2UsernameClaim { get; private set; } = null!;
 
         /// <summary>
         /// The configuration for each Tenant that limits the number of links a user may have for a particular identity provider.
@@ -131,10 +160,10 @@ namespace theogravity.Fusionauth
         public Output<ImmutableArray<Outputs.FusionAuthIdpExternalJwtTenantConfiguration>> TenantConfigurations { get; private set; } = null!;
 
         /// <summary>
-        /// The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        /// (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         /// </summary>
         [Output("uniqueIdentityClaim")]
-        public Output<string> UniqueIdentityClaim { get; private set; } = null!;
+        public Output<string?> UniqueIdentityClaim { get; private set; } = null!;
 
 
         /// <summary>
@@ -196,15 +225,14 @@ namespace theogravity.Fusionauth
         }
 
         [Input("claimMap")]
-        private InputMap<object>? _claimMap;
+        private InputMap<string>? _claimMap;
 
         /// <summary>
-        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        /// from the configured identity provider.
+        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         /// </summary>
-        public InputMap<object> ClaimMap
+        public InputMap<string> ClaimMap
         {
-            get => _claimMap ?? (_claimMap = new InputMap<object>());
+            get => _claimMap ?? (_claimMap = new InputMap<string>());
             set => _claimMap = value;
         }
 
@@ -213,6 +241,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("debug")]
         public Input<bool>? Debug { get; set; }
+
+        /// <summary>
+        /// When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        /// </summary>
+        [Input("defaultKeyId")]
+        public Input<string>? DefaultKeyId { get; set; }
 
         [Input("domains")]
         private InputList<string>? _domains;
@@ -269,10 +303,34 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2AuthorizationEndpoint { get; set; }
 
         /// <summary>
-        /// TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        /// The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        /// </summary>
+        [Input("oauth2EmailClaim")]
+        public Input<string>? Oauth2EmailClaim { get; set; }
+
+        /// <summary>
+        /// The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        /// </summary>
+        [Input("oauth2EmailVerifiedClaim")]
+        public Input<string>? Oauth2EmailVerifiedClaim { get; set; }
+
+        /// <summary>
+        /// The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         /// </summary>
         [Input("oauth2TokenEndpoint")]
         public Input<string>? Oauth2TokenEndpoint { get; set; }
+
+        /// <summary>
+        /// The name of the claim that contains the user's unique user Id.
+        /// </summary>
+        [Input("oauth2UniqueIdClaim")]
+        public Input<string>? Oauth2UniqueIdClaim { get; set; }
+
+        /// <summary>
+        /// The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Input("oauth2UsernameClaim")]
+        public Input<string>? Oauth2UsernameClaim { get; set; }
 
         [Input("tenantConfigurations")]
         private InputList<Inputs.FusionAuthIdpExternalJwtTenantConfigurationArgs>? _tenantConfigurations;
@@ -287,10 +345,10 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        /// (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         /// </summary>
-        [Input("uniqueIdentityClaim", required: true)]
-        public Input<string> UniqueIdentityClaim { get; set; } = null!;
+        [Input("uniqueIdentityClaim")]
+        public Input<string>? UniqueIdentityClaim { get; set; }
 
         public FusionAuthIdpExternalJwtArgs()
         {
@@ -313,15 +371,14 @@ namespace theogravity.Fusionauth
         }
 
         [Input("claimMap")]
-        private InputMap<object>? _claimMap;
+        private InputMap<string>? _claimMap;
 
         /// <summary>
-        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name
-        /// from the configured identity provider.
+        /// A map of incoming claims to User fields, User data or Registration data. The key of the map is the incoming claim name from the configured identity provider. The following are allowed values: birthDate, firstName, lastName, fullName, middleName, mobilePhone, imageUrl, timezone, UserData and RegistrationData.
         /// </summary>
-        public InputMap<object> ClaimMap
+        public InputMap<string> ClaimMap
         {
-            get => _claimMap ?? (_claimMap = new InputMap<object>());
+            get => _claimMap ?? (_claimMap = new InputMap<string>());
             set => _claimMap = value;
         }
 
@@ -330,6 +387,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("debug")]
         public Input<bool>? Debug { get; set; }
+
+        /// <summary>
+        /// When configured this key will be used to verify the signature of the JWT when the header key defined by the headerKeyParameter property is not found in the JWT header. In most cases, the JWT header will contain the key identifier and this value will be used to resolve the correct public key or X.509 certificate to verify the signature. This assumes the public key or X.509 certificate has already been imported using the Key API or Key Master in the FusionAuth admin UI.
+        /// </summary>
+        [Input("defaultKeyId")]
+        public Input<string>? DefaultKeyId { get; set; }
 
         [Input("domains")]
         private InputList<string>? _domains;
@@ -386,10 +449,34 @@ namespace theogravity.Fusionauth
         public Input<string>? Oauth2AuthorizationEndpoint { get; set; }
 
         /// <summary>
-        /// TThe token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
+        /// The name of the claim that contains the user's email address. This will only be used when the `linking_strategy`is equal to LinkByEmail or LinkByEmailForExistingUser.
+        /// </summary>
+        [Input("oauth2EmailClaim")]
+        public Input<string>? Oauth2EmailClaim { get; set; }
+
+        /// <summary>
+        /// The name of the claim that identities if the user's email address has been verified. When the `linking_strategy` is equal to LinkByEmail or LinkByEmailForExistingUser and this claim is present and the value is false a link will not be established and an error will be returned indicating a link cannot be established using an unverified email address.
+        /// </summary>
+        [Input("oauth2EmailVerifiedClaim")]
+        public Input<string>? Oauth2EmailVerifiedClaim { get; set; }
+
+        /// <summary>
+        /// The token endpoint for this Identity Provider. This value is not utilized by FusionAuth is only provided to be returned by the Lookup Identity Provider API response. During integration you may then utilize this value to complete the OAuth2 grant workflow.
         /// </summary>
         [Input("oauth2TokenEndpoint")]
         public Input<string>? Oauth2TokenEndpoint { get; set; }
+
+        /// <summary>
+        /// The name of the claim that contains the user's unique user Id.
+        /// </summary>
+        [Input("oauth2UniqueIdClaim")]
+        public Input<string>? Oauth2UniqueIdClaim { get; set; }
+
+        /// <summary>
+        /// The name of the claim that contains the user's username. This will only be used when the `linking_strategy` is equal to LinkByUsername or LinkByUsernameForExistingUser.
+        /// </summary>
+        [Input("oauth2UsernameClaim")]
+        public Input<string>? Oauth2UsernameClaim { get; set; }
 
         [Input("tenantConfigurations")]
         private InputList<Inputs.FusionAuthIdpExternalJwtTenantConfigurationGetArgs>? _tenantConfigurations;
@@ -404,7 +491,7 @@ namespace theogravity.Fusionauth
         }
 
         /// <summary>
-        /// The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
+        /// (Optional) The name of the claim that represents the unique identify of the User. This will generally be email or the name of the claim that provides the email address.
         /// </summary>
         [Input("uniqueIdentityClaim")]
         public Input<string>? UniqueIdentityClaim { get; set; }

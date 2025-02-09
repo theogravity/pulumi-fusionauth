@@ -64,7 +64,7 @@ type FusionAuthIdpXBox struct {
 	ApplicationConfigurations FusionAuthIdpXBoxApplicationConfigurationArrayOutput `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringOutput `pulumi:"buttonText"`
-	// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+	// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientId pulumi.StringOutput `pulumi:"clientId"`
 	// The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientSecret pulumi.StringOutput `pulumi:"clientSecret"`
@@ -127,7 +127,7 @@ type fusionAuthIdpXBoxState struct {
 	ApplicationConfigurations []FusionAuthIdpXBoxApplicationConfiguration `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText *string `pulumi:"buttonText"`
-	// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+	// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientId *string `pulumi:"clientId"`
 	// The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientSecret *string `pulumi:"clientSecret"`
@@ -152,7 +152,7 @@ type FusionAuthIdpXBoxState struct {
 	ApplicationConfigurations FusionAuthIdpXBoxApplicationConfigurationArrayInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringPtrInput
-	// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+	// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientId pulumi.StringPtrInput
 	// The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientSecret pulumi.StringPtrInput
@@ -181,7 +181,7 @@ type fusionAuthIdpXBoxArgs struct {
 	ApplicationConfigurations []FusionAuthIdpXBoxApplicationConfiguration `pulumi:"applicationConfigurations"`
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText string `pulumi:"buttonText"`
-	// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+	// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientId string `pulumi:"clientId"`
 	// The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientSecret string `pulumi:"clientSecret"`
@@ -207,7 +207,7 @@ type FusionAuthIdpXBoxArgs struct {
 	ApplicationConfigurations FusionAuthIdpXBoxApplicationConfigurationArrayInput
 	// The top-level button text to use on the FusionAuth login page for this Identity Provider.
 	ButtonText pulumi.StringInput
-	// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+	// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientId pulumi.StringInput
 	// The top-level client secret to use with the Xbox Identity Provider when retrieving the long-lived token. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 	ClientSecret pulumi.StringInput
@@ -326,7 +326,7 @@ func (o FusionAuthIdpXBoxOutput) ButtonText() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthIdpXBox) pulumi.StringOutput { return v.ButtonText }).(pulumi.StringOutput)
 }
 
-// TThe top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
+// The top-level Xbox client id for your Application. This value is retrieved from the Xbox developer website when you setup your Xbox developer account.
 func (o FusionAuthIdpXBoxOutput) ClientId() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthIdpXBox) pulumi.StringOutput { return v.ClientId }).(pulumi.StringOutput)
 }

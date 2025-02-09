@@ -48,16 +48,18 @@ type FusionAuthKey struct {
 	pulumi.CustomResourceState
 
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-	// - `RS256` - RSA using SHA-256 hash algorithm
-	// - `RS384` - RSA using SHA-384 hash algorithm
-	// - `RS512` - RSA using SHA-512 hash algorithm
-	// - `HS256` - HMAC using SHA-256 hash algorithm
-	// - `HS384` - HMAC using SHA-384 hash algorithm
-	// - `HS512` - HMAC using SHA-512 hash algorithm
+	// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// * `RS256` - RSA using SHA-256 hash algorithm
+	// * `RS384` - RSA using SHA-384 hash algorithm
+	// * `RS512` - RSA using SHA-512 hash algorithm
+	// * `HS256` - HMAC using SHA-256 hash algorithm
+	// * `HS384` - HMAC using SHA-384 hash algorithm
+	// * `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringOutput `pulumi:"algorithm"`
+	// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+	Issuer pulumi.StringOutput `pulumi:"issuer"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringOutput `pulumi:"keyId"`
 	// The id used in the JWT header to identify the key used to generate the signature
@@ -102,16 +104,18 @@ func GetFusionAuthKey(ctx *pulumi.Context,
 // Input properties used for looking up and filtering FusionAuthKey resources.
 type fusionAuthKeyState struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-	// - `RS256` - RSA using SHA-256 hash algorithm
-	// - `RS384` - RSA using SHA-384 hash algorithm
-	// - `RS512` - RSA using SHA-512 hash algorithm
-	// - `HS256` - HMAC using SHA-256 hash algorithm
-	// - `HS384` - HMAC using SHA-384 hash algorithm
-	// - `HS512` - HMAC using SHA-512 hash algorithm
+	// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// * `RS256` - RSA using SHA-256 hash algorithm
+	// * `RS384` - RSA using SHA-384 hash algorithm
+	// * `RS512` - RSA using SHA-512 hash algorithm
+	// * `HS256` - HMAC using SHA-256 hash algorithm
+	// * `HS384` - HMAC using SHA-384 hash algorithm
+	// * `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm *string `pulumi:"algorithm"`
+	// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+	Issuer *string `pulumi:"issuer"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
 	// The id used in the JWT header to identify the key used to generate the signature
@@ -124,16 +128,18 @@ type fusionAuthKeyState struct {
 
 type FusionAuthKeyState struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-	// - `RS256` - RSA using SHA-256 hash algorithm
-	// - `RS384` - RSA using SHA-384 hash algorithm
-	// - `RS512` - RSA using SHA-512 hash algorithm
-	// - `HS256` - HMAC using SHA-256 hash algorithm
-	// - `HS384` - HMAC using SHA-384 hash algorithm
-	// - `HS512` - HMAC using SHA-512 hash algorithm
+	// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// * `RS256` - RSA using SHA-256 hash algorithm
+	// * `RS384` - RSA using SHA-384 hash algorithm
+	// * `RS512` - RSA using SHA-512 hash algorithm
+	// * `HS256` - HMAC using SHA-256 hash algorithm
+	// * `HS384` - HMAC using SHA-384 hash algorithm
+	// * `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringPtrInput
+	// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+	Issuer pulumi.StringPtrInput
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
 	// The id used in the JWT header to identify the key used to generate the signature
@@ -150,16 +156,18 @@ func (FusionAuthKeyState) ElementType() reflect.Type {
 
 type fusionAuthKeyArgs struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-	// - `RS256` - RSA using SHA-256 hash algorithm
-	// - `RS384` - RSA using SHA-384 hash algorithm
-	// - `RS512` - RSA using SHA-512 hash algorithm
-	// - `HS256` - HMAC using SHA-256 hash algorithm
-	// - `HS384` - HMAC using SHA-384 hash algorithm
-	// - `HS512` - HMAC using SHA-512 hash algorithm
+	// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// * `RS256` - RSA using SHA-256 hash algorithm
+	// * `RS384` - RSA using SHA-384 hash algorithm
+	// * `RS512` - RSA using SHA-512 hash algorithm
+	// * `HS256` - HMAC using SHA-256 hash algorithm
+	// * `HS384` - HMAC using SHA-384 hash algorithm
+	// * `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm string `pulumi:"algorithm"`
+	// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+	Issuer *string `pulumi:"issuer"`
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId *string `pulumi:"keyId"`
 	// The length of the RSA or EC certificate. This field is required when generating RSA key types.
@@ -171,16 +179,18 @@ type fusionAuthKeyArgs struct {
 // The set of arguments for constructing a FusionAuthKey resource.
 type FusionAuthKeyArgs struct {
 	// The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-	// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-	// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-	// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-	// - `RS256` - RSA using SHA-256 hash algorithm
-	// - `RS384` - RSA using SHA-384 hash algorithm
-	// - `RS512` - RSA using SHA-512 hash algorithm
-	// - `HS256` - HMAC using SHA-256 hash algorithm
-	// - `HS384` - HMAC using SHA-384 hash algorithm
-	// - `HS512` - HMAC using SHA-512 hash algorithm
+	// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+	// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+	// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+	// * `RS256` - RSA using SHA-256 hash algorithm
+	// * `RS384` - RSA using SHA-384 hash algorithm
+	// * `RS512` - RSA using SHA-512 hash algorithm
+	// * `HS256` - HMAC using SHA-256 hash algorithm
+	// * `HS384` - HMAC using SHA-384 hash algorithm
+	// * `HS512` - HMAC using SHA-512 hash algorithm
 	Algorithm pulumi.StringInput
+	// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+	Issuer pulumi.StringPtrInput
 	// The Id to use for the new key. If not specified a secure random UUID will be generated.
 	KeyId pulumi.StringPtrInput
 	// The length of the RSA or EC certificate. This field is required when generating RSA key types.
@@ -277,17 +287,22 @@ func (o FusionAuthKeyOutput) ToFusionAuthKeyOutputWithContext(ctx context.Contex
 }
 
 // The algorithm used to encrypt the Key. The following values represent algorithms supported by FusionAuth:
-// - `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
-// - `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
-// - `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
-// - `RS256` - RSA using SHA-256 hash algorithm
-// - `RS384` - RSA using SHA-384 hash algorithm
-// - `RS512` - RSA using SHA-512 hash algorithm
-// - `HS256` - HMAC using SHA-256 hash algorithm
-// - `HS384` - HMAC using SHA-384 hash algorithm
-// - `HS512` - HMAC using SHA-512 hash algorithm
+// * `ES256` - ECDSA using P-256 curve and SHA-256 hash algorithm
+// * `ES384` - ECDSA using P-384 curve and SHA-384 hash algorithm
+// * `ES512` - ECDSA using P-521 curve and SHA-512 hash algorithm
+// * `RS256` - RSA using SHA-256 hash algorithm
+// * `RS384` - RSA using SHA-384 hash algorithm
+// * `RS512` - RSA using SHA-512 hash algorithm
+// * `HS256` - HMAC using SHA-256 hash algorithm
+// * `HS384` - HMAC using SHA-384 hash algorithm
+// * `HS512` - HMAC using SHA-512 hash algorithm
 func (o FusionAuthKeyOutput) Algorithm() pulumi.StringOutput {
 	return o.ApplyT(func(v *FusionAuthKey) pulumi.StringOutput { return v.Algorithm }).(pulumi.StringOutput)
+}
+
+// The issuer of the RSA or EC certificate. If omitted, this value will default to the value of tenant issuer on the default tenant. For HMAC keys, this field does not apply and will be ignored if specified, and no default value will be set.
+func (o FusionAuthKeyOutput) Issuer() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthKey) pulumi.StringOutput { return v.Issuer }).(pulumi.StringOutput)
 }
 
 // The Id to use for the new key. If not specified a secure random UUID will be generated.

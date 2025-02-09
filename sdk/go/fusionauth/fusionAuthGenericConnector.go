@@ -35,13 +35,13 @@ import (
 //			_, err := fusionauth.NewFusionAuthGenericConnector(ctx, "example", &fusionauth.FusionAuthGenericConnectorArgs{
 //				AuthenticationUrl: pulumi.String("http://mygameserver.local:7001/fusionauth-connector"),
 //				ConnectTimeout:    pulumi.Int(1000),
-//				Data: pulumi.Map{
-//					"foo": pulumi.Any("bar"),
+//				Data: pulumi.StringMap{
+//					"foo": pulumi.String("bar"),
 //				},
 //				Debug: pulumi.Bool(false),
-//				Headers: pulumi.Map{
-//					"foo": pulumi.Any("bar"),
-//					"bar": pulumi.Any("baz"),
+//				Headers: pulumi.StringMap{
+//					"foo": pulumi.String("bar"),
+//					"bar": pulumi.String("baz"),
 //				},
 //				HttpAuthenticationPassword: pulumi.String("supersecret"),
 //				HttpAuthenticationUsername: pulumi.String("me"),
@@ -64,11 +64,11 @@ type FusionAuthGenericConnector struct {
 	// The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
 	ConnectTimeout pulumi.IntOutput `pulumi:"connectTimeout"`
 	// An object that can hold any information about the Connector that should be persisted.
-	Data pulumi.MapOutput `pulumi:"data"`
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
 	Debug pulumi.BoolPtrOutput `pulumi:"debug"`
 	// An object that can hold HTTPHeader key and value pairs.
-	Headers pulumi.MapOutput `pulumi:"headers"`
+	Headers pulumi.StringMapOutput `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrOutput `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
@@ -136,11 +136,11 @@ type fusionAuthGenericConnectorState struct {
 	// The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
 	ConnectTimeout *int `pulumi:"connectTimeout"`
 	// An object that can hold any information about the Connector that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
 	Debug *bool `pulumi:"debug"`
 	// An object that can hold HTTPHeader key and value pairs.
-	Headers map[string]interface{} `pulumi:"headers"`
+	Headers map[string]string `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
@@ -159,11 +159,11 @@ type FusionAuthGenericConnectorState struct {
 	// The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
 	ConnectTimeout pulumi.IntPtrInput
 	// An object that can hold any information about the Connector that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
 	Debug pulumi.BoolPtrInput
 	// An object that can hold HTTPHeader key and value pairs.
-	Headers pulumi.MapInput
+	Headers pulumi.StringMapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
@@ -186,11 +186,11 @@ type fusionAuthGenericConnectorArgs struct {
 	// The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
 	ConnectTimeout int `pulumi:"connectTimeout"`
 	// An object that can hold any information about the Connector that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
 	Debug *bool `pulumi:"debug"`
 	// An object that can hold HTTPHeader key and value pairs.
-	Headers map[string]interface{} `pulumi:"headers"`
+	Headers map[string]string `pulumi:"headers"`
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword *string `pulumi:"httpAuthenticationPassword"`
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
@@ -210,11 +210,11 @@ type FusionAuthGenericConnectorArgs struct {
 	// The connect timeout for the HTTP connection, in milliseconds. Value must be greater than 0.
 	ConnectTimeout pulumi.IntInput
 	// An object that can hold any information about the Connector that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
 	Debug pulumi.BoolPtrInput
 	// An object that can hold HTTPHeader key and value pairs.
-	Headers pulumi.MapInput
+	Headers pulumi.StringMapInput
 	// The HTTP basic authentication password that is sent as part of the HTTP request for the events.
 	HttpAuthenticationPassword pulumi.StringPtrInput
 	// The HTTP basic authentication username that is sent as part of the HTTP request for the events.
@@ -325,8 +325,8 @@ func (o FusionAuthGenericConnectorOutput) ConnectTimeout() pulumi.IntOutput {
 }
 
 // An object that can hold any information about the Connector that should be persisted.
-func (o FusionAuthGenericConnectorOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthGenericConnectorOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
 // Determines if debug should be enabled to create an event log to assist in debugging integration errors. Defaults to false.
@@ -335,8 +335,8 @@ func (o FusionAuthGenericConnectorOutput) Debug() pulumi.BoolPtrOutput {
 }
 
 // An object that can hold HTTPHeader key and value pairs.
-func (o FusionAuthGenericConnectorOutput) Headers() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.MapOutput { return v.Headers }).(pulumi.MapOutput)
+func (o FusionAuthGenericConnectorOutput) Headers() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthGenericConnector) pulumi.StringMapOutput { return v.Headers }).(pulumi.StringMapOutput)
 }
 
 // The HTTP basic authentication password that is sent as part of the HTTP request for the events.

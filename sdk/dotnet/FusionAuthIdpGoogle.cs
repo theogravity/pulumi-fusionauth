@@ -110,6 +110,12 @@ namespace theogravity.Fusionauth
         public Output<string?> LoginMethod { get; private set; } = null!;
 
         /// <summary>
+        /// An object to hold configuration parameters for the Google Identity Services API.
+        /// </summary>
+        [Output("properties")]
+        public Output<Outputs.FusionAuthIdpGoogleProperties?> Properties { get; private set; } = null!;
+
+        /// <summary>
         /// The top-level scope that you are requesting from Google.
         /// </summary>
         [Output("scope")]
@@ -243,6 +249,12 @@ namespace theogravity.Fusionauth
         public Input<string>? LoginMethod { get; set; }
 
         /// <summary>
+        /// An object to hold configuration parameters for the Google Identity Services API.
+        /// </summary>
+        [Input("properties")]
+        public Input<Inputs.FusionAuthIdpGooglePropertiesArgs>? Properties { get; set; }
+
+        /// <summary>
         /// The top-level scope that you are requesting from Google.
         /// </summary>
         [Input("scope")]
@@ -337,6 +349,12 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("loginMethod")]
         public Input<string>? LoginMethod { get; set; }
+
+        /// <summary>
+        /// An object to hold configuration parameters for the Google Identity Services API.
+        /// </summary>
+        [Input("properties")]
+        public Input<Inputs.FusionAuthIdpGooglePropertiesGetArgs>? Properties { get; set; }
 
         /// <summary>
         /// The top-level scope that you are requesting from Google.

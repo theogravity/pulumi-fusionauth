@@ -56,11 +56,13 @@ type FusionAuthRegistration struct {
 	// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
 	AuthenticationToken pulumi.StringOutput `pulumi:"authenticationToken"`
 	// An object that can hold any information about the User for this registration that should be persisted.
-	Data pulumi.MapOutput `pulumi:"data"`
+	Data pulumi.StringMapOutput `pulumi:"data"`
 	// Determines if FusionAuth should generate an Authentication Token for this registration.
 	GenerateAuthenticationToken pulumi.BoolPtrOutput `pulumi:"generateAuthenticationToken"`
 	// An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 	PreferredLanguages pulumi.StringArrayOutput `pulumi:"preferredLanguages"`
+	// The Id of this registration. If not specified a secure random UUID will be generated.
+	RegistrationId pulumi.StringOutput `pulumi:"registrationId"`
 	// The list of roles that the User has for this registration.
 	Roles pulumi.StringArrayOutput `pulumi:"roles"`
 	// Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
@@ -121,11 +123,13 @@ type fusionAuthRegistrationState struct {
 	// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
 	AuthenticationToken *string `pulumi:"authenticationToken"`
 	// An object that can hold any information about the User for this registration that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// Determines if FusionAuth should generate an Authentication Token for this registration.
 	GenerateAuthenticationToken *bool `pulumi:"generateAuthenticationToken"`
 	// An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 	PreferredLanguages []string `pulumi:"preferredLanguages"`
+	// The Id of this registration. If not specified a secure random UUID will be generated.
+	RegistrationId *string `pulumi:"registrationId"`
 	// The list of roles that the User has for this registration.
 	Roles []string `pulumi:"roles"`
 	// Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
@@ -144,11 +148,13 @@ type FusionAuthRegistrationState struct {
 	// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
 	AuthenticationToken pulumi.StringPtrInput
 	// An object that can hold any information about the User for this registration that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// Determines if FusionAuth should generate an Authentication Token for this registration.
 	GenerateAuthenticationToken pulumi.BoolPtrInput
 	// An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 	PreferredLanguages pulumi.StringArrayInput
+	// The Id of this registration. If not specified a secure random UUID will be generated.
+	RegistrationId pulumi.StringPtrInput
 	// The list of roles that the User has for this registration.
 	Roles pulumi.StringArrayInput
 	// Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
@@ -171,11 +177,13 @@ type fusionAuthRegistrationArgs struct {
 	// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
 	AuthenticationToken *string `pulumi:"authenticationToken"`
 	// An object that can hold any information about the User for this registration that should be persisted.
-	Data map[string]interface{} `pulumi:"data"`
+	Data map[string]string `pulumi:"data"`
 	// Determines if FusionAuth should generate an Authentication Token for this registration.
 	GenerateAuthenticationToken *bool `pulumi:"generateAuthenticationToken"`
 	// An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 	PreferredLanguages []string `pulumi:"preferredLanguages"`
+	// The Id of this registration. If not specified a secure random UUID will be generated.
+	RegistrationId *string `pulumi:"registrationId"`
 	// The list of roles that the User has for this registration.
 	Roles []string `pulumi:"roles"`
 	// Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
@@ -195,11 +203,13 @@ type FusionAuthRegistrationArgs struct {
 	// The authentication token that may be used in place of the User’s password when authenticating against this application represented by this registration. This parameter is ignored if generateAuthenticationToken is set to true and instead the value will be generated.
 	AuthenticationToken pulumi.StringPtrInput
 	// An object that can hold any information about the User for this registration that should be persisted.
-	Data pulumi.MapInput
+	Data pulumi.StringMapInput
 	// Determines if FusionAuth should generate an Authentication Token for this registration.
 	GenerateAuthenticationToken pulumi.BoolPtrInput
 	// An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 	PreferredLanguages pulumi.StringArrayInput
+	// The Id of this registration. If not specified a secure random UUID will be generated.
+	RegistrationId pulumi.StringPtrInput
 	// The list of roles that the User has for this registration.
 	Roles pulumi.StringArrayInput
 	// Indicates to FusionAuth that it should skip registration verification even if it is enabled for the Application.
@@ -310,8 +320,8 @@ func (o FusionAuthRegistrationOutput) AuthenticationToken() pulumi.StringOutput 
 }
 
 // An object that can hold any information about the User for this registration that should be persisted.
-func (o FusionAuthRegistrationOutput) Data() pulumi.MapOutput {
-	return o.ApplyT(func(v *FusionAuthRegistration) pulumi.MapOutput { return v.Data }).(pulumi.MapOutput)
+func (o FusionAuthRegistrationOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *FusionAuthRegistration) pulumi.StringMapOutput { return v.Data }).(pulumi.StringMapOutput)
 }
 
 // Determines if FusionAuth should generate an Authentication Token for this registration.
@@ -322,6 +332,11 @@ func (o FusionAuthRegistrationOutput) GenerateAuthenticationToken() pulumi.BoolP
 // An array of locale strings that give, in order, the User’s preferred languages for this registration. These are important for email templates and other localizable text.
 func (o FusionAuthRegistrationOutput) PreferredLanguages() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *FusionAuthRegistration) pulumi.StringArrayOutput { return v.PreferredLanguages }).(pulumi.StringArrayOutput)
+}
+
+// The Id of this registration. If not specified a secure random UUID will be generated.
+func (o FusionAuthRegistrationOutput) RegistrationId() pulumi.StringOutput {
+	return o.ApplyT(func(v *FusionAuthRegistration) pulumi.StringOutput { return v.RegistrationId }).(pulumi.StringOutput)
 }
 
 // The list of roles that the User has for this registration.

@@ -84,7 +84,7 @@ namespace theogravity.Fusionauth
         public Output<string?> Data { get; private set; } = null!;
 
         /// <summary>
-        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         /// </summary>
         [Output("disableDomainBlock")]
         public Output<bool?> DisableDomainBlock { get; private set; } = null!;
@@ -106,6 +106,14 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Output("expiry")]
         public Output<int?> Expiry { get; private set; } = null!;
+
+        /// <summary>
+        /// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        /// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        /// PasswordEncryptor implementation.
+        /// </summary>
+        [Output("factor")]
+        public Output<int> Factor { get; private set; } = null!;
 
         /// <summary>
         /// The first name of the User.
@@ -150,7 +158,7 @@ namespace theogravity.Fusionauth
         public Output<string?> ParentEmail { get; private set; } = null!;
 
         /// <summary>
-        /// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        /// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         /// </summary>
         [Output("password")]
         public Output<string?> Password { get; private set; } = null!;
@@ -289,7 +297,7 @@ namespace theogravity.Fusionauth
         public Input<string>? Data { get; set; }
 
         /// <summary>
-        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         /// </summary>
         [Input("disableDomainBlock")]
         public Input<bool>? DisableDomainBlock { get; set; }
@@ -311,6 +319,14 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("expiry")]
         public Input<int>? Expiry { get; set; }
+
+        /// <summary>
+        /// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        /// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        /// PasswordEncryptor implementation.
+        /// </summary>
+        [Input("factor")]
+        public Input<int>? Factor { get; set; }
 
         /// <summary>
         /// The first name of the User.
@@ -358,7 +374,7 @@ namespace theogravity.Fusionauth
         private Input<string>? _password;
 
         /// <summary>
-        /// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        /// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         /// </summary>
         public Input<string>? Password
         {
@@ -481,7 +497,7 @@ namespace theogravity.Fusionauth
         public Input<string>? Data { get; set; }
 
         /// <summary>
-        /// An optional Application Id. When this value is provided, it will be used to resolve an application specific email template if you have configured transactional emails such as setup password, email verification and others.
+        /// A tenant has the option to configure one or more email domains to be blocked in order to restrict email domains during user create or update. Setting this property equal to true will override the tenant configuration. See `registration_configuration.blocked_domains` in the Tenant resource.
         /// </summary>
         [Input("disableDomainBlock")]
         public Input<bool>? DisableDomainBlock { get; set; }
@@ -503,6 +519,14 @@ namespace theogravity.Fusionauth
         /// </summary>
         [Input("expiry")]
         public Input<int>? Expiry { get; set; }
+
+        /// <summary>
+        /// The factor used by the password encryption scheme. If not provided, the PasswordEncryptor provides a default value.
+        /// Generally this will be used as an iteration count to generate the hash. The actual use of this value is up to the
+        /// PasswordEncryptor implementation.
+        /// </summary>
+        [Input("factor")]
+        public Input<int>? Factor { get; set; }
 
         /// <summary>
         /// The first name of the User.
@@ -550,7 +574,7 @@ namespace theogravity.Fusionauth
         private Input<string>? _password;
 
         /// <summary>
-        /// The User’s plain texts password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
+        /// The User’s plaintext password. This password will be hashed and the provided value will never be stored and cannot be retrieved.
         /// </summary>
         public Input<string>? Password
         {

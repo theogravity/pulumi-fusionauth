@@ -15,17 +15,17 @@ namespace theogravity.Fusionauth.Outputs
     public sealed class FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator
     {
         /// <summary>
-        /// TThe length of the secure generator used for generating the the two factor code Id.
+        /// The length of the secure generator used for generating the the two factor code Id. Defaults to 6
         /// </summary>
-        public readonly int Length;
+        public readonly int? Length;
         /// <summary>
-        /// The type of the secure generator used for generating the two factor one time code Id.
+        /// The type of the secure generator used for generating the two factor one time code Id. Defaults to randomDigits.
         /// </summary>
         public readonly string? Type;
 
         [OutputConstructor]
         private FusionAuthTenantExternalIdentifierConfigurationTwoFactorOneTimeCodeIdGenerator(
-            int length,
+            int? length,
 
             string? type)
         {

@@ -17,7 +17,11 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// The additional SMTP headers to be added to each outgoing email. Each SMTP header consists of a name and a value.
         /// </summary>
-        public readonly ImmutableDictionary<string, object>? AdditionalHeaders;
+        public readonly ImmutableDictionary<string, string>? AdditionalHeaders;
+        /// <summary>
+        /// Determines if debug should be enabled to create an event log to assist in debugging SMTP errors.
+        /// </summary>
+        public readonly bool? Debug;
         /// <summary>
         /// The default email address that emails will be sent from when a from address is not provided on an individual email template. This is the address part email address (i.e. Jared Dunn &lt;jared@piedpiper.com&gt;).
         /// </summary>
@@ -41,7 +45,7 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// The host name of the SMTP server that FusionAuth will use.
         /// </summary>
-        public readonly string Host;
+        public readonly string? Host;
         /// <summary>
         /// When set to true, this allows email to be verified as a result of completing a similar email based workflow such as change password. When seto false, the user must explicitly complete the email verification workflow even if the user has already completed a similar email workflow such as change password.
         /// </summary>
@@ -81,7 +85,7 @@ namespace theogravity.Fusionauth.Outputs
         /// <summary>
         /// The port of the SMTP server that FusionAuth will use.
         /// </summary>
-        public readonly int Port;
+        public readonly int? Port;
         /// <summary>
         /// Additional Email Configuration in a properties file formatted String.
         /// </summary>
@@ -126,7 +130,9 @@ namespace theogravity.Fusionauth.Outputs
 
         [OutputConstructor]
         private FusionAuthTenantEmailConfiguration(
-            ImmutableDictionary<string, object>? additionalHeaders,
+            ImmutableDictionary<string, string>? additionalHeaders,
+
+            bool? debug,
 
             string? defaultFromEmail,
 
@@ -138,7 +144,7 @@ namespace theogravity.Fusionauth.Outputs
 
             string? forgotPasswordEmailTemplateId,
 
-            string host,
+            string? host,
 
             bool? implicitEmailVerificationAllowed,
 
@@ -158,7 +164,7 @@ namespace theogravity.Fusionauth.Outputs
 
             string? passwordlessEmailTemplateId,
 
-            int port,
+            int? port,
 
             string? properties,
 
@@ -183,6 +189,7 @@ namespace theogravity.Fusionauth.Outputs
             bool? verifyEmailWhenChanged)
         {
             AdditionalHeaders = additionalHeaders;
+            Debug = debug;
             DefaultFromEmail = defaultFromEmail;
             DefaultFromName = defaultFromName;
             EmailUpdateEmailTemplateId = emailUpdateEmailTemplateId;

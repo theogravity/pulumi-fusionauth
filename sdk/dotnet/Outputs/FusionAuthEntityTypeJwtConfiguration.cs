@@ -26,8 +26,7 @@ namespace theogravity.Fusionauth.Outputs
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
-        /// The length of time in seconds the JWT will live before it is expired and no
-        /// longer valid. Required when enabled is set to true.
+        /// The length of time in seconds the JWT will live before it is expired and no longer valid. Required when enabled is set to true.
         /// </summary>
         public readonly int? TimeToLiveInSeconds;
 

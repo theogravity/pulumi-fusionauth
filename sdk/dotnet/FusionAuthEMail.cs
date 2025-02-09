@@ -83,25 +83,25 @@ namespace theogravity.Fusionauth
         /// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         /// </summary>
         [Output("localizedFromNames")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedFromNames { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedFromNames { get; private set; } = null!;
 
         /// <summary>
         /// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         /// </summary>
         [Output("localizedHtmlTemplates")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedHtmlTemplates { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedHtmlTemplates { get; private set; } = null!;
 
         /// <summary>
         /// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         /// </summary>
         [Output("localizedSubjects")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedSubjects { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedSubjects { get; private set; } = null!;
 
         /// <summary>
         /// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         /// </summary>
         [Output("localizedTextTemplates")]
-        public Output<ImmutableDictionary<string, object>?> LocalizedTextTemplates { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> LocalizedTextTemplates { get; private set; } = null!;
 
         /// <summary>
         /// A descriptive name for the email template (i.e. "April 2016 Coupon Email")
@@ -193,50 +193,50 @@ namespace theogravity.Fusionauth
         public Input<string>? FromEmail { get; set; }
 
         [Input("localizedFromNames")]
-        private InputMap<object>? _localizedFromNames;
+        private InputMap<string>? _localizedFromNames;
 
         /// <summary>
         /// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedFromNames
+        public InputMap<string> LocalizedFromNames
         {
-            get => _localizedFromNames ?? (_localizedFromNames = new InputMap<object>());
+            get => _localizedFromNames ?? (_localizedFromNames = new InputMap<string>());
             set => _localizedFromNames = value;
         }
 
         [Input("localizedHtmlTemplates")]
-        private InputMap<object>? _localizedHtmlTemplates;
+        private InputMap<string>? _localizedHtmlTemplates;
 
         /// <summary>
         /// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedHtmlTemplates
+        public InputMap<string> LocalizedHtmlTemplates
         {
-            get => _localizedHtmlTemplates ?? (_localizedHtmlTemplates = new InputMap<object>());
+            get => _localizedHtmlTemplates ?? (_localizedHtmlTemplates = new InputMap<string>());
             set => _localizedHtmlTemplates = value;
         }
 
         [Input("localizedSubjects")]
-        private InputMap<object>? _localizedSubjects;
+        private InputMap<string>? _localizedSubjects;
 
         /// <summary>
         /// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedSubjects
+        public InputMap<string> LocalizedSubjects
         {
-            get => _localizedSubjects ?? (_localizedSubjects = new InputMap<object>());
+            get => _localizedSubjects ?? (_localizedSubjects = new InputMap<string>());
             set => _localizedSubjects = value;
         }
 
         [Input("localizedTextTemplates")]
-        private InputMap<object>? _localizedTextTemplates;
+        private InputMap<string>? _localizedTextTemplates;
 
         /// <summary>
         /// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedTextTemplates
+        public InputMap<string> LocalizedTextTemplates
         {
-            get => _localizedTextTemplates ?? (_localizedTextTemplates = new InputMap<object>());
+            get => _localizedTextTemplates ?? (_localizedTextTemplates = new InputMap<string>());
             set => _localizedTextTemplates = value;
         }
 
@@ -291,50 +291,50 @@ namespace theogravity.Fusionauth
         public Input<string>? FromEmail { get; set; }
 
         [Input("localizedFromNames")]
-        private InputMap<object>? _localizedFromNames;
+        private InputMap<string>? _localizedFromNames;
 
         /// <summary>
         /// The From Name used when sending emails to users who speak other languages. This overrides the default From Name based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedFromNames
+        public InputMap<string> LocalizedFromNames
         {
-            get => _localizedFromNames ?? (_localizedFromNames = new InputMap<object>());
+            get => _localizedFromNames ?? (_localizedFromNames = new InputMap<string>());
             set => _localizedFromNames = value;
         }
 
         [Input("localizedHtmlTemplates")]
-        private InputMap<object>? _localizedHtmlTemplates;
+        private InputMap<string>? _localizedHtmlTemplates;
 
         /// <summary>
         /// The HTML Email Template used when sending emails to users who speak other languages. This overrides the default HTML Email Template based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedHtmlTemplates
+        public InputMap<string> LocalizedHtmlTemplates
         {
-            get => _localizedHtmlTemplates ?? (_localizedHtmlTemplates = new InputMap<object>());
+            get => _localizedHtmlTemplates ?? (_localizedHtmlTemplates = new InputMap<string>());
             set => _localizedHtmlTemplates = value;
         }
 
         [Input("localizedSubjects")]
-        private InputMap<object>? _localizedSubjects;
+        private InputMap<string>? _localizedSubjects;
 
         /// <summary>
         /// The Subject used when sending emails to users who speak other languages. This overrides the default Subject based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedSubjects
+        public InputMap<string> LocalizedSubjects
         {
-            get => _localizedSubjects ?? (_localizedSubjects = new InputMap<object>());
+            get => _localizedSubjects ?? (_localizedSubjects = new InputMap<string>());
             set => _localizedSubjects = value;
         }
 
         [Input("localizedTextTemplates")]
-        private InputMap<object>? _localizedTextTemplates;
+        private InputMap<string>? _localizedTextTemplates;
 
         /// <summary>
         /// The Text Email Template used when sending emails to users who speak other languages. This overrides the default Text Email Template based on the user’s list of preferred languages.
         /// </summary>
-        public InputMap<object> LocalizedTextTemplates
+        public InputMap<string> LocalizedTextTemplates
         {
-            get => _localizedTextTemplates ?? (_localizedTextTemplates = new InputMap<object>());
+            get => _localizedTextTemplates ?? (_localizedTextTemplates = new InputMap<string>());
             set => _localizedTextTemplates = value;
         }
 
