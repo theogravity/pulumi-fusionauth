@@ -13,7 +13,6 @@
         "strict": true
     },
     "files": [
-        "applicationOauthScope.ts",
         "config/index.ts",
         "config/vars.ts",
         "fusionAuthApiKey.ts",
@@ -54,7 +53,7 @@
         "fusionAuthUserGroupMembership.ts",
         "fusionAuthWebhook.ts",
         "getApplication.ts",
-        "getApplicationOauthScope.ts",
+        "getApplicationOAuthScope.ts",
         "getApplicationRole.ts",
         "getEMail.ts",
         "getForm.ts",
@@ -69,7 +68,6 @@
         "types/index.ts",
         "types/input.ts",
         "types/output.ts",
-        "userGroupMembership.ts",
         "utilities.ts"
     ]
 }

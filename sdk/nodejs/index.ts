@@ -5,11 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export { ApplicationOauthScopeArgs, ApplicationOauthScopeState } from "./applicationOauthScope";
-export type ApplicationOauthScope = import("./applicationOauthScope").ApplicationOauthScope;
-export const ApplicationOauthScope: typeof import("./applicationOauthScope").ApplicationOauthScope = null as any;
-utilities.lazyLoad(exports, ["ApplicationOauthScope"], () => require("./applicationOauthScope"));
-
 export { FusionAuthApiKeyArgs, FusionAuthApiKeyState } from "./fusionAuthApiKey";
 export type FusionAuthApiKey = import("./fusionAuthApiKey").FusionAuthApiKey;
 export const FusionAuthApiKey: typeof import("./fusionAuthApiKey").FusionAuthApiKey = null as any;
@@ -200,10 +195,10 @@ export const getApplication: typeof import("./getApplication").getApplication = 
 export const getApplicationOutput: typeof import("./getApplication").getApplicationOutput = null as any;
 utilities.lazyLoad(exports, ["getApplication","getApplicationOutput"], () => require("./getApplication"));
 
-export { GetApplicationOauthScopeArgs, GetApplicationOauthScopeResult, GetApplicationOauthScopeOutputArgs } from "./getApplicationOauthScope";
-export const getApplicationOauthScope: typeof import("./getApplicationOauthScope").getApplicationOauthScope = null as any;
-export const getApplicationOauthScopeOutput: typeof import("./getApplicationOauthScope").getApplicationOauthScopeOutput = null as any;
-utilities.lazyLoad(exports, ["getApplicationOauthScope","getApplicationOauthScopeOutput"], () => require("./getApplicationOauthScope"));
+export { GetApplicationOAuthScopeArgs, GetApplicationOAuthScopeResult, GetApplicationOAuthScopeOutputArgs } from "./getApplicationOAuthScope";
+export const getApplicationOAuthScope: typeof import("./getApplicationOAuthScope").getApplicationOAuthScope = null as any;
+export const getApplicationOAuthScopeOutput: typeof import("./getApplicationOAuthScope").getApplicationOAuthScopeOutput = null as any;
+utilities.lazyLoad(exports, ["getApplicationOAuthScope","getApplicationOAuthScopeOutput"], () => require("./getApplicationOAuthScope"));
 
 export { GetApplicationRoleArgs, GetApplicationRoleResult, GetApplicationRoleOutputArgs } from "./getApplicationRole";
 export const getApplicationRole: typeof import("./getApplicationRole").getApplicationRole = null as any;
@@ -255,11 +250,6 @@ export type Provider = import("./provider").Provider;
 export const Provider: typeof import("./provider").Provider = null as any;
 utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
 
-export { UserGroupMembershipArgs, UserGroupMembershipState } from "./userGroupMembership";
-export type UserGroupMembership = import("./userGroupMembership").UserGroupMembership;
-export const UserGroupMembership: typeof import("./userGroupMembership").UserGroupMembership = null as any;
-utilities.lazyLoad(exports, ["UserGroupMembership"], () => require("./userGroupMembership"));
-
 
 // Export sub-modules:
 import * as config from "./config";
@@ -274,8 +264,6 @@ const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "fusionauth:index/applicationOauthScope:ApplicationOauthScope":
-                return new ApplicationOauthScope(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey":
                 return new FusionAuthApiKey(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthApplication:FusionAuthApplication":
@@ -350,14 +338,11 @@ const _module = {
                 return new FusionAuthUserGroupMembership(name, <any>undefined, { urn })
             case "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook":
                 return new FusionAuthWebhook(name, <any>undefined, { urn })
-            case "fusionauth:index/userGroupMembership:UserGroupMembership":
-                return new UserGroupMembership(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("fusionauth", "index/applicationOauthScope", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApiKey", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApplication", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthApplicationOAuthScope", _module)
@@ -395,7 +380,6 @@ pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUser", _mod
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUserAction", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthUserGroupMembership", _module)
 pulumi.runtime.registerResourceModule("fusionauth", "index/fusionAuthWebhook", _module)
-pulumi.runtime.registerResourceModule("fusionauth", "index/userGroupMembership", _module)
 pulumi.runtime.registerResourcePackage("fusionauth", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

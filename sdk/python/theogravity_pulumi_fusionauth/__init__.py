@@ -5,7 +5,6 @@
 from . import _utilities
 import typing
 # Export this package's modules as members:
-from .application_oauth_scope import *
 from .fusion_auth_api_key import *
 from .fusion_auth_application import *
 from .fusion_auth_application_o_auth_scope import *
@@ -44,7 +43,7 @@ from .fusion_auth_user_action import *
 from .fusion_auth_user_group_membership import *
 from .fusion_auth_webhook import *
 from .get_application import *
-from .get_application_oauth_scope import *
+from .get_application_o_auth_scope import *
 from .get_application_role import *
 from .get_e_mail import *
 from .get_form import *
@@ -55,7 +54,6 @@ from .get_tenant import *
 from .get_user import *
 from .get_user_group_membership import *
 from .provider import *
-from .user_group_membership import *
 from ._inputs import *
 from . import outputs
 
@@ -69,14 +67,6 @@ else:
 _utilities.register(
     resource_modules="""
 [
- {
-  "pkg": "fusionauth",
-  "mod": "index/applicationOauthScope",
-  "fqn": "theogravity_pulumi_fusionauth",
-  "classes": {
-   "fusionauth:index/applicationOauthScope:ApplicationOauthScope": "ApplicationOauthScope"
-  }
- },
  {
   "pkg": "fusionauth",
   "mod": "index/fusionAuthApiKey",
@@ -371,14 +361,6 @@ _utilities.register(
   "fqn": "theogravity_pulumi_fusionauth",
   "classes": {
    "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook": "FusionAuthWebhook"
-  }
- },
- {
-  "pkg": "fusionauth",
-  "mod": "index/userGroupMembership",
-  "fqn": "theogravity_pulumi_fusionauth",
-  "classes": {
-   "fusionauth:index/userGroupMembership:UserGroupMembership": "UserGroupMembership"
   }
  }
 ]

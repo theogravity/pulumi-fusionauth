@@ -21,8 +21,6 @@ func (m *module) Version() semver.Version {
 
 func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi.Resource, err error) {
 	switch typ {
-	case "fusionauth:index/applicationOauthScope:ApplicationOauthScope":
-		r = &ApplicationOauthScope{}
 	case "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey":
 		r = &FusionAuthApiKey{}
 	case "fusionauth:index/fusionAuthApplication:FusionAuthApplication":
@@ -97,8 +95,6 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &FusionAuthUserGroupMembership{}
 	case "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook":
 		r = &FusionAuthWebhook{}
-	case "fusionauth:index/userGroupMembership:UserGroupMembership":
-		r = &UserGroupMembership{}
 	default:
 		return nil, fmt.Errorf("unknown resource type: %s", typ)
 	}
@@ -130,11 +126,6 @@ func init() {
 	if err != nil {
 		version = semver.Version{Major: 1}
 	}
-	pulumi.RegisterResourceModule(
-		"fusionauth",
-		"index/applicationOauthScope",
-		&module{version},
-	)
 	pulumi.RegisterResourceModule(
 		"fusionauth",
 		"index/fusionAuthApiKey",
@@ -318,11 +309,6 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"fusionauth",
 		"index/fusionAuthWebhook",
-		&module{version},
-	)
-	pulumi.RegisterResourceModule(
-		"fusionauth",
-		"index/userGroupMembership",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

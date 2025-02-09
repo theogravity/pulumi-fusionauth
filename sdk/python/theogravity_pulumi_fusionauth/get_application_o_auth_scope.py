@@ -15,16 +15,16 @@ else:
 from . import _utilities
 
 __all__ = [
-    'GetApplicationOauthScopeResult',
-    'AwaitableGetApplicationOauthScopeResult',
-    'get_application_oauth_scope',
-    'get_application_oauth_scope_output',
+    'GetApplicationOAuthScopeResult',
+    'AwaitableGetApplicationOAuthScopeResult',
+    'get_application_o_auth_scope',
+    'get_application_o_auth_scope_output',
 ]
 
 @pulumi.output_type
-class GetApplicationOauthScopeResult:
+class GetApplicationOAuthScopeResult:
     """
-    A collection of values returned by getApplicationOauthScope.
+    A collection of values returned by getApplicationOAuthScope.
     """
     def __init__(__self__, application_id=None, data=None, default_consent_detail=None, default_consent_message=None, description=None, id=None, name=None, required=None, scope_id=None):
         if application_id and not isinstance(application_id, str):
@@ -122,12 +122,12 @@ class GetApplicationOauthScopeResult:
         return pulumi.get(self, "scope_id")
 
 
-class AwaitableGetApplicationOauthScopeResult(GetApplicationOauthScopeResult):
+class AwaitableGetApplicationOAuthScopeResult(GetApplicationOAuthScopeResult):
     # pylint: disable=using-constant-test
     def __await__(self):
         if False:
             yield self
-        return GetApplicationOauthScopeResult(
+        return GetApplicationOAuthScopeResult(
             application_id=self.application_id,
             data=self.data,
             default_consent_detail=self.default_consent_detail,
@@ -139,9 +139,9 @@ class AwaitableGetApplicationOauthScopeResult(GetApplicationOauthScopeResult):
             scope_id=self.scope_id)
 
 
-def get_application_oauth_scope(application_id: Optional[str] = None,
-                                name: Optional[str] = None,
-                                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetApplicationOauthScopeResult:
+def get_application_o_auth_scope(application_id: Optional[str] = None,
+                                 name: Optional[str] = None,
+                                 opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetApplicationOAuthScopeResult:
     """
     ## # Application OAuth Scope Resource
 
@@ -155,7 +155,7 @@ def get_application_oauth_scope(application_id: Optional[str] = None,
     import pulumi
     import pulumi_fusionauth as fusionauth
 
-    this = fusionauth.get_application_oauth_scope(application_id=data["fusionauth_application"]["this"]["id"],
+    this = fusionauth.get_application_o_auth_scope(application_id=data["fusionauth_application"]["this"]["id"],
         name="data:read")
     ```
 
@@ -167,9 +167,9 @@ def get_application_oauth_scope(application_id: Optional[str] = None,
     __args__['applicationId'] = application_id
     __args__['name'] = name
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
-    __ret__ = pulumi.runtime.invoke('fusionauth:index/getApplicationOauthScope:getApplicationOauthScope', __args__, opts=opts, typ=GetApplicationOauthScopeResult).value
+    __ret__ = pulumi.runtime.invoke('fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope', __args__, opts=opts, typ=GetApplicationOAuthScopeResult).value
 
-    return AwaitableGetApplicationOauthScopeResult(
+    return AwaitableGetApplicationOAuthScopeResult(
         application_id=pulumi.get(__ret__, 'application_id'),
         data=pulumi.get(__ret__, 'data'),
         default_consent_detail=pulumi.get(__ret__, 'default_consent_detail'),
@@ -179,9 +179,9 @@ def get_application_oauth_scope(application_id: Optional[str] = None,
         name=pulumi.get(__ret__, 'name'),
         required=pulumi.get(__ret__, 'required'),
         scope_id=pulumi.get(__ret__, 'scope_id'))
-def get_application_oauth_scope_output(application_id: Optional[pulumi.Input[str]] = None,
-                                       name: Optional[pulumi.Input[str]] = None,
-                                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetApplicationOauthScopeResult]:
+def get_application_o_auth_scope_output(application_id: Optional[pulumi.Input[str]] = None,
+                                        name: Optional[pulumi.Input[str]] = None,
+                                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetApplicationOAuthScopeResult]:
     """
     ## # Application OAuth Scope Resource
 
@@ -195,7 +195,7 @@ def get_application_oauth_scope_output(application_id: Optional[pulumi.Input[str
     import pulumi
     import pulumi_fusionauth as fusionauth
 
-    this = fusionauth.get_application_oauth_scope(application_id=data["fusionauth_application"]["this"]["id"],
+    this = fusionauth.get_application_o_auth_scope(application_id=data["fusionauth_application"]["this"]["id"],
         name="data:read")
     ```
 
@@ -207,8 +207,8 @@ def get_application_oauth_scope_output(application_id: Optional[pulumi.Input[str
     __args__['applicationId'] = application_id
     __args__['name'] = name
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
-    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getApplicationOauthScope:getApplicationOauthScope', __args__, opts=opts, typ=GetApplicationOauthScopeResult)
-    return __ret__.apply(lambda __response__: GetApplicationOauthScopeResult(
+    __ret__ = pulumi.runtime.invoke_output('fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope', __args__, opts=opts, typ=GetApplicationOAuthScopeResult)
+    return __ret__.apply(lambda __response__: GetApplicationOAuthScopeResult(
         application_id=pulumi.get(__response__, 'application_id'),
         data=pulumi.get(__response__, 'data'),
         default_consent_detail=pulumi.get(__response__, 'default_consent_detail'),

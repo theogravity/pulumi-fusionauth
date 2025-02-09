@@ -3284,137 +3284,6 @@
         }
     },
     "resources": {
-        "fusionauth:index/applicationOauthScope:ApplicationOauthScope": {
-            "description": "## # Application OAuth Scope Resource\n\nThe Application OAuth Scope resource allows you to define the scopes that an application can request when using OAuth.\n\n[Application OAuth Scope API](https://fusionauth.io/docs/apis/scopes)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst _this = new fusionauth.FusionAuthApplicationOAuthScope(\"this\", {\n    applicationId: fusionauth_application[\"this\"].id,\n    data: {\n        addedBy: \"Tom\",\n        addedOn: \"2025-02-05\",\n    },\n    defaultConsentDetail: \"This will provide the requesting application read-only access to your data\",\n    defaultConsentMessage: \"View your data\",\n    description: \"Provides an application read-only access to a user's data\",\n    required: true,\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi_fusionauth as fusionauth\n\nthis = fusionauth.FusionAuthApplicationOAuthScope(\"this\",\n    application_id=fusionauth_application[\"this\"][\"id\"],\n    data={\n        \"addedBy\": \"Tom\",\n        \"addedOn\": \"2025-02-05\",\n    },\n    default_consent_detail=\"This will provide the requesting application read-only access to your data\",\n    default_consent_message=\"View your data\",\n    description=\"Provides an application read-only access to a user's data\",\n    required=True)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = new Fusionauth.FusionAuthApplicationOAuthScope(\"this\", new()\n    {\n        ApplicationId = fusionauth_application.This.Id,\n        Data = \n        {\n            { \"addedBy\", \"Tom\" },\n            { \"addedOn\", \"2025-02-05\" },\n        },\n        DefaultConsentDetail = \"This will provide the requesting application read-only access to your data\",\n        DefaultConsentMessage = \"View your data\",\n        Description = \"Provides an application read-only access to a user's data\",\n        Required = true,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthApplicationOAuthScope(ctx, \"this\", \u0026fusionauth.FusionAuthApplicationOAuthScopeArgs{\n\t\t\tApplicationId: pulumi.Any(fusionauth_application.This.Id),\n\t\t\tData: pulumi.StringMap{\n\t\t\t\t\"addedBy\": pulumi.String(\"Tom\"),\n\t\t\t\t\"addedOn\": pulumi.String(\"2025-02-05\"),\n\t\t\t},\n\t\t\tDefaultConsentDetail:  pulumi.String(\"This will provide the requesting application read-only access to your data\"),\n\t\t\tDefaultConsentMessage: pulumi.String(\"View your data\"),\n\t\t\tDescription:           pulumi.String(\"Provides an application read-only access to a user's data\"),\n\t\t\tRequired:              pulumi.Bool(true),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthApplicationOAuthScope;\nimport com.pulumi.fusionauth.FusionAuthApplicationOAuthScopeArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var this_ = new FusionAuthApplicationOAuthScope(\"this\", FusionAuthApplicationOAuthScopeArgs.builder()\n            .applicationId(fusionauth_application.this().id())\n            .data(Map.ofEntries(\n                Map.entry(\"addedBy\", \"Tom\"),\n                Map.entry(\"addedOn\", \"2025-02-05\")\n            ))\n            .defaultConsentDetail(\"This will provide the requesting application read-only access to your data\")\n            .defaultConsentMessage(\"View your data\")\n            .description(\"Provides an application read-only access to a user's data\")\n            .required(true)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  this:\n    type: fusionauth:FusionAuthApplicationOAuthScope\n    properties:\n      applicationId: ${fusionauth_application.this.id}\n      data:\n        addedBy: Tom\n        addedOn: 2025-02-05\n      defaultConsentDetail: This will provide the requesting application read-only access to your data\n      defaultConsentMessage: View your data\n      description: Provides an application read-only access to a user's data\n      required: true\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
-            "properties": {
-                "applicationId": {
-                    "type": "string",
-                    "description": "ID of the application that this role is for.\n"
-                },
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "An object that can hold any information about the OAuth Scope that should be persisted.\n"
-                },
-                "defaultConsentDetail": {
-                    "type": "string",
-                    "description": "\"The default detail to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                },
-                "defaultConsentMessage": {
-                    "type": "string",
-                    "description": "The default message to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "A description of the OAuth Scope. This is used for display purposes only.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the Role.\n"
-                },
-                "required": {
-                    "type": "boolean",
-                    "description": "Determines if the OAuth Scope is required when requested in an OAuth workflow.\n"
-                },
-                "scopeId": {
-                    "type": "string",
-                    "description": "The Id to use for the new OAuth Scope. If not specified a secure random UUID will be generated.\n"
-                }
-            },
-            "required": [
-                "applicationId",
-                "name",
-                "scopeId"
-            ],
-            "inputProperties": {
-                "applicationId": {
-                    "type": "string",
-                    "description": "ID of the application that this role is for.\n"
-                },
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "An object that can hold any information about the OAuth Scope that should be persisted.\n"
-                },
-                "defaultConsentDetail": {
-                    "type": "string",
-                    "description": "\"The default detail to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                },
-                "defaultConsentMessage": {
-                    "type": "string",
-                    "description": "The default message to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "A description of the OAuth Scope. This is used for display purposes only.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the Role.\n",
-                    "willReplaceOnChanges": true
-                },
-                "required": {
-                    "type": "boolean",
-                    "description": "Determines if the OAuth Scope is required when requested in an OAuth workflow.\n"
-                },
-                "scopeId": {
-                    "type": "string",
-                    "description": "The Id to use for the new OAuth Scope. If not specified a secure random UUID will be generated.\n",
-                    "willReplaceOnChanges": true
-                }
-            },
-            "requiredInputs": [
-                "applicationId"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering ApplicationOauthScope resources.\n",
-                "properties": {
-                    "applicationId": {
-                        "type": "string",
-                        "description": "ID of the application that this role is for.\n"
-                    },
-                    "data": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        },
-                        "description": "An object that can hold any information about the OAuth Scope that should be persisted.\n"
-                    },
-                    "defaultConsentDetail": {
-                        "type": "string",
-                        "description": "\"The default detail to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                    },
-                    "defaultConsentMessage": {
-                        "type": "string",
-                        "description": "The default message to display on the OAuth consent screen if one cannot be found in the theme.\n"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "A description of the OAuth Scope. This is used for display purposes only.\n"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "The name of the Role.\n",
-                        "willReplaceOnChanges": true
-                    },
-                    "required": {
-                        "type": "boolean",
-                        "description": "Determines if the OAuth Scope is required when requested in an OAuth workflow.\n"
-                    },
-                    "scopeId": {
-                        "type": "string",
-                        "description": "The Id to use for the new OAuth Scope. If not specified a secure random UUID will be generated.\n",
-                        "willReplaceOnChanges": true
-                    }
-                },
-                "type": "object"
-            },
-            "deprecationMessage": "fusionauth.index/applicationoauthscope.ApplicationOauthScope has been deprecated in favor of fusionauth.index/fusionauthapplicationoauthscope.FusionAuthApplicationOAuthScope"
-        },
         "fusionauth:index/fusionAuthApiKey:FusionAuthApiKey": {
             "description": "## # API Key\n\nThe FusionAuth APIs are primarily secured using API keys. This API can only be accessed using an API key that is set as a keyManager. In order to retrieve, update or delete an API key, an API key with equal or greater permissions must be used. A \"tenant-scoped\" API key can retrieve, create, update or delete an API key for the same tenant. This page describes APIs that are used to manage API keys.\n\n[API Key](https://fusionauth.io/docs/v1/tech/apis/api-keys/)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst example = new fusionauth.FusionAuthApiKey(\"example\", {\n    description: \"my super secret key\",\n    key: \"super-secret-key\",\n    permissionsEndpoints: [{\n        \"delete\": true,\n        endpoint: \"/api/application\",\n        get: true,\n        patch: true,\n        post: true,\n        put: true,\n    }],\n    tenantId: \"94f751c5-4883-4684-a817-6b106778edec\",\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi_fusionauth as fusionauth\n\nexample = fusionauth.FusionAuthApiKey(\"example\",\n    description=\"my super secret key\",\n    key=\"super-secret-key\",\n    permissions_endpoints=[{\n        \"delete\": True,\n        \"endpoint\": \"/api/application\",\n        \"get\": True,\n        \"patch\": True,\n        \"post\": True,\n        \"put\": True,\n    }],\n    tenant_id=\"94f751c5-4883-4684-a817-6b106778edec\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = new Fusionauth.FusionAuthApiKey(\"example\", new()\n    {\n        Description = \"my super secret key\",\n        Key = \"super-secret-key\",\n        PermissionsEndpoints = new[]\n        {\n            new Fusionauth.Inputs.FusionAuthApiKeyPermissionsEndpointArgs\n            {\n                Delete = true,\n                Endpoint = \"/api/application\",\n                Get = true,\n                Patch = true,\n                Post = true,\n                Put = true,\n            },\n        },\n        TenantId = \"94f751c5-4883-4684-a817-6b106778edec\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthApiKey(ctx, \"example\", \u0026fusionauth.FusionAuthApiKeyArgs{\n\t\t\tDescription: pulumi.String(\"my super secret key\"),\n\t\t\tKey:         pulumi.String(\"super-secret-key\"),\n\t\t\tPermissionsEndpoints: fusionauth.FusionAuthApiKeyPermissionsEndpointArray{\n\t\t\t\t\u0026fusionauth.FusionAuthApiKeyPermissionsEndpointArgs{\n\t\t\t\t\tDelete:   pulumi.Bool(true),\n\t\t\t\t\tEndpoint: pulumi.String(\"/api/application\"),\n\t\t\t\t\tGet:      pulumi.Bool(true),\n\t\t\t\t\tPatch:    pulumi.Bool(true),\n\t\t\t\t\tPost:     pulumi.Bool(true),\n\t\t\t\t\tPut:      pulumi.Bool(true),\n\t\t\t\t},\n\t\t\t},\n\t\t\tTenantId: pulumi.String(\"94f751c5-4883-4684-a817-6b106778edec\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthApiKey;\nimport com.pulumi.fusionauth.FusionAuthApiKeyArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthApiKeyPermissionsEndpointArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new FusionAuthApiKey(\"example\", FusionAuthApiKeyArgs.builder()\n            .description(\"my super secret key\")\n            .key(\"super-secret-key\")\n            .permissionsEndpoints(FusionAuthApiKeyPermissionsEndpointArgs.builder()\n                .delete(true)\n                .endpoint(\"/api/application\")\n                .get(true)\n                .patch(true)\n                .post(true)\n                .put(true)\n                .build())\n            .tenantId(\"94f751c5-4883-4684-a817-6b106778edec\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  example:\n    type: fusionauth:FusionAuthApiKey\n    properties:\n      description: my super secret key\n      key: super-secret-key\n      permissionsEndpoints:\n        - delete: true\n          endpoint: /api/application\n          get: true\n          patch: true\n          post: true\n          put: true\n      tenantId: 94f751c5-4883-4684-a817-6b106778edec\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
@@ -3953,12 +3822,7 @@
                     }
                 },
                 "type": "object"
-            },
-            "aliases": [
-                {
-                    "type": "fusionauth:index/applicationOauthScope:ApplicationOauthScope"
-                }
-            ]
+            }
         },
         "fusionauth:index/fusionAuthApplicationRole:FusionAuthApplicationRole": {
             "description": "## # Application Role Resource\n\nThis Resource is used to create a role for an Application.\n\n[Application Roles API](https://fusionauth.io/docs/v1/tech/apis/applications)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst myAppAdminRole = new fusionauth.FusionAuthApplicationRole(\"myAppAdminRole\", {\n    applicationId: fusionauth_application.my_app.id,\n    description: \"\",\n    isDefault: false,\n    isSuperRole: true,\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi_fusionauth as fusionauth\n\nmy_app_admin_role = fusionauth.FusionAuthApplicationRole(\"myAppAdminRole\",\n    application_id=fusionauth_application[\"my_app\"][\"id\"],\n    description=\"\",\n    is_default=False,\n    is_super_role=True)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myAppAdminRole = new Fusionauth.FusionAuthApplicationRole(\"myAppAdminRole\", new()\n    {\n        ApplicationId = fusionauth_application.My_app.Id,\n        Description = \"\",\n        IsDefault = false,\n        IsSuperRole = true,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthApplicationRole(ctx, \"myAppAdminRole\", \u0026fusionauth.FusionAuthApplicationRoleArgs{\n\t\t\tApplicationId: pulumi.Any(fusionauth_application.My_app.Id),\n\t\t\tDescription:   pulumi.String(\"\"),\n\t\t\tIsDefault:     pulumi.Bool(false),\n\t\t\tIsSuperRole:   pulumi.Bool(true),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthApplicationRole;\nimport com.pulumi.fusionauth.FusionAuthApplicationRoleArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myAppAdminRole = new FusionAuthApplicationRole(\"myAppAdminRole\", FusionAuthApplicationRoleArgs.builder()\n            .applicationId(fusionauth_application.my_app().id())\n            .description(\"\")\n            .isDefault(false)\n            .isSuperRole(true)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myAppAdminRole:\n    type: fusionauth:FusionAuthApplicationRole\n    properties:\n      applicationId: ${fusionauth_application.my_app.id}\n      description: \"\"\n      isDefault: false\n      isSuperRole: true\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
@@ -10423,12 +10287,7 @@
                     }
                 },
                 "type": "object"
-            },
-            "aliases": [
-                {
-                    "type": "fusionauth:index/userGroupMembership:UserGroupMembership"
-                }
-            ]
+            }
         },
         "fusionauth:index/fusionAuthWebhook:FusionAuthWebhook": {
             "description": "## # Webhook Resource\n\nA FusionAuth Webhook is intended to consume JSON events emitted by FusionAuth. Creating a Webhook allows you to tell FusionAuth where you would like to receive these JSON events.\n\n[Webhooks API](https://fusionauth.io/docs/v1/tech/apis/webhooks)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst example = new fusionauth.FusionAuthWebhook(\"example\", {\n    tenantIds: [\n        \"00000000-0000-0000-0000-000000000003\",\n        fusionauth_tenant.example.id,\n    ],\n    connectTimeout: 1000,\n    description: \"The standard game Webhook\",\n    eventsEnabled: {\n        userCreate: true,\n        userDelete: false,\n    },\n    global: false,\n    headers: {\n        foo: \"bar\",\n        bar: \"baz\",\n    },\n    httpAuthenticationPassword: \"password\",\n    httpAuthenticationUsername: \"username\",\n    readTimeout: 2000,\n    sslCertificate: \"  -----BEGIN CERTIFICATE-----\\\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\\\n-----END CERTIFICATE-----\\n\",\n    url: \"http://mygameserver.local:7001/fusionauth-webhook\",\n    signatureConfiguration: {\n        enabled: true,\n        signingKeyId: fusionauth_key.webhook_key.id,\n    },\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi_fusionauth as fusionauth\n\nexample = fusionauth.FusionAuthWebhook(\"example\",\n    tenant_ids=[\n        \"00000000-0000-0000-0000-000000000003\",\n        fusionauth_tenant[\"example\"][\"id\"],\n    ],\n    connect_timeout=1000,\n    description=\"The standard game Webhook\",\n    events_enabled={\n        \"user_create\": True,\n        \"user_delete\": False,\n    },\n    global_=False,\n    headers={\n        \"foo\": \"bar\",\n        \"bar\": \"baz\",\n    },\n    http_authentication_password=\"password\",\n    http_authentication_username=\"username\",\n    read_timeout=2000,\n    ssl_certificate=\"  -----BEGIN CERTIFICATE-----\\\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\\\n-----END CERTIFICATE-----\\n\",\n    url=\"http://mygameserver.local:7001/fusionauth-webhook\",\n    signature_configuration={\n        \"enabled\": True,\n        \"signing_key_id\": fusionauth_key[\"webhook_key\"][\"id\"],\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = new Fusionauth.FusionAuthWebhook(\"example\", new()\n    {\n        TenantIds = new[]\n        {\n            \"00000000-0000-0000-0000-000000000003\",\n            fusionauth_tenant.Example.Id,\n        },\n        ConnectTimeout = 1000,\n        Description = \"The standard game Webhook\",\n        EventsEnabled = new Fusionauth.Inputs.FusionAuthWebhookEventsEnabledArgs\n        {\n            UserCreate = true,\n            UserDelete = false,\n        },\n        Global = false,\n        Headers = \n        {\n            { \"foo\", \"bar\" },\n            { \"bar\", \"baz\" },\n        },\n        HttpAuthenticationPassword = \"password\",\n        HttpAuthenticationUsername = \"username\",\n        ReadTimeout = 2000,\n        SslCertificate = @\"  -----BEGIN CERTIFICATE-----\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\n-----END CERTIFICATE-----\n\",\n        Url = \"http://mygameserver.local:7001/fusionauth-webhook\",\n        SignatureConfiguration = new Fusionauth.Inputs.FusionAuthWebhookSignatureConfigurationArgs\n        {\n            Enabled = true,\n            SigningKeyId = fusionauth_key.Webhook_key.Id,\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthWebhook(ctx, \"example\", \u0026fusionauth.FusionAuthWebhookArgs{\n\t\t\tTenantIds: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"00000000-0000-0000-0000-000000000003\"),\n\t\t\t\tfusionauth_tenant.Example.Id,\n\t\t\t},\n\t\t\tConnectTimeout: pulumi.Int(1000),\n\t\t\tDescription:    pulumi.String(\"The standard game Webhook\"),\n\t\t\tEventsEnabled: \u0026fusionauth.FusionAuthWebhookEventsEnabledArgs{\n\t\t\t\tUserCreate: pulumi.Bool(true),\n\t\t\t\tUserDelete: pulumi.Bool(false),\n\t\t\t},\n\t\t\tGlobal: pulumi.Bool(false),\n\t\t\tHeaders: pulumi.StringMap{\n\t\t\t\t\"foo\": pulumi.String(\"bar\"),\n\t\t\t\t\"bar\": pulumi.String(\"baz\"),\n\t\t\t},\n\t\t\tHttpAuthenticationPassword: pulumi.String(\"password\"),\n\t\t\tHttpAuthenticationUsername: pulumi.String(\"username\"),\n\t\t\tReadTimeout:                pulumi.Int(2000),\n\t\t\tSslCertificate:             pulumi.String(\"  -----BEGIN CERTIFICATE-----\\\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\\\n-----END CERTIFICATE-----\\n\"),\n\t\t\tUrl:                        pulumi.String(\"http://mygameserver.local:7001/fusionauth-webhook\"),\n\t\t\tSignatureConfiguration: \u0026fusionauth.FusionAuthWebhookSignatureConfigurationArgs{\n\t\t\t\tEnabled:      pulumi.Bool(true),\n\t\t\t\tSigningKeyId: pulumi.Any(fusionauth_key.Webhook_key.Id),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthWebhook;\nimport com.pulumi.fusionauth.FusionAuthWebhookArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthWebhookEventsEnabledArgs;\nimport com.pulumi.fusionauth.inputs.FusionAuthWebhookSignatureConfigurationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new FusionAuthWebhook(\"example\", FusionAuthWebhookArgs.builder()\n            .tenantIds(            \n                \"00000000-0000-0000-0000-000000000003\",\n                fusionauth_tenant.example().id())\n            .connectTimeout(1000)\n            .description(\"The standard game Webhook\")\n            .eventsEnabled(FusionAuthWebhookEventsEnabledArgs.builder()\n                .userCreate(true)\n                .userDelete(false)\n                .build())\n            .global(false)\n            .headers(Map.ofEntries(\n                Map.entry(\"foo\", \"bar\"),\n                Map.entry(\"bar\", \"baz\")\n            ))\n            .httpAuthenticationPassword(\"password\")\n            .httpAuthenticationUsername(\"username\")\n            .readTimeout(2000)\n            .sslCertificate(\"\"\"\n  -----BEGIN CERTIFICATE-----\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\n-----END CERTIFICATE-----\n            \"\"\")\n            .url(\"http://mygameserver.local:7001/fusionauth-webhook\")\n            .signatureConfiguration(FusionAuthWebhookSignatureConfigurationArgs.builder()\n                .enabled(true)\n                .signingKeyId(fusionauth_key.webhook_key().id())\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  example:\n    type: fusionauth:FusionAuthWebhook\n    properties:\n      tenantIds:\n        - 00000000-0000-0000-0000-000000000003\n        - ${fusionauth_tenant.example.id}\n      connectTimeout: 1000\n      description: The standard game Webhook\n      eventsEnabled:\n        userCreate: true\n        userDelete: false\n      global: false\n      headers:\n        foo: bar\n        bar: baz\n      httpAuthenticationPassword: password\n      httpAuthenticationUsername: username\n      readTimeout: 2000\n      sslCertificate: |2\n          -----BEGIN CERTIFICATE-----\\nMIIDUjCCArugAwIBAgIJANZCTNN98L9ZMA0GCSqGSIb3DQEBBQUAMHoxCzAJBgNV\\nBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZz\\nZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkB\\nFhFzamZkZkBsc2tkamZjLmNvbTAeFw0xNDA0MDkyMTA2MDdaFw0xNDA1MDkyMTA2\\nMDdaMHoxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVy\\nMQ8wDQYDVQQKEwZzZXRoLXMxCjAIBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAw\\nHgYJKoZIhvcNAQkBFhFzamZkZkBsc2tkamZjLmNvbTCBnzANBgkqhkiG9w0BAQEF\\nAAOBjQAwgYkCgYEAxnQBqyuYvjUE4aFQ6vVZU5RqHmy3KiTg2NcxELIlZztUTK3a\\nVFbJoBB4ixHXCCYslujthILyBjgT3F+IhSpPAcrlu8O5LVPaPCysh/SNrGNwH4lq\\neiW9Z5WAhRO/nG7NZNa0USPHAei6b9Sv9PxuKCY+GJfAIwlO4/bltIH06/kCAwEA\\nAaOB3zCB3DAdBgNVHQ4EFgQUU4SqJEFm1zW+CcLxmLlARrqtMN0wgawGA1UdIwSB\\npDCBoYAUU4SqJEFm1zW+CcLxmLlARrqtMN2hfqR8MHoxCzAJBgNVBAYTAlVTMQsw\\nCQYDVQQIEwJDTzEPMA0GA1UEBxMGZGVudmVyMQ8wDQYDVQQKEwZzZXRoLXMxCjAI\\nBgNVBAsTAXMxDjAMBgNVBAMTBWludmVyMSAwHgYJKoZIhvcNAQkBFhFzamZkZkBs\\nc2tkamZjLmNvbYIJANZCTNN98L9ZMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEF\\nBQADgYEAY/cJsi3w6R4hF4PzAXLhGOg1tzTDYvol3w024WoehJur+qM0AY6UqtoJ\\nneCq9af32IKbbOKkoaok+t1+/tylQVF/0FXMTKepxaMbG22vr4TmN3idPUYYbPfW\\n5GkF7Hh96BjerrtiUPGuBZL50HoLZ5aR5oZUMAu7TXhOFp+vZp8=\\n-----END CERTIFICATE-----\n      url: http://mygameserver.local:7001/fusionauth-webhook\n      signatureConfiguration:\n        enabled: true\n        signingKeyId: ${fusionauth_key.webhook_key.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
@@ -10668,88 +10527,6 @@
                 },
                 "type": "object"
             }
-        },
-        "fusionauth:index/userGroupMembership:UserGroupMembership": {
-            "description": "## # User Group Membership Resource\n\n[User Group Membership API](https://fusionauth.io/docs/apis/groups#request-5)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"pulumi-fusionauth\";\n\nconst _this = new fusionauth.FusionAuthUserGroupMembership(\"this\", {\n    groupId: fusionauth_group[\"this\"].id,\n    userId: fusionauth_user[\"this\"].id,\n});\n```\n```python\nimport pulumi\nimport theogravity_pulumi_fusionauth as fusionauth\n\nthis = fusionauth.FusionAuthUserGroupMembership(\"this\",\n    group_id=fusionauth_group[\"this\"][\"id\"],\n    user_id=fusionauth_user[\"this\"][\"id\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = theogravity.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = new Fusionauth.FusionAuthUserGroupMembership(\"this\", new()\n    {\n        GroupId = fusionauth_group.This.Id,\n        UserId = fusionauth_user.This.Id,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.NewFusionAuthUserGroupMembership(ctx, \"this\", \u0026fusionauth.FusionAuthUserGroupMembershipArgs{\n\t\t\tGroupId: pulumi.Any(fusionauth_group.This.Id),\n\t\t\tUserId:  pulumi.Any(fusionauth_user.This.Id),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionAuthUserGroupMembership;\nimport com.pulumi.fusionauth.FusionAuthUserGroupMembershipArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var this_ = new FusionAuthUserGroupMembership(\"this\", FusionAuthUserGroupMembershipArgs.builder()\n            .groupId(fusionauth_group.this().id())\n            .userId(fusionauth_user.this().id())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  this:\n    type: fusionauth:FusionAuthUserGroupMembership\n    properties:\n      groupId: ${fusionauth_group.this.id}\n      userId: ${fusionauth_user.this.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
-            "properties": {
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "An object that can hold any information about the User for this membership that should be persisted.\n"
-                },
-                "groupId": {
-                    "type": "string",
-                    "description": "The Id of the Group of this membership.\n"
-                },
-                "membershipId": {
-                    "type": "string",
-                    "description": "The Id of the User Group Membership. If not provided, a random UUID will be generated.\n"
-                },
-                "userId": {
-                    "type": "string",
-                    "description": "\"The Id of the User of this membership.\n"
-                }
-            },
-            "required": [
-                "groupId",
-                "membershipId",
-                "userId"
-            ],
-            "inputProperties": {
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "An object that can hold any information about the User for this membership that should be persisted.\n"
-                },
-                "groupId": {
-                    "type": "string",
-                    "description": "The Id of the Group of this membership.\n"
-                },
-                "membershipId": {
-                    "type": "string",
-                    "description": "The Id of the User Group Membership. If not provided, a random UUID will be generated.\n",
-                    "willReplaceOnChanges": true
-                },
-                "userId": {
-                    "type": "string",
-                    "description": "\"The Id of the User of this membership.\n"
-                }
-            },
-            "requiredInputs": [
-                "groupId",
-                "userId"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering UserGroupMembership resources.\n",
-                "properties": {
-                    "data": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        },
-                        "description": "An object that can hold any information about the User for this membership that should be persisted.\n"
-                    },
-                    "groupId": {
-                        "type": "string",
-                        "description": "The Id of the Group of this membership.\n"
-                    },
-                    "membershipId": {
-                        "type": "string",
-                        "description": "The Id of the User Group Membership. If not provided, a random UUID will be generated.\n",
-                        "willReplaceOnChanges": true
-                    },
-                    "userId": {
-                        "type": "string",
-                        "description": "\"The Id of the User of this membership.\n"
-                    }
-                },
-                "type": "object"
-            },
-            "deprecationMessage": "fusionauth.index/usergroupmembership.UserGroupMembership has been deprecated in favor of fusionauth.index/fusionauthusergroupmembership.FusionAuthUserGroupMembership"
         }
     },
     "functions": {
@@ -10798,10 +10575,10 @@
                 ]
             }
         },
-        "fusionauth:index/getApplicationOauthScope:getApplicationOauthScope": {
-            "description": "## # Application OAuth Scope Resource\n\nThe Application OAuth Scope resource allows you to define the scopes that an application can request when using OAuth.\n\n[Application OAuth Scope API](https://fusionauth.io/docs/apis/scopes)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst this = fusionauth.getApplicationOauthScope({\n    applicationId: data.fusionauth_application[\"this\"].id,\n    name: \"data:read\",\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\nthis = fusionauth.get_application_oauth_scope(application_id=data[\"fusionauth_application\"][\"this\"][\"id\"],\n    name=\"data:read\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = Fusionauth.GetApplicationOauthScope.Invoke(new()\n    {\n        ApplicationId = data.Fusionauth_application.This.Id,\n        Name = \"data:read\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.LookupApplicationOauthScope(ctx, \u0026fusionauth.LookupApplicationOauthScopeArgs{\n\t\t\tApplicationId: data.Fusionauth_application.This.Id,\n\t\t\tName:          \"data:read\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetApplicationOauthScopeArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var this = FusionauthFunctions.getApplicationOauthScope(GetApplicationOauthScopeArgs.builder()\n            .applicationId(data.fusionauth_application().this().id())\n            .name(\"data:read\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  this:\n    fn::invoke:\n      function: fusionauth:getApplicationOauthScope\n      arguments:\n        applicationId: ${data.fusionauth_application.this.id}\n        name: data:read\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+        "fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope": {
+            "description": "## # Application OAuth Scope Resource\n\nThe Application OAuth Scope resource allows you to define the scopes that an application can request when using OAuth.\n\n[Application OAuth Scope API](https://fusionauth.io/docs/apis/scopes)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst this = fusionauth.getApplicationOAuthScope({\n    applicationId: data.fusionauth_application[\"this\"].id,\n    name: \"data:read\",\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\nthis = fusionauth.get_application_o_auth_scope(application_id=data[\"fusionauth_application\"][\"this\"][\"id\"],\n    name=\"data:read\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = Fusionauth.GetApplicationOAuthScope.Invoke(new()\n    {\n        ApplicationId = data.Fusionauth_application.This.Id,\n        Name = \"data:read\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.GetApplicationOAuthScope(ctx, \u0026fusionauth.GetApplicationOAuthScopeArgs{\n\t\t\tApplicationId: data.Fusionauth_application.This.Id,\n\t\t\tName:          \"data:read\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetApplicationOAuthScopeArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var this = FusionauthFunctions.getApplicationOAuthScope(GetApplicationOAuthScopeArgs.builder()\n            .applicationId(data.fusionauth_application().this().id())\n            .name(\"data:read\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  this:\n    fn::invoke:\n      function: fusionauth:getApplicationOAuthScope\n      arguments:\n        applicationId: ${data.fusionauth_application.this.id}\n        name: data:read\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
-                "description": "A collection of arguments for invoking getApplicationOauthScope.\n",
+                "description": "A collection of arguments for invoking getApplicationOAuthScope.\n",
                 "properties": {
                     "applicationId": {
                         "type": "string",
@@ -10820,7 +10597,7 @@
                 ]
             },
             "outputs": {
-                "description": "A collection of values returned by getApplicationOauthScope.\n",
+                "description": "A collection of values returned by getApplicationOAuthScope.\n",
                 "properties": {
                     "applicationId": {
                         "type": "string"
@@ -11473,7 +11250,7 @@
             }
         },
         "fusionauth:index/getUserGroupMembership:getUserGroupMembership": {
-            "description": "## # User Group Membership Resource\n\n[User Group Membership API](https://fusionauth.io/docs/apis/groups#request-5)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst this = fusionauth.getUserGroupMembership({\n    groupId: fusionauth_group[\"this\"].id,\n    userId: fusionauth_user[\"this\"].id,\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\nthis = fusionauth.get_user_group_membership(group_id=fusionauth_group[\"this\"][\"id\"],\n    user_id=fusionauth_user[\"this\"][\"id\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = Fusionauth.GetUserGroupMembership.Invoke(new()\n    {\n        GroupId = fusionauth_group.This.Id,\n        UserId = fusionauth_user.This.Id,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.LookupUserGroupMembership(ctx, \u0026fusionauth.LookupUserGroupMembershipArgs{\n\t\t\tGroupId: fusionauth_group.This.Id,\n\t\t\tUserId:  fusionauth_user.This.Id,\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetUserGroupMembershipArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var this = FusionauthFunctions.getUserGroupMembership(GetUserGroupMembershipArgs.builder()\n            .groupId(fusionauth_group.this().id())\n            .userId(fusionauth_user.this().id())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  this:\n    fn::invoke:\n      function: fusionauth:getUserGroupMembership\n      arguments:\n        groupId: ${fusionauth_group.this.id}\n        userId: ${fusionauth_user.this.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "## # User Group Membership Resource\n\n[User Group Membership API](https://fusionauth.io/docs/apis/groups#request-5)\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as fusionauth from \"@pulumi/fusionauth\";\n\nconst this = fusionauth.getUserGroupMembership({\n    groupId: fusionauth_group[\"this\"].id,\n    userId: fusionauth_user[\"this\"].id,\n});\n```\n```python\nimport pulumi\nimport pulumi_fusionauth as fusionauth\n\nthis = fusionauth.get_user_group_membership(group_id=fusionauth_group[\"this\"][\"id\"],\n    user_id=fusionauth_user[\"this\"][\"id\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Fusionauth = Pulumi.Fusionauth;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = Fusionauth.GetUserGroupMembership.Invoke(new()\n    {\n        GroupId = fusionauth_group.This.Id,\n        UserId = fusionauth_user.This.Id,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/theogravity/pulumi-fusionauth/sdk/go/fusionauth\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := fusionauth.GetUserGroupMembership(ctx, \u0026fusionauth.GetUserGroupMembershipArgs{\n\t\t\tGroupId: fusionauth_group.This.Id,\n\t\t\tUserId:  fusionauth_user.This.Id,\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.fusionauth.FusionauthFunctions;\nimport com.pulumi.fusionauth.inputs.GetUserGroupMembershipArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var this = FusionauthFunctions.getUserGroupMembership(GetUserGroupMembershipArgs.builder()\n            .groupId(fusionauth_group.this().id())\n            .userId(fusionauth_user.this().id())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  this:\n    fn::invoke:\n      function: fusionauth:getUserGroupMembership\n      arguments:\n        groupId: ${fusionauth_group.this.id}\n        userId: ${fusionauth_user.this.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getUserGroupMembership.\n",
                 "properties": {

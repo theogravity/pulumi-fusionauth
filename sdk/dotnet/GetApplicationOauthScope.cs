@@ -10,7 +10,7 @@ using Pulumi;
 
 namespace theogravity.Fusionauth
 {
-    public static class GetApplicationOauthScope
+    public static class GetApplicationOAuthScope
     {
         /// <summary>
         /// ## # Application OAuth Scope Resource
@@ -29,7 +29,7 @@ namespace theogravity.Fusionauth
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var @this = Fusionauth.GetApplicationOauthScope.Invoke(new()
+        ///     var @this = Fusionauth.GetApplicationOAuthScope.Invoke(new()
         ///     {
         ///         ApplicationId = data.Fusionauth_application.This.Id,
         ///         Name = "data:read",
@@ -38,8 +38,8 @@ namespace theogravity.Fusionauth
         /// });
         /// ```
         /// </summary>
-        public static Task<GetApplicationOauthScopeResult> InvokeAsync(GetApplicationOauthScopeArgs args, InvokeOptions? options = null)
-            => global::Pulumi.Deployment.Instance.InvokeAsync<GetApplicationOauthScopeResult>("fusionauth:index/getApplicationOauthScope:getApplicationOauthScope", args ?? new GetApplicationOauthScopeArgs(), options.WithDefaults());
+        public static Task<GetApplicationOAuthScopeResult> InvokeAsync(GetApplicationOAuthScopeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.InvokeAsync<GetApplicationOAuthScopeResult>("fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope", args ?? new GetApplicationOAuthScopeArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Application OAuth Scope Resource
@@ -58,7 +58,7 @@ namespace theogravity.Fusionauth
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var @this = Fusionauth.GetApplicationOauthScope.Invoke(new()
+        ///     var @this = Fusionauth.GetApplicationOAuthScope.Invoke(new()
         ///     {
         ///         ApplicationId = data.Fusionauth_application.This.Id,
         ///         Name = "data:read",
@@ -67,8 +67,8 @@ namespace theogravity.Fusionauth
         /// });
         /// ```
         /// </summary>
-        public static Output<GetApplicationOauthScopeResult> Invoke(GetApplicationOauthScopeInvokeArgs args, InvokeOptions? options = null)
-            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationOauthScopeResult>("fusionauth:index/getApplicationOauthScope:getApplicationOauthScope", args ?? new GetApplicationOauthScopeInvokeArgs(), options.WithDefaults());
+        public static Output<GetApplicationOAuthScopeResult> Invoke(GetApplicationOAuthScopeInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationOAuthScopeResult>("fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope", args ?? new GetApplicationOAuthScopeInvokeArgs(), options.WithDefaults());
 
         /// <summary>
         /// ## # Application OAuth Scope Resource
@@ -87,7 +87,7 @@ namespace theogravity.Fusionauth
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var @this = Fusionauth.GetApplicationOauthScope.Invoke(new()
+        ///     var @this = Fusionauth.GetApplicationOAuthScope.Invoke(new()
         ///     {
         ///         ApplicationId = data.Fusionauth_application.This.Id,
         ///         Name = "data:read",
@@ -96,12 +96,12 @@ namespace theogravity.Fusionauth
         /// });
         /// ```
         /// </summary>
-        public static Output<GetApplicationOauthScopeResult> Invoke(GetApplicationOauthScopeInvokeArgs args, InvokeOutputOptions options)
-            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationOauthScopeResult>("fusionauth:index/getApplicationOauthScope:getApplicationOauthScope", args ?? new GetApplicationOauthScopeInvokeArgs(), options.WithDefaults());
+        public static Output<GetApplicationOAuthScopeResult> Invoke(GetApplicationOAuthScopeInvokeArgs args, InvokeOutputOptions options)
+            => global::Pulumi.Deployment.Instance.Invoke<GetApplicationOAuthScopeResult>("fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope", args ?? new GetApplicationOAuthScopeInvokeArgs(), options.WithDefaults());
     }
 
 
-    public sealed class GetApplicationOauthScopeArgs : global::Pulumi.InvokeArgs
+    public sealed class GetApplicationOAuthScopeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
         /// ID of the application that this role is for.
@@ -115,13 +115,13 @@ namespace theogravity.Fusionauth
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
-        public GetApplicationOauthScopeArgs()
+        public GetApplicationOAuthScopeArgs()
         {
         }
-        public static new GetApplicationOauthScopeArgs Empty => new GetApplicationOauthScopeArgs();
+        public static new GetApplicationOAuthScopeArgs Empty => new GetApplicationOAuthScopeArgs();
     }
 
-    public sealed class GetApplicationOauthScopeInvokeArgs : global::Pulumi.InvokeArgs
+    public sealed class GetApplicationOAuthScopeInvokeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
         /// ID of the application that this role is for.
@@ -135,15 +135,15 @@ namespace theogravity.Fusionauth
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        public GetApplicationOauthScopeInvokeArgs()
+        public GetApplicationOAuthScopeInvokeArgs()
         {
         }
-        public static new GetApplicationOauthScopeInvokeArgs Empty => new GetApplicationOauthScopeInvokeArgs();
+        public static new GetApplicationOAuthScopeInvokeArgs Empty => new GetApplicationOAuthScopeInvokeArgs();
     }
 
 
     [OutputType]
-    public sealed class GetApplicationOauthScopeResult
+    public sealed class GetApplicationOAuthScopeResult
     {
         public readonly string ApplicationId;
         /// <summary>
@@ -177,7 +177,7 @@ namespace theogravity.Fusionauth
         public readonly string ScopeId;
 
         [OutputConstructor]
-        private GetApplicationOauthScopeResult(
+        private GetApplicationOAuthScopeResult(
             string applicationId,
 
             ImmutableDictionary<string, string> data,

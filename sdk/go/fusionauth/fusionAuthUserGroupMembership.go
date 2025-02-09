@@ -68,12 +68,6 @@ func NewFusionAuthUserGroupMembership(ctx *pulumi.Context,
 	if args.UserId == nil {
 		return nil, errors.New("invalid value for required argument 'UserId'")
 	}
-	aliases := pulumi.Aliases([]pulumi.Alias{
-		{
-			Type: pulumi.String("fusionauth:index/userGroupMembership:UserGroupMembership"),
-		},
-	})
-	opts = append(opts, aliases)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthUserGroupMembership
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership", name, args, &resource, opts...)

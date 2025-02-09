@@ -17,24 +17,24 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const this = fusionauth.getApplicationOauthScope({
+ * const this = fusionauth.getApplicationOAuthScope({
  *     applicationId: data.fusionauth_application["this"].id,
  *     name: "data:read",
  * });
  * ```
  */
-export function getApplicationOauthScope(args: GetApplicationOauthScopeArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationOauthScopeResult> {
+export function getApplicationOAuthScope(args: GetApplicationOAuthScopeArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationOAuthScopeResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
-    return pulumi.runtime.invoke("fusionauth:index/getApplicationOauthScope:getApplicationOauthScope", {
+    return pulumi.runtime.invoke("fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope", {
         "applicationId": args.applicationId,
         "name": args.name,
     }, opts);
 }
 
 /**
- * A collection of arguments for invoking getApplicationOauthScope.
+ * A collection of arguments for invoking getApplicationOAuthScope.
  */
-export interface GetApplicationOauthScopeArgs {
+export interface GetApplicationOAuthScopeArgs {
     /**
      * ID of the application that this role is for.
      */
@@ -46,9 +46,9 @@ export interface GetApplicationOauthScopeArgs {
 }
 
 /**
- * A collection of values returned by getApplicationOauthScope.
+ * A collection of values returned by getApplicationOAuthScope.
  */
-export interface GetApplicationOauthScopeResult {
+export interface GetApplicationOAuthScopeResult {
     readonly applicationId: string;
     /**
      * (Optional) An object that can hold any information about the OAuth Scope that should be persisted.
@@ -93,24 +93,24 @@ export interface GetApplicationOauthScopeResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as fusionauth from "@pulumi/fusionauth";
  *
- * const this = fusionauth.getApplicationOauthScope({
+ * const this = fusionauth.getApplicationOAuthScope({
  *     applicationId: data.fusionauth_application["this"].id,
  *     name: "data:read",
  * });
  * ```
  */
-export function getApplicationOauthScopeOutput(args: GetApplicationOauthScopeOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetApplicationOauthScopeResult> {
+export function getApplicationOAuthScopeOutput(args: GetApplicationOAuthScopeOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetApplicationOAuthScopeResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
-    return pulumi.runtime.invokeOutput("fusionauth:index/getApplicationOauthScope:getApplicationOauthScope", {
+    return pulumi.runtime.invokeOutput("fusionauth:index/getApplicationOAuthScope:getApplicationOAuthScope", {
         "applicationId": args.applicationId,
         "name": args.name,
     }, opts);
 }
 
 /**
- * A collection of arguments for invoking getApplicationOauthScope.
+ * A collection of arguments for invoking getApplicationOAuthScope.
  */
-export interface GetApplicationOauthScopeOutputArgs {
+export interface GetApplicationOAuthScopeOutputArgs {
     /**
      * ID of the application that this role is for.
      */

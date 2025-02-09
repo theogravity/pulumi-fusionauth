@@ -127,8 +127,6 @@ export class FusionAuthApplicationOAuthScope extends pulumi.CustomResource {
             resourceInputs["scopeId"] = args ? args.scopeId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const aliasOpts = { aliases: [{ type: "fusionauth:index/applicationOauthScope:ApplicationOauthScope" }] };
-        opts = pulumi.mergeOptions(opts, aliasOpts);
         super(FusionAuthApplicationOAuthScope.__pulumiType, name, resourceInputs, opts);
     }
 }

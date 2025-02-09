@@ -25,7 +25,7 @@ import (
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 
 	// Replace this provider with the provider you are bridging.
-	fusionauth "github.com/FusionAuth/terraform-provider-fusionauth/fusionauth"
+	"github.com/FusionAuth/terraform-provider-fusionauth/fusionauth"
 )
 
 // all of the token components used below.
@@ -134,7 +134,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"fusionauth_application":             {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplication")},
-			"fusionauth_application_oauth_scope": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplicationOauthScope")},
+			"fusionauth_application_oauth_scope": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplicationOAuthScope")},
 			"fusionauth_application_role":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getApplicationRole")},
 			"fusionauth_email":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getEMail")},
 			"fusionauth_form":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getForm")},

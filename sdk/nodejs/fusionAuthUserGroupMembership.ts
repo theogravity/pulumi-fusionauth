@@ -97,8 +97,6 @@ export class FusionAuthUserGroupMembership extends pulumi.CustomResource {
             resourceInputs["userId"] = args ? args.userId : undefined;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const aliasOpts = { aliases: [{ type: "fusionauth:index/userGroupMembership:UserGroupMembership" }] };
-        opts = pulumi.mergeOptions(opts, aliasOpts);
         super(FusionAuthUserGroupMembership.__pulumiType, name, resourceInputs, opts);
     }
 }

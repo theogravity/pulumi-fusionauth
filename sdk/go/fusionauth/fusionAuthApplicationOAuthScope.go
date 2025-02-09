@@ -82,12 +82,6 @@ func NewFusionAuthApplicationOAuthScope(ctx *pulumi.Context,
 	if args.ApplicationId == nil {
 		return nil, errors.New("invalid value for required argument 'ApplicationId'")
 	}
-	aliases := pulumi.Aliases([]pulumi.Alias{
-		{
-			Type: pulumi.String("fusionauth:index/applicationOauthScope:ApplicationOauthScope"),
-		},
-	})
-	opts = append(opts, aliases)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource FusionAuthApplicationOAuthScope
 	err := ctx.RegisterResource("fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope", name, args, &resource, opts...)

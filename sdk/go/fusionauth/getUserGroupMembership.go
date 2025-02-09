@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := fusionauth.LookupUserGroupMembership(ctx, &fusionauth.LookupUserGroupMembershipArgs{
+//			_, err := fusionauth.GetUserGroupMembership(ctx, &fusionauth.GetUserGroupMembershipArgs{
 //				GroupId: fusionauth_group.This.Id,
 //				UserId:  fusionauth_user.This.Id,
 //			}, nil)
@@ -41,9 +41,9 @@ import (
 //	}
 //
 // ```
-func LookupUserGroupMembership(ctx *pulumi.Context, args *LookupUserGroupMembershipArgs, opts ...pulumi.InvokeOption) (*LookupUserGroupMembershipResult, error) {
+func GetUserGroupMembership(ctx *pulumi.Context, args *GetUserGroupMembershipArgs, opts ...pulumi.InvokeOption) (*GetUserGroupMembershipResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
-	var rv LookupUserGroupMembershipResult
+	var rv GetUserGroupMembershipResult
 	err := ctx.Invoke("fusionauth:index/getUserGroupMembership:getUserGroupMembership", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func LookupUserGroupMembership(ctx *pulumi.Context, args *LookupUserGroupMembers
 }
 
 // A collection of arguments for invoking getUserGroupMembership.
-type LookupUserGroupMembershipArgs struct {
+type GetUserGroupMembershipArgs struct {
 	// The Id of the Group of this membership.
 	GroupId string `pulumi:"groupId"`
 	// "The Id of the User of this membership.
@@ -60,7 +60,7 @@ type LookupUserGroupMembershipArgs struct {
 }
 
 // A collection of values returned by getUserGroupMembership.
-type LookupUserGroupMembershipResult struct {
+type GetUserGroupMembershipResult struct {
 	// (Optional) An object that can hold any information about the User for this membership that should be persisted.
 	Data    map[string]string `pulumi:"data"`
 	GroupId string            `pulumi:"groupId"`
@@ -71,65 +71,65 @@ type LookupUserGroupMembershipResult struct {
 	UserId       string `pulumi:"userId"`
 }
 
-func LookupUserGroupMembershipOutput(ctx *pulumi.Context, args LookupUserGroupMembershipOutputArgs, opts ...pulumi.InvokeOption) LookupUserGroupMembershipResultOutput {
+func GetUserGroupMembershipOutput(ctx *pulumi.Context, args GetUserGroupMembershipOutputArgs, opts ...pulumi.InvokeOption) GetUserGroupMembershipResultOutput {
 	return pulumi.ToOutputWithContext(ctx.Context(), args).
-		ApplyT(func(v interface{}) (LookupUserGroupMembershipResultOutput, error) {
-			args := v.(LookupUserGroupMembershipArgs)
+		ApplyT(func(v interface{}) (GetUserGroupMembershipResultOutput, error) {
+			args := v.(GetUserGroupMembershipArgs)
 			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
-			return ctx.InvokeOutput("fusionauth:index/getUserGroupMembership:getUserGroupMembership", args, LookupUserGroupMembershipResultOutput{}, options).(LookupUserGroupMembershipResultOutput), nil
-		}).(LookupUserGroupMembershipResultOutput)
+			return ctx.InvokeOutput("fusionauth:index/getUserGroupMembership:getUserGroupMembership", args, GetUserGroupMembershipResultOutput{}, options).(GetUserGroupMembershipResultOutput), nil
+		}).(GetUserGroupMembershipResultOutput)
 }
 
 // A collection of arguments for invoking getUserGroupMembership.
-type LookupUserGroupMembershipOutputArgs struct {
+type GetUserGroupMembershipOutputArgs struct {
 	// The Id of the Group of this membership.
 	GroupId pulumi.StringInput `pulumi:"groupId"`
 	// "The Id of the User of this membership.
 	UserId pulumi.StringInput `pulumi:"userId"`
 }
 
-func (LookupUserGroupMembershipOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupUserGroupMembershipArgs)(nil)).Elem()
+func (GetUserGroupMembershipOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetUserGroupMembershipArgs)(nil)).Elem()
 }
 
 // A collection of values returned by getUserGroupMembership.
-type LookupUserGroupMembershipResultOutput struct{ *pulumi.OutputState }
+type GetUserGroupMembershipResultOutput struct{ *pulumi.OutputState }
 
-func (LookupUserGroupMembershipResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupUserGroupMembershipResult)(nil)).Elem()
+func (GetUserGroupMembershipResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetUserGroupMembershipResult)(nil)).Elem()
 }
 
-func (o LookupUserGroupMembershipResultOutput) ToLookupUserGroupMembershipResultOutput() LookupUserGroupMembershipResultOutput {
+func (o GetUserGroupMembershipResultOutput) ToGetUserGroupMembershipResultOutput() GetUserGroupMembershipResultOutput {
 	return o
 }
 
-func (o LookupUserGroupMembershipResultOutput) ToLookupUserGroupMembershipResultOutputWithContext(ctx context.Context) LookupUserGroupMembershipResultOutput {
+func (o GetUserGroupMembershipResultOutput) ToGetUserGroupMembershipResultOutputWithContext(ctx context.Context) GetUserGroupMembershipResultOutput {
 	return o
 }
 
 // (Optional) An object that can hold any information about the User for this membership that should be persisted.
-func (o LookupUserGroupMembershipResultOutput) Data() pulumi.StringMapOutput {
-	return o.ApplyT(func(v LookupUserGroupMembershipResult) map[string]string { return v.Data }).(pulumi.StringMapOutput)
+func (o GetUserGroupMembershipResultOutput) Data() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetUserGroupMembershipResult) map[string]string { return v.Data }).(pulumi.StringMapOutput)
 }
 
-func (o LookupUserGroupMembershipResultOutput) GroupId() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupUserGroupMembershipResult) string { return v.GroupId }).(pulumi.StringOutput)
+func (o GetUserGroupMembershipResultOutput) GroupId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetUserGroupMembershipResult) string { return v.GroupId }).(pulumi.StringOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
-func (o LookupUserGroupMembershipResultOutput) Id() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupUserGroupMembershipResult) string { return v.Id }).(pulumi.StringOutput)
+func (o GetUserGroupMembershipResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetUserGroupMembershipResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 // (Optional) The Id of the User Group Membership. If not provided, a random UUID will be generated.
-func (o LookupUserGroupMembershipResultOutput) MembershipId() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupUserGroupMembershipResult) string { return v.MembershipId }).(pulumi.StringOutput)
+func (o GetUserGroupMembershipResultOutput) MembershipId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetUserGroupMembershipResult) string { return v.MembershipId }).(pulumi.StringOutput)
 }
 
-func (o LookupUserGroupMembershipResultOutput) UserId() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupUserGroupMembershipResult) string { return v.UserId }).(pulumi.StringOutput)
+func (o GetUserGroupMembershipResultOutput) UserId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetUserGroupMembershipResult) string { return v.UserId }).(pulumi.StringOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupUserGroupMembershipResultOutput{})
+	pulumi.RegisterOutputType(GetUserGroupMembershipResultOutput{})
 }

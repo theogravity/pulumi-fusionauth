@@ -410,8 +410,6 @@ class FusionAuthApplicationOAuthScope(pulumi.CustomResource):
             __props__.__dict__["name"] = name
             __props__.__dict__["required"] = required
             __props__.__dict__["scope_id"] = scope_id
-        alias_opts = pulumi.ResourceOptions(aliases=[pulumi.Alias(type_="fusionauth:index/applicationOauthScope:ApplicationOauthScope")])
-        opts = pulumi.ResourceOptions.merge(opts, alias_opts)
         super(FusionAuthApplicationOAuthScope, __self__).__init__(
             'fusionauth:index/fusionAuthApplicationOAuthScope:FusionAuthApplicationOAuthScope',
             resource_name,

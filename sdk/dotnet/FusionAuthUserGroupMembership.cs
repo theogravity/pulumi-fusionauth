@@ -85,10 +85,6 @@ namespace theogravity.Fusionauth
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "https://github.com/theogravity/pulumi-fusionauth/releases/download/v${VERSION}",
-                Aliases =
-                {
-                    new global::Pulumi.Alias { Type = "fusionauth:index/userGroupMembership:UserGroupMembership" },
-                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.

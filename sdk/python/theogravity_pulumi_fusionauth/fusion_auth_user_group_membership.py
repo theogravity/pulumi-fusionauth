@@ -249,8 +249,6 @@ class FusionAuthUserGroupMembership(pulumi.CustomResource):
             if user_id is None and not opts.urn:
                 raise TypeError("Missing required property 'user_id'")
             __props__.__dict__["user_id"] = user_id
-        alias_opts = pulumi.ResourceOptions(aliases=[pulumi.Alias(type_="fusionauth:index/userGroupMembership:UserGroupMembership")])
-        opts = pulumi.ResourceOptions.merge(opts, alias_opts)
         super(FusionAuthUserGroupMembership, __self__).__init__(
             'fusionauth:index/fusionAuthUserGroupMembership:FusionAuthUserGroupMembership',
             resource_name,
