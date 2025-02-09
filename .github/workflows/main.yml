@@ -96,7 +96,7 @@ jobs:
         pythonversion:
         - "3.8.18"
   lint:
-    container: golangci/golangci-lint:v1.59.1
+    container: golangci/golangci-lint:v1.63.4
     name: lint
     runs-on: ubuntu-latest
     steps:
@@ -127,7 +127,7 @@ jobs:
         goversion:
         - 1.22.4
   lint_sdk:
-    container: golangci/golangci-lint:v1.59.1
+    container: golangci/golangci-lint:v1.63.4
     name: lint-sdk
     needs: build_sdk
     runs-on: ubuntu-latest
